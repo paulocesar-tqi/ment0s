@@ -132,7 +132,11 @@ namespace CarregaImagem
                     {
                         rounded = (int)Math.Ceiling(t);
                         if (!IsGoodPixel(a.X, rounded))
-                            return false;
+                        {
+                            rounded = (int)t-1;
+                            if (!IsGoodPixel(a.X, rounded))
+                                return false;
+                        }
                     }
 
                 }
