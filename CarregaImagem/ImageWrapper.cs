@@ -127,8 +127,13 @@ namespace CarregaImagem
                     a.X += dx;                           // step to next x value
                     t += m;                             // add slope to y value
 
-                    if (!IsGoodPixel(a.X, (int)t))
-                        return false;
+                    int rounded = (int)t;
+                    if (!IsGoodPixel(a.X, rounded))
+                    {
+                        rounded = (int)Math.Ceiling(t);
+                        if (!IsGoodPixel(a.X, rounded))
+                            return false;
+                    }
 
                 }
 

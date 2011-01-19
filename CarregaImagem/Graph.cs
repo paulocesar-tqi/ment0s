@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace CarregaImagem
 {
@@ -35,7 +36,7 @@ namespace CarregaImagem
             {
                 Path p = this.lstPaths.Dequeue();
                 if (!p.Used)
-                {
+                {                    
                     p.Used = true;
                     List<Path> lstNewPaths = FindPaths(p);
                     if (lstNewPaths.Count > 0)
