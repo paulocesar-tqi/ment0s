@@ -31,12 +31,8 @@ namespace CarregaImagem
                     graph.FindAllPaths(wrapper.FirstPoints);
 
                     IEnumerable<Path> lstPaths = graph.Paths;
-                    StringBuilder sb = new StringBuilder();
-                    foreach (Path p in lstPaths)
-                    {
-                        //sb.AppendLine(p.Write());
-                        wrapper.Paint(p);
-                    }
+                    wrapper.Paint(lstPaths);
+                    wrapper.ClearImage();
                     //txtPaths.Text = sb.ToString();
 
 /*

@@ -13,6 +13,8 @@ namespace CarregaImagem
         private int lastX;
         private List<Point> lstFirstPoints;
         private List<Point> lstLastPoints;
+        
+        private Dictionary<int, List<Point>> memoryPoints = new Dictionary<int, List<Point>>();
 
         public ImageWrapper(Bitmap bmp)
         {
@@ -34,8 +36,7 @@ namespace CarregaImagem
             {
                 for (int y = 0; y < imagem.Height; y++)
                 {
-                    Color c = imagem.GetPixel(x, y);
-                    if (c.ToArgb() == Color.Black.ToArgb())
+                    if (IsGoodPixel(x, y))
                     {
                         lstPoints.Add(new Point(x, y));
                     }
@@ -60,8 +61,7 @@ namespace CarregaImagem
             {
                 for (int y = 0; y < imagem.Height; y++)
                 {
-                    Color c = imagem.GetPixel(x, y);
-                    if (c.ToArgb() == Color.Black.ToArgb())
+                    if (IsGoodPixel(x, y))
                     {
                         lstPoints.Add(new Point(x, y));                        
                     }
@@ -87,22 +87,23 @@ namespace CarregaImagem
                 return lstPoints;
 
             int x = point.X + X_INCREMENTER;
-            if (x > 160)
-            {
-                x = x;
-            }
             if (x > lastX)
                 return lstLastPoints;
 
+            if (memoryPoints.ContainsKey(x))
+            {
+                return memoryPoints[x];
+            }
+
             for (int y = 0; y < imagem.Height; y++)
             {
-                Color col1 = imagem.GetPixel(x, y);
-                if (col1.ToArgb() == Color.Black.ToArgb())
+                if (IsGoodPixel(x, y))
                 {
                     lstPoints.Add(new Point(x, y));
                 }
 
             }
+            memoryPoints[x] = lstPoints;
             return lstPoints;
 
         }
@@ -126,8 +127,7 @@ namespace CarregaImagem
                     a.X += dx;                           // step to next x value
                     t += m;                             // add slope to y value
 
-                    Color col1 = imagem.GetPixel(a.X, (int)t);
-                    if (col1.ToArgb() != Color.Black.ToArgb())
+                    if (!IsGoodPixel(a.X, (int)t))
                         return false;
 
                 }
@@ -144,26 +144,68 @@ namespace CarregaImagem
                 {
                     a.Y += dy;                           // step to next y value
                     t += m;                             // add slope to x value
-                    Color col1 = imagem.GetPixel((int)t, a.Y);
-                    if (col1.ToArgb() != Color.Black.ToArgb())
+                    if (!IsGoodPixel((int)t, a.Y))
                         return false;
                 }
             }
             return true;
         }
 
-        internal void Paint(Path path)
+        public void ClearImage()
         {
+            Log.WriteLine("Clear Image: " + DateTime.Now);
+            for (int x = 1; x < imagem.Width-1; x++)
+            {
+                for (int y = 1; y < imagem.Height-1; y++)
+                {
+                    if (IsGoodPixel(x,y) && IsAlonePixel(x, y))
+                    {
+                        imagem.SetPixel(x, y, Color.White);
+                    }
+                }
+            }
+            Log.WriteLine("Clear Image: " + DateTime.Now);
+        }
+
+        private bool IsGoodPixel(int x, int y)
+        {
+            Color col1 = imagem.GetPixel(x, y);
+            return (col1.ToArgb() == Color.Black.ToArgb());
+        }
+
+        private bool IsAlonePixel(int x, int y)
+        {
+            int thresold = 1;
+            int count = 0;
+            count += IsGoodPixel(x + 1, y) ? 1 : 0;
+            count += IsGoodPixel(x, y + 1) ? 1 : 0;
+            count += IsGoodPixel(x - 1, y) ? 1 : 0;
+            count += IsGoodPixel(x, y - 1) ? 1 : 0;
+            
+            count += IsGoodPixel(x - 1, y - 1) ? 1 : 0;
+            count += IsGoodPixel(x - 1, y + 1) ? 1 : 0;
+            count += IsGoodPixel(x + 1, y + 1) ? 1 : 0;
+            count += IsGoodPixel(x + 1, y - 1) ? 1 : 0;
+
+            return (count <= thresold);
+        }
+
+        internal void Paint(IEnumerable<Path> lstPath)
+        {
+            Log.WriteLine("Paint Image: " + DateTime.Now);
             using (Graphics g = Graphics.FromImage(imagem))
             {
-                for (int i = 0; i < path.Points.Count-1; i++)
+                foreach (Path path in lstPath)
                 {
-                    Point p = path.Points[i];
-                    Point p2 = path.Points[i + 1];
-                    g.DrawLine(new Pen(Color.White), new PointF(p.X, p.Y), new PointF(p2.X, p2.Y));
+                    for (int i = 0; i < path.Points.Count - 1; i++)
+                    {
+                        Point p = path.Points[i];
+                        Point p2 = path.Points[i + 1];
+                        g.DrawLine(new Pen(Color.White), new PointF(p.X, p.Y), new PointF(p2.X, p2.Y));
+                    }
                 }
-                
             }
+            Log.WriteLine("Paint Image: " + DateTime.Now);
         }
     }
 }
