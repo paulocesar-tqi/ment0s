@@ -22,6 +22,7 @@ namespace CarregaImagem
 
         public void FindAllPaths(List<Point> starters)
         {
+            Log.WriteLine("FindAllPaths: " + DateTime.Now);
             foreach (Point start in starters)
             {
                 Path startPath = new Path(null);
@@ -52,6 +53,7 @@ namespace CarregaImagem
                 }
                 
             }
+            Log.WriteLine("FindAllPaths: " + DateTime.Now);
         }
 
         private List<Path> FindPaths(Path originalPath)
