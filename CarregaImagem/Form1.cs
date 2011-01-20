@@ -33,6 +33,7 @@ namespace CarregaImagem
                     List<Point> lastPoints = graph.LastPoints;
                     wrapper.Paint(lastPoints);
                     wrapper.ClearImage();
+                    //wrapper.Repopulate(lastPoints);
                     //txtPaths.Text = sb.ToString();
 
 /*

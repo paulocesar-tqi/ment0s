@@ -130,12 +130,6 @@ namespace CarregaImagem
             int dx = b.X - a.X;
             float t = (float)0.5;                      // offset for rounding
 
-            if (start.X == 107 && start.Y == 34)
-            {
-                dy = 0;
-                dy = b.Y - a.Y;
-            }
-
             if (Math.Abs(dx) > Math.Abs(dy))
             {          // slope < 1
                 float m = (float)dy / (float)dx;      // compute s
@@ -165,7 +159,8 @@ namespace CarregaImagem
 
             }
             else
-            {                                    // slope >= 1
+            {
+                // slope >= 1
                 float m = (float)dx / (float)dy;      // compute slope
                 t += a.X;
                 dy = (dy < 0) ? -1 : 1;
@@ -232,21 +227,134 @@ namespace CarregaImagem
                     foreach (Point point in lastPoints)
                     {
                         List<Point> lstAncessors = point.Ancessors;
+                        CheckAncessors(lstAncessors);
                         foreach (Point ancessor in lstAncessors)
                         {
                             Point p = ancessor;
                             Point p2 = point;
-                            g.DrawLine(new Pen(Color.White), new PointF(p.X, p.Y), new PointF(p2.X, p2.Y));
+                            g.DrawLine(new Pen(Color.White, 2), new PointF(p.X, p.Y), new PointF(p2.X, p2.Y));
                             if (!lstPoints.Contains(ancessor))
-                                lstPoints.Add(ancessor);
+                                lstPoints.Add(GetPoint(ancessor.X, ancessor.Y));
                         }
                     }
-                    lastPoints.Clear();
-                    lastPoints.AddRange(lstPoints);
-                    lstPoints.Clear();
+                    lastPoints = lstPoints;
                 }
             }
             Log.WriteLine("Paint Image: " + DateTime.Now);
         }
+
+        private void CheckAncessors(List<Point> lstAncessors)
+        {
+            List<Point> lstConnections = new List<Point>();
+            foreach (Point p in lstAncessors)
+            {
+                Point newPoint = new Point(p);
+                lstConnections.Add(newPoint);
+            }
+
+            foreach (Point p in lstConnections)
+            {
+                foreach (Point p2 in lstConnections)
+                {
+                    if (p.Y == p2.Y + 1 || p.Y == p2.Y - 1)
+                    {
+                        p.AddAncessor(p2);
+                        p2.AddAncessor(p);
+                    }
+                }
+            }
+
+            bool existsConnection = true;
+            while (existsConnection)
+            {
+                int count = 0;
+                foreach (Point p in lstConnections)
+                {
+                    foreach (Point p2 in lstConnections)
+                    {
+                        if (!p.Equals(p2))
+                        {
+                            if (p.Ancessors.Contains(p2))
+                            {                                
+                                foreach (Point a in p2.Ancessors)
+                                {
+                                    if (!p.Ancessors.Contains(a) && !p.Equals(a))
+                                    {
+                                        p.AddAncessor(a);
+                                        a.AddAncessor(p);
+                                        count++;
+                                    }
+                                }
+                            }
+                        }
+
+                    }
+                }
+                existsConnection = count > 0;
+            }
+
+            int maxConnections = 0;
+            foreach (Point p in lstConnections)
+            {
+                int qtd = p.Ancessors.Count;
+                if (qtd > maxConnections) maxConnections = qtd;
+            }
+
+            lstAncessors.Clear();
+
+            foreach (Point p in lstConnections)
+            {
+                int qtd = p.Ancessors.Count;
+                if (qtd == maxConnections)
+                    lstAncessors.Add(p);
+            }
+        }
+
+        internal void Repopulate(List<Point> lastPoints)
+        {
+            Log.WriteLine("Repopulate: " + DateTime.Now);
+            using (Graphics g = Graphics.FromImage(imagem))
+            {
+                while (lastPoints.Count > 0)
+                {
+                    List<Point> lstPoints = new List<Point>();
+
+                    Point minPointA = lastPoints[0];
+                    Point maxPointA = lastPoints[0];
+                    foreach (Point point in lastPoints)
+                    {
+                        if (point.Y < minPointA.Y) minPointA = point;
+                        if (point.Y > maxPointA.Y) maxPointA = point;
+                    }
+
+                    List<Point> lstAncessors = new List<Point>(minPointA.Ancessors);
+                    lstAncessors.AddRange(maxPointA.Ancessors);
+                    if (lstAncessors.Count == 0)
+                        return;
+                    Point minPointB = lstAncessors[0];
+                    Point maxPointB = lstAncessors[0];
+
+                    foreach (Point ancessor in lstAncessors)
+                    {
+                        if (ancessor.Y < minPointB.Y) minPointB = ancessor;
+                        if (ancessor.Y > maxPointB.Y) maxPointB = ancessor;
+
+                        if (!lstPoints.Contains(ancessor))
+                            lstPoints.Add(ancessor);
+                    }
+
+                    lastPoints = lstPoints;
+
+                    g.DrawPolygon(new Pen(Color.Red), new PointF[] {
+                    new PointF(minPointA.X, minPointA.Y), 
+                    new PointF(minPointB.X, minPointB.Y), 
+                    new PointF(maxPointA.X, maxPointA.Y), 
+                    new PointF(maxPointB.X, maxPointB.Y) 
+                    });                    
+                }
+            }
+            Log.WriteLine("Repopulate: " + DateTime.Now);
+        }
+
     }
 }
