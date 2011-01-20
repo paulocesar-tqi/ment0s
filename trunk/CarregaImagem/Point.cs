@@ -40,12 +40,14 @@ namespace CarregaImagem
         {
             get
             {
-                return lstAncessor;
+                return new List<Point>(lstAncessor);
             }
         }
 
         public void AddAncessor(Point p)
         {
+            if (lstAncessor.Contains(p) || p.Equals(this))
+                return;
             lstAncessor.Add(p);
         }
 
