@@ -321,20 +321,18 @@ namespace CarregaImagem
                     {
                         Color c = imagem.GetPixel(x, y);
                         int redY = y;
-                        int blackY = 0;
+
                         if (c.ToArgb() == Color.Red.ToArgb() && IsGoodPixel(x, y-1))
                         {
-                            for (; y < imagem.Height; y++)
+                            while (c.ToArgb() == Color.Red.ToArgb())
                             {
-                                if (IsGoodPixel(x, y)) 
-                                {
-                                    blackY = y;
-                                    break;
-                                }                                
+                                y++;
+                                c = imagem.GetPixel(x, y);
                             }
-                            if (blackY != 0)
+                            
+                            if (IsGoodPixel(x, y))
                             {
-                                for (int i = redY; i < blackY; i++)
+                                for (int i = redY; i < y; i++)
                                 {
                                     imagem.SetPixel(x, i, Color.Black);
                                 }
