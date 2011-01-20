@@ -232,7 +232,7 @@ namespace CarregaImagem
                         {
                             Point p = ancessor;
                             Point p2 = point;
-                            g.DrawLine(new Pen(Color.White, 2), new PointF(p.X, p.Y), new PointF(p2.X, p2.Y));
+                            g.DrawLine(new Pen(Color.Red, 1), new PointF(p.X, p.Y), new PointF(p2.X, p2.Y));
                             if (!lstPoints.Contains(ancessor))
                                 lstPoints.Add(GetPoint(ancessor.X, ancessor.Y));
                         }
@@ -310,47 +310,50 @@ namespace CarregaImagem
             }
         }
 
-        internal void Repopulate(List<Point> lastPoints)
+        internal void Repopulate()
         {
             Log.WriteLine("Repopulate: " + DateTime.Now);
             using (Graphics g = Graphics.FromImage(imagem))
             {
-                while (lastPoints.Count > 0)
+                for (int x = 0; x < imagem.Width; x++)
                 {
-                    List<Point> lstPoints = new List<Point>();
-
-                    Point minPointA = lastPoints[0];
-                    Point maxPointA = lastPoints[0];
-                    foreach (Point point in lastPoints)
+                    for (int y = 0; y < imagem.Height; y++)
                     {
-                        if (point.Y < minPointA.Y) minPointA = point;
-                        if (point.Y > maxPointA.Y) maxPointA = point;
+                        Color c = imagem.GetPixel(x, y);
+                        int redY = y;
+                        int blackY = 0;
+                        if (c.ToArgb() == Color.Red.ToArgb() && IsGoodPixel(x, y-1))
+                        {
+                            for (; y < imagem.Height; y++)
+                            {
+                                if (IsGoodPixel(x, y)) 
+                                {
+                                    blackY = y;
+                                    break;
+                                }                                
+                            }
+                            if (blackY != 0)
+                            {
+                                for (int i = redY; i < blackY; i++)
+                                {
+                                    imagem.SetPixel(x, i, Color.Black);
+                                }
+                                break;
+                            }
+
+                        }
                     }
-
-                    List<Point> lstAncessors = new List<Point>(minPointA.Ancessors);
-                    lstAncessors.AddRange(maxPointA.Ancessors);
-                    if (lstAncessors.Count == 0)
-                        return;
-                    Point minPointB = lstAncessors[0];
-                    Point maxPointB = lstAncessors[0];
-
-                    foreach (Point ancessor in lstAncessors)
+                }
+                for (int x = 0; x < imagem.Width; x++)
+                {
+                    for (int y = 0; y < imagem.Height; y++)
                     {
-                        if (ancessor.Y < minPointB.Y) minPointB = ancessor;
-                        if (ancessor.Y > maxPointB.Y) maxPointB = ancessor;
-
-                        if (!lstPoints.Contains(ancessor))
-                            lstPoints.Add(ancessor);
+                        Color c = imagem.GetPixel(x, y);
+                        if (c.ToArgb() == Color.Red.ToArgb())
+                        {
+                            imagem.SetPixel(x, y, Color.White);
+                        }
                     }
-
-                    lastPoints = lstPoints;
-
-                    g.DrawPolygon(new Pen(Color.Red), new PointF[] {
-                    new PointF(minPointA.X, minPointA.Y), 
-                    new PointF(minPointB.X, minPointB.Y), 
-                    new PointF(maxPointA.X, maxPointA.Y), 
-                    new PointF(maxPointB.X, maxPointB.Y) 
-                    });                    
                 }
             }
             Log.WriteLine("Repopulate: " + DateTime.Now);
