@@ -180,9 +180,9 @@ namespace CarregaImagem
         public void ClearImage()
         {
             Log.WriteLine("Clear Image: " + DateTime.Now);
-            for (int x = 1; x < imagem.Width-1; x++)
+            for (int x = 0; x < imagem.Width; x++)
             {
-                for (int y = 1; y < imagem.Height-1; y++)
+                for (int y = 0; y < imagem.Height; y++)
                 {
                     if (IsGoodPixel(x,y) && IsAlonePixel(x, y))
                     {
@@ -195,6 +195,9 @@ namespace CarregaImagem
 
         private bool IsGoodPixel(int x, int y)
         {
+            if (x < 0 || x >= imagem.Width) return false;
+            if (y < 0 || y >= imagem.Height) return false;
+
             Color col1 = imagem.GetPixel(x, y);
             return (col1.ToArgb() == Color.Black.ToArgb());
         }
@@ -324,7 +327,7 @@ namespace CarregaImagem
 
                         if (c.ToArgb() == Color.Red.ToArgb() && IsGoodPixel(x, y-1))
                         {
-                            while (c.ToArgb() == Color.Red.ToArgb())
+                            while (c.ToArgb() == Color.Red.ToArgb() && y < imagem.Height-1)
                             {
                                 y++;
                                 c = imagem.GetPixel(x, y);
