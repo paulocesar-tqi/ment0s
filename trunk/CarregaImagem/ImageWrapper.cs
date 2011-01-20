@@ -14,7 +14,8 @@ namespace CarregaImagem
         private List<Point> lstFirstPoints;
         private List<Point> lstLastPoints;
         
-        private Dictionary<int, List<Point>> memoryPoints = new Dictionary<int, List<Point>>();
+        private Dictionary<int, List<Point>> memoryYPoints = new Dictionary<int, List<Point>>();
+        private Dictionary<string, Point> memoryPoint = new Dictionary<string, Point>();
 
         public ImageWrapper(Bitmap bmp)
         {
@@ -28,6 +29,19 @@ namespace CarregaImagem
             get { return this.lstFirstPoints; }
         }
 
+        public Point GetPoint(int x, int y)
+        {
+            lock (memoryPoint)
+            {
+                string key = x + "|" + y;
+                if (!memoryPoint.ContainsKey(key))
+                {
+                    memoryPoint[key] = new Point(x, y);
+                }
+                return memoryPoint[key];
+            }
+        }
+
         private List<Point> GetFirstPoints()
         {
             List<Point> lstPoints = new List<Point>();
@@ -38,7 +52,7 @@ namespace CarregaImagem
                 {
                     if (IsGoodPixel(x, y))
                     {
-                        lstPoints.Add(new Point(x, y));
+                        lstPoints.Add(GetPoint(x, y));
                     }
                 }
                 if (lstPoints.Count < 3)
@@ -63,7 +77,7 @@ namespace CarregaImagem
                 {
                     if (IsGoodPixel(x, y))
                     {
-                        lstPoints.Add(new Point(x, y));                        
+                        lstPoints.Add(GetPoint(x,y));                        
                     }
                 }
                 if (lstPoints.Count < 3)
@@ -90,20 +104,20 @@ namespace CarregaImagem
             if (x > lastX)
                 return lstLastPoints;
 
-            if (memoryPoints.ContainsKey(x))
+            if (memoryYPoints.ContainsKey(x))
             {
-                return memoryPoints[x];
+                return memoryYPoints[x];
             }
 
             for (int y = 0; y < imagem.Height; y++)
             {
                 if (IsGoodPixel(x, y))
                 {
-                    lstPoints.Add(new Point(x, y));
+                    lstPoints.Add(GetPoint(x,y));
                 }
 
             }
-            memoryPoints[x] = lstPoints;
+            memoryYPoints[x] = lstPoints;
             return lstPoints;
 
         }
@@ -115,6 +129,12 @@ namespace CarregaImagem
             int dy = b.Y - a.Y;
             int dx = b.X - a.X;
             float t = (float)0.5;                      // offset for rounding
+
+            if (start.X == 107 && start.Y == 34)
+            {
+                dy = 0;
+                dy = b.Y - a.Y;
+            }
 
             if (Math.Abs(dx) > Math.Abs(dy))
             {          // slope < 1
@@ -130,13 +150,15 @@ namespace CarregaImagem
                     int rounded = (int)t;
                     if (!IsGoodPixel(a.X, rounded))
                     {
-                        rounded = (int)Math.Ceiling(t);
+                        return false;
+                        /*rounded = (int)Math.Ceiling(t);
                         if (!IsGoodPixel(a.X, rounded))
                         {
                             rounded = (int)t-1;
                             if (!IsGoodPixel(a.X, rounded))
-                                return false;
+                            return false;
                         }
+                         */
                     }
 
                 }
@@ -199,19 +221,29 @@ namespace CarregaImagem
             return (count <= thresold);
         }
 
-        internal void Paint(IEnumerable<Path> lstPath)
+        internal void Paint(List<Point> lastPoints)
         {
             Log.WriteLine("Paint Image: " + DateTime.Now);
             using (Graphics g = Graphics.FromImage(imagem))
             {
-                foreach (Path path in lstPath)
+                while (lastPoints.Count > 0)
                 {
-                    for (int i = 0; i < path.Points.Count - 1; i++)
+                    List<Point> lstPoints = new List<Point>();
+                    foreach (Point point in lastPoints)
                     {
-                        Point p = path.Points[i];
-                        Point p2 = path.Points[i + 1];
-                        g.DrawLine(new Pen(Color.White), new PointF(p.X, p.Y), new PointF(p2.X, p2.Y));
+                        List<Point> lstAncessors = point.Ancessors;
+                        foreach (Point ancessor in lstAncessors)
+                        {
+                            Point p = ancessor;
+                            Point p2 = point;
+                            g.DrawLine(new Pen(Color.White), new PointF(p.X, p.Y), new PointF(p2.X, p2.Y));
+                            if (!lstPoints.Contains(ancessor))
+                                lstPoints.Add(ancessor);
+                        }
                     }
+                    lastPoints.Clear();
+                    lastPoints.AddRange(lstPoints);
+                    lstPoints.Clear();
                 }
             }
             Log.WriteLine("Paint Image: " + DateTime.Now);
