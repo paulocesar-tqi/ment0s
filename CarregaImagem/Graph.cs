@@ -8,77 +8,67 @@ namespace CarregaImagem
     public class Graph
     {
         private ImageWrapper image;
-        private Queue<Path> lstPaths = new Queue<Path>();
+        private List<Point> lastPoints = new List<Point>();
 
         public Graph(ImageWrapper image)
         {
             this.image = image;
         }
 
-        public IEnumerable<Path> Paths
+        public List<Point> LastPoints
         {
-            get { return lstPaths; }
+            get { return lastPoints; }
         }
 
 
         public void FindAllPaths(List<Point> starters)
         {
             Log.WriteLine("FindAllPaths: " + DateTime.Now);
-            foreach (Point start in starters)
-            {
-                Path startPath = new Path(null);
-                startPath.Add(start);
-                lstPaths.Enqueue(startPath);                
-            }
+            
+            lastPoints = starters;
 
-            bool hasNotUsed = true;
-            while (hasNotUsed)
+            bool hasMoreLevels = true;
+            while (hasMoreLevels)
             {
-                Path p = this.lstPaths.Dequeue();
-                if (!p.Used)
-                {                    
-                    p.Used = true;
-                    List<Path> lstNewPaths = FindPaths(p);
-                    if (lstNewPaths.Count > 0)
+                List<Point> lstNewPoints = new List<Point>();
+                foreach (Point pointA in lastPoints)
+                {
+                    List<Point> lstPoints = FindPoints(pointA);
+                    foreach (Point p in lstPoints)
                     {
-                        foreach (Path newPath in lstNewPaths)
-                        {
-                            this.lstPaths.Enqueue(newPath);
-                        }
+                        if (!lstNewPoints.Contains(p))
+                            lstNewPoints.Add(p);
                     }
+
+                }
+                if (lstNewPoints.Count == 0)
+                {
+                    hasMoreLevels = false;
                 }
                 else
                 {
-                    this.lstPaths.Enqueue(p);
-                    hasNotUsed = false;
-                }
-                
+                    lastPoints = lstNewPoints;
+                }                
             }
             Log.WriteLine("FindAllPaths: " + DateTime.Now);
         }
 
-        private List<Path> FindPaths(Path originalPath)
+        private List<Point> FindPoints(Point originalPoint)
         {
-            List<Path> lstPaths = new List<Path>();
-            Point lastPoint = originalPath.LastPoint;
-            List<Point> lstPoints = image.GetNextPoints(lastPoint);
-            if (lstPoints.Count > 0)
+            List<Point> lstPoints = new List<Point>();
+            List<Point> lstNextPoints = image.GetNextPoints(originalPoint);
+            if (lstNextPoints.Count > 0)
             {
-                foreach (Point point in lstPoints)
+                foreach (Point point in lstNextPoints)
                 {
-                    if (image.CheckLine(lastPoint, point))
+                    if (image.CheckLine(originalPoint, point))
                     {
-                        Path newPath = new Path(originalPath);
-                        newPath.Add(point);
-                        lstPaths.Add(newPath);
+                        point.AddAncessor(originalPoint);
+                        lstPoints.Add(point);
                     }
                 }
             }
-            else
-            {
-                lstPaths.Add(originalPath);
-            }
-            return lstPaths;
+            return lstPoints;
         }
     }
 

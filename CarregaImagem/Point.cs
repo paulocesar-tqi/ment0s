@@ -1,13 +1,16 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Collections;
 
 namespace CarregaImagem
 {
     public class Point
-    {
+    {        
+
         private int x;
         private int y;
+        private List<Point> lstAncessor = new List<Point>();
 
         public Point(int x, int y)
         {
@@ -33,6 +36,18 @@ namespace CarregaImagem
             set { y = value; }
         }
 
+        public List<Point> Ancessors
+        {
+            get
+            {
+                return lstAncessor;
+            }
+        }
+
+        public void AddAncessor(Point p)
+        {
+            lstAncessor.Add(p);
+        }
 
         public override bool Equals(object obj)
         {

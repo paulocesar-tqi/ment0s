@@ -30,8 +30,8 @@ namespace CarregaImagem
 
                     graph.FindAllPaths(wrapper.FirstPoints);
 
-                    IEnumerable<Path> lstPaths = graph.Paths;
-                    wrapper.Paint(lstPaths);
+                    List<Point> lastPoints = graph.LastPoints;
+                    wrapper.Paint(lastPoints);
                     wrapper.ClearImage();
                     //txtPaths.Text = sb.ToString();
 
