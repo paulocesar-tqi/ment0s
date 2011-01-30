@@ -25,7 +25,7 @@
     <ManifestCertificateThumbprint>8585CFB7A4747BCA25956A81A44EEFE98522029E</ManifestCertificateThumbprint>
     <ManifestKeyFile>Bazinga_TemporaryKey.pfx</ManifestKeyFile>
     <GenerateManifests>true</GenerateManifests>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
     <ApplicationIcon>retro_mushroom_1up_2.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">

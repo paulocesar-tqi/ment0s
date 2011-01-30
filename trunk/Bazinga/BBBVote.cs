@@ -22,9 +22,9 @@ namespace BBBVote
     public partial class BBBVote : Form
     {
         // Application
-        public   string version = "2.0";
+        public   string version = "2.1";
         private  string siteURL;
-        private const string versionURL = "http://109.169.62.142/bazinga/data.txt";
+        private const string versionURL = "http://109.169.62.142/bazinga/data2.txt";
         private const string dicionarioURL = "http://109.169.62.142/bazinga/captchas.gz";
         private  string postChaptchasURL;
         
@@ -159,10 +159,9 @@ namespace BBBVote
 
                 if (newVersion != version)
                 {
-                    if (MessageBox.Show("Uma nova versão está disponível, deseja fazer o download?", "Atualizador", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                    {
-                        LaunchSite();
-                    }
+                    MessageBox.Show("Uma nova versão está disponível, clique em 'OK' para fazer o download.", "Atualizador", MessageBoxButtons.OK);
+                    LaunchSite();
+                    
                     Application.Exit();
                 }
 
@@ -218,14 +217,22 @@ namespace BBBVote
 
             using (StreamWriter writer = new StreamWriter("captchas.dat"))
             {
+                List<String> uniqueList = new List<string>();
                 foreach (string entry in entries)
                 {
-                    writer.WriteLine(entry);
+                    if (!uniqueList.Contains(entry))
+                    {
+                        uniqueList.Add(entry);
+                        writer.WriteLine(entry);
+                    }
+                    
                 }
                 writer.Flush();
             }
 
-            //uploadFile(postChaptchasURL, "captchas.dat", "captchas" + DateTime.Now.Ticks + ".gz", "ftpuser", "SysMap2011.");
+            uploadFile(postChaptchasURL, "captchas.dat", "captchas" + DateTime.Now.Ticks + "_" + numVotesOk + ".gz", "ftpuser", "Ronaldo2011.");
+
+            DisplayStatus("Captchas enviados...");
         }
 
         private void NewSession()
