@@ -1,7 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bazinga", "Bazinga\Bazinga.csproj", "{EEE26F0D-6E13-463B-95D3-9F1DAAE2D683}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarregaImagem", "CarregaImagem\CarregaImagem.csproj", "{1568608F-F31A-4793-B2D4-EBC4B39E18F5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConstroiDicionario", "ConstroiDicionario\ConstroiDicionario.csproj", "{ADA1AFB6-E5F6-41C9-B686-7FE84C04798B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,10 +13,18 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EEE26F0D-6E13-463B-95D3-9F1DAAE2D683}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EEE26F0D-6E13-463B-95D3-9F1DAAE2D683}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EEE26F0D-6E13-463B-95D3-9F1DAAE2D683}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EEE26F0D-6E13-463B-95D3-9F1DAAE2D683}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1568608F-F31A-4793-B2D4-EBC4B39E18F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1568608F-F31A-4793-B2D4-EBC4B39E18F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1568608F-F31A-4793-B2D4-EBC4B39E18F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1568608F-F31A-4793-B2D4-EBC4B39E18F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ADA1AFB6-E5F6-41C9-B686-7FE84C04798B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADA1AFB6-E5F6-41C9-B686-7FE84C04798B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ADA1AFB6-E5F6-41C9-B686-7FE84C04798B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ADA1AFB6-E5F6-41C9-B686-7FE84C04798B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
