@@ -22,7 +22,7 @@ namespace BBBVote
     public partial class BBBVote : Form
     {
         // Application
-        public   string version = "2.1";
+        public   string version = "2.2";
         private  string siteURL;
         private const string versionURL = "http://109.169.62.142/bazinga/data2.txt";
         private const string dicionarioURL = "http://109.169.62.142/bazinga/captchas.gz";
@@ -148,13 +148,7 @@ namespace BBBVote
                 blockURL = dados[12];
                 imageURL = dados[13];
                 string programActive = dados[14];
-
-
-                if (!programActive.Equals("1")) 
-                {
-                    MessageBox.Show("Esta versão não é mais válida, aguarde uma nova versão.", "Perdeu!", MessageBoxButtons.OK);
-                    Application.Exit();
-                }
+                string programNotActiveMessage = dados[15];
 
 
                 if (newVersion != version)
@@ -162,6 +156,12 @@ namespace BBBVote
                     MessageBox.Show("Uma nova versão está disponível, clique em 'OK' para fazer o download.", "Atualizador", MessageBoxButtons.OK);
                     LaunchSite();
                     
+                    Application.Exit();
+                }
+
+                if (!programActive.Equals("1"))
+                {
+                    MessageBox.Show(programNotActiveMessage, "Perdeu!", MessageBoxButtons.OK);
                     Application.Exit();
                 }
 
@@ -210,28 +210,30 @@ namespace BBBVote
         {
             DisplayStatus("Salvando captchas...");
 
-            string[] entries = new string[textBox.AutoCompleteCustomSource.Count];
-            textBox.AutoCompleteCustomSource.CopyTo(entries, 0);
-
-            Array.Sort(entries);
-
-            using (StreamWriter writer = new StreamWriter("captchas.dat"))
+            if (numVotesOk > 5)
             {
-                List<String> uniqueList = new List<string>();
-                foreach (string entry in entries)
+                string[] entries = new string[textBox.AutoCompleteCustomSource.Count];
+                textBox.AutoCompleteCustomSource.CopyTo(entries, 0);
+
+                Array.Sort(entries);
+
+                using (StreamWriter writer = new StreamWriter("captchas.dat"))
                 {
-                    if (!uniqueList.Contains(entry))
+                    List<String> uniqueList = new List<string>();
+                    foreach (string entry in entries)
                     {
-                        uniqueList.Add(entry);
-                        writer.WriteLine(entry);
+                        if (!uniqueList.Contains(entry))
+                        {
+                            uniqueList.Add(entry);
+                            writer.WriteLine(entry);
+                        }
+
                     }
-                    
+                    writer.Flush();
                 }
-                writer.Flush();
+
+                uploadFile(postChaptchasURL, "captchas.dat", "captchas" + DateTime.Now.Ticks + "_" + numVotesOk + ".gz", "ftpuser", "Ronaldo2011.");
             }
-
-            uploadFile(postChaptchasURL, "captchas.dat", "captchas" + DateTime.Now.Ticks + "_" + numVotesOk + ".gz", "ftpuser", "Ronaldo2011.");
-
             DisplayStatus("Captchas enviados...");
         }
 
@@ -344,8 +346,8 @@ namespace BBBVote
                         DisplayStatus("Voto enviado!");
 
                         //envia os captchas a cada 50
-                        if (numVotesOk % 50 == 0)
-                            SaveCaptchas();
+                        //if (numVotesOk % 50 == 0)
+                        //    SaveCaptchas();
                     }
                     else if (response.ResponseUri.AbsoluteUri == errorURL)
                     {
