@@ -20,12 +20,14 @@ namespace WinServerDDE
         private int step = 0;
         private const string socketHost = "189.90.8.164";
         private const string socketUrl = "/Adv.php?Log=0";
-        private const string url = "htp://189.90.8.164/Adv.php?Sessao={0}&Cmd={1}";
+        private const string url = "http://189.90.8.164/Adv.php?Sessao={0}&Cmd={1}";
         private string sessao = null;
 
         public Form1()
         {
             InitializeComponent();
+            timer_ack.Start();
+            timer_ack.Tick += new EventHandler(SendAck);
         }
 
         private void SendAck(Object sender, EventArgs eArgs)
@@ -63,6 +65,31 @@ namespace WinServerDDE
                     response.Close();
 
                     step = 2;
+
+                    SendAck(null, null);
+                }
+                catch (Exception ex)
+                {
+                    outBox.AppendText(ex.Message);
+                }
+
+            }
+
+        }
+
+
+        private void getQuote(string quote)
+        {
+            if (step == 2)
+            {
+                try
+                {
+                    string urlLogin = string.Format(url, sessao, "GET;12;" + quote.ToUpper() + ";3;;;;;1;");
+                    HttpWebRequest http = (HttpWebRequest)HttpWebRequest.Create(urlLogin);
+                    http.KeepAlive = false;
+                    http.Timeout = 10 * 1000;
+                    HttpWebResponse response = (HttpWebResponse)http.GetResponse();
+                    response.Close();
                 }
                 catch (Exception ex)
                 {
@@ -127,7 +154,6 @@ namespace WinServerDDE
                     using (NetworkStream n = new NetworkStream(socket))
                     {
 
-                        //SendRequest(n, new string[] { "GET " + url + " HTTP/1.1", "Host: " + host, "Connection: Close", "Accept-Encoding: gzip" });
                         SendRequest(n, new string[] { "GET " + socketUrl + " HTTP/1.1", "Host: " + socketHost, "Accept-Encoding: gzip" });
 
                         while (true)
@@ -154,18 +180,28 @@ namespace WinServerDDE
         {
             if (step == 0)
             {
-                if (line.IndexOf("CONECTADO") > 0)
+                if (line.IndexOf("CONECTADO") != -1)
                 {
                     string[] dados = line.Split(';');
                     if (dados.Length > 5)
                     {
-                        sessao = dados[5];
+                        sessao = dados[4];
                         step = 1;
+
+                        SendLogin();
                     }
                 }
             }
             
             outBox.AppendText(line + "\n");
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (textBoxQuote.Text.Length > 4)
+                getQuote(textBoxQuote.Text);
+            
+            textBoxQuote.Text = "";
         }
 
     }
