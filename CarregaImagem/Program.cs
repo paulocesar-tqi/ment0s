@@ -44,12 +44,8 @@ namespace CarregaImagem
                             Graph graph = new Graph(wrapper);
 
                             graph.FindAllPaths(wrapper.FirstPoints);
+                            wrapper.Paint(graph.LastPoints);
 
-                            IEnumerable<Path> lstPaths = graph.Paths;
-                            foreach (Path p in lstPaths)
-                            {
-                                wrapper.Paint(p);
-                            }
                             imagem.Save(newPrefix + file.Name);
                             Console.WriteLine(file.Name + " -> " + newPrefix + file.Name);
                         }
