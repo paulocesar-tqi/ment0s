@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE taglib PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.1//EN" "http://java.sun.com/j2ee/dtds/web-jsptaglibrary_1_1.dtd">
+<taglib>
+<tlibversion>1.5.7</tlibversion>
+<jspversion>1.1</jspversion>
+<shortname>AjaxTags</shortname>
+<uri>http://ajaxtags.org/tags/ajax</uri>
+
+<tag>
+<name>displayTag</name>
+<tagclass>net.sourceforge.ajaxtags.tags.AjaxDisplayTag</tagclass>
+<bodycontent>JSP</bodycontent>
+<attribute>
+<name>id</name>
+<required>false</required>
+</attribute>
+</tag>
+</taglib>

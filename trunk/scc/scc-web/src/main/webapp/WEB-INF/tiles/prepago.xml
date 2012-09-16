@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC        
+"-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"       
+"http://tiles.apache.org/dtds/tiles-config_2_0.dtd"> 
+
+<tiles-definitions> 
+
+<definition  name="basicLayout" template="/WEB-INF/tiles/scc_template.jsp"> 
+<put-attribute name="menu" value="/css/menu.jsp" />
+<put-attribute name="body" value="/WEB-INF/jsp/empty.jsp" />
+</definition>
+
+
+
+<definition name="repasse.pre.solicitacao" extends="basicLayout">
+<put-attribute name="body" value="/WEB-INF/jsp/repasse/pre/solicitacao/solicitacao.jsp" />
+<put-attribute name="tituloTela" value="Solicitação Repasse - Pré Pago" />
+</definition>
+
+<definition name="repasse.pre.consulta.filtro" extends="basicLayout">
+<put-attribute name="body" value="/WEB-INF/jsp/repasse/pre/consulta/filtro.jsp" />
+<put-attribute name="tituloTela" value="Consulta de Repasse - Pré Pago" />
+</definition>
+
+<definition name="repasse.pre.consulta.resultados" extends="basicLayout">
+<put-attribute name="body" value="/WEB-INF/jsp/repasse/pre/consulta/resultados.jsp" />
+<put-attribute name="tituloTela" value="Consulta de Repasse - Pré Pago" />
+</definition>
+
+
+<definition name="repasse.pre.demonstrativo.filtro" extends="basicLayout">
+<put-attribute name="body" value="/WEB-INF/jsp/repasse/pre/demonstrativo/filtro.jsp" />
+<put-attribute name="tituloTela" value="Demonstrativo de Repasse - Pré Pago" />
+</definition>
+
+<definition name="repasse.pre.relatorios.filtro" extends="basicLayout">
+<put-attribute name="body" value="/WEB-INF/jsp/repasse/pre/relatorios/filtro.jsp" />
+<put-attribute name="tituloTela" value="Relatórios de Repasse - Pré Pago" />
+</definition>
+
+<definition name="repasse.pre.relatorios.sintetico" extends="basicLayout">
+<put-attribute name="body" value="/WEB-INF/jsp/repasse/pre/relatorios/sintetico.jsp" />
+<put-attribute name="tituloTela" value="Relatório Sintético de Chamadas - Pré Pago" />
+</definition>
+
+<definition name="repasse.pre.relatorios.apurado" extends="basicLayout">
+<put-attribute name="body" value="/WEB-INF/jsp/repasse/pre/relatorios/apurado.jsp" />
+<put-attribute name="tituloTela" value="Relatório de Resumo de Apuração - Pré Pago" />
+</definition>
+
+
+<definition name="creditos.pre.consulta.filtro" extends="basicLayout">
+<put-attribute name="body" value="/WEB-INF/jsp/repasse/pre/creditos/filtro.jsp" />
+<put-attribute name="tituloTela" value="Consulta Créditos - Pré Pago" />
+</definition>
+
+<definition name="creditos.pre.consulta.resultados" extends="basicLayout">
+<put-attribute name="body" value="/WEB-INF/jsp/repasse/pre/creditos/resultados.jsp" />
+<put-attribute name="tituloTela" value="Consulta Créditos - Pré Pago" />
+</definition>
+
+<definition name="contrato_pre_cadastro" extends="basicLayout">
+<put-attribute name="body" value="/WEB-INF/jsp/contrato/pre/cadastro.jsp" />
+<put-attribute name="tituloTela" value="Cadastro Contrato - Pré-Pago" />
+</definition>
+
+<definition name="produtos_contrato_pre_cadastro" extends="basicLayout">
+<put-attribute name="body" value="/WEB-INF/jsp/produto/pre/cadastro/cadastro.jsp" />
+<put-attribute name="tituloTela" value="Cadastro Produto - Pré-Pago" />
+</definition>
+
+<definition name="produtos_pre_pacote" extends="basicLayout">
+<put-attribute name="body" value="/WEB-INF/jsp/produto/pre/pacote/cadastro.jsp" />
+<put-attribute name="tituloTela" value="Cadastro de Pacote - Pré-Pago" />
+</definition>
+
+<definition name="produtos_pre_evento" extends="basicLayout">
+<put-attribute name="body" value="/WEB-INF/jsp/produto/pre/evento/cadastro.jsp" />
+<put-attribute name="tituloTela" value="Cadastro de Tipo de Evento - Pré-Pago" />
+</definition>
+
+<definition name="controle_remessa_cdr_pre" extends="basicLayout">
+<put-attribute name="body" value="/WEB-INF/jsp/arquivo/controle/remessa/cdr/filtro.jsp" />
+<put-attribute name="tituloTela" value="Relatório de CDR's - Pré Pago" />
+</definition>
+
+<definition name="arquivos_credito_filtro" extends="basicLayout">
+<put-attribute name="body" value="/WEB-INF/jsp/arquivo/creditos/filtro.jsp" />
+<put-attribute name="tituloTela" value="Arquivos de Crédito- Pré Pago" />
+</definition>
+
+<definition name="pesquisa_processados_pre_filtro" extends="basicLayout">
+<put-attribute name="body" value="/WEB-INF/jsp/pesquisa/arquivos/processados/pre/filtro.jsp" />
+<put-attribute name="tituloTela" value="Pesquisa de Arquivos processados - PréPago" />
+</definition>
+
+
+<definition name="pesquisa_processados_pre_detalhes" extends="basicLayout">
+<put-attribute name="body" value="/WEB-INF/jsp/pesquisa/arquivos/processados/pre/detalhes.jsp" />
+<put-attribute name="tituloTela" value="Detalhes de Arquivos processados - PréPago" />
+</definition>
+
+<definition name="relatorio_prestacao_servico_pre_filtro" extends="basicLayout">
+<put-attribute name="body" value="/WEB-INF/jsp/relatorio/servico/pre/filtro.jsp" />
+<put-attribute name="tituloTela" value="Relatório Prestação de Serviço - PréPago" />
+</definition>
+
+
+</tiles-definitions>
+

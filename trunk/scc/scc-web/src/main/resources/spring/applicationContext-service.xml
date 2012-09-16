@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+http://www.springframework.org/schema/aop
+http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+http://www.springframework.org/schema/tx
+http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+
+	<tx:annotation-driven />
+	
+	<bean id="applicationContextProvider" class="com.claro.scc.spring.ApplicationContextProvider"/>
+	
+	<bean id="sessionDataManager" class="com.claro.sccweb.service.SessionDataManager"
+		scope="session">
+		<aop:scoped-proxy />
+	</bean>
+
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<aop:config>
+		<aop:pointcut id="servicesMethods"
+			expression="execution(* com.claro.sccweb.service.*.*(..))" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="servicesMethods" />
+	</aop:config>
+
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="*" propagation="SUPPORTS" read-only="true" />
+		</tx:attributes>
+	</tx:advice>
+
+	<bean id="serviceManager" class="com.claro.sccweb.service.ServiceManager">
+		<property name="pesquisaDominiosService" ref="pesquisaDominiosService" />
+		<property name="arquivosService" ref="arquivosService" />
+		<property name="sumarioService" ref="sumarioService" />
+		<property name="cdrService" ref="cdrService" />
+		<property name="contratoService" ref="contratoService" />
+		<property name="repasseService" ref="repasseService" />
+		<property name="periodicidadeService" ref="periodicidadeService" />
+		<property name="operadoraService" ref="operadoraService" />
+		<property name="pagamentoRepasseService" ref="pagamentoRepasseService" />
+		<property name="contratoPrePagoService" ref="contratoPrePagoService" />
+		<property name="repassePreService" ref="repassePreService" />
+		<property name="creditosPrePagoService" ref="creditosPrePagoService" />
+		<property name="repassePosService" ref="repassePosService" />
+		<property name="produtoService" ref="produtoService" />
+		<property name="produtoPrepagoService" ref="produtoPrepagoService" />
+		<property name="controleRemessaService" ref="controleRemessaService" />
+		<property name="volumeSuspeitoService" ref="volumeSuspeitoService" />
+		<property name="evolucaoCDRService" ref="evolucaoCDRService" />
+		<property name="saldosService" ref="saldosService" />
+		<property name="ftpService" ref="FTPService" />
+		<property name="adminService" ref="adminService" />
+		<property name="estornoMobileService" ref="estornoMobileService" />
+		<property name="contabilService" ref="contabilService" />
+		<property name="sccParamProcessoService" ref="sccParamProcessoService" />
+		<property name="sccGrupoCobillingService" ref="sccGrupoCobillingService" />
+		<property name="sccEmailCobillingService" ref="sccEmailCobillingService" />
+		<property name="sccRelatorioCobillingService" ref="sccRelatorioCobillingService" />
+		<property name="sccBatimentoArquivosService" ref="sccBatimentoArquivosService"/>
+	</bean>
+
+	<bean id="sccService" abstract="true"
+		class="com.claro.sccweb.service.AbstractService">
+		<property name="sessionDataManager" ref="sessionDataManager" />
+	</bean>
+
+	<bean id="controleRemessaService"
+		class="com.claro.sccweb.service.impl.ControleRemessaServiceImpl"
+		parent="sccService">
+		<property name="arquivoSumarizadoDAO" ref="arquivoSumarizadoDAO" />
+		<property name="cdrCoblDAO" ref="cdrCoblDAO" />
+	</bean>
+
+
+	<bean id="FTPService" class="com.claro.sccweb.service.impl.FTPServiceImpl"
+		parent="sccService">
+		<property name="userName" value="rafael.eder" />
+		<property name="password" value="senha123" />
+		<property name="hostName" value="localhost" />
+		<property name="port" value="23" />
+		<property name="folder" value="/arquivos" />
+	</bean>
+
+
+
+	<bean id="pesquisaDominiosService"
+		class="com.claro.sccweb.service.impl.PesquisaDominiosServiceImpl"
+		parent="sccService">
+		<property name="tipoArquivoDAO" ref="tipoArquivoDAO" />
+		<property name="statusArquivoDAO" ref="statusArquivoDAO" />
+		<property name="sccOperadoraDAO" ref="sccOperadoraDAO" />
+		<property name="preDominioDAO" ref="preDominioDAO" />
+		<property name="statusCdrDAO" ref="statusCdrDAO" />
+		<property name="motivoRejeicaoDAO" ref="motivoRejeicaoDAO" />
+		<property name="criticaPrebillingDAO" ref="criticaPrebillingDAO" />
+	</bean>
+
+	<bean id="arquivosService" class="com.claro.sccweb.service.impl.ArquivosServiceImpl"
+		parent="sccService">
+		<property name="controlConnectFileDAO" ref="controlConnectFileDAO" />
+		<property name="sccArquivoCobillingDAO" ref="sccArquivoCobillingDAO" />
+		<property name="sccTipoArquivoDAO" ref="tipoArquivoDAO" />
+		<property name="preDominioDAO" ref="preDominioDAO" />
+		<property name="statusArquivoDAO" ref="statusArquivoDAO" />
+		<property name="viewArquivoPrePagoDAO" ref="viewArquivoPrePagoDAO" />
+		<property name="cdrCobillingDAO" ref="cdrCobillingDAO" />
+		<property name="statusCdrDAO" ref="statusCdrDAO" />
+		<property name="arquivoCreditoDAO" ref="arquivoCreditoDAO" />
+	</bean>
+
+	<bean id="sumarioService" class="com.claro.sccweb.service.impl.SumarioServiceImpl"
+		parent="sccService">
+		<property name="sumarioArquivoDAO" ref="sumarioArquivoDAO" />
+		<property name="cdrCobillingDAO" ref="cdrCobillingDAO" />
+	</bean>
+
+
+	<bean id="cdrService" class="com.claro.sccweb.service.impl.CDRServiceImpl"
+		parent="sccService">
+		<property name="cdrCobillingDAO" ref="cdrCobillingDAO" />
+		<property name="arquivoSumarizadoDAO" ref="arquivoSumarizadoDAO" />
+	</bean>
+
+	<bean id="contratoService" class="com.claro.sccweb.service.impl.ContratoServiceImpl"
+		parent="sccService">
+		<property name="produtoCobillingDAO" ref="produtoCobillingDAO" />
+		<property name="periodicidadeRepasseDAO" ref="periodicidadeRepasseDAO" />
+		<property name="contratoAcordadoDAO" ref="contratoAcordadoDAO" />
+		<property name="contratoCoblDAO" ref="contratoCoblDAO" />
+		<property name="produtoContratadoDAO" ref="produtoContratadoDAO" />
+		<property name="configRepasseCobrancaDAO" ref="configRepasseCobrancaDAO" />
+		<property name="periodProdContrDAO" ref="periodProdContrDAO" />
+	</bean>
+
+	<bean id="repasseService"
+		class="com.claro.sccweb.service.impl.RelatorioRepasseServiceImpl"
+		parent="sccService">
+		<property name="paramProcessoDAO" ref="paramProcessoDAO" />
+		<property name="contratoAcordadoDAO" ref="contratoAcordadoDAO" />
+		<property name="operadoraDAO" ref="sccOperadoraDAO" />
+		<property name="periodicidadeRepasseDAO" ref="periodicidadeRepasseDAO" />
+		<property name="produtoCobillingDAO" ref="produtoCobillingDAO" />
+		<property name="repasseDAO" ref="repasseDAO" />
+		<property name="repasseServicoAdicionalDAO" ref="repasseServicoAdicionalDAO" />
+		<property name="relatorioJurosMultaDAO" ref="relatorioJurosMultaDAO" />
+		<property name="itemRepasseDAO" ref="itemRepasseDAO" />
+		<property name="tipoContratoDAO" ref="tipoContratoDAO" />
+		<property name="produtoPrepagoDAO" ref="produtoPrepagoDAO" />
+	</bean>
+
+	<bean id="repassePreService" class="com.claro.sccweb.service.impl.RepassePreServiceImpl"
+		parent="sccService">
+		<property name="paramProcessoDAO" ref="paramProcessoDAO" />
+		<property name="contratoAcordadoDAO" ref="contratoAcordadoDAO" />
+		<property name="operadoraDAO" ref="sccOperadoraDAO" />
+		<property name="periodicidadeRepasseDAO" ref="periodicidadeRepasseDAO" />
+		<property name="produtoCobillingDAO" ref="produtoCobillingDAO" />
+		<property name="repasseDAO" ref="repasseDAO" />
+		<property name="repasseServicoAdicionalDAO" ref="repasseServicoAdicionalDAO" />
+		<property name="relatorioJurosMultaDAO" ref="relatorioJurosMultaDAO" />
+		<property name="itemRepasseDAO" ref="itemRepasseDAO" />
+		<property name="tipoContratoDAO" ref="tipoContratoDAO" />
+		<property name="produtoPrepagoDAO" ref="produtoPrepagoDAO" />
+		<property name="preFechamentoDAO" ref="preFechamentoDAO" />
+		<property name="preFechamentoAssinaturaDAO" ref="preFechamentoAssinaturaDAO" />
+	</bean>
+
+
+	<bean id="periodicidadeService" class="com.claro.sccweb.service.impl.PeriodicidadeServiceImpl"
+		parent="sccService">
+		<property name="periodicidadeRepasseDAO" ref="periodicidadeRepasseDAO" />
+	</bean>
+
+	<bean id="operadoraService" class="com.claro.sccweb.service.impl.OperadoraServiceImpl"
+		parent="sccService">
+		<property name="operadoraDAO" ref="sccOperadoraDAO" />
+	</bean>
+
+	<bean id="pagamentoRepasseService"
+		class="com.claro.sccweb.service.impl.PagamentoRepasseServiceImpl"
+		parent="sccService">
+		<property name="operadoraDAO" ref="sccOperadoraDAO" />
+		<property name="pagamentoRepasseDAO" ref="pagamentoRepasseDAO" />
+		<property name="repasseDAO" ref="repasseDAO" />
+		<property name="memoDAO" ref="memoDAO" />
+		<property name="arquivoCobillingDAO" ref="sccArquivoCobillingDAO" />
+		<property name="repasseServicoAdicionalDAO" ref="repasseServicoAdicionalDAO" />
+		<property name="relatorioJurosMultaDAO" ref="relatorioJurosMultaDAO" />
+		<property name="preFechamentoDAO" ref="preFechamentoDAO" />
+	</bean>
+
+
+
+	<bean id="contratoPrePagoService"
+		class="com.claro.sccweb.service.impl.ContratoPrePagoServiceImpl"
+		parent="sccService">
+		<property name="produtoContratadoPrepagoDAO" ref="produtoContratadoPrepagoDAO" />
+		<property name="produtoPrepagoDAO" ref="produtoPrepagoDAO" />
+		<property name="contratoCobillingDAO" ref="contratoCobillingDAO" />
+	</bean>
+
+	<bean id="creditosPrePagoService"
+		class="com.claro.sccweb.service.impl.CreditosPrePagoServiceImpl"
+		parent="sccService">
+		<property name="creditoDAO" ref="creditoDAO" />
+	</bean>
+
+	<bean id="repassePosService" class="com.claro.sccweb.service.impl.RepassePosServiceImpl"
+		parent="sccService">
+		<property name="repasseDAO" ref="repasseDAO" />
+		<property name="itemRepasseDAO" ref="itemRepasseDAO" />
+		<property name="operadoraDAO" ref="sccOperadoraDAO" />
+		<property name="produtoCobillingDAO" ref="produtoCobillingDAO" />
+	</bean>
+
+
+	<bean id="produtoService" class="com.claro.sccweb.service.impl.ProdutoServiceImpl"
+		parent="sccService">
+		<property name="produtoCobillingDAO" ref="produtoCobillingDAO" />
+		<property name="composicaoProdutoDAO" ref="composicaoProdutoDAO" />
+		<property name="itemCobillingDAO" ref="itemCobillingDAO" />
+		<property name="servicoAdicionalDAO" ref="servicoAdicionalDAO" />
+	</bean>
+
+	<bean id="produtoPrepagoService" class="com.claro.sccweb.service.impl.ProdutoPrepagoServiceImpl"
+		parent="sccService">
+		<property name="produtoPrepagoDAO" ref="produtoPrepagoDAO" />
+		<property name="pacotePrepagoDAO" ref="pacotePrepagoDAO" />
+		<property name="tipoEventoDAO" ref="tipoEventoDAO" />
+	</bean>
+
+	<bean id="volumeSuspeitoService" class="com.claro.sccweb.service.impl.VolumeSuspeitoServiceImpl"
+		parent="sccService">
+		<property name="paramProcessoDAO" ref="paramProcessoDAO" />
+	</bean>
+
+
+	<bean id="evolucaoCDRService" class="com.claro.sccweb.service.impl.EvolucaoCDRServiceImpl"
+		parent="sccService">
+		<property name="arquivoSumarizadoDAO" ref="arquivoSumarizadoDAO" />
+	</bean>
+
+	<bean id="saldosService" class="com.claro.sccweb.service.impl.SaldosServiceImpl"
+		parent="sccService">
+		<property name="arquivoSumarizadoDAO" ref="arquivoSumarizadoDAO" />
+	</bean>
+
+	<bean id="adminService" class="com.claro.sccweb.service.impl.AdminServiceImpl"
+		parent="sccService">
+		<property name="faixaPenalidadeDAO" ref="faixaPenalidadeDAO" />
+		<property name="assinanteCriticaDAO" ref="assinanteCriticaDAO" />
+		<property name="mapaStatusDAO" ref="mapaStatusDAO" />
+		<property name="motivoRejeicaoDAO" ref="motivoRejeicaoDAO" />
+		<property name="aliquotaImpostoDAO" ref="aliquotaImpostoDAO" />
+		<property name="ctlParalizacaoPlatDAO" ref="ctlParalizacaoPlatDAO" />
+		<property name="preDominioDAO" ref="preDominioDAO" />
+		<property name="contaContabilDAO" ref="contaContabilDAO" />
+		<property name="centroDAO" ref="centroDAO" />
+	</bean>
+
+	<bean id="estornoMobileService" class="com.claro.sccweb.service.impl.EstornoMobileServiceImpl"
+		parent="sccService">
+		<property name="estornoMobileDAO" ref="estornoMobileDAO" />
+	</bean>
+
+	<bean id="contabilService" class="com.claro.sccweb.service.impl.ContabilServiceImpl"
+		parent="sccService">
+		<property name="atividadeContabilDAO" ref="atividadeContabilDAO" />
+	</bean>
+
+	<bean id="sccParamProcessoService" class="com.claro.sccweb.service.impl.SccParamProcessoServiceImpl"
+		parent="sccService">
+		<property name="sccParamProcessoDAO" ref="sccParamProcessoDAO" />
+	</bean>
+
+	<bean id="sccGrupoCobillingService" class="com.claro.sccweb.service.impl.SccGrupoCobillingServiceImpl"
+		parent="sccService">
+		<property name="sccGrupoCobillingDAO" ref="sccGrupoCobillingDAO" />
+	</bean>
+	
+	<bean id="sccEmailCobillingService" class="com.claro.sccweb.service.impl.SccEmailCobillingServiceImpl"
+		parent="sccService">
+		<property name="sccEmailCobillingDAO" ref="sccEmailCobillingDAO" />
+	</bean>
+	
+	<bean id="sccRelatorioCobillingService" class="com.claro.sccweb.service.impl.SccRelatorioCobillingServiceImpl"
+		parent="sccService">
+		<property name="sccRelatorioCobillingDAO" ref="sccRelatorioCobillingDAO" />
+	</bean>
+
+	<bean id="sccBatimentoArquivosService" class="com.claro.sccweb.service.impl.SccBatimentoArquivosServiceImpl"
+		parent="sccService">
+		<property name="sccBatimentoArquivosDAO" ref="sccBatimentoArquivosDAO" />
+	</bean>
+	
+</beans>

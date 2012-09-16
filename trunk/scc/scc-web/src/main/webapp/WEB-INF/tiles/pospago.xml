@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC        
+"-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"       
+"http://tiles.apache.org/dtds/tiles-config_2_0.dtd"> 
+
+<tiles-definitions> 
+
+	<definition  name="basicLayout" template="/WEB-INF/tiles/scc_template.jsp"> 
+		<put-attribute name="menu" value="/css/menu.jsp" />
+		<put-attribute name="body" value="/WEB-INF/jsp/empty.jsp" />
+	</definition>
+	
+	<definition name="controle.arquivos.pesquisa" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/arquivo/controle/pesquisa.jsp" />
+		<put-attribute name="tituloTela" value="Relatório de Controle de Arquivo" />
+	</definition>
+	
+	<definition name="controle.arquivos.resultados" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/arquivo/controle/resultados.jsp" />
+		<put-attribute name="tituloTela" value="Relatório de Controle de Arquivo" />
+	</definition>
+	
+	<definition name="transmissao.recepcao.pesquisa" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/arquivo/recepcao_transmissao/filtro.jsp" />
+		<put-attribute name="tituloTela" value="Relatório de Controle de Arquivo" />
+	</definition>
+	
+	<definition name="transmissao.recepcao.resultados" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/arquivo/recepcao_transmissao/resultados.jsp" />
+		<put-attribute name="tituloTela" value="Relatório de Controle de Arquivo" />
+	</definition>
+	
+	<definition name="pesquisa.processados.pos.pesquisa" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/processados/pos/arquivos/pesquisa.jsp" />
+		<put-attribute name="tituloTela" value="Pesquisa de Arquivos de processados - PósPago" />
+	</definition>
+	
+	<definition name="pesquisa.processados.pos.resultado" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/processados/pos/arquivos/resultados.jsp" />
+		<put-attribute name="tituloTela" value="Pesquisa de Arquivos de processados - PósPago" />
+	</definition>
+	
+	<definition name="sumario.processados.pos.status" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/processados/pos/arquivos/pesquisa.jsp" />
+		<put-attribute name="tituloTela" value="Pesquisa de Arquivos Processados - PósPago" />
+	</definition>
+	
+	<definition name="sumario.processados.pos.status" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/processados/pos/sumario/sumario_status.jsp" />
+		<put-attribute name="tituloTela" value="Sumário Status CDRs - PósPago" />
+	</definition>
+	
+	<definition name="sumario.processados.pos.datas" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/processados/pos/sumario/sumario_datas.jsp" />
+		<put-attribute name="tituloTela" value="Sumário Data CDRs - PósPago" />
+	</definition>
+	
+	<definition name="lista.cdrs.processados" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/processados/pos/lista/lista.jsp" />
+		<put-attribute name="tituloTela" value="Lista de CDRs - PósPago" />
+	</definition>
+	
+	<definition name="lista.cdr.detalhe" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/processados/pos/cdrs/item.jsp" />
+		<put-attribute name="tituloTela" value="Lista de CDRs - PósPago" />
+	</definition>
+	
+	<definition name="repasse.pos.solicitacao" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/repasse/pos/solicitacao/solicitacao.jsp" />
+		<put-attribute name="tituloTela" value="Solicitação Repasse - Pós Pago" />
+	</definition>
+	
+	<definition name="repasse.pos.demonstrativo.filtro" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/repasse/pos/demonstrativo/filtro.jsp" />
+		<put-attribute name="tituloTela" value="Demonstrativo de Repasse - Pós Pago" />
+	</definition>
+	
+	<definition name="repasse.pos.consulta.filtro" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/repasse/pos/consulta/filtro.jsp" />
+		<put-attribute name="tituloTela" value="Consulta de Repasse - Pós Pago" />
+	</definition>
+	
+	<definition name="repasse.pos.consulta.resultados" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/repasse/pos/consulta/resultados.jsp" />
+		<put-attribute name="tituloTela" value="Consulta de Repasse - Pós Pago" />
+	</definition>
+	
+	<definition name="repasse.pos.ajuste" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/repasse/pos/ajuste/ajuste.jsp" />
+		<put-attribute name="tituloTela" value="Relatório e Ajuste de Repasse - Pós Pago" />
+	</definition>
+	
+	<definition name="contrato_pos_cadastro" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/contrato/pos/cadastro.jsp" />
+		<put-attribute name="tituloTela" value="Cadastro Contrato - Pós-Pago" />
+	</definition>
+	
+	<definition name="operadoras_contrato_pos_cadastro" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/contrato/operadoras/cadastro.jsp" />
+		<put-attribute name="tituloTela" value="Operadoras do Contrato - Pós-Pago" />
+	</definition>
+	
+	<definition name="produtos_contrato_pos_cadastro" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/contrato/produtos/cadastro.jsp" />
+		<put-attribute name="tituloTela" value="Produtos do Contrato - Pós-Pago" />
+	</definition>
+	
+	<definition name="produtos_repasse_contrato_pos_cadastro" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/contrato/produtos/repasse/cadastro.jsp" />
+		<put-attribute name="tituloTela" value="Configuração do Repasse Contrato - Pós-Pago" />
+	</definition>
+	
+	<definition name="produtos_periodo_contrato_pos_cadastro" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/contrato/produtos/periodo/cadastro.jsp" />
+		<put-attribute name="tituloTela" value="Configuração de Periodicidade Contrato - Pós-Pago" />
+	</definition>
+	
+	<definition name="produto_pos_item_cadastro" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/produto/item/cadastro.jsp" />
+		<put-attribute name="tituloTela" value="Cadastro de Composição do Produto - Pós-Pago" />
+	</definition>
+	
+	<definition name="produto_pos_cadastro" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/produto/cadastro/cadastro.jsp" />
+		<put-attribute name="tituloTela" value="Cadastro de Produto - Pós-Pago" />
+	</definition>
+	
+	<definition name="produto_pos_chargecode" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/produto/chargecode/cadastro.jsp" />
+		<put-attribute name="tituloTela" value="Cadastro de Charge Code - Pós-Pago" />
+	</definition>
+	
+	<definition name="arquivo_controle_remessa_ciclo" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/arquivo/controle/remessa/ciclo/filtro.jsp" />
+		<put-attribute name="tituloTela" value="Controle de Remessa por Ciclo" />
+	</definition>
+	
+	<definition name="arquivo_controle_remessa_evento" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/arquivo/controle/remessa/evento/filtro.jsp" />
+		<put-attribute name="tituloTela" value="Controle de Remessa por Evento" />
+	</definition>
+	
+	
+	<definition name="pesquisa_arquivos_processados_pos" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/pesquisa/arquivos/processados/pos/filtro.jsp" />
+		<put-attribute name="tituloTela" value="Pesquisa de Arquivos Processados - Pós" />
+	</definition>
+	
+	<definition name="pesquisa_arquivos_processados_pos_status" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/pesquisa/arquivos/processados/pos/status.jsp" />
+		<put-attribute name="tituloTela" value="Pesquisa de Arquivos Processados - Pós" />
+	</definition>
+	
+	<definition name="pesquisa_arquivos_processados_pos_erro" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/pesquisa/arquivos/processados/pos/erro.jsp" />
+		<put-attribute name="tituloTela" value="Pesquisa de Arquivos Processados - Pós" />
+	</definition>
+	
+	<definition name="pesquisa_arquivos_processados_pos_processados" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/pesquisa/arquivos/processados/pos/processados.jsp" />
+		<put-attribute name="tituloTela" value="Pesquisa de Arquivos Processados - Pós" />
+	</definition>
+	
+	<definition name="pesquisa_arquivos_processados_pos_cdrs" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/pesquisa/arquivos/processados/pos/lista.jsp" />
+		<put-attribute name="tituloTela" value="Pesquisa de Arquivos Processados - Pós" />
+	</definition>
+	
+	<definition name="arquivos_retorno_evento" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/arquivo/retorno/eventos/filtro.jsp" />
+		<put-attribute name="tituloTela" value="Relatório de Eventos" />
+	</definition>
+	
+	<definition name="arquivo_retorno" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/arquivo/retorno/relatorio/filtro.jsp" />
+		<put-attribute name="tituloTela" value="Relatório de Eventos" />
+	</definition>
+	
+	<definition name="arquivo_retorno_critica" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/arquivo/retorno/critica/filtro.jsp" />
+		<put-attribute name="tituloTela" value="Relatório de Critica" />
+	</definition>
+	
+	<definition name="evolucao_status_filtro" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/cdr/evolucao/filtro.jsp" />
+		<put-attribute name="tituloTela" value="Relatório de Evolução de CDRs" />
+	</definition>
+	
+	<definition name="demonstrativo_saldo_lotes_filtro" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/saldo/filtro.jsp" />
+		<put-attribute name="tituloTela" value="Relatório Demonstrativo de Saldo de Lotes" />
+	</definition>
+	
+	<definition name="relatorio_contabil_filtro" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/contabil/relatorio/filtro.jsp" />
+		<put-attribute name="tituloTela" value="Relatório Contábil" />
+	</definition>
+	
+	<definition name="relatorio_contabil_transicao_filtro" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/contabil/transicao/filtro.jsp" />
+		<put-attribute name="tituloTela" value="Relatório para Conferência Interface Contábil" />
+	</definition>
+	
+	<definition name="relatorio_prestacao_servico_pos_filtro" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/relatorio/servico/pos/filtro.jsp" />
+		<put-attribute name="tituloTela" value="Relatório Prestação de Serviço Pos" />
+	</definition>
+	
+
+</tiles-definitions>

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<b:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:b="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/security
+           http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+
+	<global-method-security secured-annotations="enabled" access-decision-manager-ref="accessDecisionManager" />
+
+	<http auto-config='true' access-decision-manager-ref="accessDecisionManager">
+	</http>
+
+	<!-- Gerenciador de autenticação para testes. -->
+	<!-- 	<authentication-manager alias="ldap"> -->
+	<!-- 		<authentication-provider ref="LDAPAuthenticationProvider" /> -->
+	<!-- 	</authentication-manager> -->
+	<!-- Gerenciador de autenticação usando o Active Directory da Claro. -->
+	<authentication-manager alias="ldap">
+		<authentication-provider>
+			<user-service>
+				<user name="teste" password="teste" authorities="ROLE_USER, ROLE_ADMIN" />
+				<user name="user" password="user" authorities="ROLE_USER" />
+				<user name="operator" password="12345" authorities="ROLE_OPERATOR" />
+			</user-service>
+		</authentication-provider>
+	</authentication-manager>
+	
+	<!-- 	<b:bean id="ldapUserService" -->
+	<!-- 		class="com.claro.sccweb.security.ldap.LDAPUserDetailsService"> -->
+	<!-- 		<b:property name="contextSource" ref="contextSource" /> -->
+	<!-- 		<b:property name="contextToSearch" value="DC=claro,DC=com,DC=br" /> -->
+	<!-- 		<b:property name="authoritiesPopulator" ref="authoritiesPopulator" /> -->
+	<!-- 	</b:bean> -->
+	<!-- 	<b:bean id="authoritiesPopulator" -->
+	<!-- 		class="com.claro.sccweb.security.ldap.LDAPGroupAuthoritiesPopulator"> -->
+	<!-- 		<b:property name="groupAttributeName" value="memberOf" /> -->
+	<!-- 		<b:property name="groupsMap"> -->
+	<!-- 			<b:map> -->
+	<!-- 				<b:entry key="GRUPO TI COBILLING" value="ROLE_ADMIN" /> -->
+	<!-- 				<b:entry key="Grupo Associados SP1" value="ROLE_USER" /> -->
+	<!-- 				<b:entry key="SCC_OPERATOR" value="ROLE_OPERATOR" /> -->
+	<!-- 			</b:map> -->
+	<!-- 		</b:property> -->
+	<!-- 	</b:bean> -->
+	<!-- 	<b:bean id="contextSource" -->
+	<!-- 		class="com.claro.sccweb.security.ldap.LdapSecurityContextSource"> -->
+	<!-- 		<b:property name="serverURL" value="ldap://MONTEIRO:389" /> -->
+	<!-- 		<b:property name="user" value="93274088@CLARO" /> -->
+	<!-- 		<b:property name="password" value="Mu@dibi1905" /> -->
+	<!-- 	</b:bean> -->
+	<!-- 	<b:bean id="LDAPAuthenticationProvider" -->
+	<!-- 		class="com.claro.sccweb.security.ldap.LDAPAuthenticationProvider"> -->
+	<!-- 		<b:property name="userDetailsService" ref="ldapUserService" /> -->
+	<!-- 		<b:property name="contextSource" ref="contextSource" /> -->
+	<!-- 	</b:bean> -->
+	
+	<b:bean id="sccFilterChain" class="org.springframework.security.web.FilterChainProxy">
+		<b:constructor-arg>
+			<b:list>
+				<filter-chain pattern="/**/login.scc" filters="none" />
+				<filter-chain pattern="/**/*.scc"
+					filters="concurrentSessionFilter,
+					securityContextPersistenceFilter,
+					authenticationFilter,
+					exceptionTranslationFilter,
+					filterSecurityInterceptor" />
+			</b:list>
+		</b:constructor-arg>
+	</b:bean>
+	
+	<b:bean id="sessionRegistry" class="org.springframework.security.core.session.SessionRegistryImpl" />
+	
+	<b:bean id="concurrentSessionFilter" class="org.springframework.security.web.session.ConcurrentSessionFilter">
+		<b:property name="sessionRegistry" ref="sessionRegistry" />
+	</b:bean>
+	
+	<b:bean id="securityContextPersistenceFilter" class="org.springframework.security.web.context.SecurityContextPersistenceFilter" />
+	
+	<b:bean id="authenticationFilter" class="org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter">
+		<b:property name="authenticationManager" ref="ldap" />
+		<b:property name="filterProcessesUrl" value="/j_scc_security_check.scc" />
+		<b:property name="authenticationSuccessHandler" ref="authenticationSuccessHandler" />
+		<b:property name="authenticationFailureHandler" ref="authenticationFailureHandler" />
+	</b:bean>
+	
+	<b:bean id="authenticationSuccessHandler" class="com.claro.sccweb.security.handler.SCCAuthenticationSuccessHandler">
+		<b:property name="afterLoginTargetURL" value="/inicio/scc.scc" />
+	</b:bean>
+	
+	<b:bean id="authenticationFailureHandler" class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
+    	<b:property name="defaultFailureUrl" value="/login.scc"/>
+  	</b:bean>
+	
+	<b:bean id="roleVoter" class="org.springframework.security.access.vote.RoleHierarchyVoter">
+		<b:constructor-arg ref="roleHierarchy" />
+	</b:bean>
+	
+	<b:bean id="roleHierarchy" class="org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl">
+		<b:property name="hierarchy"
+			value="ROLE_ADMIN > ROLE_USER 
+	ROLE_USER > ROLE_OPERATOR 
+	ROLE_OPERATOR > ROLE_GUEST" />
+	</b:bean>
+	
+	<b:bean id="filterSecurityInterceptor" class="org.springframework.security.web.access.intercept.FilterSecurityInterceptor">
+		<b:property name="authenticationManager" ref="ldap" />
+		<b:property name="accessDecisionManager" ref="accessDecisionManager" />
+		<b:property name="securityMetadataSource">
+			<filter-security-metadata-source>
+				<intercept-url pattern="/guest/**" access="ROLE_GUEST" />
+				<intercept-url pattern="/operator/**" access="ROLE_OPERATOR" />
+				<intercept-url pattern="/user/**" access="ROLE_USER" />
+				<intercept-url pattern="/admin/**" access="ROLE_ADMIN" />
+				<intercept-url pattern="/inicio/**" access="ROLE_OPERATOR" />
+			</filter-security-metadata-source>
+		</b:property>
+	</b:bean>
+	
+	<b:bean id="accessDecisionManager" class="org.springframework.security.access.vote.AffirmativeBased">
+		<b:property name="decisionVoters">
+			<b:list>
+				<b:ref bean="roleVoter" />
+			</b:list>
+		</b:property>
+	</b:bean>
+	
+	<b:bean id="exceptionTranslationFilter" class="org.springframework.security.web.access.ExceptionTranslationFilter">
+		<b:property name="authenticationEntryPoint" ref="authenticationEntryPoint" />
+		<b:property name="accessDeniedHandler" ref="accessDeniedHandler" />
+	</b:bean>
+	
+	<b:bean id="authenticationEntryPoint" class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
+		<b:property name="loginFormUrl" value="/login.scc" />
+	</b:bean>
+	
+	<b:bean id="accessDeniedHandler" class="org.springframework.security.web.access.AccessDeniedHandlerImpl">
+		<b:property name="errorPage" value="/login.scc" />
+	</b:bean>
+	
+</b:beans>
