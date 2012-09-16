@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jee="http://www.springframework.org/schema/jee" xsi:schemaLocation="http://www.springframework.org/schema/beans  http://www.springframework.org/schema/beans/spring-beans-2.5.xsd http://www.springframework.org/schema/jee  http://www.springframework.org/schema/jee/spring-jee-2.5.xsd">
+
+<bean id="sccDAO" class="com.claro.cobillingweb.persistence.dao.impl.HibernateBasicDAOImpl" abstract="true">
+	<property name="sessionFactory" ref="sessionFactory"/>
+</bean>
+
+<bean id="controlConnectFileDAO" class="com.claro.cobillingweb.persistence.dao.external.impl.ControlConnectFileDAOImpl" parent="sccDAO"/>
+<bean id="tipoArquivoDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccTipoArquivoDAOImpl" parent="sccDAO"/>
+<bean id="statusArquivoDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccStatusArquivoDAOImpl" parent="sccDAO"/>
+<bean id="sccOperadoraDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccOperadoraDAOImpl" parent="sccDAO"/>
+<bean id="sumarioArquivoDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SumarioArquivoDAOImpl" parent="sccDAO"/>
+<bean id="cdrCobillingDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccCdrCobillingDAOImpl" parent="sccDAO"/>
+<bean id="preDominioDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccPreDominioDAOImpl" parent="sccDAO"/>
+<bean id="viewArquivoPrePagoDAO" class="com.claro.cobillingweb.persistence.dao.external.impl.ViewArquivoPrePagoDAOImpl" parent="sccDAO"/>
+
+<bean id="produtoCobillingDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccProdutoCobillingDAOImpl" parent="sccDAO"/>
+<bean id="periodicidadeRepasseDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccPeriodicidadeRepasseDAOImpl" parent="sccDAO"/>
+<bean id="paramProcessoDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccParamProcessoDAOImpl" parent="sccDAO"/>
+<bean id="sccGrupoCobillingDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccGrupoCobillingDAOImpl" parent="sccDAO"/>
+<bean id="sccEmailCobillingDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccEmailCobillingDAOImpl" parent="sccDAO"/>
+<bean id="sccBatimentoArquivosDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccBatimentoArquivosDAOImpl" parent="sccDAO"/>
+<bean id="sccRelatorioCobillingDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccRelatorioCobillingDAOImpl" parent="sccDAO"/>
+<bean id="contratoAcordadoDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccContratoAcordadoDAOImpl" parent="sccDAO">
+<property name="operadoraDAO" ref="sccOperadoraDAO"/>
+</bean>
+
+<bean id="ctlParalizacaoPlatDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccCtlParalizacaoPlatDAOImpl" parent="sccDAO"/>
+
+
+<bean id="itemRepasseDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccItemRepasseDAOImpl" parent="sccDAO">
+</bean>
+
+
+<bean id="relatorioJurosMultaDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccRelatorioJurosMultaDAOImpl" parent="sccDAO">
+<property name="operadoraDAO" ref="sccOperadoraDAO"/>
+</bean>
+
+
+<bean id="produtoContratadoPrepagoDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccProdutoContratadoPrepagoDAOImpl" parent="sccDAO">
+<property name="operadoraDAO" ref="sccOperadoraDAO"/>
+<property name="produtoPrepagoDAO" ref="produtoPrepagoDAO"/>
+</bean>
+
+
+
+<bean id="repasseServicoAdicionalDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccRepasseServicoAdicionalDAOImpl" parent="sccDAO">
+<property name="operadoraDAO" ref="sccOperadoraDAO"/>
+</bean>
+
+<bean id="produtoPrepagoDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccProdutoPrepagoDAOImpl" parent="sccDAO"/>
+
+
+<bean id="sccArquivoCobillingDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccArquivoCobillingDAOImpl" parent="sccDAO">
+<property name="sccTipoArquivoDAO" ref="tipoArquivoDAO"/>
+<property name="operadoraDAO" ref="sccOperadoraDAO"/>
+</bean>
+
+<bean id="repasseDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccRepasseDAOImpl" parent="sccDAO">
+<property name="operadoraDAO" ref="sccOperadoraDAO"/>
+</bean>
+
+<bean id="sccParamProcessoDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccParamProcessoDAOImpl" parent="sccDAO">
+</bean>
+
+<bean id="pagamentoRepasseDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccPagamentoRepasseDAOImpl" parent="sccDAO"/>
+<bean id="memoDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccMemoDAOImpl" parent="sccDAO"/>
+
+<bean id="tipoContratoDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccTipoContratoDAOImpl" parent="sccDAO"/>
+
+<bean id="preFechamentoDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccPreFechamentoDAOImpl" parent="sccDAO">
+<property name="operadoraDAO" ref="sccOperadoraDAO"/>
+</bean>
+
+
+<bean id="preFechamentoAssinaturaDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccPreFechamentoAssinaturaDAOImpl" parent="sccDAO"/>
+
+<bean id="creditoDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccCreditoDAOImpl" parent="sccDAO"/>
+
+<bean id="contratoCobillingDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccContratoCobillingDAOImpl" parent="sccDAO"/>
+
+<bean id="contratoCoblDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccContratoCoblDAOImpl" parent="sccDAO"/>
+
+<bean id="produtoContratadoDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccProdutoContratadoDAOImpl" parent="sccDAO"/>
+
+<bean id="configRepasseCobrancaDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccConfigRepasseCobrancaDAOImpl" parent="sccDAO"/>
+
+<bean id="periodProdContrDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccPeriodProdContrDAOImpl" parent="sccDAO"/>
+
+<bean id="composicaoProdutoDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccComposicaoProdutoDAOImpl" parent="sccDAO"/>
+
+<bean id="itemCobillingDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccItemCobillingDAOImpl" parent="sccDAO"/>
+
+<bean id="servicoAdicionalDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccServicoAdicionalDAOImpl" parent="sccDAO"/>
+
+<bean id="pacotePrepagoDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccPacotePrepagoDAOImpl" parent="sccDAO"/>
+
+<bean id="tipoEventoDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccTipoEventoDAOImpl" parent="sccDAO"/>
+
+<bean id="arquivoSumarizadoDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccArquivoSumarizadoDAOImpl" parent="sccDAO"/>
+
+<bean id="cdrCoblDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccCdrCoblDAOImpl" parent="sccDAO"/>
+
+<bean id="statusCdrDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccStatusCdrDAOImpl" parent="sccDAO"/>
+
+<bean id="motivoRejeicaoDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccMotivoRejeicaoDAOImpl" parent="sccDAO"/>
+
+<bean id="arquivoCreditoDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccArquivoCreditoDAOImpl" parent="sccDAO"/>
+
+<bean id="faixaPenalidadeDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccFaixaPenalidadeDAOImpl" parent="sccDAO"/>
+<bean id="assinanteCriticaDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccAssinanteCriticaDAOImpl" parent="sccDAO"/>
+<bean id="criticaPrebillingDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccCriticaPrebillingDAOImpl" parent="sccDAO"/>
+<bean id="mapaStatusDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccMapaStatusDAOImpl" parent="sccDAO"/>
+<bean id="estornoMobileDAO" class="com.claro.cobillingweb.persistence.dao.external.impl.EstornoMobileDAOImpl" parent="sccDAO"/>
+<bean id="aliquotaImpostoDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccAliquotaImpostoDAOImpl" parent="sccDAO"/>
+<bean id="contaContabilDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccContaContabilDAOImpl" parent="sccDAO"/>
+<bean id="centroDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccCentroDAOImpl" parent="sccDAO"/>
+<bean id="atividadeContabilDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccAtividadeContabilDAOImpl" parent="sccDAO"/>
+
+</beans>

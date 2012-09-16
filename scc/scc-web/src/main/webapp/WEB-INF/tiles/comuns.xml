@@ -1,0 +1,138 @@
+<!--?xml version="1.0" encoding="UTF-8"?-->
+<!DOCTYPE tiles-definitions PUBLIC        
+"-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"       
+"http://tiles.apache.org/dtds/tiles-config_2_0.dtd"> 
+<tiles-definitions> 
+
+
+<definition  name="basicLayout" template="/WEB-INF/tiles/scc_template.jsp"> 
+<put-attribute name="menu" value="/css/menu.jsp" />
+<put-attribute name="body" value="/WEB-INF/jsp/empty.jsp" />
+</definition> 
+
+<definition  name="outOfSystemLayout" template="/WEB-INF/tiles/scc_out.jsp">
+<put-attribute name="body" value="/WEB-INF/jsp/empty.jsp" />
+</definition>
+
+<definition name="scc.login" extends="outOfSystemLayout">
+<put-attribute name="body" value="/WEB-INF/jsp/login.jsp" />
+<put-attribute name="tituloTela" value="Login SCC Evolution" />
+</definition>
+
+<definition name="scc.inicial" extends="basicLayout">
+<put-attribute name="tituloTela" value="SCC Evolution" />
+</definition>
+
+<definition name="cadastro.pagamento.filtro" extends="basicLayout">
+<put-attribute name="body" value="/WEB-INF/jsp/pagamento/filtro.jsp" />
+<put-attribute name="tituloTela" value="Cadastro de Pagamento de Repasse" />
+</definition>
+
+<definition name="cadastro.pagamento.editar" extends="basicLayout">
+<put-attribute name="body" value="/WEB-INF/jsp/pagamento/editar.jsp" />
+<put-attribute name="tituloTela" value="Cadastro de Pagamento de Repasse" />
+</definition>
+
+<definition name="pagamento.relatorio.filtro" extends="basicLayout">
+<put-attribute name="body" value="/WEB-INF/jsp/pagamento/relatorio/filtro.jsp" />
+<put-attribute name="tituloTela" value="Relatório de Pagamento de Repasse" />
+</definition>
+
+<definition name="assinante_suspeito_solicitacao" extends="basicLayout">
+<put-attribute name="body" value="/WEB-INF/jsp/suspeito/solicitacao/filtro.jsp" />
+<put-attribute name="tituloTela" value="Solicitação Arquivo com Volume Suspeito" />
+</definition>
+
+<definition name="distribuicao_cdr_filtro" extends="basicLayout">
+<put-attribute name="body" value="/WEB-INF/jsp/cdr/distribuicao/filtro.jsp" />
+<put-attribute name="tituloTela" value="Distribuição de CDRs" />
+</definition>
+
+<definition name="cadastro_operadora_filtro" extends="basicLayout">
+<put-attribute name="body" value="/WEB-INF/jsp/admin/operadora/filtro.jsp" />
+<put-attribute name="tituloTela" value="Cadastro de Operadoras" />
+</definition>
+
+<definition name="gestao_penalidade_filtro" extends="basicLayout">
+<put-attribute name="body" value="/WEB-INF/jsp/admin/penalidade/filtro.jsp" />
+<put-attribute name="tituloTela" value="Gestão de Penalidades" />
+</definition>
+
+<definition name="cadastro_assinante_critica_filtro" extends="basicLayout">
+<put-attribute name="body" value="/WEB-INF/jsp/admin/assinante_critica/filtro.jsp" />
+<put-attribute name="tituloTela" value="Gestão de Assinante Critica" />
+</definition>
+
+<definition name="mapa_status_filtro" extends="basicLayout">
+<put-attribute name="body" value="/WEB-INF/jsp/admin/mapa/filtro.jsp" />
+<put-attribute name="tituloTela" value="Gestão de Mapa de Status" />
+</definition>
+
+<definition name="motivo_rejeicao_filtro" extends="basicLayout">
+<put-attribute name="body" value="/WEB-INF/jsp/admin/rejeicao/filtro.jsp" />
+<put-attribute name="tituloTela" value="Gestão de Motivo de Rejeição" />
+</definition>
+
+<definition name="estorno_debito_filtro" extends="basicLayout">
+<put-attribute name="body" value="/WEB-INF/jsp/admin/estorno/filtro.jsp" />
+<put-attribute name="tituloTela" value="Re-geração do arquivo de Estorno de Débito" />
+</definition>
+
+<definition name="aliquota_imposto_filtro" extends="basicLayout">
+<put-attribute name="body" value="/WEB-INF/jsp/admin/aliquotas/filtro.jsp" />
+<put-attribute name="tituloTela" value="Gestão de Controle de Impostos" />
+</definition>
+
+<definition name="controle_paralisacao_filtro" extends="basicLayout">
+<put-attribute name="body" value="/WEB-INF/jsp/admin/paralisacao/filtro.jsp" />
+<put-attribute name="tituloTela" value="Gestão de Controle Paralisação" />
+</definition>
+
+<definition name="pre_dominio_form" extends="basicLayout">
+<put-attribute name="body" value="/WEB-INF/jsp/admin/dominio/filtro.jsp" />
+<put-attribute name="tituloTela" value="Gestão de Domínio Pré Pago" />
+</definition>
+
+<definition name="conta_contabil_filtro" extends="basicLayout">
+<put-attribute name="body" value="/WEB-INF/jsp/admin/contas/filtro.jsp" />
+<put-attribute name="tituloTela" value="Gestão de Contas Contábeis" />
+</definition>
+
+<definition name="centro_custo_filtro" extends="basicLayout">
+<put-attribute name="body" value="/WEB-INF/jsp/admin/centros/filtro.jsp" />
+<put-attribute name="tituloTela" value="Gestão de Centros de Custo" />
+</definition>
+
+<definition name="atividade_contabil_filtro" extends="basicLayout">
+<put-attribute name="body" value="/WEB-INF/jsp/admin/atividades/filtro.jsp" />
+<put-attribute name="tituloTela" value="Gestão de Atividades Contábeis" />
+</definition>
+
+<definition name="relatorio_processo_parametro" extends="basicLayout">
+<put-attribute name="body" value="/WEB-INF/jsp/relatorio/filtro.jsp" />
+<put-attribute name="tituloTela" value="Relatório de Processos e Parametros" />
+</definition>
+
+<definition name="cadastro_grupo_cobilling_filtro" extends="basicLayout">
+	<put-attribute name="body" value="/WEB-INF/jsp/admin/grupo/filtro.jsp" />
+	<put-attribute name="tituloTela" value="Gestão de Grupos Cobilling" />
+</definition>
+
+
+<definition name="cadastro_email_cobilling_filtro" extends="basicLayout">
+	<put-attribute name="body" value="/WEB-INF/jsp/admin/email/filtro.jsp" />
+	<put-attribute name="tituloTela" value="Gestão de Emails Cobilling" />
+</definition>
+
+<definition name="cadastro_relatorio_cobilling_filtro" extends="basicLayout">
+	<put-attribute name="body" value="/WEB-INF/jsp/admin/relatorio/filtro.jsp" />
+	<put-attribute name="tituloTela" value="Gestão de Relatórios Cobilling" />
+</definition>
+
+<definition name="relatorio_batimento_arquivos_filtro" extends="basicLayout">
+	<put-attribute name="body" value="/WEB-INF/jsp/relatorio/batimento/filtro.jsp" />
+	<put-attribute name="tituloTela" value="Relatório de Batimentos Semanais" />
+</definition>
+
+
+</tiles-definitions>
