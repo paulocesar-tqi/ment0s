@@ -29,6 +29,8 @@ public class SccBatimentoArquivosDAOImpl extends HibernateBasicDAOImpl<SccBatime
 		return null;
 	}
 
+	
+	
 	@Override
 	public List<SccBatimentoArquivosView> gerarRelatorioBatimento(Date dtInicioBatimento, Date dtFimBatimento, 
 			String cdEOTLD, String cdEOTClaro, String tpArquivo) throws DAOException {
