@@ -4,6 +4,7 @@ import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -105,6 +106,8 @@ public class NativeSQLViewMapper<E> {
 				query.setDate(name, (Date)value);
 			else if (value instanceof Long)
 				query.setLong(name, (Long)value);
+			else if (value instanceof Long[])
+				query.setParameterList(name, (Long[])value);
 			else
 				throw new DAOException("Tipo "+value.getClass()+" não reconhecido por ");
 		}

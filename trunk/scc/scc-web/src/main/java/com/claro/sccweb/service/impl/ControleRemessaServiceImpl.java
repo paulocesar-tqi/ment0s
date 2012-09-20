@@ -54,7 +54,7 @@ public class ControleRemessaServiceImpl extends AbstractService implements Contr
 	}
 
 	@Override
-	public List<SccArquivoSumarizado> pesquisaSumarioPorEvento(String cdEOTClaro, String cdEOTLD, Date dataInicial, Date dataFinal, Long cdProdutoCobilling, Long statusCdr, boolean holding, boolean tipoPeriodo) throws DAOException {
+	public List<SccArquivoSumarizado> pesquisaSumarioPorEvento(String cdEOTClaro, String cdEOTLD, Date dataInicial, Date dataFinal, Long cdProdutoCobilling, Long[] statusCdr, boolean holding, boolean tipoPeriodo) throws DAOException {
 		return getArquivoSumarizadoDAO().pesquisarPorEvento(cdEOTClaro, cdEOTLD, dataInicial, dataFinal, cdProdutoCobilling, statusCdr, holding, tipoPeriodo);
 	}
 	

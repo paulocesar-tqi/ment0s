@@ -75,6 +75,6 @@ public class ControleRemessaPorEventoSql {
 	
 	public static final String FILTRO_DT_PROC_EXTERNA_FIM = "AND f.DT_PROC_EXTERNA <= :dataFinal "; 
 	
-	public static final String FILTRO_STATUS_CDR = "AND fs.CD_STATUS_CDR = :statusCdr ";
+	public static final String FILTRO_STATUS_CDR = "AND fs.CD_STATUS_CDR IN (:statusCdr) ";
 	
 }

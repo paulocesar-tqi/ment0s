@@ -120,11 +120,6 @@
 				</tr>
 				
 				<tr>
-					<td width="15%"><spring:message code="controle.remessa.evento.label.status.cdr"/></td>
-					<td> <form:select path="cdStatusCdr" items="${eventos}" itemLabel="dsStatusCdr" itemValue="cdStatusCdr"/> </td>
-				</tr>
-				
-				<tr>
     				<td width="10%"><spring:message code="controle.remessa.evento.label.data.inicio"/></td>
     				<td><form:input id="dataInicial" path="dataInicial" />
     				<form:errors path="dataInicial" /></td>
@@ -137,6 +132,27 @@
     					<form:errors path="dataFinal" />
     				</td>
 				</tr>
+
+				<tr>
+					<td width="100%" colspan="2"><spring:message code="controle.remessa.evento.label.status.cdr"/><br>&nbsp;<br/></td>
+				</tr> 
+				
+				<tr>
+					<td width="100%" colspan="2"> <table width="100%">
+						<tr>
+							<c:forEach var="evento" items="${eventos}" varStatus="rowCounter">
+								<td><form:checkbox path="cdStatusCdr" value="${evento.cdStatusCdr}" label="${evento.dsStatusCdr}" /></td>
+								<c:choose>
+									<c:when test="${rowCounter.count % 4 == 0}">
+										</tr><tr>
+									</c:when>
+								</c:choose>
+							</c:forEach>
+						</tr>
+						</table>				
+					</td>
+				</tr>
+
 			</table>
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr>

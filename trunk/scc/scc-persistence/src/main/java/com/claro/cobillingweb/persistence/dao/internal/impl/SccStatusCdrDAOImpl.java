@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Order;
 
 import com.claro.cobillingweb.persistence.dao.DAOException;
 import com.claro.cobillingweb.persistence.dao.impl.HibernateBasicDAOImpl;
@@ -18,7 +19,7 @@ public class SccStatusCdrDAOImpl extends HibernateBasicDAOImpl<SccStatusCdr> imp
 	
 	public List<SccStatusCdr> getAll() throws DAOException {
 		try {
-			Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(SccStatusCdr.class);
+			Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(SccStatusCdr.class).addOrder(Order.asc("dsStatusCdr"));
 			return criteria.list();
 		} catch (Exception e) {
 			throw new DAOException(e.getMessage(), e);
