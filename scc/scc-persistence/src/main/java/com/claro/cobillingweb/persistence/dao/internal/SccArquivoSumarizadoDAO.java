@@ -20,7 +20,7 @@ public interface SccArquivoSumarizadoDAO extends BasicDAO<SccArquivoSumarizado> 
 	
 	public List<SccArquivoSumarizado> geraSumarizadoPeriodoCiclo(String cdEOTClaro,String cdEOTLD, Date dataInicial, Date dataFinal, boolean holding) throws DAOException;
 	
-	List<SccArquivoSumarizado> pesquisarPorEvento(String cdEOTClaro, String cdEOTLD, Date dataInicial, Date dataFinal, Long cdProdutoCobilling, Long statusCdr, boolean holding, boolean tipoPeriodo) throws DAOException;
+	List<SccArquivoSumarizado> pesquisarPorEvento(String cdEOTClaro, String cdEOTLD, Date dataInicial, Date dataFinal, Long cdProdutoCobilling, Long[] statusCdr, boolean holding, boolean tipoPeriodo) throws DAOException;
 	
 	public List<DemonstrativoSaldosLotesView> geraDemonstrativoSaldosLotes(String cdEOTClaro,String cdEOTLD,Long cdProdutoCobilling,Long cdTipoArquivo,Date dataInicial,Date dataFinal) throws DAOException;
 	

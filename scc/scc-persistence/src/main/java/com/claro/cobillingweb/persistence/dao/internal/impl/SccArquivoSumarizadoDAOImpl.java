@@ -1,5 +1,6 @@
 package com.claro.cobillingweb.persistence.dao.internal.impl;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -83,7 +84,7 @@ public class SccArquivoSumarizadoDAOImpl extends HibernateBasicDAOImpl<SccArquiv
 		return ControleRemessaPorEventoSql.PROJECTION;
 	}
 	
-	public List<SccArquivoSumarizado> pesquisarPorEvento(String cdEOTClaro, String cdEOTLD, Date dataInicial, Date dataFinal, Long cdProdutoCobilling, Long statusCdr, boolean holding, boolean tipoPeriodo) throws DAOException {
+	public List<SccArquivoSumarizado> pesquisarPorEvento(String cdEOTClaro, String cdEOTLD, Date dataInicial, Date dataFinal, Long cdProdutoCobilling, Long[] statusCdr, boolean holding, boolean tipoPeriodo) throws DAOException {
 		
 		List<SccArquivoSumarizado> listArquivoSumarizado = null;
 		try {
@@ -117,7 +118,7 @@ public class SccArquivoSumarizadoDAOImpl extends HibernateBasicDAOImpl<SccArquiv
 				mapper.addArgument("cdProdutoCobilling", cdProdutoCobilling, ControleRemessaPorEventoSql.FILTRO_PRODUTO);
 			}
 			
-			if (statusCdr != null && !statusCdr.equals(BasicDAO.GET_ALL)) {
+			if (statusCdr != null && statusCdr.length > 0) {
 				mapper.addArgument("statusCdr", statusCdr, ControleRemessaPorEventoSql.FILTRO_STATUS_CDR);
 			}
 			

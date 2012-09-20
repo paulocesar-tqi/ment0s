@@ -138,10 +138,6 @@ public class ControleRemessaEventoController extends BaseOperationController<Con
 	@ModelAttribute("eventos")
 	public List<SccStatusCdr> populaEventos() throws Exception {
 		List<SccStatusCdr> comboList = new ArrayList<SccStatusCdr>();
-		SccStatusCdr allValues = new SccStatusCdr();
-		allValues.setCdStatusCdr(BasicDAO.GET_ALL);
-		allValues.setDsStatusCdr("Todos");
-		comboList.add(0,allValues);
 		comboList.addAll(getServiceManager().getPesquisaDominiosService().getAllStatus());
 		return comboList;
 	}

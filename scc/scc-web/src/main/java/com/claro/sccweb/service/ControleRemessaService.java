@@ -19,6 +19,6 @@ public interface ControleRemessaService {
 	
 	public List<SccArquivoSumarizado> geraSumarizadoPeriodo(String cdEOTClaro,String cdEOTLD,Date dataInicial,Date dataFinal,boolean holding) throws DAOException;
 	
-	List<SccArquivoSumarizado> pesquisaSumarioPorEvento(String cdEOTClaro, String cdEOTLD, Date dataInicial, Date dataFinal, Long cdProdutoCobilling, Long statusCdr, boolean holding, boolean tipoPeriodo) throws DAOException;
+	List<SccArquivoSumarizado> pesquisaSumarioPorEvento(String cdEOTClaro, String cdEOTLD, Date dataInicial, Date dataFinal, Long cdProdutoCobilling, Long[] statusCdr, boolean holding, boolean tipoPeriodo) throws DAOException;
 	
 }

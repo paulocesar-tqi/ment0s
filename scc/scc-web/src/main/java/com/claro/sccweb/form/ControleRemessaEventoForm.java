@@ -16,7 +16,7 @@ public class ControleRemessaEventoForm extends BaseForm {
 	
 	private Long cdProdutoCobilling;
 	
-	private Long cdStatusCdr;
+	private Long[] cdStatusCdr;
 	
 	private String tipoPeriodo;
 
@@ -59,11 +59,11 @@ public class ControleRemessaEventoForm extends BaseForm {
 		this.cdEOTLD = cdEOTLD;
 	}
 
-	public Long getCdStatusCdr() {
+	public Long[] getCdStatusCdr() {
 		return cdStatusCdr;
 	}
 
-	public void setCdStatusCdr(Long cdStatusCdr) {
+	public void setCdStatusCdr(Long[] cdStatusCdr) {
 		this.cdStatusCdr = cdStatusCdr;
 	}
 
