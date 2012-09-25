@@ -224,6 +224,7 @@
 	<a href="#"><spring:message code="relatorio.menu.relatorio"/></a>
 	<ul>
 		<li><a href="/scc/user/relatorio/batimento/arquivos/new.scc"><spring:message code="menu.relatorio.batimento.arquivos"/></a></li>
+		<li><a href="/scc/user/relatorio/alarmeoperacional/new.scc"><spring:message code="menu.relatorio.alarme.operacional"/></a></li>
 	
 		<li>
 			<a class="has-children" href="#"><spring:message code="menu.relatorio.processo"/></a>
