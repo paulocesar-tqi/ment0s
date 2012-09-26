@@ -2,45 +2,23 @@ package com.claro.sccweb.form;
 
 import java.util.Date;
 
-import com.claro.cobillingweb.persistence.entity.SccArquivoCobilling;
-import com.claro.cobillingweb.persistence.entity.SccCdrCobilling;
-
 public class PesquisaBatimentoInterfacePosForm extends BaseForm {
 
 	 
 	public String toString() {
 		return "PesquisaBatimentoInterfacePosForm [tipoOperadora=" + tipoOperadora
 				+ ", cdEOTClaro=" + cdEOTClaro + ", cdEOTLD=" + cdEOTLD
-				+ ", statusArquivo=" + statusArquivo + ", tipoArquivo="
-				+ tipoArquivo + ", periodo=" + periodo + ", dataInicial="
+				+ ", tipoArquivo=" + tipoArquivo + ", dataInicial="
 				+ dataInicial + ", dataFinal=" + dataFinal + "]";
 	}
 
-	private SccArquivoCobilling arquivoSelecionado;
-	
-	private SccCdrCobilling filtroSelecionado;
-	
-	private SccCdrCobilling cdrSelecionado;
-	
 	private String tipoOperadora = "O";
 	private String cdEOTClaro;
 	private String cdEOTLD;
-	private String statusArquivo;
 	private String tipoArquivo;
-	private String periodo;
 	private Date dataInicial;
 	private Date dataFinal;
-	private String visaoArquivo;
-	private SccPaginatedList cdrList;
 	
-
-	public SccArquivoCobilling getArquivoSelecionado() {
-		return arquivoSelecionado;
-	}
-
-	public void setArquivoSelecionado(SccArquivoCobilling arquivoSelecionado) {
-		this.arquivoSelecionado = arquivoSelecionado;
-	}
 
 	public String getTipoOperadora() {
 		return tipoOperadora;
@@ -66,28 +44,12 @@ public class PesquisaBatimentoInterfacePosForm extends BaseForm {
 		this.cdEOTLD = cdEOTLD;
 	}
 
-	public String getStatusArquivo() {
-		return statusArquivo;
-	}
-
-	public void setStatusArquivo(String statusArquivo) {
-		this.statusArquivo = statusArquivo;
-	}
-
 	public String getTipoArquivo() {
 		return tipoArquivo;
 	}
 
 	public void setTipoArquivo(String tipoArquivo) {
 		this.tipoArquivo = tipoArquivo;
-	}
-
-	public String getPeriodo() {
-		return periodo;
-	}
-
-	public void setPeriodo(String periodo) {
-		this.periodo = periodo;
 	}
 
 	public Date getDataInicial() {
@@ -104,38 +66,6 @@ public class PesquisaBatimentoInterfacePosForm extends BaseForm {
 
 	public void setDataFinal(Date dataFinal) {
 		this.dataFinal = dataFinal;
-	}
-
-	public String getVisaoArquivo() {
-		return visaoArquivo;
-	}
-
-	public void setVisaoArquivo(String visaoArquivo) {
-		this.visaoArquivo = visaoArquivo;
-	}
-
-	public SccCdrCobilling getFiltroSelecionado() {
-		return filtroSelecionado;
-	}
-
-	public void setFiltroSelecionado(SccCdrCobilling filtroSelecionado) {
-		this.filtroSelecionado = filtroSelecionado;
-	}
-
-	public SccPaginatedList getCdrList() {
-		return cdrList;
-	}
-
-	public void setCdrList(SccPaginatedList cdrList) {
-		this.cdrList = cdrList;
-	}
-
-	public SccCdrCobilling getCdrSelecionado() {
-		return cdrSelecionado;
-	}
-
-	public void setCdrSelecionado(SccCdrCobilling cdrSelecionado) {
-		this.cdrSelecionado = cdrSelecionado;
 	}
 	
 }

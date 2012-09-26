@@ -34,27 +34,6 @@ function excel() {
 	$('#form1').submit();
 }
 
-function selecionar(linha) {
-	$('#itemSelecionado').val(linha);	
-	$('#operacao').val("selecionar");
-	$('#form1').submit();
-}
-
-function visualizarOK(linha) {	
-	$('#itemSelecionado').val(linha);	
-	$('#operacao').val("visualizarOK");
-	$('#form1').submit();
-}
-
-function visualizarNOK(linha)
-{
-	$('#itemSelecionado').val(linha);	
-	$('#operacao').val("visualizarNOK");
-	$('#form1').submit();
-}
-
-
-
 function trocaTipoOperadora()
 {
 var sel = $("#tipoOperadora option:selected");
@@ -105,9 +84,8 @@ function mostraOperadoraClaro()
 <ul>
 <li><a href="#tabs-1"><spring:message code="crud.titulo.pesquisar"/></a></li>
 </ul>
-<form:form modelAttribute="filtro" method="post" action="/scc/user/pos/processados/pesquisa/execute.scc" id="form1">
+<form:form modelAttribute="filtro" method="post" action="/scc/user/arquivo/batimento/interface/execute.scc" id="form1">
 <form:hidden path="operacao" id="operacao"/>
-<form:hidden path="itemSelecionado" id="itemSelecionado"/>
 <div id="tabs-1">
 <table width="100%" border="0" cellspacing="0" cellpadding="0" >
 
@@ -127,18 +105,8 @@ function mostraOperadoraClaro()
 </tr>
 
 <tr>
-<td width="15%">Status do Arquivo:</td>
-<td><form:select path="statusArquivo" id="statusArquivo" items="${statusArquivo}" itemLabel="label" itemValue="key" /></td>
-</tr>
-
-<tr>
 <td width="15%">Tipo de Arquivo:</td>
 <td><form:select path="tipoArquivo" id="tipoArquivo" items="${tiposArquivo}" itemLabel="label" itemValue="key" /></td>
-</tr>
-
-<tr>
-    <td width="10%">Período:</td>
-    <td ><form:select path="periodo"  id="periodo" items="${tiposPeriodo}" itemLabel="label" itemValue="key" /></td>
 </tr>
 
 <tr>
@@ -170,19 +138,17 @@ function mostraOperadoraClaro()
 <c:if test="${!empty sessionScope._DISPLAY_TAG_SPACE_1}">
 <table  width="100%" border="0" cellspacing="0" cellpadding="0" >
  <tr><td align="center">                            
-<display:table style="width:100%"  name="sessionScope._DISPLAY_TAG_SPACE_1"   pagesize="20"  id="repasses" requestURI="/scc/user/pos/processados/pesquisa/tab1.scc" class="ui-state-default">
-<display:column property="seqArquivo" title="Seq. Arq." />
-<display:column property="noComposto" title="Arquivo" />
-<display:column property="operadoraClaro" title="Op. Claro" />
-<display:column property="operadoraExterna" title="Op. Externa" />
-<display:column property="dataProcClaro" title="Data Proc. Claro" />
-<display:column property="dataReferencia" title="Data Referência" />
-<display:column property="dataInicioTrafego" title="Data Início" />
-<display:column property="dataFinalTrafego" title="Data Final" />
-<display:column property="qtCDR" title="Qtd. CDRs" />
-<display:column property="selecionar" title="Status" />
-<display:column property="erro" title="Motivo" />
-<display:column property="sucesso" title="Ciclo" />
+<display:table style="width:100%"  name="sessionScope._DISPLAY_TAG_SPACE_1"   pagesize="20"  id="repasses" requestURI="/scc/user/arquivo/batimento/interface/tab1.scc" class="ui-state-default">
+<display:column property="nomeArquivo" title="Nome do Arquivo" />
+<display:column property="operadoraLD" title="Operadora LD" />
+<display:column property="operadoraClaro" title="Operadora Claro" />
+<display:column property="dataMovimentacao" title="Data de Movimentação" />
+<display:column property="dataTransferencia" title="Data de Transferência" />
+<display:column property="quantidadeRegistrosMobile" title="Quantidade de Registros" />
+<display:column property="dataProcessamento" title="Data de Processamento" />
+<display:column property="quantidadeRegistrosScc" title="Quantidade de Registros" />
+<display:column property="diferenca" title="Diferença" />
+<display:column property="status" title="Status" />
 </display:table>
 </td></tr>
 </table>
