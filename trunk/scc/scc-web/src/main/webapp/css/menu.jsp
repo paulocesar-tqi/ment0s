@@ -44,6 +44,16 @@
 </c:if>
 
 
+<c:if test="${sessionScope['scopedTarget.sessionDataManager'].posPago}">
+	<li>
+		<a class="has-children" href="#"><spring:message code="menu.arquivo.batimento"/></a>
+		<ul>
+			<li><a href="/scc/user/arquivo/batimento/interface/new.scc"><spring:message code="menu.arquivo.batimento.interface"/></a>	</li>
+		</ul>
+	</li>
+</c:if>
+
+
 
 <li><a class="has-children" href="#">Arquivo de Retorno</a>
 <ul>
