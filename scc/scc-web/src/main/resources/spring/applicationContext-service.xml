@@ -68,6 +68,7 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 		<property name="sccRelatorioCobillingService" ref="sccRelatorioCobillingService" />
 		<property name="sccBatimentoArquivosService" ref="sccBatimentoArquivosService"/>
 		<property name="sccBatimentoInterfaceService" ref="sccBatimentoInterfaceService"/>
+		<property name="sccRelatorioConciliacaoService" ref="sccRelatorioConciliacaoService"/>
 	</bean>
 
 	<bean id="sccService" abstract="true"
@@ -307,6 +308,11 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 	<bean id="sccBatimentoInterfaceService" class="com.claro.sccweb.service.impl.SccBatimentoInterfaceServiceImpl"
 		parent="sccService">
 		<property name="sccBatimentoInterfaceDAO" ref="sccBatimentoInterfaceDAO" />
+	</bean>
+	
+	<bean id="sccRelatorioConciliacaoService" class="com.claro.sccweb.service.impl.SccRelatorioConciliacaoServiceImpl"
+		parent="sccService">
+		<property name="sccRelatorioConciliacaoDAO" ref="sccRelatorioConciliacaoDAO" />
 	</bean>
 	
 </beans>
