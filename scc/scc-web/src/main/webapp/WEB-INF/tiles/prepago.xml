@@ -105,6 +105,10 @@
 <put-attribute name="tituloTela" value="Relatório Prestação de Serviço - PréPago" />
 </definition>
 
+<definition name="relatorio_conciliacao_pre_filtro" extends="basicLayout">
+<put-attribute name="body" value="/WEB-INF/jsp/relatorio/conciliacao/pre/filtro.jsp" />
+<put-attribute name="tituloTela" value="Relatório Conciliação" />
+</definition>
 
 </tiles-definitions>
 
