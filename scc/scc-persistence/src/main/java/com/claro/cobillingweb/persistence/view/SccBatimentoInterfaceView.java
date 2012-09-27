@@ -13,7 +13,7 @@ public class SccBatimentoInterfaceView {
 	
 	private String nomeArquivo;
 	private Long operadoraLD;
-	private Long operadoraClaro;
+	private String operadoraClaro;
 	private Date dataMovimentacao;
 	private Date dataTransferencia;
 	private Long quantidadeRegistrosMobile;
@@ -33,10 +33,10 @@ public class SccBatimentoInterfaceView {
 	public void setOperadoraLD(Long operadoraLD) {
 		this.operadoraLD = operadoraLD;
 	}
-	public Long getOperadoraClaro() {
+	public String getOperadoraClaro() {
 		return operadoraClaro;
 	}
-	public void setOperadoraClaro(Long operadoraClaro) {
+	public void setOperadoraClaro(String operadoraClaro) {
 		this.operadoraClaro = operadoraClaro;
 	}
 	public Date getDataMovimentacao() {
@@ -68,8 +68,6 @@ public class SccBatimentoInterfaceView {
 	}
 	public void setQuantidadeRegistrosScc(Long quantidadeRegistrosScc) {
 		this.quantidadeRegistrosScc = quantidadeRegistrosScc;
-	}	
-	
-	
+	}		
 
 }

@@ -11,10 +11,8 @@ import org.hibernate.Session;
 import com.claro.cobillingweb.persistence.dao.BasicDAO;
 import com.claro.cobillingweb.persistence.dao.DAOException;
 import com.claro.cobillingweb.persistence.dao.impl.HibernateBasicDAOImpl;
-import com.claro.cobillingweb.persistence.dao.internal.SccBatimentoArquivosDAO;
 import com.claro.cobillingweb.persistence.dao.internal.SccBatimentoInterfaceDAO;
-import com.claro.cobillingweb.persistence.dao.query.SccBatimentoArquivosDAONativeSQL;
-import com.claro.cobillingweb.persistence.view.SccBatimentoArquivosView;
+import com.claro.cobillingweb.persistence.dao.query.SccBatimentoInterfaceDAONativeSQL;
 import com.claro.cobillingweb.persistence.view.SccBatimentoInterfaceView;
 import com.claro.cobillingweb.persistence.view.mapper.NativeSQLViewMapper;
 
@@ -36,49 +34,39 @@ public class SccBatimentoInterfaceDAOImpl extends HibernateBasicDAOImpl<SccBatim
 	@Override
 	public List<SccBatimentoInterfaceView> listarBatimentoInterface(Date dtInicio, Date dtFim, String cdEOTLD, String cdEOTClaro, String tpArquivo) throws DAOException {
 		
-		List<SccBatimentoArquivosView> list = null;
+		List<SccBatimentoInterfaceView> list = null;
 		try {
 			Session session = getSessionFactory().getCurrentSession();
-			NativeSQLViewMapper<SccBatimentoInterfaceView> mapper = new NativeSQLViewMapper<SccBatimentoInterfaceView>(session, SccBatimentoArquivosDAONativeSQL.SQL, SccBatimentoInterfaceView.class);
-			if(dtInicioBatimento != null) {
-				mapper.addArgument("dtInicioBatimento", dtInicioBatimento, SccBatimentoArquivosDAONativeSQL.FILTRO_DT_INICIO_BATIMENTO);
+			NativeSQLViewMapper<SccBatimentoInterfaceView> mapper = new NativeSQLViewMapper<SccBatimentoInterfaceView>(session, SccBatimentoInterfaceDAONativeSQL.SQL, SccBatimentoInterfaceView.class);
+			if(dtInicio != null) {
+				mapper.addArgument("dtInicio", dtInicio, SccBatimentoInterfaceDAONativeSQL.FILTRO_DT_INICIO);
 			}
 			
-			if(dtFimBatimento != null) {
-				mapper.addArgument("dtFimBatimento", dtFimBatimento, SccBatimentoArquivosDAONativeSQL.FILTRO_DT_FIM_BATIMENTO);
+			if(dtFim != null) {
+				mapper.addArgument("dtFim", dtFim, SccBatimentoInterfaceDAONativeSQL.FILTRO_DT_FIM);
 			}
 			
 			if(cdEOTClaro != null && !cdEOTClaro.equals(BasicDAO.GET_ALL_STRING)){
-				mapper.addArgument("cdEOTClaro", cdEOTClaro, SccBatimentoArquivosDAONativeSQL.FILTRO_CDEOTCLARO);
+				mapper.addArgument("cdEOTClaro", cdEOTClaro, SccBatimentoInterfaceDAONativeSQL.FILTRO_CDEOTCLARO);
 			}
 			
 			if(cdEOTLD != null && !cdEOTLD.equals(BasicDAO.GET_ALL_STRING)){
-				mapper.addArgument("cdEOTLD", cdEOTLD, SccBatimentoArquivosDAONativeSQL.FILTRO_CDEOTLD);
+				mapper.addArgument("cdEOTLD", cdEOTLD, SccBatimentoInterfaceDAONativeSQL.FILTRO_CDEOTLD);
+			}
+
+			if(tpArquivo != null && !tpArquivo.equals(BasicDAO.GET_ALL_STRING)){
+				mapper.addArgument("tpArquivo", tpArquivo, SccBatimentoInterfaceDAONativeSQL.FILTRO_TIPO_ARQUIVO);
 			}
 			
-			mapper.addArgument("tpArquivo", tpArquivo, SccBatimentoArquivosDAONativeSQL.FILTRO_TIPO_BATIMENTO);
-			
 			//Claro
-			mapper.addResultMap("dtConnectClaro", Date.class);
-			mapper.addResultMap("dtReferenciaClaro",Date.class);
-			mapper.addResultMap("nomeArquivoClaro", String.class);
-			mapper.addResultMap("dnsProtocoloClaro", String.class);
-			mapper.addResultMap("duracaoTarifadaClaro", Double.class);
-			mapper.addResultMap("quantidadeClaro", Double.class);
-			mapper.addResultMap("valorLiquidoClaro", Double.class);
-			mapper.addResultMap("erroProtocoloClaro", String.class);
-			mapper.addResultMap("descErroProtocoloClaro", String.class);
-			//LD
-			mapper.addResultMap("nomeArquivoLD", String.class);
-			mapper.addResultMap("duracaoTarifadaLD", Double.class);
-			mapper.addResultMap("quantidadeLD", Double.class);
-			mapper.addResultMap("valorLiquidoLD", Double.class);
-			mapper.addResultMap("statusLD", String.class);
-			//Resultado do Batimento
-			
-			mapper.addResultMap("duracaoTarifadaBat", Double.class);
-			mapper.addResultMap("quantidadeBat", Double.class);
-			mapper.addResultMap("valorLiquidoBat", Double.class);
+			mapper.addResultMap("nomeArquivo", String.class);
+			mapper.addResultMap("operadoraLD", Long.class);
+			mapper.addResultMap("operadoraClaro", String.class);
+			mapper.addResultMap("dataMovimentacao", Date.class);
+			mapper.addResultMap("dataTransferencia", Date.class);
+			mapper.addResultMap("quantidadeRegistrosMobile", Long.class);
+			mapper.addResultMap("dataProcessamento", Date.class);
+			mapper.addResultMap("quantidadeRegistrosScc", Long.class);
 			
 			list = mapper.execute();
 		} catch(Exception e) {

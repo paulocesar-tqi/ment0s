@@ -163,7 +163,7 @@ public class NativeSQLViewMapper<E> {
 							
 						} else {
 							//System.out.println("Setter "+setter.getName()+" com valor null");
-							setter.invoke(item, " ");
+							setter.invoke(item, String.class.equals(itemMap.getType()) ?  " " : null);
 							
 						}
 					}
