@@ -7,7 +7,11 @@
 <link rel="stylesheet" href="/scc/css/jquery-ui-1.8.18.custom.css" type="text/css"/>
 <link rel="stylesheet" href="/scc/css/table_jui.css" type="text/css">
 <%@ taglib uri="/tags/displaytag" prefix="display" %>
-
+<style type="text/css">
+th.fundoVerde {background:#D7E4BC;}
+th.fundoAzul {background:#B8CCE4;}
+th.fundoLaranja {background:#FCD5B4;}
+</style>
 <script>
 $(document).ready(function(){	
 	$("#dataInicial").mask("99/99/9999");	
@@ -142,13 +146,13 @@ function mostraOperadoraClaro()
 <display:column property="nomeArquivo" title="Nome do Arquivo" />
 <display:column property="operadoraLD" title="Operadora LD" />
 <display:column property="operadoraClaro" title="Operadora Claro" />
-<display:column property="dataMovimentacao" title="Data de Movimentação" />
-<display:column property="dataTransferencia" title="Data de Transferência" />
-<display:column property="quantidadeRegistrosMobile" title="Quantidade de Registros" />
-<display:column property="dataProcessamento" title="Data de Processamento" />
-<display:column property="quantidadeRegistrosScc" title="Quantidade de Registros" />
-<display:column property="diferenca" title="Diferença" />
-<display:column property="status" title="Status" />
+<display:column property="dataMovimentacao" title="Data de Movimentação" headerClass="fundoVerde" />
+<display:column property="dataTransferencia" title="Data de Transferência" headerClass="fundoVerde" />
+<display:column property="quantidadeRegistrosMobile" title="Quantidade de Registros" headerClass="fundoVerde" />
+<display:column property="dataProcessamento" title="Data de Processamento" headerClass="fundoAzul" />
+<display:column property="quantidadeRegistrosScc" title="Quantidade de Registros" headerClass="fundoAzul" />
+<display:column property="diferenca" title="Diferença" headerClass="fundoLaranja" />
+<display:column property="status" title="Status" headerClass="fundoLaranja" style="width: 20px" />
 </display:table>
 </td></tr>
 </table>
