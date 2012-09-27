@@ -20,6 +20,7 @@
 <bean id="sccGrupoCobillingDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccGrupoCobillingDAOImpl" parent="sccDAO"/>
 <bean id="sccEmailCobillingDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccEmailCobillingDAOImpl" parent="sccDAO"/>
 <bean id="sccBatimentoArquivosDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccBatimentoArquivosDAOImpl" parent="sccDAO"/>
+<bean id="sccBatimentoInterfaceDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccBatimentoInterfaceDAOImpl" parent="sccDAO"/>
 <bean id="sccRelatorioCobillingDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccRelatorioCobillingDAOImpl" parent="sccDAO"/>
 <bean id="contratoAcordadoDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccContratoAcordadoDAOImpl" parent="sccDAO">
 <property name="operadoraDAO" ref="sccOperadoraDAO"/>

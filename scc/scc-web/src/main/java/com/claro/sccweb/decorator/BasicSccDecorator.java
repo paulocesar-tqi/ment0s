@@ -12,6 +12,7 @@ public class BasicSccDecorator extends TableDecorator {
 	
 	protected SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 	protected SimpleDateFormat datePeriodoFormat = new SimpleDateFormat("MM/yyyy");
+	protected SimpleDateFormat dateTimeFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 	protected static NumberFormat decimalFormat = new DecimalFormat("#.##");
 	protected static NumberFormat decimalFormat34 = new DecimalFormat("###.####");
 	
@@ -89,6 +90,13 @@ public class BasicSccDecorator extends TableDecorator {
 			return " ";
 		}
 		return dateFormat.format(valor);
+	}
+	
+	protected String formataDateTime(Date valor) {
+		if (valor == null) {
+			return " ";
+		}
+		return dateTimeFormat.format(valor);
 	}
 	
 	protected String formataString(String value) {

@@ -6,8 +6,7 @@ public class PesquisaBatimentoInterfacePosForm extends BaseForm {
 
 	 
 	public String toString() {
-		return "PesquisaBatimentoInterfacePosForm [tipoOperadora=" + tipoOperadora
-				+ ", cdEOTClaro=" + cdEOTClaro + ", cdEOTLD=" + cdEOTLD
+		return "PesquisaBatimentoInterfacePosForm ["+ ", cdEOTClaro=" + cdEOTClaro + ", cdEOTLD=" + cdEOTLD
 				+ ", tipoArquivo=" + tipoArquivo + ", dataInicial="
 				+ dataInicial + ", dataFinal=" + dataFinal + "]";
 	}
@@ -19,7 +18,6 @@ public class PesquisaBatimentoInterfacePosForm extends BaseForm {
 	private Date dataInicial;
 	private Date dataFinal;
 	
-
 	public String getTipoOperadora() {
 		return tipoOperadora;
 	}
@@ -27,6 +25,7 @@ public class PesquisaBatimentoInterfacePosForm extends BaseForm {
 	public void setTipoOperadora(String tipoOperadora) {
 		this.tipoOperadora = tipoOperadora;
 	}
+
 
 	public String getCdEOTClaro() {
 		return cdEOTClaro;
