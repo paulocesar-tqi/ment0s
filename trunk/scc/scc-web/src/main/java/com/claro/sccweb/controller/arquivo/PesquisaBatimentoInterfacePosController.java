@@ -16,14 +16,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.claro.cobillingweb.persistence.dao.BasicDAO;
-import com.claro.cobillingweb.persistence.entity.SccArquivoCobilling;
-import com.claro.cobillingweb.persistence.entity.SccCdrCobilling;
 import com.claro.cobillingweb.persistence.entity.SccOperadora;
+import com.claro.cobillingweb.persistence.view.SccBatimentoInterfaceView;
 import com.claro.sccweb.controller.BaseOperationController;
 import com.claro.sccweb.controller.util.BasicStringItem;
 import com.claro.sccweb.controller.validator.PesquisaBatimentoInterfacePosValidator;
-import com.claro.sccweb.decorator.rownum.entity.SccArquivoCobillingDecorator;
-import com.claro.sccweb.decorator.rownum.entity.SccCdrCobillingDecorator;
+import com.claro.sccweb.decorator.rownum.entity.SccBatimentoInterfaceViewDecorator;
 import com.claro.sccweb.form.BaseForm;
 import com.claro.sccweb.form.PesquisaBatimentoInterfacePosForm;
 
@@ -38,20 +36,17 @@ public class PesquisaBatimentoInterfacePosController extends BaseOperationContro
 		ModelAndView mav = new ModelAndView(getViewName());
 		PesquisaBatimentoInterfacePosForm myForm = (PesquisaBatimentoInterfacePosForm)form;
 		info("Pesquisando batimento interface pós-pago:  "+myForm.toString());
-		List<SccArquivoCobilling> rows = null;
-		if (myForm.getTipoArquivo().equals("REM")) {
-			rows = getServiceManager().getArquivosService().pesquisaArquivosRemessa(myForm.getCdEOTClaro(), myForm.getCdEOTLD(), myForm.getPeriodo(), myForm.getDataInicial(), myForm.getDataFinal(), myForm.getStatusArquivo(), myForm.getTipoOperadora().equals("H"));
-		} else {
-			rows = getServiceManager().getArquivosService().pesquisaArquivosRemessaFranquia(myForm.getCdEOTClaro(), myForm.getCdEOTLD(), myForm.getPeriodo(), myForm.getDataInicial(), myForm.getDataFinal(), myForm.getStatusArquivo(), myForm.getTipoOperadora().equals("H"));
-		}
+		
+		List<SccBatimentoInterfaceView> rows = null;
+		rows = getServiceManager().getSccBatimentoInterfaceService().listarBatimentoInterface(myForm.getDataInicial(), myForm.getDataFinal(), myForm.getCdEOTLD(), myForm.getCdEOTClaro(), myForm.getTipoArquivo());
+		
 		debug("Pesquisa de batimento interface pós-pago retornou "+rows.size()+" linhas com filtro "+myForm.toString());
-		List<SccArquivoCobillingDecorator> decoratorList = new ArrayList<SccArquivoCobillingDecorator>(rows.size());	
+		List<SccBatimentoInterfaceViewDecorator> decoratorList = new ArrayList<SccBatimentoInterfaceViewDecorator>(rows.size());	
 		for (int i=0;i<rows.size();i++) {
-			SccArquivoCobilling arquivoProtocolo = getServiceManager().getArquivosService().pesquisaArquivoProtocolo(rows.get(i));
-			SccArquivoCobillingDecorator decorator = new SccArquivoCobillingDecorator(rows.get(i), arquivoProtocolo, i);
+			SccBatimentoInterfaceViewDecorator decorator = new SccBatimentoInterfaceViewDecorator(rows.get(i), i);
 			decoratorList.add(decorator); 
 		}
-		debug("Resultado de pequisa de arquivos processados pós-pago armazenada em DISPLAY_TAG_SPACE_1");
+		debug("Resultado de pequisa batimento interface pós-pago armazenada em DISPLAY_TAG_SPACE_1");
 		storeInSession(getClass(), DISPLAY_TAG_SPACE_1, decoratorList, request);
 		mav.addObject(FORM_NAME, form);
 		cacheMyForm(getClass(), form);
@@ -88,8 +83,20 @@ public class PesquisaBatimentoInterfacePosController extends BaseOperationContro
 	@ModelAttribute("tiposArquivo")
 	public List<BasicStringItem> populaTiposArquivo() throws Exception {
 		List<BasicStringItem> comboList = new ArrayList<BasicStringItem>();
-		comboList.add(new BasicStringItem("REM", "Remessa"));
-		comboList.add(new BasicStringItem("FRANQ", "Remessa Franquia"));
+		comboList.add(new BasicStringItem(BasicDAO.GET_ALL_STRING, "Todos"));
+
+		comboList.add(new BasicStringItem("scc.INVOICES%.output", "Arquivo de Faturas LD"));
+		comboList.add(new BasicStringItem("scc.LATEPYM%.output", "Arquivo de Juros e Multas LD"));
+		comboList.add(new BasicStringItem("scc.ADJUSTMENT%.output", "Arquivo de Ajustes e Reversões"));
+		comboList.add(new BasicStringItem("scc.EVENTS%.output", "Arquivo de Chamadas Faturadas"));
+		comboList.add(new BasicStringItem("scc.FISCAL%.output", "Arquivo Fiscal SCC"));
+		comboList.add(new BasicStringItem("scc.ESTORNO%.output", "Arquivo de Estorno de Débito SCC"));
+		comboList.add(new BasicStringItem("scc.COBRANCA%.output", "Arquivo de Cobrança LD"));
+		comboList.add(new BasicStringItem("scc.PAYMENT-ARRANGEMENT%.output", "Arquivo de Acordo de Pagamentos"));
+		comboList.add(new BasicStringItem("scc.PA-FOLLOWUP%.output", "Arquivo de Acompanhamento de PA"));
+		comboList.add(new BasicStringItem("scc.INVCHGDT%.output", "Arquivo de Alteração de Data de Vencimento"));
+		comboList.add(new BasicStringItem("TCOU.%.IN", "Extração de Informações CM - Input"));
+		comboList.add(new BasicStringItem("scc.CMDATA%.extract", "Extração de Informações CM - Output"));	
 		return comboList;
 	}
 	

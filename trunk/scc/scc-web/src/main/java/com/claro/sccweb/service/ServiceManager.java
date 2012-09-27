@@ -45,6 +45,8 @@ public class ServiceManager {
 	@Autowired
 	private SccBatimentoArquivosService sccBatimentoArquivosService;
 
+	@Autowired
+	private SccBatimentoInterfaceService sccBatimentoInterfaceService;
 
 	
 	public PesquisaDominiosService getPesquisaDominiosService() {
@@ -280,6 +282,14 @@ public class ServiceManager {
 	}
 	
 	
+	public SccBatimentoInterfaceService getSccBatimentoInterfaceService() {
+		return sccBatimentoInterfaceService;
+	}
+
+	public void setSccBatimentoInterfaceService(
+			SccBatimentoInterfaceService sccBatimentoInterfaceService) {
+		this.sccBatimentoInterfaceService = sccBatimentoInterfaceService;
+	}
 	
 	
 	
