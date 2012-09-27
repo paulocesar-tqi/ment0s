@@ -48,6 +48,8 @@ public class ServiceManager {
 	@Autowired
 	private SccBatimentoInterfaceService sccBatimentoInterfaceService;
 
+	@Autowired
+	private SccRelatorioConciliacaoService sccRelatorioConciliacaoService;
 	
 	public PesquisaDominiosService getPesquisaDominiosService() {
 		return pesquisaDominiosService;
@@ -290,10 +292,14 @@ public class ServiceManager {
 			SccBatimentoInterfaceService sccBatimentoInterfaceService) {
 		this.sccBatimentoInterfaceService = sccBatimentoInterfaceService;
 	}
-	
-	
-	
-	
-	
+
+	public SccRelatorioConciliacaoService getSccRelatorioConciliacaoService() {
+		return sccRelatorioConciliacaoService;
+	}
+
+	public void setSccRelatorioConciliacaoService(
+			SccRelatorioConciliacaoService sccRelatorioConciliacaoService) {
+		this.sccRelatorioConciliacaoService = sccRelatorioConciliacaoService;
+	}
 	
 }

@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.claro.cobillingweb.persistence.dao.BasicDAO;
 import com.claro.cobillingweb.persistence.entity.SccOperadora;
 import com.claro.cobillingweb.persistence.view.RelContabilView;
+import com.claro.cobillingweb.persistence.view.SccRelatorioConciliacaoView;
 import com.claro.sccweb.controller.BaseOperationController;
 import com.claro.sccweb.controller.util.BasicIntegerItem;
 import com.claro.sccweb.controller.validator.RelatorioConciliacaoPreValidator;
@@ -37,9 +38,9 @@ public class RelatorioConciliacaoPreController extends BaseOperationController<R
 	{
 		ModelAndView mav = new ModelAndView(getViewName());
 		RelatorioConciliacaoPreForm form = (RelatorioConciliacaoPreForm)_form;
-		/*Date dataInicial = calculaDataInicialPeriodo(form.getMes(), form.getAno());
+		Date dataInicial = calculaDataInicialPeriodo(form.getMes(), form.getAno());
 		Date dataFinal = calculaDataFinalPeriodo(form.getMes(), form.getAno());
-		List<RelContabilView> rows = getServiceManager().getRepassePosService().geraRelatorioContabil(form.getCdEOTLD(), form.getCdEOTClaro(), form.getCdMotivoRejeicao(), dataInicial, dataFinal, form.getTipoOperadora().equals("H"));
+		/*List<SccRelatorioConciliacaoView> rows = getServiceManager().getSccRelatorioConciliacaoService().search(form.getOperadoraClaro(), form.getOperadoraExterna(), dataInicial, dataFinal);
 		List<RelContabilViewDecorator> decoratorList = new ArrayList<RelContabilViewDecorator>(rows.size());
 		for (int i=0;i<rows.size();i++)
 			{
