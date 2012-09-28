@@ -32,8 +32,6 @@ function pesquisar() {
 }
 
 function excel() {
-	$('#excel_button').attr('disabled', 'disabled');
-	$('#pesquisar_button').attr('disabled', 'disabled');
 	$('#operacao').val("excel");	
 	$('#form1').submit();
 }

@@ -14,6 +14,7 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.HSSFColor;
+import org.apache.poi.hssf.util.Region;
 
 import com.claro.sccweb.excel.style.ExcelStyle;
 import com.claro.sccweb.excel.style.SubTitleStyle;
@@ -433,6 +434,51 @@ public class ExcelPrinter {
 		HSSFCell cell = row.createCell((short)0);
 		cell.setCellValue(" ");				
 		currentRow++;
+		}
+	}
+	
+
+	/**
+	 * 	
+	 * Insere uma linha com os dados da lista de entrada
+	 * @param line
+	 * @param mergeRanges
+	 * @param lineStyle
+	 */
+	public void addLine(List<String> line, List<Short> mergeRanges, ExcelStyle lineStyle)
+	{
+		if(line != null && line.size() > 0) 
+		{
+			HSSFRow row = sheetList.get(currentSheet).createRow((short) currentRow);
+			HSSFCellStyle style = workbook.createCellStyle();
+			HSSFFont font = workbook.createFont();
+			
+			ExcelStyle myStyle = null;
+			if(lineStyle != null)
+				myStyle = lineStyle;
+			else
+				myStyle = subtitleStyle;
+			
+			font.setColor(myStyle.getFontColor());
+			font.setFontName(myStyle.getFontName());
+			font.setFontHeightInPoints(myStyle.getFontHeight());
+			font.setBoldweight(myStyle.getBoldweight());
+			style.setFont(font);
+			style.setAlignment(myStyle.getAlignment());
+			style.setWrapText(myStyle.getWrapText());
+
+			for (int i=0;i<line.size();i++)
+			{
+				HSSFCell cell = row.createCell((short)i);
+				cell.setCellStyle(style);
+				cell.setCellValue(line.get(i));				
+			}
+			
+			if(mergeRanges != null)
+				for(int i=0; i< mergeRanges.size(); i+=2)
+					sheetList.get(currentSheet).addMergedRegion(new Region(currentRow, mergeRanges.get(i),currentRow,mergeRanges.get(i+1)));
+			
+			currentRow++;
 		}
 	}
 	
