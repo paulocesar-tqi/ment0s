@@ -44,15 +44,15 @@ public class SccBatimentoInterfaceViewDecorator extends RownumDecorator<SccBatim
 	private void formatarCampos(SccBatimentoInterfaceView entity){
 
 		this.setNomeArquivo(formataString(entity.getNomeArquivo()));
-		this.setOperadoraLD(formataLong(entity.getOperadoraLD()));
+		this.setOperadoraLD(exibeLong(entity.getOperadoraLD()));
 		this.setOperadoraClaro(formataString(entity.getOperadoraClaro()));
 		this.setDataMovimentacao(formataDateTime(entity.getDataMovimentacao()));
 		this.setDataTransferencia(formataDateTime(entity.getDataTransferencia()));
-		this.setQuantidadeRegistrosMobile(formataLong(entity.getQuantidadeRegistrosMobile()));
+		this.setQuantidadeRegistrosMobile(exibeLong(entity.getQuantidadeRegistrosMobile()));
 		this.setDataProcessamento(formataDateTime(entity.getDataProcessamento()));
-		this.setQuantidadeRegistrosScc(formataLong(entity.getQuantidadeRegistrosScc()));
+		this.setQuantidadeRegistrosScc(exibeLong(entity.getQuantidadeRegistrosScc()));
 
-		this.setDiferenca(formataLong((entity.getQuantidadeRegistrosScc() != null ? entity.getQuantidadeRegistrosScc() : 0L) - 
+		this.setDiferenca(exibeLong((entity.getQuantidadeRegistrosScc() != null ? entity.getQuantidadeRegistrosScc() : 0L) - 
 									  (entity.getQuantidadeRegistrosMobile() != null ? entity.getQuantidadeRegistrosMobile() : 0L)));
 		
 		this.setStatus("0".equals(this.getDiferenca()) ? "OK" : "NOK");
