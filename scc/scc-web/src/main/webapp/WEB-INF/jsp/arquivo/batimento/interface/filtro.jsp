@@ -139,24 +139,36 @@ function mostraOperadoraClaro()
 </tr>
 </table>
 <br/>
-<c:if test="${!empty sessionScope._DISPLAY_TAG_SPACE_1}">
 <table  width="100%" border="0" cellspacing="0" cellpadding="0" >
+<c:if test="${!empty sessionScope._DISPLAY_TAG_SPACE_1}">
+
+ <tr><td align="center">
+		<table id="header1" style="width:100%">
+		<thead>
+		<tr>
+		<th>&nbsp;</th>
+		<th class="fundoVerde" style="width: 60px;" >MOBILE</th>
+		<th class="fundoAzul" style="width: 40px;">SCC</th>
+		</tr></thead>
+		</table>
+</td></tr>
+</c:if>
+
  <tr><td align="center">                            
 <display:table style="width:100%"  name="sessionScope._DISPLAY_TAG_SPACE_1"   pagesize="20"  id="repasses" requestURI="/scc/user/arquivo/batimento/interface/tab1.scc" class="ui-state-default">
 <display:column property="nomeArquivo" title="Nome do Arquivo" />
-<display:column property="operadoraLD" title="Operadora LD" />
-<display:column property="operadoraClaro" title="Operadora Claro" />
+<display:column property="operadoraLD" title="Op. LD" />
+<display:column property="operadoraClaro" title="Op. Claro" />
 <display:column property="dataMovimentacao" title="Data de Movimentação" headerClass="fundoVerde" />
 <display:column property="dataTransferencia" title="Data de Transferência" headerClass="fundoVerde" />
 <display:column property="quantidadeRegistrosMobile" title="Quantidade de Registros" headerClass="fundoVerde" />
 <display:column property="dataProcessamento" title="Data de Processamento" headerClass="fundoAzul" />
 <display:column property="quantidadeRegistrosScc" title="Quantidade de Registros" headerClass="fundoAzul" />
 <display:column property="diferenca" title="Diferença" headerClass="fundoLaranja" />
-<display:column property="status" title="Status" headerClass="fundoLaranja" style="width: 20px" />
+<display:column property="status" title="Status" headerClass="fundoLaranja" />
 </display:table>
 </td></tr>
 </table>
-</c:if>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 
 </table>

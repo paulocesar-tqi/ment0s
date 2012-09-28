@@ -85,6 +85,14 @@ public class BasicSccDecorator extends TableDecorator {
 		}
 	}
 	
+	protected String exibeLong(Long valor) {
+		if (valor == null) {
+			return "";
+		} else {
+			return valor.toString();
+		}
+	}
+	
 	protected String formataDate(Date valor) {
 		if (valor == null) {
 			return " ";

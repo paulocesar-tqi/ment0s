@@ -55,8 +55,8 @@ public class PesquisaBatimentoInterfacePosController extends BaseOperationContro
 	
 	
 	public ModelAndView excel(HttpServletRequest request, HttpServletResponse response,@Valid @ModelAttribute(FORM_NAME)  BaseForm form,BindingResult bindingResult,Model model) throws Exception {
-		info("Iniciando geração de Excel para pesquisa de arquivos processados pós-pago");
-		ModelAndView mav = new ModelAndView("pesquisa_arquivos_processados_excel");
+		info("Iniciando geração de Excel para pesquisa de batimento interface pós-pago");
+		ModelAndView mav = new ModelAndView("pesquisa_arquivos_batimento_interface_pos_excel");
 		return mav;
 	}
 	
