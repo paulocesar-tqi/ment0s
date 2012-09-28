@@ -18,15 +18,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.claro.cobillingweb.persistence.dao.BasicDAO;
 import com.claro.cobillingweb.persistence.entity.SccOperadora;
-import com.claro.cobillingweb.persistence.view.RelContabilView;
 import com.claro.cobillingweb.persistence.view.SccRelatorioConciliacaoView;
 import com.claro.sccweb.controller.BaseOperationController;
 import com.claro.sccweb.controller.util.BasicIntegerItem;
 import com.claro.sccweb.controller.validator.RelatorioConciliacaoPreValidator;
-import com.claro.sccweb.decorator.rownum.entity.RelContabilViewDecorator;
+import com.claro.sccweb.decorator.rownum.entity.RelatorioConciliacaoPreDecorator;
 import com.claro.sccweb.form.BaseForm;
 import com.claro.sccweb.form.RelatorioConciliacaoPreForm;
-import com.claro.sccweb.form.RelatorioContabilForm;
 
 @Controller
 @RequestMapping(value="/user/relatorio/conciliacao/pre")
@@ -40,16 +38,16 @@ public class RelatorioConciliacaoPreController extends BaseOperationController<R
 		RelatorioConciliacaoPreForm form = (RelatorioConciliacaoPreForm)_form;
 		Date dataInicial = calculaDataInicialPeriodo(form.getMes(), form.getAno());
 		Date dataFinal = calculaDataFinalPeriodo(form.getMes(), form.getAno());
-		/*List<SccRelatorioConciliacaoView> rows = getServiceManager().getSccRelatorioConciliacaoService().search(form.getOperadoraClaro(), form.getOperadoraExterna(), dataInicial, dataFinal);
-		List<RelContabilViewDecorator> decoratorList = new ArrayList<RelContabilViewDecorator>(rows.size());
+		List<SccRelatorioConciliacaoView> rows = getServiceManager().getSccRelatorioConciliacaoService().search(form.getOperadoraClaro(), form.getOperadoraExterna(), dataInicial, dataFinal);
+		List<RelatorioConciliacaoPreDecorator> decoratorList = new ArrayList<RelatorioConciliacaoPreDecorator>(rows.size());
 		for (int i=0;i<rows.size();i++)
-			{
-			RelContabilViewDecorator decorator = new RelContabilViewDecorator(rows.get(i), i);
+		{
+			RelatorioConciliacaoPreDecorator decorator = new RelatorioConciliacaoPreDecorator(rows.get(i), i);
 			decoratorList.add(decorator);
-			}
+		}
 		cacheMyForm(getClass(), form);
 		mav.addObject(FORM_NAME, form);
-		storeInSession(getClass(), DISPLAY_TAG_SPACE_1, decoratorList, request);*/
+		storeInSession(getClass(), DISPLAY_TAG_SPACE_1, decoratorList, request);
 		return mav;
 	}
 	

@@ -98,14 +98,14 @@ function excel()
 <table  width="100%" border="0" cellspacing="0" cellpadding="0" >
  <tr><td>                            
 <display:table style="width:90%"  name="sessionScope._DISPLAY_TAG_SPACE_1"   pagesize="20"  id="repasses" requestURI="/scc/user/relatorio/conciliacao/pre/tab1.scc" class="ui-state-default">
-<display:column property="row.cdEOTLD" title="Longa Distância"/>
-<display:column property="row.cdEOTClaro" title="Empresa Claro"/>
-<display:column property="row.dataFechamento" title="Mês/Ano"/>
-<display:column property="row.descricao" title="Descrição"/>
-<display:column property="row.cdContabil" title="Código Contábil"/>
-<display:column property="qtCdrs" title="Qtde."/>
-<display:column property="vlLiquido" title="Valor Líquido"/>
-<display:column property="vlBruto" title="Valor Bruto"/>
+<display:column property="dataLancamento" title="Data Lançamento"/>
+<display:column property="descricao" title="Descrição"/>
+<display:column property="contaCredito" title="Conta Contábil Crédito"/>
+<display:column property="contaDebito" title="Conta Contábil Débito"/>
+<display:column property="operadoraLd" title="Operadora LD"/>
+<display:column property="localNegocio" title="Local de Negócio"/>
+<display:column property="empresaContabil" title="Empresa Contábil"/>
+<display:column property="valorBruto" title="Valor Bruto"/>
 </display:table>
 </td></tr>
 </table>

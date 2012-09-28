@@ -13,8 +13,8 @@ public class SccRelatorioConciliacaoView {
 	
 	private Date dataLancamento;
 	private String descricao;
-	private String contaCredito;
-	private String contaDebito;
+	private Long contaCredito;
+	private Long contaDebito;
 	private String codCsp;
 	private String localNegocio;
 	private String empresaContabil;
@@ -34,16 +34,16 @@ public class SccRelatorioConciliacaoView {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-	public String getContaCredito() {
+	public Long getContaCredito() {
 		return contaCredito;
 	}
-	public void setContaCredito(String contaCredito) {
+	public void setContaCredito(Long contaCredito) {
 		this.contaCredito = contaCredito;
 	}
-	public String getContaDebito() {
+	public Long getContaDebito() {
 		return contaDebito;
 	}
-	public void setContaDebito(String contaDebito) {
+	public void setContaDebito(Long contaDebito) {
 		this.contaDebito = contaDebito;
 	}
 	public String getLocalNegocio() {

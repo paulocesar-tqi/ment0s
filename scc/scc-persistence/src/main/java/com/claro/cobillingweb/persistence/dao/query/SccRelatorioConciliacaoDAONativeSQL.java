@@ -18,7 +18,7 @@ public class SccRelatorioConciliacaoDAONativeSQL {
 										"LC.CD_CENTRO as codCentro, " +
 										"LC.TX_HISTORICO_ATIVIDADE as descricao, " + 
 										"TRUNC(ARQ.DT_PROC_CLARO) as dataProcessamento, " +
-										"SUM(LC.VL_CONTABILIZADO) as valorBruto" +
+										"SUM(LC.VL_CONTABILIZADO) as valorBruto " +
 										"FROM   SCC_ARQUIVO_COBILLING ARQ, " + 
 										"SCC_LANCAMENTO_CONTABIL LC, " +
 										"SCC_ATIVIDADE_CONTABIL AC " +

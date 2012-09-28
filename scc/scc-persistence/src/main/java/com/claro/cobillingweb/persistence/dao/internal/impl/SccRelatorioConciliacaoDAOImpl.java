@@ -60,8 +60,8 @@ public class SccRelatorioConciliacaoDAOImpl extends HibernateBasicDAOImpl<SccRel
 			mapper.addResultMap("codCsp", String.class);
 			mapper.addResultMap("localNegocio", String.class);
 			mapper.addResultMap("empresaContabil", String.class);
-			mapper.addResultMap("contaCredito", String.class);
-			mapper.addResultMap("contaDebito", String.class);
+			mapper.addResultMap("contaCredito", Long.class);
+			mapper.addResultMap("contaDebito", Long.class);
 			mapper.addResultMap("codCentro", String.class);
 			mapper.addResultMap("descricao", String.class);
 			mapper.addResultMap("dataProcessamento", Date.class);
