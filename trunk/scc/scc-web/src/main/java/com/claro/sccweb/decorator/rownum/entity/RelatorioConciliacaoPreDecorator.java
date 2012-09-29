@@ -48,7 +48,7 @@ public class RelatorioConciliacaoPreDecorator extends RownumDecorator<SccRelator
 		this.setOperadoraLd(formataString(entity.getCodCsp()));
 		this.setLocalNegocio(formataString(entity.getLocalNegocio()));
 		this.setEmpresaContabil(formataString(entity.getEmpresaContabil()));
-		this.setValorBruto("R$ " + formataDouble(entity.getValorBruto()));
+		this.setValorBruto(formataDouble(entity.getValorBruto()));
 	}
 
 	
