@@ -36,7 +36,7 @@ public class RelatorioConciliacaoPreExcelHandler extends BasicExcelHandler {
 		columnDefinitions.add(new ExcelColumnDefinition("getOperadoraLd", "Operadora LD", style, 30));
 		columnDefinitions.add(new ExcelColumnDefinition("getLocalNegocio", "Local de Negócio", style, 30));
 		columnDefinitions.add(new ExcelColumnDefinition("getEmpresaContabil", "Empresa Contábil", style, 30));
-		columnDefinitions.add(new ExcelColumnDefinition("getValorBruto", "Valor Bruto", style, 30));
+		columnDefinitions.add(new ExcelColumnDefinition("getValorBruto", "Valor Bruto", currencyStyle, 30));
 		ExcelPrinter printer = new ExcelPrinter(columnDefinitions,workbook);
 		printer.addSheet("Conciliação");
 		List<String> linhasCabecalho = new ArrayList<String>();
