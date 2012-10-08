@@ -1,11 +1,16 @@
 package com.claro.cobillingweb.persistence.view;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+
 
 /**
  * Relatório sintético de repasse pré-pago.
  *
  */
 public class RelSinteticoFechamentoPrePagoView {
+	
+	protected static NumberFormat decimalFormat = new DecimalFormat("#.##");
 
 	private String cdEOTHolding;
 	private String cdEOTClaro;
@@ -146,5 +151,53 @@ public class RelSinteticoFechamentoPrePagoView {
 	}
 	
 	
+	
+	//Para Excel
+	public String getMinutosString()
+	{
+		if (getMinutos() == null)
+			return "0,0";
+		else
+			return decimalFormat.format(getMinutos());
+	}
+	
+	/*item.setVlLiquido(item.getVlBruto()-item.getVlIcmsADescontar()-item.getVlIcmsRepassar()-item.getVlPis()-item.getVlCofins());*/
+	public String getValorLiquidoString()
+	{
+		return decimalFormat.format(zeroIfNull(getValorBruto())-zeroIfNull(getIcmsRepassar())-zeroIfNull(getValorPis())-zeroIfNull(getValorCofins())-zeroIfNull(getIcmsNaoRepassado()));
+	}
+	
+	public String getPisCofinsString()
+	{
+		return decimalFormat.format(zeroIfNull(getValorPis())+zeroIfNull(getValorCofins()));
+	}
+	
+	public String getIcmsRepassarString()
+	{
+		return decimalFormat.format(zeroIfNull(getIcmsRepassar()));
+	}
+	
+	public String getValorRepassarString()
+	{
+		return decimalFormat.format(zeroIfNull(getValorRepassar()));
+	}
+	
+	public String getIcmsNaoRepassadoString()
+	{
+		return decimalFormat.format(zeroIfNull(getIcmsNaoRepassado()));
+	}
+		
+	
+	public String getValorBrutoString()
+	{
+		return decimalFormat.format(getValorBruto());
+	}
+	
+	protected Double zeroIfNull(Double value) {
+		if (value == null) {
+			return 0.0;
+		}
+		return value;
+	}
 }
 
