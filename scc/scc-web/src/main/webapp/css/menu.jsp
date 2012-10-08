@@ -60,6 +60,9 @@
 <li><a href="/scc/user/arquivo/retorno/eventos/new.scc">Eventos</a></li>
 <li><a href="/scc/user/arquivo/retorno/new.scc">Arquivo de Retorno</a></li>
 <li><a href="/scc/user/arquivo/retorno/critica/new.scc">Críticas</a></li>
+<c:if test="${sessionScope['scopedTarget.sessionDataManager'].posPago}">
+	<li><a href="/scc/user/arquivo/retorno/drilldown/new.scc"><spring:message code="menu.arquivo.retorno.drilldown"/></a></li>
+</c:if>
 </ul>
 </li>
 

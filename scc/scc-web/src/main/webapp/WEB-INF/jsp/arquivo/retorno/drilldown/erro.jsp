@@ -10,33 +10,24 @@
 
 <script>
 $(document).ready(function(){
-	$('#voltar_button').click(voltar)	
-	$('#excel_button').click(excel)
+	$('#voltar_button').click(voltar)	 
 	$('#tabs').tabs();
 });
 
 function voltar()
 {	
-	$('#operacao').val("voltarArquivo");	
+	$('#operacao').val("voltar");	
 	$('#form1').submit();
 }
 
 
 
-function selecionar(linha)
+function listar(linha)
 {
 	$('#itemSelecionado').val(linha);	
-	$('#operacao').val("selecionarCDR");
+	$('#operacao').val("listar");
 	$('#form1').submit();
 }
-
-
-function excel()
-{
-	$('#operacao').val("excelCDRs");
-	$('#form1').submit();
-}
-
 
 </script>
 
@@ -59,21 +50,10 @@ function excel()
 <br/>
 <table  width="100%" border="0" cellspacing="0" cellpadding="0" >
  <tr><td>                            
-
-<display:table  style="width:90%"  name="sessionScope._DISPLAY_TAG_SPACE_3" pagesize="50"  id="cdrs" requestURI="/scc/user/pos/processados/pesquisa/pagina.scc" partialList="true" size="sessionScope._DISPLAY_TAG_SPACE_3.fullListSize" class="ui-state-default">
-<display:column property="cdMotivo" title="Cod. Motivo" />
-<display:column property="status" title="Status" />
-<display:column property="dataStatus" title="Data Status" />
-<display:column property="CSP" title="CSP" />
-<display:column property="numeroA" title="A#" />
-<display:column property="numeroB" title="B#" />
-<display:column property="EOTOrigem" title="EOT Origem" />
-<display:column property="EOTExterna" title="EOT Externa" />
-<display:column property="dataChamada" title="Data Chamada" />
-<display:column property="horaChamada" title="Hora Chamada" />
-<display:column property="duracao" title="Duração" />
-<display:column property="valorLiquido" title="Vl. Líquido" />
-<display:column property="arquivoRetorno" title="Arquivo Retorno" />
+<display:table style="width:90%"  name="sessionScope._DISPLAY_TAG_SPACE_2"   pagesize="20"  id="repasses" requestURI="/scc/user/pos/processados/pesquisa/tab1.scc" class="ui-state-default">
+<display:column property="motivo" title="Motivo" />
+<display:column property="quantidade" title="Quantidade" />
+<display:column property="listar" title="Listar" />
 </display:table>
 </td></tr>
 </table>
@@ -81,9 +61,8 @@ function excel()
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
     <td colspan="3" class="TdFormularioUp">&nbsp;</td>    
-    <td colspan="1" align="right" class="TdFormularioUp" nowrap="nowrap">    
+    <td colspan="1" align="right" class="TdFormularioUp" nowrap="nowrap">
     <input id="voltar_button" type="button" value="Voltar" />
-    <input id="excel_button" type="button" value="Excel" />
     </td>
 </tr>
 </table>
