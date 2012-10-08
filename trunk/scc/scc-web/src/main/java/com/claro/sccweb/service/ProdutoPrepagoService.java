@@ -14,6 +14,7 @@ public interface ProdutoPrepagoService {
 	public void create(SccProdutoPrepago entity) throws DAOException;
 	public void update(SccProdutoPrepago entity) throws DAOException;
 	public void delete(SccProdutoPrepago entity) throws DAOException;
+	public SccProdutoPrepago findByPk(String codigo) throws DAOException;
 	public List<SccPacotePrepago> pesquisaPacotes(Long cdPacotePrepago,String noPacotePrepago,String cdProdutoPrepago) throws DAOException;
 	
 	public void create(SccPacotePrepago entity) throws DAOException;

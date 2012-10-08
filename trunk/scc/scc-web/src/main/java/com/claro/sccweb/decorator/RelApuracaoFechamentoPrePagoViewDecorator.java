@@ -116,6 +116,23 @@ public class RelApuracaoFechamentoPrePagoViewDecorator extends RownumDecorator<R
 		return decimalFormat.format(valorLiquidoApurado+valorPisCofins+valorIcmsRepassar);
 	}
 
+	public String getValorNotaFiscal() {		
+		return decimalFormat.format((valorLiquidoApurado+valorPisCofins+valorIcmsRepassar)-(valorCreditos226-valorAcertos));
+	}
+	
+	public String getDestaqueIcms() {
+		Double valorRepassar = (valorLiquidoApurado+valorPisCofins+valorIcmsRepassar);
+		if (valorRepassar == 0.0) {
+			return "0.00";
+		}
+		Double valor = 0.0;
+		if (isFlagTrue(getRow().getRepassaICMS()))
+			{
+			valor = zeroIfNull(getRow().getValor14())+zeroIfNull(getRow().getValor22());
+			}
+		return decimalFormat.format(valor - (valorCreditos226 * (valor/valorRepassar)));
+	}
+	
 	public String getServicoPrestadoLiquido() {
 		Double valor = 0.0;
 		valor = zeroIfNull(getRow().getValor25()) -(zeroIfNull(getRow().getValor26())+zeroIfNull(getRow().getValor27())+zeroIfNull(getRow().getValor28()));
