@@ -211,4 +211,29 @@
 		<put-attribute name="tituloTela" value="Pesquisa de Batimento das Interfaces MOBILE e SCC - Pós" />
 	</definition>
 
+	<definition name="pesquisa_arquivos_retorno_drilldown" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/arquivo/retorno/drilldown/filtro.jsp" />
+		<put-attribute name="tituloTela" value="Relatório Drill Down - Pós" />
+	</definition>
+
+	<definition name="pesquisa_arquivos_retorno_drilldown_status" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/arquivo/retorno/drilldown/status.jsp" />
+		<put-attribute name="tituloTela" value="Relatório Drill Down - Pós" />
+	</definition>
+	
+	<definition name="pesquisa_arquivos_retorno_drilldown_erro" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/arquivo/retorno/drilldown/erro.jsp" />
+		<put-attribute name="tituloTela" value="Relatório Drill Down - Pós" />
+	</definition>
+	
+	<definition name="pesquisa_arquivos_retorno_drilldown_processados" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/arquivo/retorno/drilldown/processados.jsp" />
+		<put-attribute name="tituloTela" value="Relatório Drill Down - Pós" />
+	</definition>
+	
+	<definition name="pesquisa_arquivos_retorno_drilldown_cdrs" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/arquivo/retorno/drilldown/lista.jsp" />
+		<put-attribute name="tituloTela" value="Relatório Drill Down - Pós" />
+	</definition>
+
 </tiles-definitions>

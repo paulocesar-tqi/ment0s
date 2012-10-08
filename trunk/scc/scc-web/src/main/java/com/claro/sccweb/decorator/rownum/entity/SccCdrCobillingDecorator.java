@@ -40,12 +40,18 @@ public class SccCdrCobillingDecorator extends RownumDecorator<SccCdrCobilling>{
 	
 	public String getMotivo()
 	{
-		return formataString(getRow().getCdMotivoRejeicao().getDsMotivoRejeicao());
+		if(getRow().getCdMotivoRejeicao() != null)
+			return formataString(getRow().getCdMotivoRejeicao().getDsMotivoRejeicao());
+		else
+			return " ";
 	}
 	
 	public String getCdMotivo()
 	{
-		return formataString(getRow().getCdMotivoRejeicao().getCdMotivoRejeicao());
+		if(getRow().getCdMotivoRejeicao() != null)
+			return formataString(getRow().getCdMotivoRejeicao().getCdMotivoRejeicao());
+		else
+			return " ";
 	}
 	
 	public String getQuantidade()
@@ -125,7 +131,11 @@ public class SccCdrCobillingDecorator extends RownumDecorator<SccCdrCobilling>{
 	
 	public String getArquivoRetorno()
 	{
-		return getRow().getArquivoRetorno().getNoArquivo();
+		try {
+			return getRow().getArquivoRetorno().getNoArquivo();			
+		} catch (Exception e) {
+			return " ";
+		}
 	}
 
 	public SccArquivoCobilling getArquivoRemessa() {
