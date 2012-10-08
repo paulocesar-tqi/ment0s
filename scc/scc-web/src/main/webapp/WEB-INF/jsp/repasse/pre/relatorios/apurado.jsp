@@ -62,6 +62,8 @@ $('#tabs').tabs();
 <display:column property="icmsDescontar" title="ICMS Descontar" />
 <display:column property="icmsRepassar" title="ICMS Repassar" />
 <display:column property="valorFinalRepassar" title="Vlr. Final Repassar" />
+<display:column property="valorNotaFiscal" title="Valor Nota Fiscal" />
+<display:column property="destaqueIcms" title="Destaque ICMS" />
 </display:table>
 </td></tr>
 </table>

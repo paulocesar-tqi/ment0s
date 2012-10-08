@@ -20,7 +20,11 @@ public class ProdutoPrepagoServiceImpl extends AbstractService implements Produt
 	private SccPacotePrepagoDAO pacotePrepagoDAO;
 	private SccTipoEventoDAO tipoEventoDAO;
 	
-	 
+	
+	public SccProdutoPrepago findByPk(String codigo) throws DAOException {
+		return getProdutoPrepagoDAO().getByPk(codigo, SccProdutoPrepago.class);
+	}
+	
 	public List<SccProdutoPrepago> getAll() throws DAOException {
 		return getProdutoPrepagoDAO().getAll();
 	}

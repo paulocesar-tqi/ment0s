@@ -129,7 +129,6 @@ public class RelatoriosRepassePreController extends BaseFormController {
 	 */
 	@RequestMapping(value="/execute" , method = RequestMethod.POST)
 	public ModelAndView pesquisar(HttpServletRequest request, HttpServletResponse response,@Valid @ModelAttribute("filtro")  RelatoriosRepassePreForm form,BindingResult bindingResult,Model model) throws Exception {	
-		cacheMyForm(getClass(), form);
 		debug("Tratando request RelatoriosRepassePreController com operação "+form.getOperacao());
 		ModelAndView mav = new ModelAndView();
 		System.out.println("CONTROLLER=1");
@@ -137,6 +136,7 @@ public class RelatoriosRepassePreController extends BaseFormController {
 		if (bindingResult.hasErrors()) {
 			mav.setViewName("repasse_pre_relatorios_filtro");
 		} else if (form.getOperacao().equals(OPERACAO_PESQUISAR)) {
+			cacheMyForm(getClass(), form);
 			System.out.println("CONTROLLER=2");
 			if (form.getCdTipoRelatorio().equals(TIPO_RELATORIOS_SINTETICO)) {
 				System.out.println("CONTROLLER=2-1");
@@ -181,7 +181,7 @@ public class RelatoriosRepassePreController extends BaseFormController {
 		
 		List<RelSinteticoServicoPrePagoView> parte2 = getServiceManager().getRepassePreService().geraRelatorioSinteticoService(form.getCdProdutoPrepago(),form.getCdEOTLD(), form.getCdEOTClaro(), form.getCdStatusFechamento(), dataInicial, dataFinal);
 		List<RelSinteticoFechamentoPrePagoView> parte1 = getServiceManager().getRepassePreService().geraRelatorioSintetico(form.getCdProdutoPrepago(),form.getCdEOTLD(), form.getCdEOTClaro(), form.getCdStatusFechamento(), dataInicial, dataFinal);
-		
+
 		storeInSession(getClass(), DISPLAY_TAG_SPACE_1, parte1, request);
 		storeInSession(getClass(), DISPLAY_TAG_SPACE_2, parte2, request);
 		
@@ -206,12 +206,14 @@ public class RelatoriosRepassePreController extends BaseFormController {
 	
 	private ModelAndView exportaExcelApurado(HttpServletRequest request, HttpServletResponse response,@Valid @ModelAttribute("filtro")  RelatoriosRepassePreForm form,BindingResult bindingResult,Model model) throws Exception {
 		info("Exportando relatório apurado de repasse pré-pago : "+form.toString());
-		return null;
+		ModelAndView mav = new ModelAndView("relatorio_apuracao_pre_filtro_excel");
+		return mav;
 	}
 	
 	private ModelAndView exportaExcelSintetico(HttpServletRequest request, HttpServletResponse response,@Valid @ModelAttribute("filtro")  RelatoriosRepassePreForm form,BindingResult bindingResult,Model model) throws Exception {
 		info("Exportando relatório sintético de repasse pré-pago : "+form.toString());
-		return null;
+		ModelAndView mav = new ModelAndView("relatorio_sintetico_pre_filtro_excel");
+		return mav;
 	}
 	
 	@ModelAttribute("operadorasExternas")
