@@ -361,6 +361,14 @@
 			<ul>	
 		</li>
 		
+		<c:if test="${sessionScope['scopedTarget.sessionDataManager'].prePago}">
+			<li>
+				<a class="has-children" href="#"><spring:message code="menu.relatorio.contabil"/></a>
+				<ul>
+					<li><a href="/scc/user/relatorio/conciliacao/pre/new.scc"><spring:message code="menu.relatorio.contabil.conciliacao"/></a>	</li>
+				</ul>
+			</li>
+		</c:if>
 		
 	</ul>
 </li>

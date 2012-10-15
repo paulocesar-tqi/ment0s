@@ -50,7 +50,8 @@ public class RelatorioResumoApuradoPreExcelHandler extends BasicExcelHandler{
 		columnDefinitions.add(new ExcelColumnDefinition("getIcmsDescontar",	"ICMS Descontar", style, 30));
 		columnDefinitions.add(new ExcelColumnDefinition("getIcmsRepassar",	"ICMS Repassar", style, 30));
 		columnDefinitions.add(new ExcelColumnDefinition("getValorFinalRepassar",	"Vlr. Final Repassar", style, 30));
-		
+		columnDefinitions.add(new ExcelColumnDefinition("getValorNotaFiscal", "Valor Nota Fiscal", style, 30));
+		columnDefinitions.add(new ExcelColumnDefinition("getDestaqueIcms", "Destaque ICMS", style, 30));
 		ExcelPrinter printer = new ExcelPrinter(columnDefinitions,workbook);
 		printer.addSheet("Resumo Apuração");
 		List<String> linhasCabecalho = new ArrayList<String>();
