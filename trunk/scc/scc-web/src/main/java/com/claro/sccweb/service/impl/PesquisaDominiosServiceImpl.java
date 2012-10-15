@@ -96,6 +96,10 @@ public class PesquisaDominiosServiceImpl extends AbstractService implements Pesq
 	public List<SccPreDominio> pesquisaPorTipoDominioPre(String tipo) throws DAOException {
 		return getPreDominioDAO().pesquisaPorTipoDominio(tipo);
 	}
+	
+	public List<SccStatusArquivo> findByStatus() throws DAOException{
+		return getStatusArquivoDAO().findByStatus();
+	}
 
 	public SccPreDominioDAO getPreDominioDAO() {
 		return preDominioDAO;

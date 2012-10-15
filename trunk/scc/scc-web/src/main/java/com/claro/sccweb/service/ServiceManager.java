@@ -1,11 +1,13 @@
 package com.claro.sccweb.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
- * Spring bean aonde os serviços serão injetados e disponibilizados para os controllers. 
+ * Spring bean onde os serviços serão injetados e disponibilizados para os controllers. 
  *
  */
+@Service
 public class ServiceManager {
 
 	private PesquisaDominiosService pesquisaDominiosService;	
@@ -33,6 +35,38 @@ public class ServiceManager {
 	private ContabilService contabilService;
 	private SccParamProcessoService sccParamProcessoService;
 	
+	@SuppressWarnings("unused")
+	@Autowired
+	private SccRelBatimentoEstornoDebitoService sccRelBatimentoEstornoDebitoService;
+	
+	@SuppressWarnings("unused")
+	@Autowired
+	private SccFinanceiroService sccFinanceiroService;
+	
+	@Autowired
+	private SccAcordoParcelamentoService sccAcordoParcelamentoService;
+	
+	@Autowired
+	private SccAcoesCobrancaService sccAcoesCobrancaService;
+	
+	@Autowired
+	private SccFaturasService sccFaturasService;
+	
+	@Autowired
+	private SccNaoConfAplBatimentoEstornoDebitoService sccNaoConfAplBatimentoEstornoDebitoService;
+	
+	@Autowired
+	private SccPreRelatorioEventosService sccPreRelatorioEventosService;
+	
+	@Autowired
+	private SccPreChamadasCreditoService sccPreChamadasCreditoService;
+	
+	@Autowired
+	private SccNaoConfAplFaturamentoService sccNaoConfAplFaturamentoService;
+	
+	@Autowired
+	private SccNaoConfAplAjustesService sccNaoConfAplAjustesService;
+	
 	@Autowired
 	private SccGrupoCobillingService sccGrupoCobillingService;
 	
@@ -44,6 +78,39 @@ public class ServiceManager {
 	
 	@Autowired
 	private SccBatimentoArquivosService sccBatimentoArquivosService;
+
+	@Autowired
+	private SccConfirmacaoRepasseService sccConfirmacaoRepasseService;
+	
+	@Autowired
+	private SccArquivosNaoProcessadosService sccArquivosNaoProcessadosService;
+
+	@Autowired
+	private SccAssexuadosService sccAssexuadosService;
+
+	@Autowired
+	private SccEncaminhadoMobileService sccEncaminhadoMobileService;
+
+	@Autowired
+	private SccAlocadasMobileService sccAlocadasMobileService;
+
+	@Autowired
+	private SccAlocadasMobileSemProcessamentoService sccAlocadasMobileSemProcessamentoService;
+
+	@Autowired
+	private SccExtracaoCDRsService sccExtracaoCDRsService;
+	
+	@Autowired
+	private SccRelatorioChamadasRefaturamentoService sccRelatorioChamadasRefaturamentoService;
+	
+	@Autowired
+	private SccContingenciaFiscalService sccContingenciaFiscalService;
+
+	@Autowired
+	private SccBatimentoFiscalService sccBatimentoFiscalService;
+
+	@Autowired
+	private SccArquivosFiscaisService sccArquivosFiscaisService;
 
 	@Autowired
 	private SccBatimentoInterfaceService sccBatimentoInterfaceService;
@@ -260,8 +327,7 @@ public class ServiceManager {
 		return sccEmailCobillingService;
 	}
 
-	public void setSccEmailCobillingService(
-			SccEmailCobillingService sccEmailCobillingService) {
+	public void setSccEmailCobillingService(SccEmailCobillingService sccEmailCobillingService) {
 		this.sccEmailCobillingService = sccEmailCobillingService;
 	}
 
@@ -269,8 +335,7 @@ public class ServiceManager {
 		return sccRelatorioCobillingService;
 	}
 
-	public void setSccRelatorioCobillingService(
-			SccRelatorioCobillingService sccRelatorioCobillingService) {
+	public void setSccRelatorioCobillingService(SccRelatorioCobillingService sccRelatorioCobillingService) {
 		this.sccRelatorioCobillingService = sccRelatorioCobillingService;
 	}
 
@@ -278,11 +343,182 @@ public class ServiceManager {
 		return sccBatimentoArquivosService;
 	}
 
-	public void setSccBatimentoArquivosService(
-			SccBatimentoArquivosService sccBatimentoArquivosService) {
+	public void setSccBatimentoArquivosService(SccBatimentoArquivosService sccBatimentoArquivosService) {
 		this.sccBatimentoArquivosService = sccBatimentoArquivosService;
 	}
+
+	public SccConfirmacaoRepasseService getSccConfirmacaoRepasseService() {
+		return sccConfirmacaoRepasseService;
+	}
+
+	public void setSccConfirmacaoRepasseService(
+			SccConfirmacaoRepasseService sccConfirmacaoRepasseService) {
+		this.sccConfirmacaoRepasseService = sccConfirmacaoRepasseService;
+	}
+
+	public SccNaoConfAplAjustesService getSccNaoConfAplAjustesService() {
+		return sccNaoConfAplAjustesService;
+	}
+
+	public void setSccNaoConfAplAjustesService(SccNaoConfAplAjustesService sccNaoConfAplAjustesService) {
+		this.sccNaoConfAplAjustesService = sccNaoConfAplAjustesService;
+	}
+
+	public SccAcoesCobrancaService getSccAcoesCobrancaService() {
+		return sccAcoesCobrancaService;
+	}
+
+	public void setSccAcoesCobrancaService(
+			SccAcoesCobrancaService sccAcoesCobrancaService) {
+		this.sccAcoesCobrancaService = sccAcoesCobrancaService;
+	}
+
+	public SccFaturasService getSccFaturasService() {
+		return sccFaturasService;
+	}
+
+	public void setSccFaturasService(SccFaturasService sccFaturasService) {
+		this.sccFaturasService = sccFaturasService;
+	}
+
+	public SccNaoConfAplBatimentoEstornoDebitoService getSccNaoConfAplBatimentoEstornoDebitoService() {
+		return sccNaoConfAplBatimentoEstornoDebitoService;
+	}
+
+	public void setSccNaoConfAplBatimentoEstornoDebitoService(
+			SccNaoConfAplBatimentoEstornoDebitoService sccNaoConfAplBatimentoEstornoDebitoService) {
+		this.sccNaoConfAplBatimentoEstornoDebitoService = sccNaoConfAplBatimentoEstornoDebitoService;
+	}
+
+	public SccPreRelatorioEventosService getSccPreRelatorioEventosService() {
+		return sccPreRelatorioEventosService;
+	}
+
+	public void setSccPreRelatorioEventosService(
+			SccPreRelatorioEventosService sccPreRelatorioEventosService) {
+		this.sccPreRelatorioEventosService = sccPreRelatorioEventosService;
+	}
+
+	public SccArquivosNaoProcessadosService getSccArquivosNaoProcessadosService() {
+		return sccArquivosNaoProcessadosService;
+	}
+
+	public void setSccArquivosNaoProcessadosService(
+			SccArquivosNaoProcessadosService sccArquivosNaoProcessadosService) {
+		this.sccArquivosNaoProcessadosService = sccArquivosNaoProcessadosService;
+	}
+
+	public SccAssexuadosService getSccAssexuadosService() {
+		return sccAssexuadosService;
+	}
+
+	public void setSccAssexuadosService(SccAssexuadosService sccAssexuadosService) {
+		this.sccAssexuadosService = sccAssexuadosService;
+	}
+
+	public SccEncaminhadoMobileService getSccEncaminhadoMobileService() {
+		return sccEncaminhadoMobileService;
+	}
+
+	public void setSccEncaminhadoMobileService(
+			SccEncaminhadoMobileService sccEncaminhadoMobileService) {
+		this.sccEncaminhadoMobileService = sccEncaminhadoMobileService;
+	}
+
+	public SccAlocadasMobileService getSccAlocadasMobileService() {
+		return sccAlocadasMobileService;
+	}
+
+	public void setSccAlocadasMobileService(
+			SccAlocadasMobileService sccAlocadasMobileService) {
+		this.sccAlocadasMobileService = sccAlocadasMobileService;
+	}
+
+	public SccAlocadasMobileSemProcessamentoService getSccAlocadasMobileSemProcessamentoService() {
+		return sccAlocadasMobileSemProcessamentoService;
+	}
+
+	public void setSccAlocadasMobileSemProcessamentoService(
+			SccAlocadasMobileSemProcessamentoService sccAlocadasMobileSemProcessamentoService) {
+		this.sccAlocadasMobileSemProcessamentoService = sccAlocadasMobileSemProcessamentoService;
+	}
+
+	public SccExtracaoCDRsService getSccExtracaoCDRsService() {
+		return sccExtracaoCDRsService;
+	}
+
+	public void setSccExtracaoCDRsService(
+			SccExtracaoCDRsService sccExtracaoCDRsService) {
+		this.sccExtracaoCDRsService = sccExtracaoCDRsService;
+	}
+
+	public SccNaoConfAplFaturamentoService getSccNaoConfAplFaturamentoService() {
+		return sccNaoConfAplFaturamentoService;
+	}
+
+	public void setSccNaoConfAplFaturamentoService(
+			SccNaoConfAplFaturamentoService sccNaoConfAplFaturamentoService) {
+		this.sccNaoConfAplFaturamentoService = sccNaoConfAplFaturamentoService;
+	}
 	
+	
+	public SccPreChamadasCreditoService getSccPreChamadasCreditoService() {
+		return sccPreChamadasCreditoService;
+	}
+
+	public void setSccPreChamadasCreditoService(
+			SccPreChamadasCreditoService sccPreChamadasCreditoService) {
+		this.sccPreChamadasCreditoService = sccPreChamadasCreditoService;
+	}
+
+	public SccContingenciaFiscalService getSccContingenciaFiscalService() {
+		return sccContingenciaFiscalService;
+	}
+
+	public void setSccContingenciaFiscalService(
+			SccContingenciaFiscalService sccContingenciaFiscalService) {
+		this.sccContingenciaFiscalService = sccContingenciaFiscalService;
+	}
+
+	public SccBatimentoFiscalService getSccBatimentoFiscalService() {
+		return sccBatimentoFiscalService;
+	}
+
+	public void setSccBatimentoFiscalService(
+			SccBatimentoFiscalService sccBatimentoFiscalService) {
+		this.sccBatimentoFiscalService = sccBatimentoFiscalService;
+	}
+
+	public SccArquivosFiscaisService getSccArquivosFiscaisService() {
+		return sccArquivosFiscaisService;
+	}
+
+	public void setSccArquivosFiscaisService(
+			SccArquivosFiscaisService sccArquivosFiscaisService) {
+		this.sccArquivosFiscaisService = sccArquivosFiscaisService;
+	}
+
+	public void setSccAcordoParcelamentoService(SccAcordoParcelamentoService sccAcordoParcelamentoService) {
+		this.sccAcordoParcelamentoService = sccAcordoParcelamentoService;
+	}
+
+	public void setSccFinanceiroService(SccFinanceiroService sccFinanceiroService) {
+		this.sccFinanceiroService = sccFinanceiroService;
+	}
+
+	public void setSccRelBatimentoEstornoDebitoService(
+			SccRelBatimentoEstornoDebitoService sccRelBatimentoEstornoDebitoService) {
+		this.sccRelBatimentoEstornoDebitoService = sccRelBatimentoEstornoDebitoService;
+	} 
+
+	public SccRelatorioChamadasRefaturamentoService getSccRelatorioChamadasRefaturamentoService() {
+		return sccRelatorioChamadasRefaturamentoService;
+	}
+
+	public void setSccRelatorioChamadasRefaturamentoService(
+			SccRelatorioChamadasRefaturamentoService sccRelatorioChamadasRefaturamentoService) {
+		this.sccRelatorioChamadasRefaturamentoService = sccRelatorioChamadasRefaturamentoService;
+	}
 	
 	public SccBatimentoInterfaceService getSccBatimentoInterfaceService() {
 		return sccBatimentoInterfaceService;
@@ -301,5 +537,4 @@ public class ServiceManager {
 			SccRelatorioConciliacaoService sccRelatorioConciliacaoService) {
 		this.sccRelatorioConciliacaoService = sccRelatorioConciliacaoService;
 	}
-	
 }

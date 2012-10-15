@@ -38,7 +38,11 @@ public class RelPrestacaoServicoSQL {
 	
 	public static final String CD_EOT_LD = "AND R.CD_EOT_LD = :cdEOTLd " ;
 	
+	public static final String CD_EOT_LD_PRE = "AND PF.CD_EOT_LD = :cdEOTLd " ;
+	
 	public static final String CD_EOT_CLARO = "AND R.CD_EOT_CLARO = :cdEOTClaro ";
+	
+	public static final String CD_EOT_CLARO_PRE = "AND PF.CD_EOT_CLARO = :cdEOTClaro ";
 	
 	public static final String DT_INICIAL_REPASSE = "AND R.DT_INICIAL_REPASSE = :dataInicial ";
 	
@@ -57,7 +61,7 @@ public class RelPrestacaoServicoSQL {
 												"SUM(CASE WHEN O.cd_eot = '001' THEN PF.vl_serv_prest_bruto "+
 												"ELSE 0          END)        AS EMBRATEL, " +
 												"SUM(CASE WHEN O.CD_EOT = '201' THEN PF.vl_serv_prest_bruto "+
-												"ELSE 0          END) AS INTELIG "+
+												"ELSE 0          END) AS INTELIG, "+
 												"SUM(CASE WHEN O.cd_eot = '061' THEN PF.vl_serv_prest_bruto "+ 
 												"ELSE 0          END)        AS BRASIL_TELECOM, "+
 											    "SUM(CASE WHEN O.cd_eot = '211' THEN PF.vl_serv_prest_bruto "+ 

@@ -67,8 +67,27 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 		<property name="sccEmailCobillingService" ref="sccEmailCobillingService" />
 		<property name="sccRelatorioCobillingService" ref="sccRelatorioCobillingService" />
 		<property name="sccBatimentoArquivosService" ref="sccBatimentoArquivosService"/>
+		<property name="sccConfirmacaoRepasseService" ref="sccConfirmacaoRepasseService"/>
+		<property name="sccArquivosNaoProcessadosService" ref="sccArquivosNaoProcessadosService"/>
+		<property name="sccAssexuadosService" ref="sccAssexuadosService"/>
+		<property name="sccContingenciaFiscalService" ref="sccContingenciaFiscalService"/>
+		<property name="sccBatimentoFiscalService" ref="sccBatimentoFiscalService"/>
+		<property name="sccArquivosFiscaisService" ref="sccArquivosFiscaisService"/>
+		<property name="sccAlocadasMobileService" ref="sccAlocadasMobileService"/>
+		<property name="sccAlocadasMobileSemProcessamentoService" ref="sccAlocadasMobileSemProcessamentoService"/>
+		<property name="sccEncaminhadoMobileService" ref="sccEncaminhadoMobileService"/>
+		<property name="sccExtracaoCDRsService" ref="sccExtracaoCDRsService"/>
+		<property name="sccNaoConfAplAjustesService" ref="sccNaoConfAplAjustesService"/>
+		<property name="sccNaoConfAplFaturamentoService" ref="sccNaoConfAplFaturamentoService"/>
+		<property name="sccNaoConfAplBatimentoEstornoDebitoService" ref="sccNaoConfAplBatimentoEstornoDebitoService"/>
+		<property name="sccFaturasService" ref="sccFaturasService"/>
+		<property name="sccAcoesCobrancaService" ref="sccAcoesCobrancaService"/>
+		<property name= "sccRelBatimentoEstornoDebitoService" ref="sccRelBatimentoEstornoDebitoService"/>
+		<property name="sccAcordoParcelamentoService" ref="sccAcordoParcelamentoService"/>
+		<property name="sccFinanceiroService" ref="sccFinanceiroService"/>
 		<property name="sccBatimentoInterfaceService" ref="sccBatimentoInterfaceService"/>
 		<property name="sccRelatorioConciliacaoService" ref="sccRelatorioConciliacaoService"/>
+
 	</bean>
 
 	<bean id="sccService" abstract="true"
@@ -305,6 +324,113 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 		<property name="sccBatimentoArquivosDAO" ref="sccBatimentoArquivosDAO" />
 	</bean>
 	
+	<bean id="sccConfirmacaoRepasseService" class="com.claro.sccweb.service.impl.SccConfirmacaoRepasseServiceImpl"
+		parent="sccService">
+		<property name="sccConfirmacaoRepasseDAO" ref="sccConfirmacaoRepasseDAO" />
+	</bean>
+	
+	<bean id="sccArquivosNaoProcessadosService" class="com.claro.sccweb.service.impl.SccArquivosNaoProcessadosServiceImpl"
+		parent="sccService">
+		<property name="sccArquivosNaoProcessadosDAO" ref="sccArquivosNaoProcessadosDAO" />
+	</bean>
+	
+	<bean id="sccAssexuadosService" class="com.claro.sccweb.service.impl.SccAssexuadosServiceImpl"
+		parent="sccService">
+		<property name="sccAssexuadosDAO" ref="sccAssexuadosDAO" />
+	</bean>
+	
+	<bean id="sccContingenciaFiscalService" class="com.claro.sccweb.service.impl.SccContingenciaFiscalServiceImpl"
+		parent="sccService">
+		<property name="sccContingenciaFiscalDAO" ref="sccContingenciaFiscalDAO" />
+	</bean>
+
+	<bean id="sccBatimentoFiscalService" class="com.claro.sccweb.service.impl.SccBatimentoFiscalServiceImpl"
+		parent="sccService">
+		<property name="sccBatimentoFiscalDAO" ref="sccBatimentoFiscalDAO" />
+	</bean>
+	
+	<bean id="sccArquivosFiscaisService" class="com.claro.sccweb.service.impl.SccArquivosFiscaisServiceImpl"
+		parent="sccService">
+		<property name="sccArquivosFiscaisDAO" ref="sccArquivosFiscaisDAO" />
+	</bean>
+	
+	<bean id="sccAlocadasMobileService" class="com.claro.sccweb.service.impl.SccAlocadasMobileServiceImpl"
+		parent="sccService">
+		<property name="sccAlocadasMobileDAO" ref="sccAlocadasMobileDAO" />
+	</bean>
+	
+	<bean id="sccAlocadasMobileSemProcessamentoService" class="com.claro.sccweb.service.impl.SccAlocadasMobileSemProcessamentoServiceImpl"
+		parent="sccService">
+		<property name="sccAlocadasMobileSemProcessamentoDAO" ref="sccAlocadasMobileSemProcessamentoDAO" />
+	</bean>
+	
+	<bean id="sccEncaminhadoMobileService" class="com.claro.sccweb.service.impl.SccEncaminhadoMobileServiceImpl"
+		parent="sccService">
+		<property name="sccEncaminhadoMobileDAO" ref="sccEncaminhadoMobileDAO" />
+	</bean>
+
+	<bean id="sccExtracaoCDRsService" class="com.claro.sccweb.service.impl.SccExtracaoCDRsServiceImpl"
+		parent="sccService">
+		<property name="sccExtracaoCDRsDAO" ref="sccExtracaoCDRsDAO" />
+	</bean>
+	
+	<bean id="sccPreRelatorioEventosService" class="com.claro.sccweb.service.impl.SccPreRelatorioEventosServiceImpl"
+		parent="sccService">
+		<property name="sccPreRelatorioEventosDAO" ref="sccPreRelatorioEventosDAO" />
+	</bean>
+	
+	<bean id="sccNaoConfAplAjustesService" class="com.claro.sccweb.service.impl.SccNaoConfAplAjustesServiceImpl"
+		parent="sccService">
+		<property name="sccNaoConfAplAjustesDAO" ref="sccNaoConfAplAjustesDAO" />
+	</bean>
+	
+	<bean id="sccNaoConfAplFaturamentoService" class="com.claro.sccweb.service.impl.SccNaoConfAplFaturamentoServiceImpl"
+		parent="sccService">
+		<property name="sccNaoConfAplFaturamentoDAO" ref="sccNaoConfAplFaturamentoDAO" />
+	</bean>
+
+	<bean id="sccNaoConfAplBatimentoEstornoDebitoService" class="com.claro.sccweb.service.impl.SccNaoConfAplBatimentoEstornoDebitoServiceImpl"
+		parent="sccService">
+		<property name="sccNaoConfAplBatimentoEstornoDebitoDAO" ref="sccNaoConfAplBatimentoEstornoDebitoDAO" />
+	</bean>
+
+	<bean id="sccFaturasService" class="com.claro.sccweb.service.impl.SccFaturasServiceImpl"
+		parent="sccService">
+		<property name="sccFaturasDAO" ref="sccFaturasDAO" />
+	</bean>
+	
+	<bean id="sccAcoesCobrancaService" class="com.claro.sccweb.service.impl.SccAcoesCobrancaServiceImpl"
+		parent="sccService">
+		<property name="sccAcoesCobrancaDAO" ref="sccAcoesCobrancaDAO" />
+	</bean>
+	
+	
+	<bean id="sccPreChamadasCreditoService" class="com.claro.sccweb.service.impl.SccPreChamadasCreditoServiceImpl"
+		parent="sccService">
+		<property name="sccPreChamadasCreditoDAO" ref="sccPreChamadasCreditoDAO" />
+	</bean>
+
+	<bean id="sccAcordoParcelamentoService" class="com.claro.sccweb.service.impl.SccAcordoParcelamentoServiceImpl"
+		parent="sccService">
+		<property name="sccAcordoParcelamentoDAO" ref="sccAcordoParcelamentoDAO" />
+	</bean>
+
+	<bean id="sccFinanceiroService" class="com.claro.sccweb.service.impl.SccFinanceiroServiceImpl"
+		parent="sccService">
+		<property name="sccFinanceiroDAO" ref="sccFinanceiroDAO" />
+	</bean>
+	
+	
+	<bean id="sccRelBatimentoEstornoDebitoService" class="com.claro.sccweb.service.impl.SccRelBatimentoEstornoDebitoServiceImpl"
+		parent="sccService">
+		<property name="sccRelBatimentoEstornoDebitoDAO" ref="sccRelBatimentoEstornoDebitoDAO" />
+	</bean>
+	
+	<bean id="sccRelatorioChamadasRefaturamentoService" class="com.claro.sccweb.service.impl.SccRelatorioChamadasRefaturamentoServiceImpl"
+		parent="sccService">
+		<property name="sccRelatorioChamadasRefaturamentoDAO" ref="sccRelatorioChamadasRefaturamentoDAO" />
+	</bean>
+	
 	<bean id="sccBatimentoInterfaceService" class="com.claro.sccweb.service.impl.SccBatimentoInterfaceServiceImpl"
 		parent="sccService">
 		<property name="sccBatimentoInterfaceDAO" ref="sccBatimentoInterfaceDAO" />
@@ -314,5 +440,6 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 		parent="sccService">
 		<property name="sccRelatorioConciliacaoDAO" ref="sccRelatorioConciliacaoDAO" />
 	</bean>
+
 	
 </beans>

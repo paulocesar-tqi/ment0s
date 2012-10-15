@@ -49,7 +49,7 @@ public class RelatorioServicoPreController extends BaseOperationController<Relat
 		RelatorioPrestacaoServicoPreForm form = (RelatorioPrestacaoServicoPreForm)_form;
 		
 		gerarPeriodo(form);
-		List<RelPrestacaoServicoView> rows = getServiceManager().getRepasseService().gerarRelatorioPrestacaoServicoPos(criarTo(form));
+		List<RelPrestacaoServicoView> rows = getServiceManager().getRepasseService().gerarRelatorioPrestacaoServicoPre(criarTo(form));
 		
 		List<RelatorioPrestacaoServicoPreDecorator> decoratorList = new ArrayList<RelatorioPrestacaoServicoPreDecorator>(rows.size());
 		for (int i=0;i<rows.size();i++)	{
@@ -163,10 +163,10 @@ public class RelatorioServicoPreController extends BaseOperationController<Relat
 	@ModelAttribute("operadorasExternas")
 	public List<SccOperadora> populaOperadorasExternas() throws Exception {
 		List<SccOperadora> comboList = new ArrayList<SccOperadora>();
-		SccOperadora nullValue = new SccOperadora();
-		nullValue.setCdEot(BasicDAO.NULL_STRING);
-		nullValue.setDsOperadora("Selecione...");
-		comboList.add(0,nullValue);
+		SccOperadora allValues = new SccOperadora();
+		allValues.setCdEot(BasicDAO.GET_ALL_STRING);
+		allValues.setDsOperadora("Todas");
+		comboList.add(0,allValues);
 		comboList.addAll(getServiceManager().getPesquisaDominiosService().pesquisaOperadorasExternas());
 		return comboList;
 	}

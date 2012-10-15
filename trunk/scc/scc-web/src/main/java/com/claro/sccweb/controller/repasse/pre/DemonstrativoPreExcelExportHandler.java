@@ -32,6 +32,7 @@ SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 	ExcelStyle integerStyle = new IntegerStyle();
 	
 	 
+	@SuppressWarnings("unchecked")
 	protected void buildExcelDocument(Map<String, Object> model,HSSFWorkbook workbook, HttpServletRequest request,HttpServletResponse response) 
 			throws Exception {		
 		Map<SccOperadora, DemonstrativoRepassePreDecorator> excelModel = (Map<SccOperadora, DemonstrativoRepassePreDecorator>)getFromSession(DemonstrativoRepassePrePagoController.DEMONSTRATIVO_COMPLETO, request);

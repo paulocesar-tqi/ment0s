@@ -42,11 +42,26 @@ public class SccPeriodicidadeRepasseDAOImpl extends HibernateBasicDAOImpl<SccPer
 			return query.list();
 			}else{
 				return  new ArrayList<SccPeriodicidadeRepasse>();
-				}			
-		} catch (Exception e)
-			{
+			}			
+		} catch (Exception e){
 			throw new DAOException(e.getMessage(), "SccPeriodicidadeRepasseDAO.pesquisaPeriodicidadeRepasse");
-			}		
+		}		
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<SccPeriodicidadeRepasse> pesquisaPeriodicidadeRepasseByProduto(Long cdProduto) throws DAOException { 
+		List<SccPeriodicidadeRepasse> list = null;
+		try {
+			Query query = getSessionFactory().getCurrentSession().createQuery("SELECT DISTINCT r.sccPeriodicidadeRepasse FROM SccPeriodProdContr r where r.id.cdProdutoCobilling = ?");
+			query.setLong(0, cdProduto);
+			list = (List<SccPeriodicidadeRepasse> ) query.list();
+		} catch (Exception e) {
+			throw new DAOException(e.getMessage(), "SccPeriodicidadeRepasseDAO.pesquisaPeriodicidadeRepasse");
+		}
+		
+		
+		return list;
+		
 	}
 
 	

@@ -3,6 +3,8 @@ package com.claro.cobillingweb.persistence.view;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
+import org.apache.commons.lang.StringUtils;
+
 
 /**
  * Relatório sintético de repasse pré-pago.
@@ -10,7 +12,7 @@ import java.text.NumberFormat;
  */
 public class RelSinteticoFechamentoPrePagoView {
 	
-	protected static NumberFormat decimalFormat = new DecimalFormat("#.##");
+	public static NumberFormat decimalFormat = new DecimalFormat("#.##");
 
 	private String cdEOTHolding;
 	private String cdEOTClaro;
@@ -31,6 +33,11 @@ public class RelSinteticoFechamentoPrePagoView {
 	private Double valorBruto;
 	private Double valorPis;
 	private Double valorCofins;
+	
+	private Double valorLiquido;
+	private Double pisCofins;
+	
+
 	
 	public String getOperadoraClaro() {
 		return operadoraClaro;
@@ -149,9 +156,38 @@ public class RelSinteticoFechamentoPrePagoView {
 	public void setCdEOTClaro(String cdEOTClaro) {
 		this.cdEOTClaro = cdEOTClaro;
 	}
+	public Double getValorLiquido() {
+		return valorLiquido;
+	}	
+	public void setValorLiquido(Double valorLiquido) {
+		
+		String retorno = decimalFormat.format(zeroIfNull(this.valorBruto)
+				- zeroIfNull(this.icmsRepassar)
+				- zeroIfNull(this.valorPis)
+				- zeroIfNull(this.valorCofins)
+				- zeroIfNull(this.icmsNaoRepassado));
+			
+		if(StringUtils.isNotEmpty(retorno)){
+			this.valorLiquido = new Double(retorno);
+		}
+		
+		this.valorLiquido = valorLiquido;
+	}
+	public Double getPisCofins() {
+		return pisCofins;
+	}
+
 	
-	
-	
+	public void setPisCofins(Double pisCofins) {
+		
+		String value = decimalFormat.format(zeroIfNull(this.valorPis)
+				+ zeroIfNull(this.valorCofins));
+		
+		if(StringUtils.isNotEmpty(value)){
+			this.pisCofins = new Double(value);
+		}
+		this.pisCofins = pisCofins;
+	}	
 	//Para Excel
 	public String getMinutosString()
 	{

@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.apache.commons.lang.StringUtils;
 import org.codehaus.jettison.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -155,7 +156,7 @@ public class RelatorioServicoPosController extends BaseOperationController<RelPr
 	public List<SccOperadora> populaOperadorasExternas() throws Exception {
 		List<SccOperadora> comboList = new ArrayList<SccOperadora>();
 		SccOperadora nullValue = new SccOperadora();
-		nullValue.setCdEot(BasicDAO.NULL_STRING);
+		nullValue.setCdEot(BasicDAO.GET_ALL_STRING);
 		nullValue.setDsOperadora("Todas");
 		comboList.add(0,nullValue);
 		comboList.addAll(getServiceManager().getPesquisaDominiosService().pesquisaOperadorasExternas());
@@ -179,9 +180,17 @@ public class RelatorioServicoPosController extends BaseOperationController<RelPr
 		return _populaComboMeses();
 	}
 	
-	@RequestMapping(value="/json/lista_produtos/{cdEOTLD}" , method=RequestMethod.GET)
-	public void pesquisaProdutosLD(@PathVariable("cdEOTLD") String cdEOT,HttpServletRequest request, HttpServletResponse response,@ModelAttribute("form") RelPrestacaoServicoPosForm form) throws Exception {		
-		List<SccProdutoCobilling> produtos = getServiceManager().getContratoService().pesquisaProdutosOperadoraLD(cdEOT);		
+	@RequestMapping(value="/json/lista_produtos/{cdEOTLD}/{cdEOTClaro}" , method=RequestMethod.GET)
+	public void pesquisaProdutosLD(@PathVariable("cdEOTLD") String cdEOT,@PathVariable("cdEOTClaro") String cdEOTClaro, HttpServletRequest request, HttpServletResponse response,@ModelAttribute("form") RelPrestacaoServicoPosForm form) throws Exception {
+		
+		List<SccProdutoCobilling> produtos = null;
+		
+		if(StringUtils.isNotEmpty(cdEOT) && cdEOT.equals("*") && cdEOTClaro.equals("*")){
+			produtos = getServiceManager().getContratoService().pesquisaProdutosOperadoraLDTodas();
+		}else{
+			produtos = getServiceManager().getContratoService().pesquisaProdutosOperadoraLD(cdEOT);
+			
+		}
 		JSONObject jsonResponse = new JSONObject();				
 		jsonResponse.put("0L","Selecione....");		
 		for (int i=0;i<produtos.size();i++) {			

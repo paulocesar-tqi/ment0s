@@ -36,7 +36,8 @@ public abstract class SccAbstractView extends AbstractView {
 	  * Recupera o form a partir do cache de session.
 	  * @param clazz
 	  */
-	 protected Object getFormFromCache(Class clazz,HttpServletRequest request)
+	 @SuppressWarnings("rawtypes")
+	protected Object getFormFromCache(Class clazz,HttpServletRequest request)
 	 {
 		 return getSessionDatamanager(request).getFormCache().get(clazz.getName()+BaseFormController.CACHE_PREFIX);
 	 }

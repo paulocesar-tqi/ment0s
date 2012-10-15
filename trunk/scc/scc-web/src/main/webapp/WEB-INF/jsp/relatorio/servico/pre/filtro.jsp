@@ -12,8 +12,6 @@
 	$(document).ready(function(){
 		$('#tabs').tabs();
 		$("#anoRelatorio").mask("9999");	
-		$('#cdEOTLD').change(selecionaLD);
-		$('#cdProdutoCobilling').change(selecionaProduto);
 		$('#pesquisar_button').click(pesquisar)
 		$('#excel_button').click(excel)
 		$('#inserirButton').click(function(){
@@ -47,47 +45,7 @@
 		
 	});
 	
-	function selecionaLD()
-	{
-	 $("#cdProdutoCobilling").empty().append('<option selected="selected" value="0">Selecione...</option>');
-	 $("#cdPeriodicidade").empty().append('<option selected="selected" value="0">Selecione...</option>');
-	 var sel = $("#cdEOTLD option:selected");
-	 
-	  $.ajax({   
-		 url: "/scc/user/relatorio/servico/pre/json/lista_produtos/"+sel.val()+".scc",	 
-		 dataType: "json",   success: function(data) 
-		   	{     
-			var name, select, option;        
-		    select = document.getElementById('cdProdutoCobilling');      
-		        select.options.length = 0;         
-		        for (name in data) 
-		           {       
-		           if (data.hasOwnProperty(name)) {         
-				select.options.add(new Option(data[name], name));  
-		            }}}});
-	    
-	}
-	
-	function selecionaProduto()
-	{
-		
-		var sel = $("#cdProdutoCobilling option:selected");
-		var eot = $("#cdEOTLD option:selected");	
-		$("#cdPeriodicidade").empty().append('<option selected="selected" value="0">Selecione...</option>');
-		$.ajax({   
-			 url: "/scc/user/relatorio/servico/pre/json/lista_periodos/"+sel.val()+"/"+eot.val()+".scc",	 
-			 dataType: "json",   success: function(data) 
-			   	{     
-				var name, select, option;        
-			    select = document.getElementById('cdPeriodicidade');      
-			        select.options.length = 0;         
-			        for (name in data) 
-			           {       
-			           if (data.hasOwnProperty(name)) {         
-					select.options.add(new Option(data[name], name));  
-			            }}}});
-		
-	}
+
 </script>
 
 <div id="tabs">
@@ -109,18 +67,6 @@
     				<td ><form:select path="cdEOTLD" id="cdEOTLD" items="${operadorasExternas}" itemLabel="dsOperadora" itemValue="cdEot" />    
 				</tr>
 
-				<tr>    
-    				<td width="10%"><spring:message code="relatorio.label.produto.cobilling"/>:</td>
-    				<td>
-    					<form:select path="cdProdutoCobilling" id="cdProdutoCobilling" items="${produtos}" itemLabel="noProdutoCobilling" itemValue="cdProdutoCobilling" />
- 						<form:errors path="cdProdutoCobilling"/> 
- 					</td>       
-				</tr>
- 				<tr>    
-				    <td width="10%"><spring:message code="repasse_pos_consulta.periodo"/>:</td>
-				    <td ><form:select path="cdPeriodicidade" id="cdPeriodicidade" items="${periodos}" itemLabel="noPeriodicidadeRepasse" itemValue="cdPeriodicidadeRepasse" />
-				    <form:errors path="cdPeriodicidade" /></td>
-				</tr>
 
 				<tr>    
 				    <td width="10%"><spring:message code="repasse_pre_relatorios.mes"/>:</td>
@@ -133,15 +79,6 @@
 				    <form:errors path="anoRelatorio" /></td>
 				</tr>
 			</table>
-			<table width="100%" border="0" cellspacing="0" cellpadding="0">
-				<tr>
-    				<td colspan="3" class="TdFormularioUp">&nbsp;</td>    
-    				<td colspan="1" align="right" class="TdFormularioUp" nowrap="nowrap">
-    					<input id="pesquisar_button" type="button" value=<spring:message code="comum.botao.executar"/> />  
-    					<input id="excel_button" type="button" value=<spring:message code="comum.botao.excel"/> />  
-    				</td>
-				</tr>
-			</table>
 			<br />
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
@@ -150,11 +87,11 @@
 							<display:column property="operadoraClaro" title="Operadora Claro"/>
 							<display:column property="embratel" title="Embratel"/>
 							<display:column property="intelig" title="Intelig"/>
-							<display:column property="brasil_telecom" title="Brasil Telecom"/>
+							<display:column property="brasilTelecom" title="Brasil Telecom"/>
 							<display:column property="telefonica" title="Telefonica"/>
 							<display:column property="tnl" title="TNL"/>
 							<display:column property="gvt" title="GVT"/>
-							<display:column property="sercontel" title="Sercontel"/>
+							<display:column property="sercomtel" title="Sercomtel"/>
 							<display:column property="tim" title="TIM"/>
 							<display:column property="ctbc" title="CTBC"/>
 							<display:column property="telemar" title="Telemar"/>
@@ -164,6 +101,16 @@
 					</td>
 				</tr>
 			</table>
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr>
+    				<td colspan="3" class="TdFormularioUp">&nbsp;</td>    
+    				<td colspan="1" align="right" class="TdFormularioUp" nowrap="nowrap">
+    					<input id="pesquisar_button" type="button" value=<spring:message code="comum.botao.executar"/> />  
+    					<input id="excel_button" type="button" value=<spring:message code="comum.botao.excel"/> />  
+    				</td>
+				</tr>
+			</table>
+			
 	</div>
 </form:form>
 </div>

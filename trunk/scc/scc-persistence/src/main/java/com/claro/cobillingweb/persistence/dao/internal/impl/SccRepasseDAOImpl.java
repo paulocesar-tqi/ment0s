@@ -357,11 +357,15 @@ public class SccRepasseDAOImpl extends HibernateBasicDAOImpl<SccRepasse> impleme
 		try {
 			
 			Session session = getSessionFactory().getCurrentSession();
-			NativeSQLViewMapper<RelPrestacaoServicoView> mapper = montarCamposQuery(session);
+			NativeSQLViewMapper<RelPrestacaoServicoView> mapper = montarCamposQueryServicoPre(session);
 			mapper.addArgument("dataFechamento", dataFechamento, RelPrestacaoServicoSQL.DT_FECHAMENTO);
 			
 			if (cdEOTLd != null && !cdEOTLd.equals(BasicDAO.GET_ALL_STRING)){
-				mapper.addArgument("cdEOTLd", cdEOTLd, RelPrestacaoServicoSQL.CD_EOT_LD);
+				mapper.addArgument("cdEOTLd", cdEOTLd, RelPrestacaoServicoSQL.CD_EOT_LD_PRE);
+			}
+			
+			if (cdEOTClaro != null && !cdEOTClaro.equals(BasicDAO.GET_ALL_STRING)){
+				mapper.addArgument("cdEOTClaro", cdEOTClaro, RelPrestacaoServicoSQL.CD_EOT_CLARO_PRE);
 			}
 			
 			mapper.addResultMap("dsOperadoraClaro", String.class);

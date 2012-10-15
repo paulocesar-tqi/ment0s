@@ -1,11 +1,13 @@
 package com.claro.cobillingweb.persistence.dao.internal.impl;
 
-import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.hibernate.Session;
 
+import com.claro.cobillingweb.persistence.constants.StatusCDRConstants;
 import com.claro.cobillingweb.persistence.dao.BasicDAO;
 import com.claro.cobillingweb.persistence.dao.DAOException;
 import com.claro.cobillingweb.persistence.dao.impl.HibernateBasicDAOImpl;
@@ -16,6 +18,7 @@ import com.claro.cobillingweb.persistence.dao.query.DemonstrativoSaldosLotesSQL;
 import com.claro.cobillingweb.persistence.dao.query.SumarizadoPeriodoCicloSQL;
 import com.claro.cobillingweb.persistence.dao.query.SumarizadoPeriodoSQL;
 import com.claro.cobillingweb.persistence.entity.SccArquivoSumarizado;
+import com.claro.cobillingweb.persistence.filtro.SccFiltroRelPerdaFaturamento;
 import com.claro.cobillingweb.persistence.utils.DateUtils;
 import com.claro.cobillingweb.persistence.view.DemonstrativoSaldosLotesView;
 import com.claro.cobillingweb.persistence.view.mapper.NativeSQLViewMapper;
@@ -236,5 +239,143 @@ public class SccArquivoSumarizadoDAOImpl extends HibernateBasicDAOImpl<SccArquiv
 			return mapper.execute();
 		} catch (Exception e) { throw new DAOException(e.getMessage(), e); }
 	}
+	
+	public Collection<SccArquivoSumarizado> gerarRelatorioPerdaFaturamento(SccFiltroRelPerdaFaturamento filtro) throws DAOException {
+		
+		Collection<SccArquivoSumarizado> list = null;
+		
+		try {
+			Session session = getSessionFactory().getCurrentSession();
+			NativeSQLViewMapper<SccArquivoSumarizado> mapper = new NativeSQLViewMapper<SccArquivoSumarizado>(session, ControleRemessaPorCicloSQL.SQL_PERDA_FATURAMENTO, SccArquivoSumarizado.class);
+			mapper.addArgument("dataInicial", DateUtils.lowDateTime(filtro.getDataInicialPeriodo()));
+			mapper.addArgument("dataFinal", DateUtils.highDateTime(filtro.getDataFinalPeriodo()));
+
+			if(StringUtils.isNotEmpty(filtro.getOperadoraClaro()) && !filtro.getOperadoraClaro().equals(BasicDAO.GET_ALL_STRING)){
+				mapper.addArgument("cdEOTClaro", filtro.getOperadoraClaro(), ControleRemessaPorCicloSQL.FILTRO_EOT_CLARO_REL_PF);
+			}
+			
+			if(StringUtils.isNotEmpty(filtro.getOperadoraExterna()) && ! filtro.getOperadoraExterna().equals(BasicDAO.GET_ALL_STRING)){
+				mapper.addArgument("cdEOTLD", filtro.getOperadoraExterna());
+			}
+	        if (StringUtils.isNotEmpty(filtro.getEvento()) && !filtro.getEvento().equals(BasicDAO.GET_ALL_STRING)) {
+	        	mapper.appendSQL(getBetweenStatus(filtro.getEvento()));
+	        	
+	        } else {
+	        	mapper.appendSQL(getAllStatus());
+	        }
+	        
+	        mapper.setProjections(ControleRemessaPorCicloSQL.PROJECTIONS_REL_PF);
+	        
+	        mapper.addResultMap("cdEotLd", String.class);
+	        mapper.addResultMap("cdEotClaro", String.class);
+	        mapper.addResultMap("dtProcExterna", Date.class);
+	        mapper.addResultMap("cdStatusCdr", Long.class);
+	        mapper.addResultMap("cdSubStatusCdr", String.class);
+	        mapper.addResultMap("vlLiquidoChamada", Double.class);
+	        mapper.addResultMap("vlBrutoChamada", Double.class);
+	        mapper.addResultMap("qtCdrs", Long.class);
+
+	        list = (Collection<SccArquivoSumarizado>)mapper.execute();
+	        
+		} catch (Exception e) {
+			throw new DAOException(e.getMessage(), e);
+		}
+		
+		return list;
+	}
+	
+	
+	
+    private String getBetweenStatus(String fileType) {
+    	StringBuilder sb = new StringBuilder();
+    	
+        if (StringUtils.isNotEmpty(fileType)) {
+        	switch(Integer.parseInt(fileType)) {
+	    		case (StatusCDRConstants.CDRSTATUS_REJEITADO_2):
+	            	sb.append("\n   AND (SU.CD_STATUS_CDR = " + StatusCDRConstants.CDRSTATUS_REJEITADO_C2_ESB);
+	    			sb.append("\n   OR SU.CD_STATUS_CDR = " + StatusCDRConstants.CDRSTATUS_REJEITADO_C1);
+	        		sb.append("\n   OR SU.CD_STATUS_CDR = " + StatusCDRConstants.CDRSTATUS_REJEITADO_C2_MOB);
+	                sb.append("\n   OR SU.CD_SUB_STATUS_CDR = 'C1'");
+	        		sb.append("\n   OR SU.CD_SUB_STATUS_CDR = 'C2') -- (4)");
+	        	break;
+	    		case (StatusCDRConstants.CDRSTATUS_REJEITADO_C1_2):
+	                sb.append("\n   AND (SU.CD_STATUS_CDR = " + StatusCDRConstants.CDRSTATUS_REJEITADO_C1);
+	                sb.append("\n   OR SU.CD_SUB_STATUS_CDR = 'C1') -- (4)");
+	        	break;
+	    		case (StatusCDRConstants.CDRSTATUS_REJEITADO_C2):
+	            	sb.append("\n   AND (SU.CD_STATUS_CDR = " + StatusCDRConstants.CDRSTATUS_REJEITADO_C2_ESB);
+	        		sb.append("\n   OR SU.CD_STATUS_CDR = " + StatusCDRConstants.CDRSTATUS_REJEITADO_C2_MOB);
+	        		sb.append("\n   OR SU.CD_SUB_STATUS_CDR = 'C2') -- (4)");
+	        	break;
+	    		case (StatusCDRConstants.CDRSTATUS_EXCLUIDO):
+	            	sb.append("\n   AND (SU.CD_STATUS_CDR = " + StatusCDRConstants.CDRSTATUS_EXCLUIDO_X2_ESB);
+	        		sb.append("\n   OR SU.CD_STATUS_CDR = " + StatusCDRConstants.CDRSTATUS_EXCLUIDO_X2_MOB);
+	                sb.append("\n   OR SU.CD_STATUS_CDR = " + StatusCDRConstants.CDRSTATUS_EXCLUIDO_X1);
+	                sb.append("\n   OR SU.CD_SUB_STATUS_CDR = 'X1'");
+	        		sb.append("\n   OR SU.CD_SUB_STATUS_CDR = 'X2') -- (4)");
+	        	break;
+	    		case (StatusCDRConstants.CDRSTATUS_EXCLUIDO_X1_2):
+	                sb.append("\n   AND (SU.CD_STATUS_CDR = " + StatusCDRConstants.CDRSTATUS_EXCLUIDO_X1);
+	                sb.append("\n   OR SU.CD_SUB_STATUS_CDR = 'X1') -- (4)");
+	        	break;
+	    		case (StatusCDRConstants.CDRSTATUS_EXCLUIDO_X2):
+	            	sb.append("\n   AND (SU.CD_STATUS_CDR = " + StatusCDRConstants.CDRSTATUS_EXCLUIDO_X2_ESB);
+	        		sb.append("\n   OR SU.CD_STATUS_CDR = " + StatusCDRConstants.CDRSTATUS_EXCLUIDO_X2_MOB);
+	        		sb.append("\n   OR SU.CD_SUB_STATUS_CDR = 'X2') -- (4)");
+	        	break;
+	    		case (StatusCDRConstants.CDRSTATUS_PERDIDO):
+	            	sb.append("\n   AND (SU.CD_STATUS_CDR = " + StatusCDRConstants.CDRSTATUS_PERDIDO_ESB);
+	            	sb.append("\n   OR SU.CD_STATUS_CDR = " + StatusCDRConstants.CDRSTATUS_PERDIDO_MOB);
+	            	sb.append("\n   OR SU.CD_SUB_STATUS_CDR = 'P1'");
+	            	sb.append("\n   OR SU.CD_SUB_STATUS_CDR = 'P2'");
+	            	sb.append("\n   OR SU.CD_SUB_STATUS_CDR = 'P3'");
+	            	sb.append("\n   OR SU.CD_SUB_STATUS_CDR = 'P4'");
+	            	sb.append("\n   OR SU.CD_SUB_STATUS_CDR = 'P5'");
+	            	sb.append("\n   OR SU.CD_SUB_STATUS_CDR = 'P6'");
+	            	sb.append("\n   OR SU.CD_SUB_STATUS_CDR = 'P7') -- (4)");
+	        	break;
+	    		case (StatusCDRConstants.CDRSTATUS_FATURADO):
+	            	sb.append("\n   AND (SU.CD_STATUS_CDR = " + StatusCDRConstants.CDRSTATUS_FATURADO_ESB);
+	            	sb.append("\n   OR SU.CD_STATUS_CDR = " + StatusCDRConstants.CDRSTATUS_FATURADO_MOB + ") -- (4)");
+	        	break;
+	    		case (StatusCDRConstants.CDRSTATUS_CONTESTADO):
+	            	sb.append("\n   AND (SU.CD_STATUS_CDR = " + StatusCDRConstants.CDRSTATUS_CONTESTADO_ESB);
+	            	sb.append("\n   OR SU.CD_STATUS_CDR = " + StatusCDRConstants.CDRSTATUS_CONTESTADO_MOB + ") -- (4)");
+	        	break;
+        	}
+        }
+        return sb.toString();
+    }
+    
+    private String getAllStatus() {
+    	StringBuilder sb = new StringBuilder();
+        sb.append("\n   AND ( SU.CD_STATUS_CDR = " + StatusCDRConstants.CDRSTATUS_REJEITADO_C1);
+        sb.append("\n   OR SU.CD_SUB_STATUS_CDR = 'C1'");
+    	sb.append("\n   OR SU.CD_STATUS_CDR = " + StatusCDRConstants.CDRSTATUS_REJEITADO_C2_ESB);
+		sb.append("\n   OR SU.CD_STATUS_CDR = " + StatusCDRConstants.CDRSTATUS_REJEITADO_C2_MOB);
+		sb.append("\n   OR SU.CD_SUB_STATUS_CDR = 'C2'");
+        sb.append("\n   OR SU.CD_STATUS_CDR = " + StatusCDRConstants.CDRSTATUS_EXCLUIDO_X1);
+        sb.append("\n   OR SU.CD_SUB_STATUS_CDR = 'X1'");
+    	sb.append("\n   OR SU.CD_STATUS_CDR = " + StatusCDRConstants.CDRSTATUS_EXCLUIDO_X2_ESB);
+		sb.append("\n   OR SU.CD_STATUS_CDR = " + StatusCDRConstants.CDRSTATUS_EXCLUIDO_X2_MOB);
+		sb.append("\n   OR SU.CD_SUB_STATUS_CDR = 'X2'");
+    	sb.append("\n   OR SU.CD_STATUS_CDR = " + StatusCDRConstants.CDRSTATUS_PERDIDO_PPC);
+    	sb.append("\n   OR SU.CD_STATUS_CDR = " + StatusCDRConstants.CDRSTATUS_PERDIDO_ESB);
+    	sb.append("\n   OR SU.CD_STATUS_CDR = " + StatusCDRConstants.CDRSTATUS_PERDIDO_MOB);
+    	sb.append("\n   OR SU.CD_SUB_STATUS_CDR = 'P1'");
+    	sb.append("\n   OR SU.CD_SUB_STATUS_CDR = 'P2'");
+    	sb.append("\n   OR SU.CD_SUB_STATUS_CDR = 'P3'");
+    	sb.append("\n   OR SU.CD_SUB_STATUS_CDR = 'P4'");
+    	sb.append("\n   OR SU.CD_SUB_STATUS_CDR = 'P5'");
+    	sb.append("\n   OR SU.CD_SUB_STATUS_CDR = 'P6'");
+    	sb.append("\n   OR SU.CD_SUB_STATUS_CDR = 'P7'");
+    	sb.append("\n   OR SU.CD_STATUS_CDR = " + StatusCDRConstants.CDRSTATUS_CONTESTADO_ESB);
+    	sb.append("\n   OR SU.CD_STATUS_CDR = " + StatusCDRConstants.CDRSTATUS_CONTESTADO_MOB);
+    	sb.append("\n   OR SU.CD_STATUS_CDR = " + StatusCDRConstants.CDRSTATUS_FATURADO_ESB);
+    	sb.append("\n   OR SU.CD_STATUS_CDR = " + StatusCDRConstants.CDRSTATUS_FATURADO_MOB + " ) ");
+        return sb.toString();
+    }
+
+
 	
 }

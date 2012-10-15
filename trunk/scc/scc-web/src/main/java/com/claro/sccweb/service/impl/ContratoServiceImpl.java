@@ -3,6 +3,7 @@ package com.claro.sccweb.service.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.claro.cobillingweb.persistence.dao.DAOException;
@@ -39,6 +40,10 @@ public class ContratoServiceImpl extends AbstractService implements ContratoServ
 		return getProdutoCobillingDAO().pesquisaProdutosOperadoraLD(cdEOT);
 	}
 	
+	public List<SccProdutoCobilling> pesquisaProdutosOperadoraLDTodas() throws DAOException,ServiceException {
+		return getProdutoCobillingDAO().pesquisaProdutosOperadoraLDTodas();
+	}
+	
 	public SccProdutoCobillingDAO getProdutoCobillingDAO() {
 		return produtoCobillingDAO;
 	}
@@ -64,7 +69,16 @@ public class ContratoServiceImpl extends AbstractService implements ContratoServ
 	}
 	
 	public List<SccPeriodicidadeRepasse> pesquisaPeriodicidadeRepasse(String cdEOT, Long cdProduto) throws DAOException,ServiceException {
-		return getPeriodicidadeRepasseDAO().pesquisaPeriodicidadeRepasse(cdEOT, cdProduto);		
+		
+		List<SccPeriodicidadeRepasse> list = null;
+		
+		if(StringUtils.isNotEmpty(cdEOT) && cdEOT.equals("*")){
+			list = (List<SccPeriodicidadeRepasse>) getPeriodicidadeRepasseDAO().pesquisaPeriodicidadeRepasseByProduto(cdProduto);
+		}else{
+			list =  (List<SccPeriodicidadeRepasse>)getPeriodicidadeRepasseDAO().pesquisaPeriodicidadeRepasse(cdEOT, cdProduto);
+		}
+		
+		return 	list;	
 	}
 	
 	public List<SccContratoAcordado> pesquisaContratosPorProduto(String cdEOTClaro, String cdEOTLD, Long cdProduto, Date dtInicio,Date dtFinal, boolean holding) throws DAOException,ServiceException {

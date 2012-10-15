@@ -123,6 +123,7 @@ public class ConsultaRepassePreController extends BaseOperationController<Consul
 		return mav;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public ModelAndView selecionar(HttpServletRequest request, HttpServletResponse response,@Valid @ModelAttribute("filtro")  BaseForm _form,BindingResult bindingResult,Model model) throws Exception {
 		cleanSession(getClass(), request, "DEMONSTRATIVO_OPERADORA");
 		ModelAndView mav = new ModelAndView(getViewName());
@@ -225,6 +226,7 @@ public class ConsultaRepassePreController extends BaseOperationController<Consul
 	 * @param response
 	 * @throws Exception
 	 */
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value="/json/mudaStatus/{index}" , method=RequestMethod.GET)
 	public void mudaStatus(@PathVariable("index") String index,HttpServletRequest request, HttpServletResponse response) throws Exception {		
 		List<ConsultaRepassePrePagoDecorator> items = (List<ConsultaRepassePrePagoDecorator>)request.getSession().getAttribute(DISPLAY_TAG_SPACE_1);
@@ -244,6 +246,7 @@ public class ConsultaRepassePreController extends BaseOperationController<Consul
 	 * @return Model and View com refresh na tela de resultados.
 	 * @throws Exception
 	 */
+	@SuppressWarnings("unchecked")
 	public ModelAndView efetivar(HttpServletRequest request, HttpServletResponse response,@Valid @ModelAttribute("filtro")  BaseForm form,BindingResult bindingResult,Model model) throws Exception {
 		List<ConsultaRepassePrePagoDecorator> tabelaRepasses = (List<ConsultaRepassePrePagoDecorator>)request.getSession().getAttribute(DISPLAY_TAG_SPACE_1);
 		if (tabelaRepasses != null) {

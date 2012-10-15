@@ -1,5 +1,8 @@
 package com.claro.cobillingweb.persistence.constants;
 
+import java.util.Arrays;
+import java.util.Vector;
+
 public class StatusCDRConstants {
 	
 	public static final Long CDRSTATUS_INDEFINIDO       	= 0L;
@@ -37,5 +40,61 @@ public class StatusCDRConstants {
     public static final Long CDRSTATUS_REPASSADA       = 80L;
     public static final Long CDRSTATUS_PARCELADA       = 85L;
     public static final Long CDRSTATUS_ALTERACAO_VCTO  = 90L;
+    
+    public static final int CDRSTATUS_REJEITADO_C2_ESB_2 = 11;
+    public static final Long CDRSTATUS_REJEITADO       	= -10L;
+    public static final int CDRSTATUS_REJEITADO_C2   	= -11;
+    public static final int CDRSTATUS_EXCLUIDO         	= -50;
+    public static final int CDRSTATUS_REJEITADO_C1_2   	= 10;
+    public static final int CDRSTATUS_EXCLUIDO_X1_2       = 50;
+    public static final int CDRSTATUS_EXCLUIDO_X2   	= -51;
+    public static final int CDRSTATUS_PERDIDO         	= -40;
+    public static final int CDRSTATUS_FATURADO        	= -20;
+    public static final int CDRSTATUS_CONTESTADO      	= -25;
+    public static final int CDRSTATUS_FATURADO_FINAL    = -21;
+	public static final int CDRSTATUS_FATURADO_INICIAL  = -22;
+	public static final int CDRSTATUS_REJEITADO_2       = -10;
+    
+    
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+	public static final Vector vFinancial = new Vector(Arrays.asList( new String[][] { 
+       		{""+CDRSTATUS_REJEITADO_2, "Rejeitado C1-C2"},
+       		{""+CDRSTATUS_REJEITADO_C1, "Rejeitado C1"},
+       		{""+CDRSTATUS_REJEITADO_C2, "Rejeitado C2"},
+       		{""+CDRSTATUS_EXCLUIDO, "Excluido X1-X2"},
+       		{""+CDRSTATUS_EXCLUIDO_X1, "Excluido X1"},
+       		{""+CDRSTATUS_EXCLUIDO_X2, "Excluido X2"},
+       		{""+CDRSTATUS_PERDIDO, "Perda P1-P7"},
+       		{""+CDRSTATUS_CONTESTADO, "Contestado"},
+       		{""+CDRSTATUS_FATURADO, "Faturado"},
+       		{""+CDRSTATUS_FATURADO_INICIAL, "Faturado Inicial"},
+       		{""+CDRSTATUS_FATURADO_FINAL, "Faturado Final"}
+    } ) );
+
+    public static final String[] buscaStatusFinancial(String status) {
+	    String[] tSTATUS = null;
+	    String[] tTemp = null;
+	    for(int i=0;i<StatusCDRConstants.vFinancial.size();i++) {
+	    	tTemp = (String[]) StatusCDRConstants.vFinancial.elementAt(i);
+	    	if (status.equalsIgnoreCase(tTemp[0])) {
+	    		tSTATUS = tTemp;
+	    		break;
+	    	}
+	    }
+	    if (tSTATUS == null) {
+	    	status = (status!=null&&status.length()>0?((Integer.parseInt(status)<0?"-"+status:status)):"");
+		    for(int i=0;i<StatusCDRConstants.vFinancial.size();i++) {
+		    	tTemp = (String[]) StatusCDRConstants.vFinancial.elementAt(i);
+		    	if (status.equalsIgnoreCase(tTemp[0])) {
+		    		tSTATUS = tTemp;
+		    		break;
+		    	}
+		    }
+	    }
+	    return tSTATUS;
+    }
+    
+    
+    
 	
 }

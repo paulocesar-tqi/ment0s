@@ -18,4 +18,6 @@ public interface SccPeriodicidadeRepasseDAO extends BasicDAO<SccPeriodicidadeRep
 	 */
 	public List<SccPeriodicidadeRepasse> pesquisaPeriodicidadeRepasse(String cdEOT,Long cdProduto) throws DAOException;
 	
+	List<SccPeriodicidadeRepasse> pesquisaPeriodicidadeRepasseByProduto(Long cdProduto) throws DAOException;
+	
 }

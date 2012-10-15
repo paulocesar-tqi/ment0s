@@ -792,9 +792,7 @@ public class RelatorioRepasseServiceImpl extends AbstractService implements Rela
 		List<RelPrestacaoServicoView> listRelPrestacaoServico = null;
 		if(consultaRepassePosTO != null){
 			
-			listRelPrestacaoServico = getRepasseDAO().gerarRelatorioPrestacaoServicoPos(consultaRepassePosTO.getCdEOTClaro(), 
-					consultaRepassePosTO.getCdEOTLD(), consultaRepassePosTO.getCdProdutoCobilling(), 
-					consultaRepassePosTO.getDtInicialRepasse(), consultaRepassePosTO.getDtFinalRepasse());
+			listRelPrestacaoServico = getRepasseDAO().gerarRelatorioPrestacaoServicoPre(consultaRepassePosTO.getCdEOTClaro(), consultaRepassePosTO.getCdEOTLD(), consultaRepassePosTO.getMesAno());
 			
 		}
 		

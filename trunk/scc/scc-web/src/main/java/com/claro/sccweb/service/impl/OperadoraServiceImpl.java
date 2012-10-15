@@ -19,6 +19,10 @@ public class OperadoraServiceImpl extends AbstractService implements OperadoraSe
 	public List<SccOperadora> pesquisaOperarodasHolding(String cdEOT)throws DAOException, ServiceException {
 		return getOperadoraDAO().pesquisaOperadorasHolding(cdEOT);		
 	}
+	
+	public List<SccOperadora> pesquisaOperadorasHoldingByCdEot(String cdEOT)throws DAOException, ServiceException {
+		return getOperadoraDAO().pesquisaHoldingClaroByCdEotHolding(cdEOT);
+	}
 
 	public SccOperadoraDAO getOperadoraDAO() {
 		return operadoraDAO;

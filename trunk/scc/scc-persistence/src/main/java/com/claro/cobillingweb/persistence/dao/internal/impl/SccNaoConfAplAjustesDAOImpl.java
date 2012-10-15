@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Session;
+import org.springframework.stereotype.Repository;
 
 import com.claro.cobillingweb.persistence.dao.BasicDAO;
 import com.claro.cobillingweb.persistence.dao.DAOException;
@@ -14,6 +15,7 @@ import com.claro.cobillingweb.persistence.filtro.SccFiltro;
 import com.claro.cobillingweb.persistence.view.AjustesView;
 import com.claro.cobillingweb.persistence.view.mapper.NativeSQLViewMapper;
 
+@Repository
 public class SccNaoConfAplAjustesDAOImpl extends HibernateBasicDAOImpl<AjustesView>
 		implements SccNaoConfAplAjustesDAO {
 

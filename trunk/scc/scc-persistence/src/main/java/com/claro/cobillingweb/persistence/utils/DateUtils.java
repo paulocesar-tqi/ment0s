@@ -59,7 +59,27 @@ public class DateUtils {
         date.set(Calendar.MINUTE, 0);   
         date.set(Calendar.SECOND, 0);   
         date.set(Calendar.MILLISECOND, 0);   
-    }   
+    }  
+
+	public Date calculaDataFinalPeriodo(Long mes,Long ano) {
+		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.YEAR, ano.intValue());
+		cal.set(Calendar.MONTH,mes.intValue()-1);
+		cal.set(Calendar.DAY_OF_MONTH, cal.getActualMaximum(Calendar.DAY_OF_MONTH));
+		return cal.getTime();
+	}
+	
+	/**
+	 *  Retorna um objeto Date apontando para o primeiro dia do período informado.
+	 */
+	public Date calculaDataInicialPeriodo(Long mes,Long ano) {
+		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.YEAR, ano.intValue());
+		cal.set(Calendar.MONTH,mes.intValue()-1);
+		cal.set(Calendar.DAY_OF_MONTH, 1);
+		return cal.getTime();
+	}
+
 
 
 }

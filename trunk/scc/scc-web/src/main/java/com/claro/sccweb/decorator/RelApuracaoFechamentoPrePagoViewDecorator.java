@@ -1,5 +1,7 @@
 package com.claro.sccweb.decorator;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.claro.cobillingweb.persistence.view.RelApuracaoFechamentoPrePagoView;
 import com.claro.sccweb.decorator.rownum.RownumDecorator;
 
@@ -195,6 +197,14 @@ public class RelApuracaoFechamentoPrePagoViewDecorator extends RownumDecorator<R
 				valorMultas+valorAcertos+valorIcmsRepassar);
 	}
 
+	public String getUf(){
+		String value ="";
+		if(StringUtils.isNotEmpty(getRow().getUfClaro())){
+			value = getRow().getUfClaro();
+		}
+		return value;
+	}
+	
 	 
 	protected boolean isDeleteEnabled() {
 		// TODO Auto-generated method stub
