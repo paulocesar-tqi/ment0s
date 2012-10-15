@@ -40,7 +40,21 @@ public class RelatorioConciliacaoPreExcelHandler extends BasicExcelHandler {
 		ExcelPrinter printer = new ExcelPrinter(columnDefinitions,workbook);
 		printer.addSheet("Conciliação");
 		List<String> linhasCabecalho = new ArrayList<String>();
-		linhasCabecalho.add("Data Geração "+dateFormat.format(new Date()));
+		String prestadoraLd = "Todas";
+		if (!form.getOperadoraExterna().equals("*")) {
+			prestadoraLd = getServiceManager(request).getOperadoraService().pesquisaOperadoraByPk(form.getOperadoraExterna()).getDsOperadora();
+		}
+		
+		String filial = "Todas";
+		if (!form.getOperadoraClaro().equals("*")) {
+			filial = getServiceManager(request).getOperadoraService().pesquisaOperadoraByPk(form.getOperadoraClaro()).getDsOperadora();
+		}
+		
+		linhasCabecalho.add("RELATÓRIO CONCILIAÇÃO CONTÁBIL");
+		linhasCabecalho.add("PRESTADORA LD: " + prestadoraLd);
+		linhasCabecalho.add("FILIAL CLARO: "+filial);
+		linhasCabecalho.add("MÊS DE REFERÊNCIA: "+form.getMes()+"/"+form.getAno());		
+		linhasCabecalho.add("DATA DO DEMONSTRATIVO: "+dateFormat.format(new Date()));
 		printer.setHeaderLines(linhasCabecalho);
 		printer.generateHeader();
 		printer.addBlankLines(1);
