@@ -39,6 +39,8 @@ public interface PesquisaDominiosService {
 	
 	public List<SccCriticaPrebilling> getAllCriticaPreBilling() throws DAOException;
 	
+	List<SccStatusArquivo> findByStatus() throws DAOException;
+	
 	
 	
 }

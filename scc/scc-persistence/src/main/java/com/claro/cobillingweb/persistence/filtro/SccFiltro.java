@@ -65,6 +65,30 @@ public class SccFiltro {
 	 */
 	private String cdErroProtocolo;
 	
+	private String cdCsp;
+	
+	private Long cdCiclo;
+	
+	private Long mmCiclo;
+	
+	private Long aaCiclo;
+	
+	private String statusFatura;
+	
+	private Integer tipoData;
+	
+	private String numeroFatura;
+	
+	private Character csp;
+	
+	private String status;
+	
+	private Long numeroAcordo;
+	
+	private Long numeroConta;
+	
+	private Boolean isSintetico;
+	
 	/**
 	 * Tipo de batimento do arquivo.
 	 */
@@ -157,9 +181,102 @@ public class SccFiltro {
 	public void setCdTipoBatimento(String cdTipoBatimento) {
 		this.cdTipoBatimento = cdTipoBatimento;
 	}
-	
 
-	
-	
+	public String getCdCsp() {
+		return cdCsp;
+	}
+
+	public void setCdCsp(String cdCsp) {
+		this.cdCsp = cdCsp;
+	}
+
+	public Long getCdCiclo() {
+		return cdCiclo;
+	}
+
+	public void setCdCiclo(Long cdCiclo) {
+		this.cdCiclo = cdCiclo;
+	}
+
+	public Long getMmCiclo() {
+		return mmCiclo;
+	}
+
+	public void setMmCiclo(Long mmCiclo) {
+		this.mmCiclo = mmCiclo;
+	}
+
+	public Long getAaCiclo() {
+		return aaCiclo;
+	}
+
+	public void setAaCiclo(Long aaCiclo) {
+		this.aaCiclo = aaCiclo;
+	}
+
+	public String getStatusFatura() {
+		return statusFatura;
+	}
+
+	public void setStatusFatura(String statusFatura) {
+		this.statusFatura = statusFatura;
+	}
+
+	public Integer getTipoData() {
+		return tipoData;
+	}
+
+	public void setTipoData(Integer tipoData) {
+		this.tipoData = tipoData;
+	}
+
+	public String getNumeroFatura() {
+		return numeroFatura;
+	}
+
+	public void setNumeroFatura(String numeroFatura) {
+		this.numeroFatura = numeroFatura;
+	}
+
+	public Character getCsp() {
+		return csp;
+	}
+
+	public void setCsp(Character csp) {
+		this.csp = csp;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public Long getNumeroAcordo() {
+		return numeroAcordo;
+	}
+
+	public void setNumeroAcordo(Long numeroAcordo) {
+		this.numeroAcordo = numeroAcordo;
+	}
+
+	public Long getNumeroConta() {
+		return numeroConta;
+	}
+
+	public void setNumeroConta(Long numeroConta) {
+		this.numeroConta = numeroConta;
+	}
+
+	public Boolean getIsSintetico() {
+		return isSintetico;
+	}
+
+	public void setIsSintetico(Boolean isSintetico) {
+		this.isSintetico = isSintetico;
+	}
+
 
 }

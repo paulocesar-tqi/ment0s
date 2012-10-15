@@ -2,6 +2,7 @@ package com.claro.cobillingweb.persistence.dao.internal.impl;
 
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
@@ -17,6 +18,7 @@ public class SccOperadoraDAOImpl extends HibernateBasicDAOImpl<SccOperadora> imp
 		return null;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<SccOperadora> pesquisaOperadorasExternas() throws DAOException {
 		try {
 			Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(SccOperadora.class);
@@ -28,6 +30,7 @@ public class SccOperadoraDAOImpl extends HibernateBasicDAOImpl<SccOperadora> imp
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<SccOperadora> pesquisaHoldingClaro() throws DAOException {
 		try {
 			Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(SccOperadora.class);
@@ -40,6 +43,27 @@ public class SccOperadoraDAOImpl extends HibernateBasicDAOImpl<SccOperadora> imp
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
+	public List<SccOperadora> pesquisaHoldingClaroByCdEotHolding(String cdEOT) throws DAOException{
+		
+		List<SccOperadora> list = null;
+		try {
+			Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(SccOperadora.class);
+			if(StringUtils.isNotEmpty(cdEOT) && !cdEOT.equals("*")){
+				criteria.add(Restrictions.eq("cdOperadoraHolding", cdEOT));
+			}
+			criteria.add(Restrictions.eq("cdTipoServico", "M"));		
+			criteria.add(Restrictions.eqProperty("cdEot", "cdOperadoraHolding"));
+			criteria.addOrder(Order.asc("dsOperadora"));
+			list = (List<SccOperadora>) criteria.list();
+		} catch (Exception e) {
+			throw new DAOException(e.getMessage(), "SccOperadoraDAO.pesquisaHoldingClaro");
+		}
+		
+		return list;
+	}
+	
+	@SuppressWarnings("unchecked")
 	public List<SccOperadora> pequisaOperadorasClaro() throws DAOException {
 		try {
 			Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(SccOperadora.class);
@@ -52,6 +76,7 @@ public class SccOperadoraDAOImpl extends HibernateBasicDAOImpl<SccOperadora> imp
 	}
 	
 	/* alteracao para atender ao controle de arquivo transmissao */
+	@SuppressWarnings("unchecked")
 	public List<SccOperadora> pequisaOperadorasClaroComM() throws DAOException {
 		try {
 			Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(SccOperadora.class);
@@ -63,10 +88,13 @@ public class SccOperadoraDAOImpl extends HibernateBasicDAOImpl<SccOperadora> imp
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<SccOperadora> pesquisaOperadorasHolding(String cdEOT) throws DAOException {
 		try {
 			Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(SccOperadora.class);
-			criteria.add(Restrictions.eq("cdOperadoraHolding", cdEOT));
+			if(StringUtils.isNotEmpty(cdEOT) && !cdEOT.equals("*")){
+				criteria.add(Restrictions.eq("cdOperadoraHolding", cdEOT));
+			}
 			criteria.addOrder(Order.asc("dsOperadora"));
 			return criteria.list();
 		} catch (Exception e) {
@@ -74,6 +102,9 @@ public class SccOperadoraDAOImpl extends HibernateBasicDAOImpl<SccOperadora> imp
 		}
 	}
 	
+	
+	
+	@SuppressWarnings("unchecked")
 	public List<SccOperadora> getAllCSP() throws DAOException {
 		try {
 			Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(SccOperadora.class);

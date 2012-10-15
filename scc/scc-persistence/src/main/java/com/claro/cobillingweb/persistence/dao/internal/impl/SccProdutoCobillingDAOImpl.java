@@ -89,6 +89,7 @@ public class SccProdutoCobillingDAOImpl extends HibernateBasicDAOImpl<SccProduto
 		}catch (Exception e) { throw new DAOException(e.getMessage(), e); }		
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<SccComposicaoProduto> carregaComposicaoProduto(Long cdProdutoCobilling, Long cdItemCobilling) throws DAOException {
 		try {
 			Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(SccComposicaoProduto.class);
@@ -96,7 +97,25 @@ public class SccProdutoCobillingDAOImpl extends HibernateBasicDAOImpl<SccProduto
 			criteria.add(Restrictions.eq("sccItemCobilling.cdItemCobilling", cdProdutoCobilling));
 			criteria.setFetchMode("sccItemCobilling", FetchMode.JOIN);
 			return criteria.list();
-		}catch (Exception e) { throw new DAOException(e.getMessage(), e); }		
+		}catch (Exception e) { 
+			throw new DAOException(e.getMessage(), e); 
+		}		
 	}
+	
+	
+	@SuppressWarnings("unchecked")
+	public List<SccProdutoCobilling> pesquisaProdutosOperadoraLDTodas() throws DAOException{
+		
+		List<SccProdutoCobilling> list = null;
+		try {
+			Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(SccProdutoCobilling.class);
+			list = (List<SccProdutoCobilling> ) criteria.list();
+			
+		} catch (Exception e) {
+			throw new DAOException(e.getMessage(), e); 
+		}
+		return list;
+	}
+
 	
 }

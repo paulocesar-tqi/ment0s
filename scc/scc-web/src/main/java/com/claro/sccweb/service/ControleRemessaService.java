@@ -1,12 +1,15 @@
 package com.claro.sccweb.service;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
 import com.claro.cobillingweb.persistence.dao.DAOException;
 import com.claro.cobillingweb.persistence.entity.SccArquivoSumarizado;
+import com.claro.cobillingweb.persistence.filtro.SccFiltroRelPerdaFaturamento;
 import com.claro.cobillingweb.persistence.view.RelCDRPrePagoView;
 import com.claro.cobillingweb.persistence.view.SomatorioRelCDRPrePagoView;
+import com.claro.sccweb.vo.PerdaFaturamentoVO;
 
 
 public interface ControleRemessaService {
@@ -20,5 +23,7 @@ public interface ControleRemessaService {
 	public List<SccArquivoSumarizado> geraSumarizadoPeriodo(String cdEOTClaro,String cdEOTLD,Date dataInicial,Date dataFinal,boolean holding) throws DAOException;
 	
 	List<SccArquivoSumarizado> pesquisaSumarioPorEvento(String cdEOTClaro, String cdEOTLD, Date dataInicial, Date dataFinal, Long cdProdutoCobilling, Long[] statusCdr, boolean holding, boolean tipoPeriodo) throws DAOException;
+	
+	Collection<PerdaFaturamentoVO> gerarRelatorioPerdaFaturamento(SccFiltroRelPerdaFaturamento filtro) throws DAOException;
 	
 }

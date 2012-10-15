@@ -34,6 +34,7 @@ $('#tabs').tabs();
 <div id="tabs-1">
 <form:form  modelAttribute="filtro"  method="POST" action="/scc/user/repasse/pre/relatorios/execute.scc" id="form1">
 <form:hidden path="operacao" id="operacao"/>
+<form:hidden path="cdTipoRelatorio" id="cdTipoRelatorio"/>
 
 
 <table  width="100%" border="0" cellspacing="0" cellpadding="0" >
@@ -42,7 +43,7 @@ $('#tabs').tabs();
 <td align="center"><h3>Cobilling Pré Pago - Relatório Sintético de Chamadas</h3></td>
 </tr>
  <tr><td>                            
-<display:table style="width:90%" name="sessionScope._DISPLAY_TAG_SPACE_1"  decorator="com.claro.sccweb.decorator.RelSinteticoFechamentoPrePagoViewDecorator" pagesize="20"  id="sintetico" requestURI="/scc/user/repasse/pre/relatorios/tab1_sintetico.scc" class="ui-state-default">
+<display:table style="width:90%" name="sessionScope._DISPLAY_TAG_SPACE_1" export="true"  decorator="com.claro.sccweb.decorator.RelSinteticoFechamentoPrePagoViewDecorator" pagesize="20"  id="sintetico" requestURI="/scc/user/repasse/pre/relatorios/tab1_sintetico.scc" class="ui-state-default">
 <display:column property="operadoraClaro" title="Op. Claro" />
 <display:column property="uf" title="UF" />
 <display:column property="trafego" title="Tráfego" />

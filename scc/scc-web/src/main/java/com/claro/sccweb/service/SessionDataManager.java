@@ -101,6 +101,7 @@ public class SessionDataManager {
 		return this.module.equals("POS");
 	}
 	
+	@SuppressWarnings("rawtypes")
 	public List getResultTable()
 	{
 		return getSearchResultList().getResult();

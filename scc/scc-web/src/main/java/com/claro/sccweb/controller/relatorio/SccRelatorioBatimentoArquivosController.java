@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.claro.cobillingweb.persistence.dao.BasicDAO;
@@ -109,6 +110,18 @@ public class SccRelatorioBatimentoArquivosController extends
 		comboList.add(new BasicStringItem("RET", "Ret"));
 		return comboList;
 	}
+	
+	@RequestMapping(value="/tab1" , method = RequestMethod.GET)
+	public ModelAndView tab1(HttpServletRequest request, HttpServletResponse response) throws Exception {
+			ModelAndView mav = new ModelAndView(getViewName());
+			Object form = getMyFormFromCache(getClass());
+			if (form != null)
+				mav.addObject(FORM_NAME, form);
+			else
+				mav.addObject(FORM_NAME, getForm());
+	    	return mav;  
+	}
+
 
 	public SccBatimentoArquivosService getSccBatimentoArquivosService() {
 		return sccBatimentoArquivosService;

@@ -20,6 +20,7 @@ import com.claro.cobillingweb.persistence.entity.SccProdutoContratadoPK;
 public interface ContratoService {
 
 	public List<SccProdutoCobilling> pesquisaProdutosOperadoraLD(String cdEOT) throws DAOException,ServiceException;
+	public List<SccProdutoCobilling> pesquisaProdutosOperadoraLDTodas() throws DAOException,ServiceException;
 	public List<SccPeriodicidadeRepasse> pesquisaPeriodicidadeRepasse(String cdEOT,Long cdProduto) throws DAOException,ServiceException;
 	public List<SccContratoAcordado> pesquisaContratosPorProduto(String cdEOTClaro, String cdEOTLD, Long cdProduto, Date dtInicio,Date dtFinal,boolean holding) throws DAOException,ServiceException;
 	public SccProdutoCobilling pesquisaProdutoByPk(Long cdProdutoCobilling) throws DAOException;

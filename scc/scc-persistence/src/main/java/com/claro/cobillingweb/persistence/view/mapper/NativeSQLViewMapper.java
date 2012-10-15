@@ -11,6 +11,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
@@ -54,6 +55,7 @@ public class NativeSQLViewMapper<E> {
 		this.session = session;
 	}
 	
+	@SuppressWarnings("rawtypes")
 	public void addResultMap(String propertyName,Class clazz) {
 		ViewResultMap mapping = new ViewResultMap(propertyName, clazz);		
 		resultMapping.add(mapping);		
@@ -118,6 +120,7 @@ public class NativeSQLViewMapper<E> {
 	 * @return
 	 * @throws DAOException
 	 */
+	@SuppressWarnings("unchecked")
 	public List<E> execute() throws DAOException {
 		if (getProjections() != null) {
 			SQL.append(" ");
@@ -145,25 +148,36 @@ public class NativeSQLViewMapper<E> {
 					Method setter = this.resultClass.getDeclaredMethod(methodName, itemMap.getType());
 					
 					if ((rows.get(i)[m] != null) && (rows.get(i)[m] instanceof BigDecimal)) {
-						//System.out.println("Setter (fixBigDecimal) "+setter.getName()+" com valor "+rows.get(i)[m]);
+						
 						setter.invoke(item, fixBigDecimal(itemMap.getType(), (BigDecimal)rows.get(i)[m]));
 						
+					} else if((rows.get(i)[m] != null) && (rows.get(i)[m] instanceof String)){
+						setter.invoke(item, fixString((String)rows.get(i)[m]));
+						
 					} else if ((rows.get(i)[m] != null) && (rows.get(i)[m] instanceof Character)) {
-						//System.out.println("Setter (fixCharacter) "+setter.getName()+" com valor "+rows.get(i)[m]);
-						setter.invoke(item, fixCharacter((Character)rows.get(i)[m]));
+						if(itemMap.getType().getName().equals("java.lang.Character")){
+							setter.invoke(item, fixCharacter2((Character)rows.get(i)[m]));
+						}else{
+							setter.invoke(item, fixCharacter((Character)rows.get(i)[m]));
+						}
+					} else if ((rows.get(i)[m] != null) && (rows.get(i)[m] instanceof Date)) {
+						
+						setter.invoke(item, fixDate((Timestamp)rows.get(i)[m]));
 						
 					} else if ((rows.get(i)[m] != null) && (rows.get(i)[m] instanceof Timestamp)) {
-						//System.out.println("Setter (fixTimeStamp) "+setter.getName()+" com valor "+rows.get(i)[m]);
-						setter.invoke(item, fixTimeStamp((Timestamp)rows.get(i)[m]));
-						
+						if(itemMap.getType().getName().equals("java.sql.Timestamp")){
+							setter.invoke(item, fixTimeStamp2((Timestamp)rows.get(i)[m]));
+						}else{
+							setter.invoke(item, fixTimeStamp((Timestamp)rows.get(i)[m]));
+						}
 					} else {
 						if (rows.get(i)[m] != null) {
-							//System.out.println("Setter "+setter.getName()+" com valor "+rows.get(i)[m]+" e tipo "+rows.get(i)[m].getClass());
+							
 							setter.invoke(item, rows.get(i)[m]);
 							
 						} else {
-							//System.out.println("Setter "+setter.getName()+" com valor null");
-							setter.invoke(item, String.class.equals(itemMap.getType()) ?  " " : null);
+							
+							setter.invoke(item, (Object) null);
 							
 						}
 					}
@@ -185,6 +199,7 @@ public class NativeSQLViewMapper<E> {
 	 * @return
 	 * @throws DAOException
 	 */
+	@SuppressWarnings("rawtypes")
 	private Object fixBigDecimal(Class clazz,BigDecimal value) throws DAOException {
 		Object result = null;
 		if (clazz.equals(Double.class))
@@ -198,11 +213,27 @@ public class NativeSQLViewMapper<E> {
 		return result;
 	}
 	
+	private String fixString(String value) {
+		
+		if(StringUtils.isEmpty(value)) {
+			return " ";
+		}
+		return value;
+	}
+	
+	
 	private String fixCharacter(Character value) {		
 		if (value == null)
 			return " ";
 		else
-			return value.toString();
+			return (String) fixCharacter2(value).toString();
+	}
+	
+	private Character fixCharacter2(Character value){
+		if(value != null){
+			return value;
+		}
+		return null;
 	}
 	
 	private Date fixTimeStamp(Timestamp value) {
@@ -210,6 +241,20 @@ public class NativeSQLViewMapper<E> {
 			return null;
 		else
 			return new Date(value.getTime());
+	}
+	
+	private Timestamp fixTimeStamp2(Timestamp value){
+		if(value != null){
+			return (Timestamp)value;
+		}
+		return value;
+	}
+	
+	private Date fixDate(Date value){
+		if(value != null){
+			return (Date)value;
+		}
+		return value;
 	}
 	
 	public String getProjections() {
@@ -237,8 +282,10 @@ public class NativeSQLViewMapper<E> {
 class ViewResultMap {
 	
 	private String propertyName;
+	@SuppressWarnings("rawtypes")
 	private Class type;
 	
+	@SuppressWarnings("rawtypes")
 	public ViewResultMap(String propertyName,Class type) {
 		this.propertyName = propertyName;
 		this.type = type;
@@ -252,10 +299,12 @@ class ViewResultMap {
 		this.propertyName = propertyName;
 	}
 	
+	@SuppressWarnings("rawtypes")
 	public Class getType() {
 		return type;
 	}
 	
+	@SuppressWarnings("rawtypes")
 	public void setType(Class type) {
 		this.type = type;
 	}

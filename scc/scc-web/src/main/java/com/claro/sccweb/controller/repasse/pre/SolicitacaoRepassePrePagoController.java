@@ -146,18 +146,15 @@ public class SolicitacaoRepassePrePagoController extends BaseFormController {
 	}
 	
 	@ModelAttribute("operadorasClaro")
-	public List<SccOperadora> populaOperadorasClaro() throws Exception
-	{
+	public List<SccOperadora> populaOperadorasClaro() throws Exception {
 		List<SccOperadora> comboList = new ArrayList<SccOperadora>();
 		SccOperadora allValues = new SccOperadora();
 		allValues.setCdEot(BasicDAO.GET_ALL_STRING);
 		allValues.setDsOperadora("Todas");
 		comboList.add(0,allValues);
-		comboList.addAll(getServiceManager().getPesquisaDominiosService().pequisaOperadorasClaro());
-		return comboList; 
+		comboList.addAll(getServiceManager().getPesquisaDominiosService().pequisaOperadorasClaroComM());
+		return comboList;
 	}
-	
-	
 	
 	
 	@RequestMapping(value="/json/lista_produtos/{cdEOTLD}/{cdEOTClaro}" , method=RequestMethod.GET)

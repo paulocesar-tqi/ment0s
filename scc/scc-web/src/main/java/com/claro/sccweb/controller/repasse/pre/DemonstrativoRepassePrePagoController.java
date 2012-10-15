@@ -42,6 +42,7 @@ public class DemonstrativoRepassePrePagoController extends BaseFormController {
 	public static final String OPERACAO_PESQUISAR = "OPERACAO_PESQUISAR";
 	public static final String OPERACAO_SOLICITAR = "OPERACAO_SOLICITAR";
 	public static final String OPERACAO_EXCEL = "OPERACAO_EXCEL";
+	public static final String OPERACAO_EXCEL3 = "OPERACAO_EXCEL3";
 	public static final String OPERACAO_NOVO = "OPERACAO_NOVO";
 	public static final String DEMONSTRATIVO_HOLDING = "DEMONSTRATIVO_HOLDING";
 	public static final String DEMONSTRATIVO_OPERADORA = "DEMONSTRATIVO_OPERADORA";
@@ -107,6 +108,8 @@ public class DemonstrativoRepassePrePagoController extends BaseFormController {
 			mav = pesquisa(request, response, form, bindingResult, model);
 		else if (form.getOperacao().equals(OPERACAO_EXCEL))
 			mav = geraExcel(request, response, form, bindingResult, model);
+		else if (form.getOperacao().equals(OPERACAO_EXCEL3))
+			mav = geraExcelAssinatura(request, response, form, bindingResult, model);
 		return mav;
 	}
 	
@@ -146,6 +149,12 @@ public class DemonstrativoRepassePrePagoController extends BaseFormController {
 		storeInSession(getClass(), DEMONSTRATIVO_COMPLETO, excelModel, request);
 		cachedForm.setCdEOTClaro(cdEOTOperadoraOriginal);
 		return mav;
+	}
+	
+	
+	public ModelAndView geraExcelAssinatura(HttpServletRequest request, HttpServletResponse response,@Valid @ModelAttribute("filtro")  DemonstrativoRepassePrePagoForm form,BindingResult bindingResult,Model model) throws Exception {
+		info("Exportando demonstrativo de assinatura pré-pago para Excel com filtro : "+form.toString());
+		return new ModelAndView("repasse_demonstrativo_assinatura_pre_excel");
 	}
 	
 	/**

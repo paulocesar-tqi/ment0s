@@ -51,10 +51,12 @@
 	{
 	 $("#cdProdutoCobilling").empty().append('<option selected="selected" value="0">Selecione...</option>');
 	 $("#cdPeriodicidade").empty().append('<option selected="selected" value="0">Selecione...</option>');
+	 
+	 var eotclaro =$("#cdEOTClaro option:selected");
 	 var sel = $("#cdEOTLD option:selected");
 	 
 	  $.ajax({   
-		 url: "/scc/user/relatorio/servico/pos/json/lista_produtos/"+sel.val()+".scc",	 
+		 url: "/scc/user/relatorio/servico/pos/json/lista_produtos/"+sel.val()+"/"+ eotclaro.val()+".scc",	 
 		 dataType: "json",   success: function(data) 
 		   	{     
 			var name, select, option;        
@@ -72,7 +74,8 @@
 	{
 		
 		var sel = $("#cdProdutoCobilling option:selected");
-		var eot = $("#cdEOTLD option:selected");	
+		var eot = $("#cdEOTLD option:selected");
+		
 		$("#cdPeriodicidade").empty().append('<option selected="selected" value="0">Selecione...</option>');
 		$.ajax({   
 			 url: "/scc/user/relatorio/servico/pos/json/lista_periodos/"+sel.val()+"/"+eot.val()+".scc",	 
@@ -133,15 +136,6 @@
 				    <form:errors path="anoRelatorio" /></td>
 				</tr>
 			</table>
-			<table width="100%" border="0" cellspacing="0" cellpadding="0">
-				<tr>
-    				<td colspan="3" class="TdFormularioUp">&nbsp;</td>    
-    				<td colspan="1" align="right" class="TdFormularioUp" nowrap="nowrap">
-    					<input id="pesquisar_button" type="button" value=<spring:message code="comum.botao.executar"/> />  
-    					<input id="excel_button" type="button" value=<spring:message code="comum.botao.excel"/> />  
-    				</td>
-				</tr>
-			</table>
 		    <br />
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
@@ -164,7 +158,17 @@
 					</td>
 				</tr>
 			</table>
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr>
+    				<td colspan="3" class="TdFormularioUp">&nbsp;</td>    
+    				<td colspan="1" align="right" class="TdFormularioUp" nowrap="nowrap">
+    					<input id="pesquisar_button" type="button" value=<spring:message code="comum.botao.executar"/> />  
+    					<input id="excel_button" type="button" value=<spring:message code="comum.botao.excel"/> />  
+    				</td>
+				</tr>
+			</table>
 	</div>
+		
 </form:form>
 </div>
 <script>

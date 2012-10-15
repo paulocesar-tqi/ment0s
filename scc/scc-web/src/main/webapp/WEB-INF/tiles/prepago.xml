@@ -10,8 +10,6 @@
 <put-attribute name="body" value="/WEB-INF/jsp/empty.jsp" />
 </definition>
 
-
-
 <definition name="repasse.pre.solicitacao" extends="basicLayout">
 <put-attribute name="body" value="/WEB-INF/jsp/repasse/pre/solicitacao/solicitacao.jsp" />
 <put-attribute name="tituloTela" value="Solicitação Repasse - Pré Pago" />
@@ -105,10 +103,26 @@
 <put-attribute name="tituloTela" value="Relatório Prestação de Serviço - PréPago" />
 </definition>
 
+<definition name="relatorio_confirmacao_repasse_filtro" extends="basicLayout">
+	<put-attribute name="body" value="/WEB-INF/jsp/relatorio/confirmacaoRepasse/filtro.jsp" />
+	<put-attribute name="tituloTela" value="Relatório de Confirmação de Repasse" />
+</definition>
+
+<definition name="relatorio_eventos" extends="basicLayout">
+<put-attribute name="body" value="/WEB-INF/jsp/relatorio/eventos/relatorioeventos.jsp" />
+<put-attribute name="tituloTela" value="Relatório de Eventos - PréPago" />
+</definition>
+
+<definition name="relatorio_chamadas_credito" extends="basicLayout">
+<put-attribute name="body" value="/WEB-INF/jsp/relatorio/chamadasCredito/chamadascredito.jsp" />
+<put-attribute name="tituloTela" value="Relatório de Chamadas Crédito 226 - PréPago" />
+</definition>
+
 <definition name="relatorio_conciliacao_pre_filtro" extends="basicLayout">
 <put-attribute name="body" value="/WEB-INF/jsp/relatorio/conciliacao/pre/filtro.jsp" />
 <put-attribute name="tituloTela" value="Relatório Conciliação" />
 </definition>
+
 
 </tiles-definitions>
 

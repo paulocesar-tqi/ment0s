@@ -36,5 +36,6 @@ public interface SccOperadoraDAO extends BasicDAO<SccOperadora> {
 	
 	public List<SccOperadora> getAllCSP() throws DAOException;
 	
+	public List<SccOperadora> pesquisaHoldingClaroByCdEotHolding(String cdEOT) throws DAOException;
 	
 }

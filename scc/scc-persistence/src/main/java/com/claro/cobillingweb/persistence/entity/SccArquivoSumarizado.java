@@ -42,6 +42,7 @@ public class SccArquivoSumarizado {
 	private String dsProduto;
 	private String dsOperadoraClaro;
 	private String dsOperadoraLd;
+	private String cdSubStatusCdr;
 
 	
 	
@@ -246,6 +247,12 @@ public class SccArquivoSumarizado {
 	}
 	public void setDsOperadoraLd(String dsOperadoraLd) {
 		this.dsOperadoraLd = dsOperadoraLd;
+	}
+	public String getCdSubStatusCdr() {
+		return cdSubStatusCdr;
+	}
+	public void setCdSubStatusCdr(String cdSubStatusCdr) {
+		this.cdSubStatusCdr = cdSubStatusCdr;
 	}
 	
 	

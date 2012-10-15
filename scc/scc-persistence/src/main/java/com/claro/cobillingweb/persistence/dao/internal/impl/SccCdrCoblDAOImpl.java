@@ -34,6 +34,7 @@ public class SccCdrCoblDAOImpl extends HibernateBasicDAOImpl<SccCdrCobl> impleme
 	}
 	
 	 
+	@SuppressWarnings("rawtypes")
 	public SccCdrCobl getByPk(Serializable pk, Class entityClazz) throws DAOException {
 		throw new UnsupportedOperationException();
 	}

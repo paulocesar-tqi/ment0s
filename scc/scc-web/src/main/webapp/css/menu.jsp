@@ -146,6 +146,30 @@
 	<ul>	
 </li>
 
+
+	<c:if test="${sessionScope['scopedTarget.sessionDataManager'].posPago}">
+		<li>
+			<a class="has-children" href="#"><spring:message code="menu.relatorio.financeiro"/></a>
+			<ul>
+				<c:if test="${sessionScope['scopedTarget.sessionDataManager'].posPago}">
+					<li><a href="/scc/user/relatorio/parcelamento/acordo/new.scc"><spring:message code="menu.relatorio.financeiro.relatorio"/></a></li>
+				</c:if>
+				<c:if test="${sessionScope['scopedTarget.sessionDataManager'].posPago}">
+					<li><a href="/scc/user/financeiro/perda/faturamento/new.scc"><spring:message code="menu.relatorio.financeiro.perda.faturamento"/></a></li>
+				</c:if>
+					
+			</ul>
+		</li>
+	</c:if>
+
+<li><a class="has-children" href="#">Fiscal</a>
+	<ul>	
+	<li><a href="/scc/user/fiscal/relatorio/batimento/estorno/debito/new.scc">Relatório de Batimento de Estorno de Débito</a></li>	
+	<ul>	
+</li>
+
+
+
 </ul>
 </li>
 
@@ -237,23 +261,107 @@
 	<a href="#"><spring:message code="relatorio.menu.relatorio"/></a>
 	<ul>
 		<li><a href="/scc/user/relatorio/batimento/arquivos/new.scc"><spring:message code="menu.relatorio.batimento.arquivos"/></a></li>
+		<c:if test="${sessionScope['scopedTarget.sessionDataManager'].prePago}">
+			<li><a href="/scc/user/relatorio/eventos/new.scc"><spring:message code="menu.relatorio.eventos"/></a></li>
+		</c:if>
+		
+		<c:if test="${sessionScope['scopedTarget.sessionDataManager'].prePago}">
+			<li><a href="/scc/user/relatorio/chamadas/credito/new.scc"><spring:message code="menu.relatorio.chamadas.credito"/></a></li>
+		</c:if>
 		<li><a href="/scc/user/relatorio/alarmeoperacional/new.scc"><spring:message code="menu.relatorio.alarme.operacional"/></a></li>
-	
 		<li>
 			<a class="has-children" href="#"><spring:message code="menu.relatorio.processo"/></a>
 			<ul>
-				<li><a href="/scc/user/relatorio/servico/pos/new.scc"><spring:message code="menu.relatorio.prestacao.servico"/></a>	</li>
+				<c:if test="${sessionScope['scopedTarget.sessionDataManager'].posPago}">
+					<li><a href="/scc/user/relatorio/servico/pos/new.scc"><spring:message code="menu.relatorio.prestacao.servico"/></a>	</li>
+				</c:if>
+				<c:if test="${sessionScope['scopedTarget.sessionDataManager'].prePago}">
+					<li><a href="/scc/user/relatorio/servico/pre/new.scc"><spring:message code="menu.relatorio.prestacao.servico"/></a>	</li>
+				</c:if>
+				
 				<li><a href="/scc/user/relatorio/processo/parametro/new.scc"><spring:message code="menu.relatorio.processo.parametro"/></a>	</li>
 			</ul>
 		</li>
-		<c:if test="${sessionScope['scopedTarget.sessionDataManager'].prePago}">
+		<li><a href="/scc/user/relatorio/confirmacao/repasse/new.scc"><spring:message code="menu.relatorio.confirmacao.repasse"/></a></li>
+		<li><a href="/scc/user/relatorio/arquivosNaoProcessados/new.scc"><spring:message code="menu.relatorio.arquivos.nao.processados"/></a></li>
+		<li><a href="/scc/user/relatorio/assexuados/new.scc"><spring:message code="menu.relatorio.assexuados"/></a></li>
+		<li><a href="/scc/user/relatorio/contingenciaFiscal/new.scc"><spring:message code="menu.relatorio.contingencia.fiscal"/></a></li>
+		<li><a href="/scc/user/relatorio/batimentoFiscal/new.scc"><spring:message code="menu.relatorio.batimento.fiscal"/></a></li>		
+		<li><a href="/scc/user/relatorio/arquivosFiscais/new.scc"><spring:message code="menu.relatorio.arquivos.fiscais"/></a></li>		
+		<li><a href="/scc/user/relatorio/encaminhadoMobile/new.scc"><spring:message code="menu.relatorio.encaminhado.mobile"/></a></li>
+		<li><a href="/scc/user/relatorio/alocadasMobile/new.scc"><spring:message code="menu.relatorio.alocadas.mobile"/></a></li>
+		<li><a href="/scc/user/relatorio/alocadasMobileSemProcessamento/new.scc"><spring:message code="menu.relatorio.alocadas.mobile.sem.processamento"/></a></li>		
+		<li><a href="/scc/user/relatorio/extracaoCDRs/new.scc"><spring:message code="menu.relatorio.extracao.cdrs"/></a></li>		
+		<c:if test="${sessionScope['scopedTarget.sessionDataManager'].posPago}">
+			<li>
+				<a class="has-children" href="#"><spring:message code="menu.relatorio.naoconf"/></a>
+				<ul>
+					<c:if test="${sessionScope['scopedTarget.sessionDataManager'].posPago}">
+						<li><a href="/scc/user/relatorio/naoconf/ajustes/new.scc"><spring:message code="menu.relatorio.naoconf.ajustes"/></a></li>
+					</c:if>
+					<c:if test="${sessionScope['scopedTarget.sessionDataManager'].posPago}">
+						<li><a href="/scc/user/relatorio/naoconf/faturamento/new.scc"><spring:message code="menu.relatorio.naoconf.faturamento"/></a></li>
+					</c:if>
+					
+					<c:if test="${sessionScope['scopedTarget.sessionDataManager'].posPago}">
+						<li><a href="/scc/user/relatorio/naoconf/batimento/estorno/new.scc"><spring:message code="menu.relatorio.naoconf.batimento"/></a></li>
+					</c:if>
+					
+					
+				</ul>
+			</li>
 			<li>
 				<a class="has-children" href="#"><spring:message code="menu.relatorio.contabil"/></a>
 				<ul>
 					<li><a href="/scc/user/relatorio/conciliacao/pre/new.scc"><spring:message code="menu.relatorio.contabil.conciliacao"/></a>	</li>
 				</ul>
 			</li>
+
 		</c:if>
+
+		<c:if test="${sessionScope['scopedTarget.sessionDataManager'].posPago}">
+			<li>
+				<a class="has-children" href="#"><spring:message code="menu.relatorio.faturas"/></a>
+				<ul>
+					<c:if test="${sessionScope['scopedTarget.sessionDataManager'].posPago}">
+						<li><a href="/scc/user/relatorio/faturas/controle/new.scc"><spring:message code="menu.relatorio.faturas.controle"/></a></li>
+					</c:if>
+					<c:if test="${sessionScope['scopedTarget.sessionDataManager'].posPago}">
+						<li><a href="/scc/user/relatorio/juros/multas/new.scc"><spring:message code="menu.relatorio.juros.multas"/></a></li>
+					</c:if>
+					<c:if test="${sessionScope['scopedTarget.sessionDataManager'].posPago}">
+						<li><a href="/scc/user/relatorio/faturas/acoes/cobranca/new.scc"><spring:message code="menu.relatorio.acoes.cobranca"/></a></li>
+					</c:if>
+					<c:if test="${sessionScope['scopedTarget.sessionDataManager'].posPago}">
+						<li><a href="/scc/user/relatorio/faturas/aging/new.scc"><spring:message code="menu.relatorio.aging.faturas"/></a></li>
+					</c:if>
+					
+				</ul>
+			</li>
+		</c:if>
+		
+		<c:if test="${sessionScope['scopedTarget.sessionDataManager'].posPago}">
+			<li>
+				<a class="has-children" href="#"><spring:message code="menu.relatoiro.parcelamento"/></a>
+				<ul>
+					<c:if test="${sessionScope['scopedTarget.sessionDataManager'].posPago}">
+						<li><a href="/scc/user/relatorio/parcelamento/acordo/new.scc"><spring:message code="menu.relatorio.parcelamento.acordo"/></a></li>
+					</c:if>
+					<c:if test="${sessionScope['scopedTarget.sessionDataManager'].posPago}">
+						<li><a href="/scc/user/relatorio/parcelamento/acompanhamento/new.scc"><spring:message code="menu.relatorio.parcelamento.acompanhamento"/></a></li>
+					</c:if>
+					
+				</ul>
+			</li>
+		</c:if>
+		
+		<li><a class="has-children" href="#">Refaturamento</a>
+			<ul>	
+				<li><a href="/scc/user/relatorio/chamadas/refaturamento/new.scc">Relatório de Chamadas de Refaturamento</a></li>	
+			<ul>	
+		</li>
+		
+		
 	</ul>
 </li>
 

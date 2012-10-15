@@ -32,8 +32,18 @@ $(document).ready(function(){
 		$('#form1').submit();
 	});	
 	
-	$('#excel_button').click(function(){
+	$('#excel_button1').click(function(){
 		$('#operacao').val("OPERACAO_EXCEL");		
+		$('#form1').submit();
+	});	
+	
+	$('#excel_button2').click(function(){
+		$('#operacao').val("OPERACAO_EXCEL");		
+		$('#form1').submit();
+	});	
+	
+	$('#excel_button3').click(function(){
+		$('#operacao').val("OPERACAO_EXCEL3");		
 		$('#form1').submit();
 	});	
 
@@ -174,6 +184,15 @@ function selecionarParOperadoras(cdEOT)
 
 		
 		</table>
+		
+		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+		<tr>
+		    <td colspan="3" class="TdFormularioUp">&nbsp;</td>    
+		    <td colspan="1" align="right" class="TdFormularioUp" nowrap="nowrap">
+		    <input id="excel_button1" type="button" value=<spring:message code="comum.botao.excel"/> />    
+		    </td>
+		</tr>
+		</table>
 </div> <!-- Accordion 1 Operadora --> 
 </div>
 
@@ -218,6 +237,15 @@ function selecionarParOperadoras(cdEOT)
 		 </c:forEach>
 
 		
+		</table>
+		
+		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+		<tr>
+		    <td colspan="3" class="TdFormularioUp">&nbsp;</td>    
+		    <td colspan="1" align="right" class="TdFormularioUp" nowrap="nowrap">
+		    <input id="excel_button2" type="button" value=<spring:message code="comum.botao.excel"/> />    
+		    </td>
+		</tr>
 		</table>
 </div> <!-- Accordion 2 Holding --> 
 </div>
@@ -274,18 +302,19 @@ function selecionarParOperadoras(cdEOT)
 		 </c:forEach>
 		
 		</table>
+		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+		<tr>
+		    <td colspan="3" class="TdFormularioUp">&nbsp;</td>    
+		    <td colspan="1" align="right" class="TdFormularioUp" nowrap="nowrap">
+		    <input id="excel_button3" type="button" value=<spring:message code="comum.botao.excel"/> />    
+		    </td>
+		</tr>
+		</table>	
 </div>  
 </div>
 
 </div>
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
-<tr>
-    <td colspan="3" class="TdFormularioUp">&nbsp;</td>    
-    <td colspan="1" align="right" class="TdFormularioUp" nowrap="nowrap">
-    <input id="excel_button" type="button" value=<spring:message code="comum.botao.excel"/> />    
-    </td>
-</tr>
-</table>
+
 </div>
 
 

@@ -6,6 +6,7 @@ package com.claro.sccweb.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.claro.cobillingweb.persistence.dao.DAOException;
 import com.claro.cobillingweb.persistence.dao.internal.SccNaoConfAplAjustesDAO;
@@ -19,6 +20,7 @@ import com.claro.sccweb.service.ServiceException;
  * @author 93046251
  *
  */
+@Service
 public class SccNaoConfAplAjustesServiceImpl extends AbstractService implements
 		SccNaoConfAplAjustesService {
 	

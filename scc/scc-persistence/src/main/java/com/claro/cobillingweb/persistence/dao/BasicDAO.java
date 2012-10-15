@@ -31,6 +31,7 @@ public interface BasicDAO<E> {
 	 */
 	public static final String NULL_STRING = "NULL";
 	
+	@SuppressWarnings("rawtypes")
 	public E getByPk(Serializable pk,Class entityClazz) throws DAOException;
 	
 	public void delete(E entity) throws DAOException;

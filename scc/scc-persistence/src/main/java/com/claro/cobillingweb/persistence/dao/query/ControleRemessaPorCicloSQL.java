@@ -28,4 +28,33 @@ public class ControleRemessaPorCicloSQL {
 	
 	public static final String FILTRO_PRODUTO = "AND P.CD_PRODUTO_COBILLING = :cdProdutoCobilling";
 	
+	 
+	public static final String SQL_PERDA_FATURAMENTO =  "SELECT ARQ.CD_EOT_LD,"+
+														"		ARQ.CD_EOT_CLARO,"+
+														"		TRUNC(ARQ.DT_PROC_EXTERNA), "+
+														"		SU.CD_STATUS_CDR, "+
+														"		SU.CD_SUB_STATUS_CDR,"+
+														"		SUM(SU.VL_LIQUIDO_CHAMADA),"+
+														"		SUM(SU.VL_BRUTO_CHAMADA), "+
+														"		SUM(SU.QT_CDRS)"+
+														"  FROM SCC_ARQUIVO_COBILLING ARQ, SCC_ARQUIVO_SUMARIZADO SU "+
+														" WHERE ARQ.SQ_ARQUIVO = SU.SQ_ARQUIVO "+
+														"   AND ARQ.SQ_ARQUIVO_ORIGEM = 0 "+
+														"   AND ARQ.CD_TIPO_ARQUIVO = 5 "+
+														"   AND TRUNC(ARQ.DT_PROC_EXTERNA) >= :dataInicial"+
+														"   AND TRUNC(ARQ.DT_PROC_EXTERNA) <=  :dataFinal";
+	
+	public static final String FILTRO_EOT_CLARO_REL_PF =  "AND ARQ.CD_EOT_CLARO = :cdEOTClaro ";
+	public static final String FILTRO_EOT_LT_REL_PF = "AND ARQ.CD_EOT_LD = :cdEOTLD";
+	
+	public static final String PROJECTIONS_REL_PF ="  GROUP BY ARQ.CD_EOT_LD," +
+											"		ARQ.CD_EOT_CLARO, " +
+											"		TRUNC(ARQ.DT_PROC_EXTERNA), " +
+											"		SU.CD_STATUS_CDR, " +
+											"		SU.CD_SUB_STATUS_CDR "+
+											"		ORDER BY TRUNC(ARQ.DT_PROC_EXTERNA), " +
+											"				ARQ.CD_EOT_LD, ARQ.CD_EOT_CLARO, SUM(SU.VL_LIQUIDO_CHAMADA)";
+
+
+	
 }

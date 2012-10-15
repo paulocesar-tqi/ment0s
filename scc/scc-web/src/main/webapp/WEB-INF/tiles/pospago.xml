@@ -145,7 +145,7 @@
 		<put-attribute name="body" value="/WEB-INF/jsp/pesquisa/arquivos/processados/pos/filtro.jsp" />
 		<put-attribute name="tituloTela" value="Pesquisa de Arquivos Processados - Pós" />
 	</definition>
-		
+	
 	<definition name="pesquisa_arquivos_processados_pos_status" extends="basicLayout">
 		<put-attribute name="body" value="/WEB-INF/jsp/pesquisa/arquivos/processados/pos/status.jsp" />
 		<put-attribute name="tituloTela" value="Pesquisa de Arquivos Processados - Pós" />
@@ -206,6 +206,114 @@
 		<put-attribute name="tituloTela" value="Relatório Prestação de Serviço Pos" />
 	</definition>
 	
+
+	<definition name="relatorio_nao_conformidade_ajustes" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/relatorio/naoconf/relnaoconfajustes.jsp" />
+		<put-attribute name="tituloTela" value="SCC - Relatório de Não Conformidade de Aplicação de Ajustes" />
+	</definition>
+	
+	<definition name="relatorio_arquivos_nao_processados_filtro" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/relatorio/arquivosNaoProcessados/filtro.jsp" />
+		<put-attribute name="tituloTela" value="Relatório de Arquivos Não Processados" />
+	</definition>
+	
+	<definition name="relatorio_assexuados_filtro" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/relatorio/assexuados/filtro.jsp" />
+		<put-attribute name="tituloTela" value="Relatório de Assexuados" />
+	</definition>
+		
+	<definition name="relatorio_alocadas_mobile_filtro" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/relatorio/alocadasMobile/filtro.jsp" />
+		<put-attribute name="tituloTela" value="Relatório de Alocadas no Mobile sem Atualização de Status" />
+	</definition>
+
+	<definition name="relatorio_alocadas_mobile_sem_processamento_filtro" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/relatorio/alocadasMobileSemProcessamento/filtro.jsp" />
+		<put-attribute name="tituloTela" value="Relatório de Alocadas no Mobile sem Processamento" />
+	</definition>
+
+	<definition name="relatorio_contingencia_fiscal_filtro" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/fiscal/contingencia/filtro.jsp" />
+		<put-attribute name="tituloTela" value="Relatório de Contingência Fiscal" />
+	</definition>
+	
+	<definition name="relatorio_batimento_fiscal_filtro" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/fiscal/batimento/filtro.jsp" />
+		<put-attribute name="tituloTela" value="Relatório de Batimento Fiscal" />
+	</definition>
+	
+	<definition name="relatorio_arquivos_fiscais_filtro" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/fiscal/arquivos/filtro.jsp" />
+		<put-attribute name="tituloTela" value="Relatório de Arquivos Fiscais" />
+	</definition>
+	
+	<definition name="relatorio_encaminhado_mobile_filtro" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/relatorio/encaminhadoMobile/filtro.jsp" />
+		<put-attribute name="tituloTela" value="Relatório de Encaminhadas ao Mobile" />
+	</definition>
+
+	<definition name="relatorio_extracaoCDRs_filtro" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/relatorio/extracaoCDRs/filtro.jsp" />
+		<put-attribute name="tituloTela" value="Relatório de Extração de CDRs" />
+	</definition>
+	
+	<definition name="relatorio_nao_conformidade_faturamento" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/relatorio/naoconf/relnaoconffaturamento.jsp" />
+		<put-attribute name="tituloTela" value="SCC - Relatório de Não Conformidade de Aplicação de Faturamento" />
+	</definition>
+	
+	<definition name="relatorio_nao_conformidade_batimento_estorno_debito" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/relatorio/naoconf/relnaoconfbatimentoestorno.jsp" />
+		<put-attribute name="tituloTela" value="SCC - Relatório de Não Conformidade de Aplicação de Batimento Estorno Debito" />
+	</definition>
+	
+	<definition name="relatorio_controle_faturas" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/relatorio/faturas/relcontrolefaturas.jsp" />
+		<put-attribute name="tituloTela" value="SCC - Relatório Controle de Faturas " />
+	</definition>
+	
+	<definition name="relatorio_juros_multas" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/relatorio/jurosmultas/reljurosmultas.jsp" />
+		<put-attribute name="tituloTela" value="SCC - Relatório de Juros  Multas " />
+	</definition>
+	
+	<definition name="relatorio_acoes_cobranca" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/relatorio/faturas/relacoescobranca.jsp" />
+		<put-attribute name="tituloTela" value="SCC - Relatório de Controle das Acoes de Cobranca " />
+	</definition>
+	
+	
+	<definition name="relatorio_batimento_estorno_debito" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/fiscal/relatorio/batimentoestornodebito.jsp" />
+		<put-attribute name="tituloTela" value="SCC - Relatório de Batimento de Estorno de Débito " />
+	</definition>
+	
+	
+	
+	<definition name="relatorio_aging_faturas" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/relatorio/faturas/relagingfaturas.jsp" />
+		<put-attribute name="tituloTela" value="SCC - Relatório de Aging Faturas LD" />
+	</definition>
+
+	<definition name="relatorio_acordo_parcelamento" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/relatorio/parcelamento/relacordoparcelamento.jsp" />
+		<put-attribute name="tituloTela" value="SCC - Relatório de Acordo de Parcelamentos" />
+	</definition>
+	
+	<definition name="relatorio_acompanhamento_parcelamento" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/relatorio/parcelamento/relacompanhamentoparcelamento.jsp" />
+		<put-attribute name="tituloTela" value="SCC - Relatório de Acompanhamento de Acordo de Parcelamentos" />
+	</definition>
+
+	<definition name="relatorio_perda_faturamento" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/financeiro/relPerdaFaturamento.jsp" />
+		<put-attribute name="tituloTela" value="SCC - Relatorio Perda e Faturamento" />
+	</definition>
+	
+		<definition name="relatorio_chamadas_refaturamento" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/relatorio/refaturamento/relatorioChamadasRefaturamento.jsp" />
+		<put-attribute name="tituloTela" value="SCC - Relatório de Chamadas de Refaturamento " />
+	</definition>
 	<definition name="pesquisa_arquivos_batimento_interface_pos" extends="basicLayout">
 		<put-attribute name="body" value="/WEB-INF/jsp/arquivo/batimento/interface/filtro.jsp" />
 		<put-attribute name="tituloTela" value="Pesquisa de Batimento das Interfaces MOBILE e SCC - Pós" />
@@ -235,5 +343,5 @@
 		<put-attribute name="body" value="/WEB-INF/jsp/arquivo/retorno/drilldown/lista.jsp" />
 		<put-attribute name="tituloTela" value="Relatório Drill Down - Pós" />
 	</definition>
-
+	
 </tiles-definitions>

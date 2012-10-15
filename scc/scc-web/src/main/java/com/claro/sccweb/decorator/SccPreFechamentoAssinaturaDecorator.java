@@ -2,6 +2,7 @@ package com.claro.sccweb.decorator;
 
 import com.claro.cobillingweb.persistence.entity.SccOperadora;
 import com.claro.cobillingweb.persistence.entity.SccPreFechamentoAssinatura;
+import com.claro.cobillingweb.persistence.entity.SccProdutoPrepago;
 
 /**
  * Decorator para exibir assinaturas pré-pago. Usado na tela de Demonstrativo de Repasse Pré-pago.
@@ -12,7 +13,11 @@ public class SccPreFechamentoAssinaturaDecorator extends BasicSccDecorator {
 	private SccPreFechamentoAssinatura entity;
 	private SccOperadora operadoraClaro;
 	private SccOperadora operadoraLD;
+	private SccProdutoPrepago produtoPrepago;
 	
+	private String periodo;
+	
+
 	
 	public SccPreFechamentoAssinaturaDecorator(SccPreFechamentoAssinatura entity,SccOperadora operadoraClaro,SccOperadora operadoraLD)
 	{
@@ -26,16 +31,26 @@ public class SccPreFechamentoAssinaturaDecorator extends BasicSccDecorator {
 		return entity;
 	}
 
-
+	
 	public SccOperadora getOperadoraClaro() {
 		return operadoraClaro;
 	}
 
 
+	public void setOperadora(SccOperadora operadoraClaro) {
+		this.operadoraClaro = operadoraClaro;
+	}
+	
+
 	public SccOperadora getOperadoraLD() {
 		return operadoraLD;
 	}
 
+	
+	public void setOperadoraLD(SccOperadora operadoraLD) {
+		this.operadoraLD = operadoraLD;
+	}
+	
 
 	public String getOperadoraClaroDs() {
 		return operadoraClaro.getDsOperadora();
@@ -163,8 +178,21 @@ public class SccPreFechamentoAssinaturaDecorator extends BasicSccDecorator {
 		return sccCurrencyFormat.format(entity.getVlRepasseFinal());
 	}
 	
-	
-	
+	public SccProdutoPrepago getProdutoPrepago() {
+		return produtoPrepago;
+	}
+
+	public void setProdutoPrepago(SccProdutoPrepago produtoPrepago) {
+		this.produtoPrepago = produtoPrepago;
+	}
+
+	public String getPeriodo() {
+		return periodo;
+	}
+
+	public void setPeriodo(String periodo) {
+		this.periodo = periodo;
+	}
 	
 	
 }

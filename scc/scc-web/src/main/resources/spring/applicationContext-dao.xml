@@ -20,9 +20,27 @@
 <bean id="sccGrupoCobillingDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccGrupoCobillingDAOImpl" parent="sccDAO"/>
 <bean id="sccEmailCobillingDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccEmailCobillingDAOImpl" parent="sccDAO"/>
 <bean id="sccBatimentoArquivosDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccBatimentoArquivosDAOImpl" parent="sccDAO"/>
+<bean id="sccConfirmacaoRepasseDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccConfirmacaoRepasseDAOImpl" parent="sccDAO"/>
+<bean id="sccArquivosNaoProcessadosDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccArquivosNaoProcessadosDAOImpl" parent="sccDAO"/>
+<bean id="sccAssexuadosDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccAssexuadosDAOImpl" parent="sccDAO"/>
+<bean id="sccContingenciaFiscalDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccContingenciaFiscalDAOImpl" parent="sccDAO"/>
+<bean id="sccBatimentoFiscalDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccBatimentoFiscalDAOImpl" parent="sccDAO"/>
+<bean id="sccArquivosFiscaisDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccArquivosFiscaisDAOImpl" parent="sccDAO"/>
+<bean id="sccAlocadasMobileDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccAlocadasMobileDAOImpl" parent="sccDAO"/>
+<bean id="sccAlocadasMobileSemProcessamentoDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccAlocadasMobileSemProcessamentoDAOImpl" parent="sccDAO"/>
+<bean id="sccEncaminhadoMobileDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccEncaminhadoMobileDAOImpl" parent="sccDAO"/>
+<bean id="sccExtracaoCDRsDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccExtracaoCDRsDAOImpl" parent="sccDAO"/>
+<bean id="sccRelatorioCobillingDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccRelatorioCobillingDAOImpl" parent="sccDAO"/>
+<bean id="sccNaoConfAplAjustesDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccNaoConfAplAjustesDAOImpl" parent="sccDAO"/>
+<bean id="sccNaoConfAplFaturamentoDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccNaoConfAplFaturamentoDAOImpl" parent="sccDAO"/>
+<bean id="sccNaoConfAplBatimentoEstornoDebitoDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccNaoConfAplBatimentoEstornoDebitoDAOImpl" parent="sccDAO"/>
+<bean id="sccFaturasDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccFaturasDAOImpl" parent="sccDAO"/>
+<bean id="sccAcoesCobrancaDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccAcoesCobrancaDAOImpl" parent="sccDAO"/>
+<bean id="sccAcordoParcelamentoDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccAcordoParcelamentoDAOImpl" parent="sccDAO"/>
+<bean id="sccFinanceiroDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccFinanceiroDAOImpl" parent="sccDAO"/>
 <bean id="sccBatimentoInterfaceDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccBatimentoInterfaceDAOImpl" parent="sccDAO"/>
 <bean id="sccRelatorioConciliacaoDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccRelatorioConciliacaoDAOImpl" parent="sccDAO"/>
-<bean id="sccRelatorioCobillingDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccRelatorioCobillingDAOImpl" parent="sccDAO"/>
+
 <bean id="contratoAcordadoDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccContratoAcordadoDAOImpl" parent="sccDAO">
 <property name="operadoraDAO" ref="sccOperadoraDAO"/>
 </bean>
@@ -118,5 +136,13 @@
 <bean id="contaContabilDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccContaContabilDAOImpl" parent="sccDAO"/>
 <bean id="centroDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccCentroDAOImpl" parent="sccDAO"/>
 <bean id="atividadeContabilDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccAtividadeContabilDAOImpl" parent="sccDAO"/>
+
+<bean id="sccPreRelatorioEventosDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccPreRelatorioEventosDAOImpl" parent="sccDAO"/>
+
+<bean id="sccPreChamadasCreditoDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccPreChamadasCreditoDAOImpl" parent="sccDAO"/>
+
+<bean id="sccRelBatimentoEstornoDebitoDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccRelBatimentoEstornoDebitoDAOImpl" parent="sccDAO"/>
+
+<bean id="sccRelatorioChamadasRefaturamentoDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccRelatorioChamadasRefaturamentoDAOImpl" parent="sccDAO"/>
 
 </beans>

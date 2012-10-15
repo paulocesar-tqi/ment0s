@@ -303,6 +303,7 @@ public abstract class BaseFormController {
 	 * Realiza o cache do form do controller na sessão para persistir um snapshot de um dado momento ao longo de requests.
 	 * @param clazz
 	 */
+	@SuppressWarnings("rawtypes")
 	protected void cacheMyForm(Class clazz,Object object) {
 		getSessionDataManager().getFormCache().put(clazz.getName()+CACHE_PREFIX, object);
 	}
@@ -311,6 +312,7 @@ public abstract class BaseFormController {
 	 * Recupera o form a partir do cache de session.
 	 * @param clazz
 	 */
+	@SuppressWarnings("rawtypes")
 	protected Object getMyFormFromCache(Class clazz) {
 		return getSessionDataManager().getFormCache().get(clazz.getName()+CACHE_PREFIX);
 	}
@@ -319,6 +321,7 @@ public abstract class BaseFormController {
 	 * Limpa o cache do controller liberando memória.
 	 * @param clazz
 	 */
+	@SuppressWarnings("rawtypes")
 	protected void cleanMyFormCache(Class clazz) {
 		getSessionDataManager().getFormCache().remove(clazz.getName()+CACHE_PREFIX);
 	}
@@ -330,6 +333,7 @@ public abstract class BaseFormController {
 	 * @param value
 	 * @param request
 	 */
+	@SuppressWarnings("rawtypes")
 	protected void storeInSession(Class clazz,String key,Object value,HttpServletRequest request) {		
 		debug("Controller "+clazz.getName()+" armazenando objeto na key "+key);
 		if (!getSessionDataManager().getControllerSessionValues().containsKey(clazz.getName()))
@@ -344,6 +348,7 @@ public abstract class BaseFormController {
 	 * @param clazz
 	 * @param request
 	 */
+	@SuppressWarnings("rawtypes")
 	protected void cleanSession(Class clazz,HttpServletRequest request) {
 		logger.debug("Iniciando limpeza da session do controller "+clazz.getName());
 		if (getSessionDataManager().getControllerSessionValues().containsKey(clazz.getName())) {
@@ -362,6 +367,7 @@ public abstract class BaseFormController {
 	 * @param keys
 	 * @throws ControllerExecutionException
 	 */
+	@SuppressWarnings("rawtypes")
 	protected void cleanSession(Class clazz,HttpServletRequest request,String...keys) throws ControllerExecutionException {
 		for (String key : keys) {			 
 			debug("Removendo objeto "+key+" da session");

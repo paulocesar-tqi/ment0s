@@ -46,12 +46,13 @@ public class SccCdrCobillingDecorator extends RownumDecorator<SccCdrCobilling>{
 			return " ";
 	}
 	
-	public String getCdMotivo()
-	{
-		if(getRow().getCdMotivoRejeicao() != null)
-			return formataString(getRow().getCdMotivoRejeicao().getCdMotivoRejeicao());
-		else
-			return " ";
+	public String getCdMotivo()	{
+		
+		String retorno = "";
+		if(getRow().getCdMotivoRejeicao() != null && getRow().getCdMotivoRejeicao().getCdMotivoRejeicao() != null){
+			retorno =  formataString(getRow().getCdMotivoRejeicao().getCdMotivoRejeicao());
+		}
+		return retorno;
 	}
 	
 	public String getQuantidade()
