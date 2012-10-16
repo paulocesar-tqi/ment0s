@@ -56,6 +56,7 @@ public class RelPrestacaoServicoSQL {
 	
 	public static final String DT_FECHAMENTO = "AND To_char(PF.dt_fechamento, 'MMYYYY') = :dataFechamento ";
 	
+	public static final String CD_PRODUTO_PREPAGO = "AND PF.cd_produto_prepago = :cdProdutoPrepago";
 	
 	public static final String SQL_PRE = "SELECT O2.ds_operadora AS OPERADORA_CLARO, " +
 												"SUM(CASE WHEN O.cd_eot = '001' THEN PF.vl_serv_prest_bruto "+

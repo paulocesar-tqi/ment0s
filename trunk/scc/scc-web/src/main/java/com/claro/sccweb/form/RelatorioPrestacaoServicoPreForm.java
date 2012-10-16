@@ -18,7 +18,7 @@ public class RelatorioPrestacaoServicoPreForm extends BaseForm {
 	
 	private Long anoRelatorio;
 	
-	private Long cdProdutoCobilling;
+	private Long cdProdutoPrepago;
 	
 	private Long cdPeriodicidade;
 	
@@ -78,12 +78,12 @@ public class RelatorioPrestacaoServicoPreForm extends BaseForm {
 		this.anoRelatorio = anoRelatorio;
 	}
 
-	public Long getCdProdutoCobilling() {
-		return cdProdutoCobilling;
+	public Long getCdProdutoPrepago() {
+		return cdProdutoPrepago;
 	}
 
-	public void setCdProdutoCobilling(Long cdProdutoCobilling) {
-		this.cdProdutoCobilling = cdProdutoCobilling;
+	public void setCdProdutoPrepago(Long cdProdutoPrepago) {
+		this.cdProdutoPrepago = cdProdutoPrepago;
 	}
 
 	public Long getCdPeriodicidade() {

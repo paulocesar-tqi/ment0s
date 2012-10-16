@@ -351,7 +351,7 @@ public class SccRepasseDAOImpl extends HibernateBasicDAOImpl<SccRepasse> impleme
 
 
 	@Override
-	public List<RelPrestacaoServicoView> gerarRelatorioPrestacaoServicoPre(	String cdEOTClaro, String cdEOTLd, String dataFechamento)	throws DAOException {
+	public List<RelPrestacaoServicoView> gerarRelatorioPrestacaoServicoPre(	String cdEOTClaro, String cdEOTLd, Long cdProdutoPrepago, String dataFechamento)	throws DAOException {
 		
 		List<RelPrestacaoServicoView> listRelPrestServico = null;
 		try {
@@ -366,6 +366,10 @@ public class SccRepasseDAOImpl extends HibernateBasicDAOImpl<SccRepasse> impleme
 			
 			if (cdEOTClaro != null && !cdEOTClaro.equals(BasicDAO.GET_ALL_STRING)){
 				mapper.addArgument("cdEOTClaro", cdEOTClaro, RelPrestacaoServicoSQL.CD_EOT_CLARO_PRE);
+			}
+			
+			if (cdProdutoPrepago != null && cdProdutoPrepago.longValue() != -1L) {
+				mapper.addArgument("cdProdutoPrepago", cdProdutoPrepago, RelPrestacaoServicoSQL.CD_PRODUTO_PREPAGO);
 			}
 			
 			mapper.addResultMap("dsOperadoraClaro", String.class);

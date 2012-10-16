@@ -14,6 +14,8 @@
 		$("#anoRelatorio").mask("9999");	
 		$('#pesquisar_button').click(pesquisar)
 		$('#excel_button').click(excel)
+		$('#cdEOTClaro').change(selecionaOperadora);
+		$('#cdEOTLD').change(selecionaOperadora);	
 		$('#inserirButton').click(function(){
 			$('#operacao').val("CRIAR");
 			$('#criados').val("");
@@ -45,12 +47,45 @@
 		
 	});
 	
+	function selecionaOperadora() {
+		$('#pesquisar_button').attr('disabled', 'disabled');
+		$("#cdProdutoPrepago").empty().append('<option selected="selected" value="-1">Carregando...</option>');
+		var eotClaro = $("#cdEOTClaro option:selected");
+		var eotLD = $("#cdEOTLD option:selected");
+		
+		var deshabilitar = (eotClaro.val() == "*" && eotLD.val() == "*") || (eotClaro.val() != "*");
+		
+		if (deshabilitar) {		
+			$("#cdProdutoPrepago").attr('disabled', 'disabled');
+			$('#pesquisar_button').removeAttr('disabled');
+			$("#cdProdutoPrepago").empty().append('<option selected="selected" value="-1">Todos</option>');
+			return;
+		}
+		
+		$('#cdProdutoPrepago').removeAttr('disabled');
+		$.ajax({   
+			url: "/scc/user/relatorio/servico/pre/json/lista_produtos/"+eotLD.val()+".scc",	 
+			dataType: "json", success: function(data) {
+				$('#pesquisar_button').removeAttr('disabled');
+				var name, select, option;        
+			    select = document.getElementById('cdProdutoPrepago');      
+			    select.options.length = 0;         
+			    for (name in data) {       
+			    	if (data.hasOwnProperty(name)) {         
+						select.options.add(new Option(data[name], name));  
+					}
+			    }
+			}
+		            
+		});
+	}
+	
 
 </script>
 
 <div id="tabs">
 	<ul>
-		<li><a href="#tabs-1"><spring:message code="relatorio.titulo.prestacao.servico.pos"/></a></li>
+		<li><a href="#tabs-1"><spring:message code="relatorio.titulo.prestacao.servico.pre"/></a></li>
 	</ul>
 	<form:form modelAttribute="filtro" method="post" action="/scc/user/relatorio/servico/pre/execute.scc" id="form1">
 		<form:hidden path="operacao" id="operacao"/>
@@ -66,8 +101,11 @@
     				<td width="10%"><spring:message code="relatorio.label.operadora.ld"/>:</td>
     				<td ><form:select path="cdEOTLD" id="cdEOTLD" items="${operadorasExternas}" itemLabel="dsOperadora" itemValue="cdEot" />    
 				</tr>
-
-
+				<tr>
+					<td width="10%"><spring:message code="relatorio.label.produto.cobilling"/>:</td>
+				    <td ><form:select path="cdProdutoPrepago" id="cdProdutoPrepago" items="${produtos}" itemLabel="noProdutoPrepago" itemValue="cdProdutoPrepago" />
+				    <form:errors path="cdProdutoPrepago" /></td>
+				</tr>
 				<tr>    
 				    <td width="10%"><spring:message code="repasse_pre_relatorios.mes"/>:</td>
 				    <td ><form:select path="mesRelatorio" id="mesRelatorio" items="${meses}" itemLabel="label" itemValue="key" /></td>    
