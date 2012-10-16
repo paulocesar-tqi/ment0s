@@ -5,7 +5,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,6 +28,7 @@ import com.claro.cobillingweb.persistence.dao.BasicDAO;
 import com.claro.cobillingweb.persistence.entity.SccOperadora;
 import com.claro.cobillingweb.persistence.entity.SccPeriodicidadeRepasse;
 import com.claro.cobillingweb.persistence.entity.SccProdutoCobilling;
+import com.claro.cobillingweb.persistence.entity.SccProdutoPrepago;
 import com.claro.cobillingweb.persistence.view.RelPrestacaoServicoView;
 import com.claro.sccweb.controller.BaseOperationController;
 import com.claro.sccweb.controller.util.BasicIntegerItem;
@@ -68,6 +71,7 @@ public class RelatorioServicoPreController extends BaseOperationController<Relat
 		consultaRepassePosTO.setCdEOTClaro(form.getCdEOTClaro());
 		consultaRepassePosTO.setCdEOTLD(form.getCdEOTLD());
 		consultaRepassePosTO.setMesAno(form.getMesAno());
+		consultaRepassePosTO.setCdProdutoCobilling(form.getCdProdutoPrepago());
 		return consultaRepassePosTO;
 		
 	}
@@ -172,13 +176,33 @@ public class RelatorioServicoPreController extends BaseOperationController<Relat
 	}
 
 	@ModelAttribute("produtos")
-	public List<SccProdutoCobilling> populaProdutosCobilling() throws Exception {
-		List<SccProdutoCobilling> comboList = new ArrayList<SccProdutoCobilling>();
-		SccProdutoCobilling nullValue = new SccProdutoCobilling();
-		nullValue.setNoProdutoCobilling("Selecione...");
-		nullValue.setCdProdutoCobilling(BasicDAO.NULL);
+	public List<SccProdutoPrepago> populaProdutosCobilling(@ModelAttribute("form") RelatorioPrestacaoServicoPreForm form) throws Exception {
+		List<SccProdutoPrepago> comboList = new ArrayList<SccProdutoPrepago>();
+		String cdEOT = form.getCdEOTLD();
+		String cdEOTClaro = form.getCdEOTClaro();
+		
+		SccProdutoPrepago nullValue = new SccProdutoPrepago();
+		nullValue.setNoProdutoPrepago("Todos");
+		nullValue.setCdProdutoPrepago("-1");
 		comboList.add(0,nullValue);
-		return comboList;
+		
+		if (cdEOT == null || cdEOT.equals(BasicDAO.GET_ALL_STRING) || (cdEOTClaro != null && !cdEOTClaro.equals(BasicDAO.GET_ALL_STRING))) {
+			return comboList;
+		} else {
+			List<SccProdutoPrepago> produtos = getServiceManager().getContratoPrePagoService().pesquisaProdutosContratadosEmpresa(BasicDAO.GET_ALL_STRING, cdEOT, false);			  		
+			Set<String> s = new HashSet<String>();
+			
+			for (SccProdutoPrepago prod : produtos) {
+				if (!s.contains(prod.getCdProdutoPrepago())) {
+					SccProdutoPrepago v = new SccProdutoPrepago();
+					v.setNoProdutoPrepago(prod.getNoProdutoPrepago());
+					v.setCdProdutoPrepago(prod.getCdProdutoPrepago());
+					comboList.add(v);
+					s.add(prod.getCdProdutoPrepago());
+				}
+			}
+			return comboList;
+		}
 	}
 	
 	
@@ -189,12 +213,13 @@ public class RelatorioServicoPreController extends BaseOperationController<Relat
 	}
 	
 	@RequestMapping(value="/json/lista_produtos/{cdEOTLD}" , method=RequestMethod.GET)
-	public void pesquisaProdutosLD(@PathVariable("cdEOTLD") String cdEOT,HttpServletRequest request, HttpServletResponse response,@ModelAttribute("form") RelPrestacaoServicoPosForm form) throws Exception {		
-		List<SccProdutoCobilling> produtos = getServiceManager().getContratoService().pesquisaProdutosOperadoraLD(cdEOT);		
-		JSONObject jsonResponse = new JSONObject();				
-		jsonResponse.put("0L","Selecione....");		
+	public void pesquisaProdutosLD(@PathVariable("cdEOTLD") String cdEOT,HttpServletRequest request, HttpServletResponse response,@ModelAttribute("form") RelatorioPrestacaoServicoPreForm form) throws Exception {		
+		debug("Executando atualização de produtos pré-pago através de AJAX para LD "+cdEOT);
+		List<SccProdutoPrepago> produtos = getServiceManager().getContratoPrePagoService().pesquisaProdutosContratadosEmpresa(BasicDAO.GET_ALL_STRING, cdEOT, false);			  		
+		JSONObject jsonResponse = new JSONObject();					
+		jsonResponse.put("-1","Todos");		
 		for (int i=0;i<produtos.size();i++) {			
-			jsonResponse.put(produtos.get(i).getCdProdutoCobilling().toString(), produtos.get(i).getNoProdutoCobilling());			
+			jsonResponse.put(produtos.get(i).getCdProdutoPrepago().toString(), produtos.get(i).getNoProdutoPrepago());			
 		}
 		response.setContentType("application/json");
 		response.getWriter().print(jsonResponse.toString());

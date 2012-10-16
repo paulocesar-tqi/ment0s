@@ -67,7 +67,7 @@ public interface SccRepasseDAO extends BasicDAO<SccRepasse> {
 	
 	List<RelPrestacaoServicoView> gerarRelatorioPrestacaoServicoPos(String cdEOTClaro, String cdEOTLd, Long cdProdutoCobilling, Date dataInicial, Date dataFinal)throws DAOException;
 	
-	List<RelPrestacaoServicoView> gerarRelatorioPrestacaoServicoPre(String cdEOTClaro, String cdEOTLd, String dataFechamento) throws DAOException;
+	List<RelPrestacaoServicoView> gerarRelatorioPrestacaoServicoPre(String cdEOTClaro, String cdEOTLd, Long cdProdutoPrepago, String dataFechamento) throws DAOException;
 
 		
 }
