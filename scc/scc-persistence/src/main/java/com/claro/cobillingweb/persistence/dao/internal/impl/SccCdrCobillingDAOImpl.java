@@ -141,7 +141,37 @@ public class SccCdrCobillingDAOImpl extends HibernateBasicDAOImpl<SccCdrCobillin
 		
 	}
 
-	 
+
+	@SuppressWarnings("unchecked")
+	public List<SccCdrCobilling> geraResumoCDRs(String cdEOTClaro , String cdEOTLD,Date dataInicial,Date dataFinal) throws DAOException {
+		List<SccCdrCobilling> list = null;
+		try {
+			Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(SccCdrCobilling.class);
+			criteria.createAlias("arquivoRemessa", "r");
+			if ((cdEOTLD != null) && (!cdEOTLD.equals(GET_ALL_STRING)))
+				criteria.add(Restrictions.eq("r.operadoraExterna.cdEot", cdEOTLD));
+			
+			if ((cdEOTClaro != null) && (!cdEOTClaro.equals(GET_ALL_STRING)))
+				criteria.add(Restrictions.eq("r.operadoraClaro.cdEot", cdEOTLD));			
+			
+			criteria.add(Restrictions.between("r.dtProcClaro", dataInicial, dataFinal));
+			
+			ProjectionList projectionList = Projections.projectionList();
+			projectionList.add(Projections.groupProperty("statusCdr").as("statusCdr"));
+			projectionList.add(Projections.count("nuCdr").as("nuCdr"));
+			criteria.setProjection(projectionList);
+			ResultTransformer resultTransformer = Transformers.aliasToBean(SccCdrCobilling.class);
+			criteria.setResultTransformer(resultTransformer);			
+			
+			list = (List<SccCdrCobilling>) criteria.list();
+		} catch (Exception e){
+			throw new DAOException(e.getMessage(), e);
+		}
+		return list;
+	}
+
+
+	
 	@SuppressWarnings("unchecked")
 	public List<SccCdrCobilling> listaCDRsArquivo(Long seqArquivo,SccCdrCobilling filtro, int pagina, int quantidadeRegistros) throws DAOException {
 		

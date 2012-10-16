@@ -69,4 +69,7 @@ public interface ArquivosService {
 	public List<SccArquivoCredito> pesquisaArquivosCredito(String origem,String status, Date dataInicial, Date dataFinal) throws DAOException;
 	
 	public List<SccArquivoCobilling> pesquisaRelatoriosTransicao(Long tiposArquivo, Date dataInicial, Date dataFinal) throws DAOException;
+
+	public List<SccCdrCobilling> geraResumoCDRs(String cdEOTClaro , String cdEOTLD,Date dataInicial,Date dataFinal ) throws DAOException;
+
 }

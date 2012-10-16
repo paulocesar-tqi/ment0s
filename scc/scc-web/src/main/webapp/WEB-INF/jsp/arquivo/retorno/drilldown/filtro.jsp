@@ -23,7 +23,7 @@ $(document).ready(function(){
 function pesquisar() {
 	$('#excel_button').attr('disabled', 'disabled');
 	$('#pesquisar_button').attr('disabled', 'disabled');
-	$('#operacao').val("pesquisar");	
+	$('#operacao').val("selecionar");	
 	$('#form1').submit();
 }
 
@@ -105,7 +105,7 @@ function mostraOperadoraClaro()
 <ul>
 <li><a href="#tabs-1"><spring:message code="crud.titulo.pesquisar"/></a></li>
 </ul>
-<form:form modelAttribute="filtro" method="post" action="/scc/user/pos/processados/pesquisa/execute.scc" id="form1">
+<form:form modelAttribute="filtro" method="post" action="/scc/user/arquivo/retorno/drilldown/execute.scc" id="form1">
 <form:hidden path="operacao" id="operacao"/>
 <form:hidden path="itemSelecionado" id="itemSelecionado"/>
 <div id="tabs-1">

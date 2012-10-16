@@ -268,5 +268,10 @@ public class ArquivosServiceImpl extends AbstractService implements ArquivosServ
 	public List<SccArquivoCobilling> pesquisaRelatoriosTransicao(Long tiposArquivo, Date dataInicial, Date dataFinal) throws DAOException {
 		return getSccArquivoCobillingDAO().pesquisaRelatoriosTransicao(tiposArquivo, dataInicial, dataFinal);
 	}
+
+	@Override
+	public List<SccCdrCobilling> geraResumoCDRs(String cdEOTClaro, String cdEOTLD, Date dataInicial, Date dataFinal) throws DAOException {
+		return getCdrCobillingDAO().geraResumoCDRs(cdEOTClaro, cdEOTLD, dataInicial, dataFinal);
+	}
 	
 }

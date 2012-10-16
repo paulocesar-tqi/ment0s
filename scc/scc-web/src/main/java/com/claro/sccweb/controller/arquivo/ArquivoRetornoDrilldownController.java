@@ -79,12 +79,9 @@ public class ArquivoRetornoDrilldownController extends BaseOperationController<A
 		cleanSession(getClass(), request, DISPLAY_TAG_SPACE_2);
 		ModelAndView mav = new ModelAndView(getSumarioCDRsView());
 		ArquivoRetornoDrillDownPosForm myForm = (ArquivoRetornoDrillDownPosForm)form;
-		SccArquivoCobillingDecorator decorator = (SccArquivoCobillingDecorator)getItemSelecionado(request, DISPLAY_TAG_SPACE_1, form);
-		myForm.setArquivoSelecionado(decorator.getRow());
-		info("Usuário selecionou arquivo processado "+myForm.getArquivoSelecionado().getNoArquivo()+" para sumário por status de CDRs.");
 		myForm.setVisaoArquivo(getSumarioCDRsView());
 		cacheMyForm(getClass(), myForm);
-		List<SccCdrCobilling> rows = getServiceManager().getArquivosService().geraResumoCDRsArquivo(myForm.getArquivoSelecionado().getSqArquivo());
+		List<SccCdrCobilling> rows = getServiceManager().getArquivosService().geraResumoCDRs(myForm.getCdEOTClaro(), myForm.getCdEOTLD(), myForm.getDataInicial(), myForm.getDataFinal());
 		List<SccCdrCobillingDecorator> decoratorList = new ArrayList<SccCdrCobillingDecorator>(rows.size());	
 		for (int i=0;i<rows.size();i++) {
 			SccCdrCobillingDecorator cdrDecorator = new SccCdrCobillingDecorator(rows.get(i), i);
