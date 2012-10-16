@@ -21,6 +21,8 @@ public interface SccCdrCobillingDAO extends BasicDAO<SccCdrCobilling> {
 	public List<SccCdrCobilling> geraResumoCDRsComErroArquivo(Long seqArquivo) throws DAOException;
 	
 	public List<SccCdrCobilling> geraResumoCDRsArquivo(Long seqArquivo) throws DAOException;
+
+	public List<SccCdrCobilling> geraResumoCDRs(String cdEOTClaro , String cdEOTLD,Date dataInicial,Date dataFinal) throws DAOException;
 	
 	public List<SccCdrCobilling> listaCDRsArquivo(Long seqArquivo,SccCdrCobilling filtro,int pagina,int quantidadeRegistros) throws DAOException;
 	

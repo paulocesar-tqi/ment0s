@@ -70,6 +70,7 @@ public class SccCdrCobilling implements Serializable {
 	private Long sqArquivoOriginal;
 	private Long sqArquivoRemessa;
 	private SccArquivoCobilling arquivoRetorno;
+	private SccArquivoCobilling arquivoRemessa;
 	private Long sqCredito;
 	private Long sqRegistroArquivo;
 	private Long vlAjuste;
@@ -511,6 +512,17 @@ public class SccCdrCobilling implements Serializable {
 
 	public void setArquivoRetorno(SccArquivoCobilling arquivoRetorno) {
 		this.arquivoRetorno = arquivoRetorno;
+	}
+
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="SQ_ARQUIVO_REMESSA",updatable=false,insertable=false)
+	public SccArquivoCobilling getArquivoRemessa() {
+		return arquivoRemessa;
+	}
+
+
+	public void setArquivoRemessa(SccArquivoCobilling arquivoRemessa) {
+		this.arquivoRemessa = arquivoRemessa;
 	}
 
 
