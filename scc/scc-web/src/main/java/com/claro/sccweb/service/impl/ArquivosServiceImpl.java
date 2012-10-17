@@ -274,4 +274,8 @@ public class ArquivosServiceImpl extends AbstractService implements ArquivosServ
 		return getCdrCobillingDAO().geraResumoCDRs(cdEOTClaro, cdEOTLD, dataInicial, dataFinal);
 	}
 	
+	public List<SccCdrCobilling> listaCDRsStatus(Long cdStatus, String cdEOTClaro , String cdEOTLD,Date dataInicial,Date dataFinal,int pagina, int quantidadeRegistros) throws DAOException {
+		return getCdrCobillingDAO().listaCDRsStatus(cdStatus, cdEOTClaro, cdEOTLD, dataInicial, dataFinal, pagina, quantidadeRegistros);
+	}
+	
 }

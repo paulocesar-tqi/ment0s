@@ -60,7 +60,7 @@ function excel()
 <table  width="100%" border="0" cellspacing="0" cellpadding="0" >
  <tr><td>                            
 
-<display:table  style="width:90%"  name="sessionScope._DISPLAY_TAG_SPACE_3" pagesize="50"  id="cdrs" requestURI="/scc/user/pos/processados/pesquisa/pagina.scc" partialList="true" size="sessionScope._DISPLAY_TAG_SPACE_3.fullListSize" class="ui-state-default">
+<display:table  style="width:90%"  name="sessionScope._DISPLAY_TAG_SPACE_3" pagesize="50"  id="cdrs" requestURI="/scc/user/arquivo/retorno/drilldown/pagina.scc" partialList="true" size="sessionScope._DISPLAY_TAG_SPACE_3.fullListSize" class="ui-state-default">
 <display:column property="cdMotivo" title="Cod. Motivo" />
 <display:column property="status" title="Status" />
 <display:column property="dataStatus" title="Data Status" />

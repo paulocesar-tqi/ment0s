@@ -39,7 +39,7 @@ function listar(linha)
 <ul>
 <li><a href="#tabs-1"><spring:message code="crud.titulo.pesquisar"/></a></li>
 </ul>
-<form:form modelAttribute="filtro" method="post" action="/scc/user/pos/processados/pesquisa/execute.scc" id="form1">
+<form:form modelAttribute="filtro" method="post" action="/scc/user/arquivo/retorno/drilldown/execute.scc" id="form1">
 <form:hidden path="operacao" id="operacao"/>
 <form:hidden path="itemSelecionado" id="itemSelecionado"/>
 <div id="tabs-1">
@@ -50,7 +50,7 @@ function listar(linha)
 <br/>
 <table  width="100%" border="0" cellspacing="0" cellpadding="0" >
  <tr><td>                            
-<display:table style="width:90%"  name="sessionScope._DISPLAY_TAG_SPACE_2"   pagesize="20"  id="repasses" requestURI="/scc/user/pos/processados/pesquisa/tab1.scc" class="ui-state-default">
+<display:table style="width:90%"  name="sessionScope._DISPLAY_TAG_SPACE_2"   pagesize="20"  id="repasses" requestURI="/scc/user/arquivo/retorno/drilldown/tab1.scc" class="ui-state-default">
 <display:column property="status" title="Status" />
 <display:column property="quantidade" title="Quantidade" />
 <display:column property="listar" title="Listar" />
