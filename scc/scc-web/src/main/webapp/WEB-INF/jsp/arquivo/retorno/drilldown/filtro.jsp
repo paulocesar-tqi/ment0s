@@ -15,7 +15,6 @@ $(document).ready(function(){
 	$( "#dataInicial" ).datepicker();
 	$( "#dataFinal" ).datepicker();		
 	$('#pesquisar_button').click(pesquisar)
-	$('#excel_button').click(excel)
 	$("#tipoOperadora").change(trocaTipoOperadora); 
 	$('#tabs').tabs();
 });
@@ -26,33 +25,6 @@ function pesquisar() {
 	$('#operacao').val("selecionar");	
 	$('#form1').submit();
 }
-
-function excel() {
-	$('#excel_button').attr('disabled', 'disabled');
-	$('#pesquisar_button').attr('disabled', 'disabled');
-	$('#operacao').val("excel");	
-	$('#form1').submit();
-}
-
-function selecionar(linha) {
-	$('#itemSelecionado').val(linha);	
-	$('#operacao').val("selecionar");
-	$('#form1').submit();
-}
-
-function visualizarOK(linha) {	
-	$('#itemSelecionado').val(linha);	
-	$('#operacao').val("visualizarOK");
-	$('#form1').submit();
-}
-
-function visualizarNOK(linha)
-{
-	$('#itemSelecionado').val(linha);	
-	$('#operacao').val("visualizarNOK");
-	$('#form1').submit();
-}
-
 
 
 function trocaTipoOperadora()
@@ -98,9 +70,6 @@ function mostraOperadoraClaro()
 </script>
 
 
-
-
-
 <div id="tabs">
 <ul>
 <li><a href="#tabs-1"><spring:message code="crud.titulo.pesquisar"/></a></li>
@@ -127,21 +96,6 @@ function mostraOperadoraClaro()
 </tr>
 
 <tr>
-    <td width="15%">Período:</td>
-    <td ><form:select path="periodo"  id="periodo" items="${tiposPeriodo}" itemLabel="label" itemValue="key" /></td>
-</tr>
-
-<tr>
-<td width="15%">Produto:</td>
-<td><form:select path="cdProdutoCobilling" id="cdProdutoCobilling" items="${produtos}" itemLabel="noProdutoCobilling" itemValue="cdProdutoCobilling" /></td>
-</tr>
-
-<tr>
-	<td width="15%"><spring:message code="controle.remessa.evento.label.status.cdr"/></td>
-	<td> <form:select path="cdStatusCdr" items="${eventos}" itemLabel="dsStatusCdr" itemValue="cdStatusCdr"/> </td>
-</tr>
-
-<tr>
     <td width="10%">Data Início:</td>
     <td><form:input id="dataInicial" path="dataInicial" />
     <form:errors path="dataInicial" /></td>
@@ -160,35 +114,8 @@ function mostraOperadoraClaro()
     <td colspan="3" class="TdFormularioUp">&nbsp;</td>    
     <td colspan="1" align="right" class="TdFormularioUp" nowrap="nowrap">
     <input id="pesquisar_button" type="button" value="Pesquisar" />
-    <c:if test="${!empty sessionScope._DISPLAY_TAG_SPACE_1}">
-    <input id="excel_button" type="button" value="Excel" />
-    </c:if>
     </td>
 </tr>
-</table>
-<br/>
-<c:if test="${!empty sessionScope._DISPLAY_TAG_SPACE_1}">
-<table  width="100%" border="0" cellspacing="0" cellpadding="0" >
- <tr><td align="center">                            
-<display:table style="width:100%"  name="sessionScope._DISPLAY_TAG_SPACE_1"   pagesize="20"  id="repasses" requestURI="/scc/user/pos/processados/pesquisa/tab1.scc" class="ui-state-default">
-<display:column property="seqArquivo" title="Seq. Arq." />
-<display:column property="noComposto" title="Arquivo" />
-<display:column property="operadoraClaro" title="Op. Claro" />
-<display:column property="operadoraExterna" title="Op. Externa" />
-<display:column property="dataProcClaro" title="Data Proc. Claro" />
-<display:column property="dataReferencia" title="Data Referência" />
-<display:column property="dataInicioTrafego" title="Data Início" />
-<display:column property="dataFinalTrafego" title="Data Final" />
-<display:column property="qtCDR" title="Qtd. CDRs" />
-<display:column property="selecionar" title="Status" />
-<display:column property="erro" title="Motivo" />
-<display:column property="sucesso" title="Ciclo" />
-</display:table>
-</td></tr>
-</table>
-</c:if>
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
-
 </table>
 </div>
 </form:form>
@@ -196,6 +123,5 @@ function mostraOperadoraClaro()
 <script>
 $(document).ready(function(){
 	$('#pesquisar_button').removeAttr('disabled');
-	$('#excel_button').removeAttr('disabled');
 });
 </script>
