@@ -129,63 +129,6 @@ public class ArquivoRetornoDrilldownController extends BaseOperationController<A
 	}
 	
 	/**
-	 * Visualizar os CDRs agrupados por Ciclo quando o usuário clicar no link "Ciclo" na lista de resultados de arquivos.
-	 * @param request
-	 * @param response
-	 * @param form
-	 * @param bindingResult
-	 * @param model
-	 * @return
-	 * @throws Exception
-	 */
-	public ModelAndView visualizarOK(HttpServletRequest request, HttpServletResponse response,@Valid @ModelAttribute(FORM_NAME)  BaseForm form,BindingResult bindingResult,Model model) throws Exception {
-		cleanSession(getClass(), request, DISPLAY_TAG_SPACE_2);
-		ModelAndView mav = new ModelAndView(getSumarioProcessadosView());
-		ArquivoRetornoDrillDownPosForm myForm = (ArquivoRetornoDrillDownPosForm)form;
-		SccArquivoCobillingDecorator decorator = (SccArquivoCobillingDecorator)getItemSelecionado(request, DISPLAY_TAG_SPACE_1, form);
-		myForm.setArquivoSelecionado(decorator.getRow());
-		myForm.setVisaoArquivo(getSumarioProcessadosView());
-		cacheMyForm(getClass(), myForm);
-		List<SccCdrCobilling> rows = getServiceManager().getArquivosService().geraResumoCDRsSemErroArquivo(myForm.getArquivoSelecionado().getSqArquivo());
-		List<SccCdrCobillingDecorator> decoratorList = new ArrayList<SccCdrCobillingDecorator>(rows.size());
-		for (int i=0;i<rows.size();i++) {
-			SccCdrCobillingDecorator cdrDecorator = new SccCdrCobillingDecorator(rows.get(i), i);
-			decoratorList.add(cdrDecorator);
-		}
-		storeInSession(getClass(), DISPLAY_TAG_SPACE_2, decoratorList, request);
-		return mav;	
-	}
-	
-	/**
-	 * Chamado quando o usuário clicar no link "Motivo" na lista de arquivos retornados.
-	 * Serão apresentados os CDRs com erro agrupados por motivo.
-	 * @param request
-	 * @param response
-	 * @param form
-	 * @param bindingResult
-	 * @param model
-	 * @return
-	 * @throws Exception
-	 */
-	public ModelAndView visualizarNOK(HttpServletRequest request, HttpServletResponse response,@Valid @ModelAttribute(FORM_NAME)  BaseForm form,BindingResult bindingResult,Model model) throws Exception {
-		cleanSession(getClass(), request, DISPLAY_TAG_SPACE_2);
-		ModelAndView mav = new ModelAndView(getSumarioErrosView());
-		ArquivoRetornoDrillDownPosForm myForm = (ArquivoRetornoDrillDownPosForm)form;
-		SccArquivoCobillingDecorator decorator = (SccArquivoCobillingDecorator)getItemSelecionado(request, DISPLAY_TAG_SPACE_1, form);
-		myForm.setVisaoArquivo(getSumarioErrosView());
-		myForm.setArquivoSelecionado(decorator.getRow());
-		cacheMyForm(getClass(), myForm);
-		List<SccCdrCobilling> rows = getServiceManager().getArquivosService().geraResumoCDRsComErroArquivo(myForm.getArquivoSelecionado().getSqArquivo());
-		List<SccCdrCobillingDecorator> decoratorList = new ArrayList<SccCdrCobillingDecorator>(rows.size());
-		for (int i=0;i<rows.size();i++) {
-			SccCdrCobillingDecorator cdrDecorator = new SccCdrCobillingDecorator(rows.get(i), i);
-			decoratorList.add(cdrDecorator);
-		}
-		storeInSession(getClass(), DISPLAY_TAG_SPACE_2, decoratorList, request);
-		return mav;
-	}
-	
-	/**
 	 * Lista os CDRs do arquivo.
 	 * @param request
 	 * @param response
@@ -251,14 +194,6 @@ public class ArquivoRetornoDrilldownController extends BaseOperationController<A
 	
 	private String getSumarioCDRsView() {
 		return "pesquisa_arquivos_retorno_drilldown_status";
-	}
-	
-	private String getSumarioErrosView() {
-		return "pesquisa_arquivos_retorno_drilldown_erro";
-	}
-	
-	private String getSumarioProcessadosView() {
-		return "pesquisa_arquivos_retorno_drilldown_processados";
 	}
 	
 	private String getListaCDRsView() {
