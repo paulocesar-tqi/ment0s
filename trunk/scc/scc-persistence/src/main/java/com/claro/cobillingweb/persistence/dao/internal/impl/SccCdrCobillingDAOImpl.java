@@ -147,7 +147,7 @@ public class SccCdrCobillingDAOImpl extends HibernateBasicDAOImpl<SccCdrCobillin
 		List<SccCdrCobilling> list = null;
 		try {
 			Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(SccCdrCobilling.class);
-			criteria.createAlias("arquivoRemessa", "r");
+			criteria.createAlias("arquivoRetorno", "r");
 			if ((cdEOTLD != null) && (!cdEOTLD.equals(GET_ALL_STRING)))
 				criteria.add(Restrictions.eq("r.operadoraExterna.cdEot", cdEOTLD));
 			
@@ -169,8 +169,37 @@ public class SccCdrCobillingDAOImpl extends HibernateBasicDAOImpl<SccCdrCobillin
 		}
 		return list;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<SccCdrCobilling> listaCDRsStatus(Long cdStatus, String cdEOTClaro , String cdEOTLD,Date dataInicial,Date dataFinal,int pagina, int quantidadeRegistros) throws DAOException {
+		List<SccCdrCobilling> list = null;
+		try {
+			Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(SccCdrCobilling.class);
+			criteria.createAlias("arquivoRetorno", "r");
+			if ((cdEOTLD != null) && (!cdEOTLD.equals(GET_ALL_STRING)))
+				criteria.add(Restrictions.eq("r.operadoraExterna.cdEot", cdEOTLD));
+			
+			if ((cdEOTClaro != null) && (!cdEOTClaro.equals(GET_ALL_STRING)))
+				criteria.add(Restrictions.eq("r.operadoraClaro.cdEot", cdEOTLD));			
+			
+			criteria.add(Restrictions.between("r.dtProcClaro", dataInicial, dataFinal));
 
-
+			if (cdStatus != null) {
+				criteria.add(Restrictions.eq("statusCdr.cdStatusCdr",cdStatus));
+			}
+			
+			if (quantidadeRegistros > 0) {
+				criteria.setMaxResults(quantidadeRegistros);
+				criteria.setFirstResult(pagina * quantidadeRegistros);
+			}
+			
+			list = (List<SccCdrCobilling>) criteria.list();
+		} catch (Exception e){
+			throw new DAOException(e.getMessage(), e);
+		}
+		return list;
+		
+	}
 	
 	@SuppressWarnings("unchecked")
 	public List<SccCdrCobilling> listaCDRsArquivo(Long seqArquivo,SccCdrCobilling filtro, int pagina, int quantidadeRegistros) throws DAOException {

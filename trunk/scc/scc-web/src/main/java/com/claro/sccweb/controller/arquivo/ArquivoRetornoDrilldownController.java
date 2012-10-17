@@ -102,7 +102,7 @@ public class ArquivoRetornoDrilldownController extends BaseOperationController<A
 		info("Iniciando geração de Excel com CDRs para pesquisa de arquivos processados pós-pago");
 		ModelAndView mav = new ModelAndView("pesquisa_arquivos_processados_cdrs_excel");
 		ArquivoRetornoDrillDownPosForm myForm = (ArquivoRetornoDrillDownPosForm)getMyFormFromCache(getClass());
-		List<SccCdrCobilling> rows = getServiceManager().getArquivosService().listaCDRsArquivo(myForm.getArquivoSelecionado().getSqArquivo(), myForm.getFiltroSelecionado(), -1, -1);
+		List<SccCdrCobilling> rows = getServiceManager().getArquivosService().listaCDRsStatus(myForm.getFiltroSelecionado().getStatusCdr().getCdStatusCdr(), myForm.getCdEOTClaro(), myForm.getCdEOTLD(), myForm.getDataInicial(), myForm.getDataFinal(), -1, -1);
 		List<SccCdrCobillingDecorator> decoratorList = new ArrayList<SccCdrCobillingDecorator>(rows.size());
 		for (int i=0;i<rows.size();i++) {
 			SccCdrCobillingDecorator cdrDecorator = new SccCdrCobillingDecorator(rows.get(i), i);
@@ -124,7 +124,6 @@ public class ArquivoRetornoDrilldownController extends BaseOperationController<A
 	
 	public ModelAndView selecionarCDR(HttpServletRequest request, HttpServletResponse response,@Valid @ModelAttribute(FORM_NAME)  BaseForm form,BindingResult bindingResult,Model model) throws Exception {
 		ArquivoRetornoDrillDownPosForm myForm = (ArquivoRetornoDrillDownPosForm)getMyFormFromCache(getClass());		
-		Integer itemSelecionado = ((ArquivoRetornoDrillDownPosForm)form).getItemSelecionado();
 		ModelAndView mav = new ModelAndView(myForm.getVisaoArquivo());
 		return mav;	
 	}
@@ -199,37 +198,37 @@ public class ArquivoRetornoDrilldownController extends BaseOperationController<A
 	public ModelAndView listar(HttpServletRequest request, HttpServletResponse response,@Valid @ModelAttribute(FORM_NAME)  BaseForm form,BindingResult bindingResult,Model model) throws Exception {
 		cleanSession(getClass(), request, DISPLAY_TAG_SPACE_3);
 		ModelAndView mav = new ModelAndView(getListaCDRsView());
-		ArquivoRetornoDrillDownPosForm myForm = (ArquivoRetornoDrillDownPosForm)form;
 		ArquivoRetornoDrillDownPosForm myCachedForm = (ArquivoRetornoDrillDownPosForm)getMyFormFromCache(getClass());
 		SccCdrCobillingDecorator decorator = (SccCdrCobillingDecorator)getItemSelecionado(request, DISPLAY_TAG_SPACE_2, form);
-		myForm.setFiltroSelecionado(decorator.getRow());
-		myForm.setArquivoSelecionado(myCachedForm.getArquivoSelecionado());		
-		myForm.setVisaoArquivo(myCachedForm.getVisaoArquivo());
+		myCachedForm.setFiltroSelecionado(decorator.getRow());
+		myCachedForm.setVisaoArquivo(myCachedForm.getVisaoArquivo());
 		SccPaginatedList paginatedList = new SccPaginatedList();
 		paginatedList.setObjectsPerPage(TAMANHO_PAGINA);
 		paginatedList.setPageNumber(1);		
-		List<SccCdrCobilling> rows = getServiceManager().getArquivosService().listaCDRsArquivo(myForm.getArquivoSelecionado().getSqArquivo(), myForm.getFiltroSelecionado(), paginatedList.getPageNumber()-1, TAMANHO_PAGINA);
+		List<SccCdrCobilling> rows = getServiceManager().getArquivosService().listaCDRsStatus(myCachedForm.getFiltroSelecionado().getStatusCdr().getCdStatusCdr(), myCachedForm.getCdEOTClaro(), myCachedForm.getCdEOTLD(), myCachedForm.getDataInicial(), myCachedForm.getDataFinal(), paginatedList.getPageNumber()-1, TAMANHO_PAGINA);
 		List<SccCdrCobillingDecorator> decoratorList = new ArrayList<SccCdrCobillingDecorator>(rows.size());
 		for (int i=0;i<rows.size();i++) {
 			SccCdrCobillingDecorator cdrDecorator = new SccCdrCobillingDecorator(rows.get(i), i);
 			decoratorList.add(cdrDecorator);			
 		}
 		paginatedList.setList(decoratorList);
-		paginatedList.setFullListSize(getServiceManager().getArquivosService().contaCDRsArquivo(myForm.getArquivoSelecionado().getSqArquivo(), myForm.getFiltroSelecionado()).intValue());
-		myForm.setCdrList(paginatedList);
+		paginatedList.setFullListSize(myCachedForm.getFiltroSelecionado().getNuCdr().intValue());
+		myCachedForm.setCdrList(paginatedList);
 		storeInSession(getClass(), DISPLAY_TAG_SPACE_3, paginatedList, request);
-		cacheMyForm(getClass(), myForm);
+		cacheMyForm(getClass(), myCachedForm);
 		return mav;
 	}
 	
 	@RequestMapping(value="/pagina" , method=RequestMethod.GET)
 	public ModelAndView pagina(@RequestParam("page") Integer page,HttpServletRequest request, HttpServletResponse response ) throws Exception {
 		ArquivoRetornoDrillDownPosForm myForm = (ArquivoRetornoDrillDownPosForm)getMyFormFromCache(getClass());
-		ModelAndView mav = new ModelAndView(getListaCDRsView());		
+		ModelAndView mav = new ModelAndView(getListaCDRsView());
+		mav.addObject("filtro", myForm);
 		SccPaginatedList paginatedList = myForm.getCdrList();
 		paginatedList.setObjectsPerPage(TAMANHO_PAGINA);
 		paginatedList.setPageNumber(page);
-		List<SccCdrCobilling> rows = getServiceManager().getArquivosService().listaCDRsArquivo(myForm.getArquivoSelecionado().getSqArquivo(), myForm.getFiltroSelecionado(), paginatedList.getPageNumber()-1, TAMANHO_PAGINA);
+
+		List<SccCdrCobilling> rows = getServiceManager().getArquivosService().listaCDRsStatus(myForm.getFiltroSelecionado().getStatusCdr().getCdStatusCdr(), myForm.getCdEOTClaro(), myForm.getCdEOTLD(), myForm.getDataInicial(), myForm.getDataFinal(), paginatedList.getPageNumber()-1, TAMANHO_PAGINA);
 		List<SccCdrCobillingDecorator> decoratorList = new ArrayList<SccCdrCobillingDecorator>(rows.size());
 		for (int i=0;i<rows.size();i++) {
 			SccCdrCobillingDecorator cdrDecorator = new SccCdrCobillingDecorator(rows.get(i), i);
