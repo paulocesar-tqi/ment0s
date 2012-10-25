@@ -343,5 +343,10 @@
 		<put-attribute name="body" value="/WEB-INF/jsp/arquivo/retorno/drilldown/lista.jsp" />
 		<put-attribute name="tituloTela" value="Relatório Drill Down - Pós" />
 	</definition>
+
+	<definition name="repasse.pos.retorno.filtro" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/repasse/pos/retorno/filtro.jsp" />
+		<put-attribute name="tituloTela" value="Consulta de Retorno de Repasse - Pós Pago" />
+	</definition>
 	
 </tiles-definitions>

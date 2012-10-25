@@ -16,6 +16,10 @@ public class ConsultaRepassePosTO {
 	
 	
 	/**
+	 */
+	private String tipoOperadora; 
+
+	/**
 	 * EOT da operadora Claro segundo {@link SccOperadora}
 	 */
 	private String cdEOTClaro; 
@@ -117,6 +121,12 @@ public class ConsultaRepassePosTO {
 		this.mesAno = mesAno;
 	}
 	
+	public String getTipoOperadora() {
+		return tipoOperadora;
+	}
+	public void setTipoOperadora(String tipoOperadora) {
+		this.tipoOperadora = tipoOperadora;
+	}
 	
 	
 }
