@@ -193,6 +193,10 @@
 <li><a href="/scc/user/repasse/pos/consulta/new.scc"><spring:message code="menu.repasse.pos.consulta"/></a></li>
 </c:if>
 
+<c:if test="${sessionScope['scopedTarget.sessionDataManager'].posPago}">
+<li><a href="/scc/user/repasse/pos/retorno/new.scc"><spring:message code="menu.repasse.pos.retorno"/></a></li>
+</c:if>
+
 
 
 <c:if test="${sessionScope['scopedTarget.sessionDataManager'].prePago}">
