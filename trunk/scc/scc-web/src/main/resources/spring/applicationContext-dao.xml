@@ -40,6 +40,7 @@
 <bean id="sccFinanceiroDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccFinanceiroDAOImpl" parent="sccDAO"/>
 <bean id="sccBatimentoInterfaceDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccBatimentoInterfaceDAOImpl" parent="sccDAO"/>
 <bean id="sccRelatorioConciliacaoDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccRelatorioConciliacaoDAOImpl" parent="sccDAO"/>
+<bean id="sccBatimentoWruppDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccBatimentoWruppDAOImpl" parent="sccDAO"/>
 
 <bean id="contratoAcordadoDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccContratoAcordadoDAOImpl" parent="sccDAO">
 <property name="operadoraDAO" ref="sccOperadoraDAO"/>

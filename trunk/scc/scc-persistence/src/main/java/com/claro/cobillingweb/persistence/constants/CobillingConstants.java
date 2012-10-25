@@ -399,6 +399,7 @@ public class CobillingConstants implements Serializable {
      * PARAMETER NAME CLOSING REQUEST
      */
     public static final String PARAMETER_PREPAGO_FECHAMENTO = "FECHAMENTO_PRE";
+    public static final String PARAMETER_PREPAGO_MAB = "MAB_TCOR";
     
     /**
      * OS Plugin Fase 2

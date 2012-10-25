@@ -272,6 +272,9 @@
 		<c:if test="${sessionScope['scopedTarget.sessionDataManager'].prePago}">
 			<li><a href="/scc/user/relatorio/chamadas/credito/new.scc"><spring:message code="menu.relatorio.chamadas.credito"/></a></li>
 		</c:if>
+		<c:if test="${sessionScope['scopedTarget.sessionDataManager'].prePago}">
+			<li><a href="/scc/user/relatorio/batimento/wrupp/pre/new.scc"><spring:message code="menu.relatorio.batimento.wrupp"/></a></li>
+		</c:if>
 		<li><a href="/scc/user/relatorio/alarmeoperacional/new.scc"><spring:message code="menu.relatorio.alarme.operacional"/></a></li>
 		<li>
 			<a class="has-children" href="#"><spring:message code="menu.relatorio.processo"/></a>

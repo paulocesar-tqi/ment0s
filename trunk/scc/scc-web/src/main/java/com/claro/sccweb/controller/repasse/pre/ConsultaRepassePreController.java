@@ -250,11 +250,12 @@ public class ConsultaRepassePreController extends BaseOperationController<Consul
 	public ModelAndView efetivar(HttpServletRequest request, HttpServletResponse response,@Valid @ModelAttribute("filtro")  BaseForm form,BindingResult bindingResult,Model model) throws Exception {
 		List<ConsultaRepassePrePagoDecorator> tabelaRepasses = (List<ConsultaRepassePrePagoDecorator>)request.getSession().getAttribute(DISPLAY_TAG_SPACE_1);
 		if (tabelaRepasses != null) {
+			String usuario = getSessionDataManager().getUserPrincipal();
 			for (int i=0;i<tabelaRepasses.size();i++) {
 				if (tabelaRepasses.get(i).isModificado()) {
 					String novoStatus = tabelaRepasses.get(i).getNovoStatus();
 					if (novoStatus.equals(SccRepasse.STATUS_CONFIRMADO)) {
-						getServiceManager().getPagamentoRepasseService().realizaPagamentoRepasse(tabelaRepasses.get(i).getRow());
+						getServiceManager().getPagamentoRepasseService().realizaPagamentoRepasse(tabelaRepasses.get(i).getRow(), usuario);
 					} else if (novoStatus.equals(SccRepasse.STATUS_CANCELADO)) {
 						getServiceManager().getPagamentoRepasseService().cancelaPagamentoRepasse(tabelaRepasses.get(i).getRow());
 					}

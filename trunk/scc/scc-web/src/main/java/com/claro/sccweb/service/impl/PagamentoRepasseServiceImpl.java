@@ -6,11 +6,13 @@ import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import com.claro.cobillingweb.persistence.constants.CobillingConstants;
 import com.claro.cobillingweb.persistence.dao.DAOException;
 import com.claro.cobillingweb.persistence.dao.internal.SccArquivoCobillingDAO;
 import com.claro.cobillingweb.persistence.dao.internal.SccMemoDAO;
 import com.claro.cobillingweb.persistence.dao.internal.SccOperadoraDAO;
 import com.claro.cobillingweb.persistence.dao.internal.SccPagamentoRepasseDAO;
+import com.claro.cobillingweb.persistence.dao.internal.SccParamProcessoDAO;
 import com.claro.cobillingweb.persistence.dao.internal.SccPreFechamentoDAO;
 import com.claro.cobillingweb.persistence.dao.internal.SccRelatorioJurosMultaDAO;
 import com.claro.cobillingweb.persistence.dao.internal.SccRepasseDAO;
@@ -18,6 +20,8 @@ import com.claro.cobillingweb.persistence.dao.internal.SccRepasseServicoAdiciona
 import com.claro.cobillingweb.persistence.entity.SccArquivoCobilling;
 import com.claro.cobillingweb.persistence.entity.SccPagamentoRepasse;
 import com.claro.cobillingweb.persistence.entity.SccPagamentoRepassePK;
+import com.claro.cobillingweb.persistence.entity.SccParamProcesso;
+import com.claro.cobillingweb.persistence.entity.SccParamProcessoPK;
 import com.claro.cobillingweb.persistence.entity.SccPreFechamento;
 import com.claro.cobillingweb.persistence.entity.SccRepasse;
 import com.claro.cobillingweb.persistence.entity.SccRepasseServicoAdicional;
@@ -38,7 +42,7 @@ public class PagamentoRepasseServiceImpl extends AbstractService implements Paga
 	private SccRepasseServicoAdicionalDAO repasseServicoAdicionalDAO;
 	private SccRelatorioJurosMultaDAO relatorioJurosMultaDAO;
 	private SccPreFechamentoDAO preFechamentoDAO;
-	
+	private SccParamProcessoDAO paramProcessoDAO;
 	
 	public SccRepasseDAO getRepasseDAO() {
 		return repasseDAO;
@@ -64,8 +68,13 @@ public class PagamentoRepasseServiceImpl extends AbstractService implements Paga
 	public void setMemoDAO(SccMemoDAO memoDAO) {
 		this.memoDAO = memoDAO;
 	}
-	
 	 
+	public SccParamProcessoDAO getParamProcessoDAO() {
+		return paramProcessoDAO;
+	}
+	public void setParamProcessoDAO(SccParamProcessoDAO paramProcessoDAO) {
+		this.paramProcessoDAO = paramProcessoDAO;
+	}
 	@Transactional
 	public void realizaPagamentoRepasse(RepassePosPagoComposite composite) throws DAOException, ServiceException {
 		Date now = new Date();		
@@ -251,11 +260,11 @@ public class PagamentoRepasseServiceImpl extends AbstractService implements Paga
 	}
 	
 	
-	@Transactional
-	 
-	public void realizaPagamentoRepasse(RepassePrePagoComposite composite) throws DAOException, ServiceException {
+	@Transactional	 
+	public void realizaPagamentoRepasse(RepassePrePagoComposite composite, String usuario) throws DAOException, ServiceException {
 		try {
-			SccPreFechamento fechamento = getPreFechamentoDAO().getByPk(composite.getSqPreFechamento(),SccPreFechamento.class);
+			SccPreFechamento fechamento = getPreFechamentoDAO().getByPk(composite.getSqPreFechamento(),
+					SccPreFechamento.class);
 			fechamento.setCdStatusFechamento("C");
 			getPreFechamentoDAO().update(fechamento);
 			SccPagamentoRepassePK pagamentoRepassePK = new SccPagamentoRepassePK();
@@ -269,29 +278,28 @@ public class PagamentoRepasseServiceImpl extends AbstractService implements Paga
 			pagamentoRepasse.setCdFormaPagamento("1");
 			pagamentoRepasse.setVlBrutoNf(composite.getPreFechamento().getVlFinalRepassar());
 			pagamentoRepasse.setVlRepasse(composite.getPreFechamento().getVlFinalRepassar());
-			Calendar cal = Calendar.getInstance();			
-			if (cal.get(Calendar.DAY_OF_MONTH) >=10)
-				{
+			Calendar cal = Calendar.getInstance();
+			if (cal.get(Calendar.DAY_OF_MONTH) >= 10) {
 				cal.add(Calendar.MONTH, 1);
-				}
+			}
 			cal.set(Calendar.DAY_OF_MONTH, 10);
 			pagamentoRepasse.setDtEmissaoNf(cal.getTime());
 			cal.set(Calendar.DAY_OF_MONTH, 20);
-			pagamentoRepasse.setDtPagamentoRepasse(cal.getTime());			
-			pagamentoRepasse.setCdUsuarioManut(getSessionDataManager().getUserPrincipal());			
+			pagamentoRepasse.setDtPagamentoRepasse(cal.getTime());
+			pagamentoRepasse.setCdUsuarioManut(getSessionDataManager().getUserPrincipal());
 			pagamentoRepasse.setQtDiasAtraso(0L);
 			Date now = new Date();
 			pagamentoRepasse.setDtCriacao(now);
 			pagamentoRepasse.setDtAtualizacao(now);
 			getPagamentoRepasseDAO().create(pagamentoRepasse);
-		} catch (DAOException daoEx)
-			{
+			
+			gerarParamProcessoMab(fechamento, usuario);
+			
+		} catch (DAOException daoEx) {
 			throw daoEx;
-			}
-		catch (Exception ex)
-			{
+		} catch (Exception ex) {
 			throw new ServiceException(ex.getMessage(), ex);
-			}
+		}
 		
 	}
 	 
@@ -320,6 +328,36 @@ public class PagamentoRepasseServiceImpl extends AbstractService implements Paga
 		
 	}
 	
-	
+	private void gerarParamProcessoMab(SccPreFechamento fechamento, String username) throws DAOException {
+		final SccParamProcessoPK pk = new SccParamProcessoPK();
+		pk.setCdProcesso(CobillingConstants.PARAMETER_PREPAGO_MAB);
+		StringBuffer nmParametro = new StringBuffer();
+
+		// EOT LD (3) 
+		// EOT CLARO (3)
+		// DT FECHAMENTO (8)
+		// DT INI FECHAMENTO (8)
+		// DT FIM FECHAMENTO (8)
+		// PRODUTO (4)
+		nmParametro.append(fechamento.getCdEotLd());
+		nmParametro.append(fechamento.getCdEotClaro());
+		nmParametro.append(dateFormat.format(fechamento.getDtFechamento()));
+		nmParametro.append(dateFormat.format(fechamento.getDtInicialFechamento()));
+		nmParametro.append(dateFormat.format(fechamento.getDtFimFechamento()));
+		nmParametro.append(leftZeroFill(fechamento.getCdProdutoPrepago(), 4));
+		pk.setNmParametro(nmParametro.toString());
+
+		SccParamProcesso toTest = getParamProcessoDAO().getByPk(pk, SccParamProcesso.class);
+		final Date now = new Date();
+		if (toTest == null) {
+			SccParamProcesso paramProcesso = new SccParamProcesso();
+			paramProcesso.setCdTipoParametro(CobillingConstants.ALFA);
+			paramProcesso.setTxValorParametro(CobillingConstants.TO_LOAD);
+			paramProcesso.setDtCriacao(now);
+			paramProcesso.setCdUsuarioManut(username);
+			paramProcesso.setId(pk);
+			getParamProcessoDAO().create(paramProcesso);
+		}
+	}
 	
 }

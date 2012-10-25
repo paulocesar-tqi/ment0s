@@ -87,7 +87,7 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 		<property name="sccFinanceiroService" ref="sccFinanceiroService"/>
 		<property name="sccBatimentoInterfaceService" ref="sccBatimentoInterfaceService"/>
 		<property name="sccRelatorioConciliacaoService" ref="sccRelatorioConciliacaoService"/>
-
+		<property name="sccBatimentoWruppService" ref="sccBatimentoWruppService"/>
 	</bean>
 
 	<bean id="sccService" abstract="true"
@@ -218,6 +218,7 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 		<property name="repasseServicoAdicionalDAO" ref="repasseServicoAdicionalDAO" />
 		<property name="relatorioJurosMultaDAO" ref="relatorioJurosMultaDAO" />
 		<property name="preFechamentoDAO" ref="preFechamentoDAO" />
+		<property name="paramProcessoDAO" ref="paramProcessoDAO" />
 	</bean>
 
 
@@ -441,5 +442,8 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 		<property name="sccRelatorioConciliacaoDAO" ref="sccRelatorioConciliacaoDAO" />
 	</bean>
 
-	
+	<bean id="sccBatimentoWruppService" class="com.claro.sccweb.service.impl.SccBatimentoWruppServiceImpl"
+		parent="sccService">
+		<property name="sccBatimentoWruppDAO" ref="sccBatimentoWruppDAO" />
+	</bean>
 </beans>

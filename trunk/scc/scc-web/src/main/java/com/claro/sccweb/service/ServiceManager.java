@@ -34,7 +34,7 @@ public class ServiceManager {
 	private EstornoMobileService estornoMobileService;
 	private ContabilService contabilService;
 	private SccParamProcessoService sccParamProcessoService;
-	
+		
 	@SuppressWarnings("unused")
 	@Autowired
 	private SccRelBatimentoEstornoDebitoService sccRelBatimentoEstornoDebitoService;
@@ -117,6 +117,9 @@ public class ServiceManager {
 
 	@Autowired
 	private SccRelatorioConciliacaoService sccRelatorioConciliacaoService;
+	
+	@Autowired
+	private SccBatimentoWruppService sccBatimentoWruppService;
 	
 	public PesquisaDominiosService getPesquisaDominiosService() {
 		return pesquisaDominiosService;
@@ -537,4 +540,15 @@ public class ServiceManager {
 			SccRelatorioConciliacaoService sccRelatorioConciliacaoService) {
 		this.sccRelatorioConciliacaoService = sccRelatorioConciliacaoService;
 	}
+
+	public SccBatimentoWruppService getSccBatimentoWruppService() {
+		return sccBatimentoWruppService;
+	}
+
+	public void setSccBatimentoWruppService(
+			SccBatimentoWruppService sccBatimentoWruppService) {
+		this.sccBatimentoWruppService = sccBatimentoWruppService;
+	}
+	
+	
 }

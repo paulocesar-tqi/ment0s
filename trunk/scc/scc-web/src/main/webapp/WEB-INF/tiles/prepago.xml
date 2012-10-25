@@ -123,6 +123,10 @@
 <put-attribute name="tituloTela" value="Relatório Conciliação" />
 </definition>
 
+<definition name="relatorio_batimento_wrupp_pre_filtro" extends="basicLayout">
+<put-attribute name="body" value="/WEB-INF/jsp/relatorio/batimento/wrupp/pre/filtro.jsp" />
+<put-attribute name="tituloTela" value="Relatório Batimento Wrupp" />
+</definition>
 
 </tiles-definitions>
 

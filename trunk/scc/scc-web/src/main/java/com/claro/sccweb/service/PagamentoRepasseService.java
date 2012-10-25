@@ -11,7 +11,6 @@ import com.claro.sccweb.service.composite.RepassePrePagoComposite;
  *
  */
 public interface PagamentoRepasseService {
-
 	
 	/**
 	 * Realiza o pagamento de um repasse após confirmação do usuário.
@@ -39,7 +38,7 @@ public interface PagamentoRepasseService {
 	 * @throws DAOException
 	 * @throws ServiceException
 	 */
-	public void realizaPagamentoRepasse(RepassePrePagoComposite repasse) throws DAOException,ServiceException;
+	public void realizaPagamentoRepasse(RepassePrePagoComposite repasse, String usuario) throws DAOException,ServiceException;
 	
 	
 	/**
