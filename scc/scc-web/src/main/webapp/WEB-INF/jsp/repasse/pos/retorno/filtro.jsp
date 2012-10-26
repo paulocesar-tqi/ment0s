@@ -174,17 +174,16 @@ function mostraOperadoraClaro()
 <br/>
 <table  width="100%" border="0" cellspacing="0" cellpadding="0" >
  <tr><td align="center">                            
-<display:table style="width:100%"  name="sessionScope._DISPLAY_TAG_SPACE_1"   pagesize="20"  id="repasses" requestURI="/scc/user/arquivo/batimento/interface/tab1.scc" class="ui-state-default">
-<display:column property="nomeArquivo" title="Nome do Arquivo" />
+<display:table style="width:100%"  name="sessionScope._DISPLAY_TAG_SPACE_1"   pagesize="20"  id="repasses" requestURI="/scc/user/repasse/pos/retorno/tab1.scc" class="ui-state-default">
+<display:column property="csp" title="CSP" />
 <display:column property="operadoraLD" title="Op. LD" />
 <display:column property="operadoraClaro" title="Op. Claro" />
-<display:column property="dataMovimentacao" title="Data de Movimentação" />
-<display:column property="dataTransferencia" title="Data de Transferência" />
-<display:column property="quantidadeRegistrosMobile" title="Quantidade de Registros" />
-<display:column property="dataProcessamento" title="Data de Processamento" />
-<display:column property="quantidadeRegistrosScc" title="Quantidade de Registros" />
-<display:column property="diferenca" title="Diferença" />
+<display:column property="uf" title="UF" />
 <display:column property="status" title="Status" />
+<display:column property="mes" title="Mês Conta" />
+<display:column property="valor" title="Valor" />
+<display:column property="numRepasse" title="Demonstrativo de Repasse" />
+<display:column property="arquivo" title="Nome do arquivo" />
 </display:table>
 </td></tr>
 </table>

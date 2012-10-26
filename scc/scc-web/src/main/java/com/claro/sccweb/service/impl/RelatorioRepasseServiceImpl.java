@@ -20,6 +20,7 @@ import com.claro.cobillingweb.persistence.dao.internal.SccProdutoPrepagoDAO;
 import com.claro.cobillingweb.persistence.dao.internal.SccRelatorioJurosMultaDAO;
 import com.claro.cobillingweb.persistence.dao.internal.SccRepasseDAO;
 import com.claro.cobillingweb.persistence.dao.internal.SccRepasseServicoAdicionalDAO;
+import com.claro.cobillingweb.persistence.dao.internal.SccRetornoRepasseDAO;
 import com.claro.cobillingweb.persistence.dao.internal.SccTipoContratoDAO;
 import com.claro.cobillingweb.persistence.entity.SccContratoAcordado;
 import com.claro.cobillingweb.persistence.entity.SccItemRepasse;
@@ -32,6 +33,7 @@ import com.claro.cobillingweb.persistence.entity.SccRelatorioJurosMulta;
 import com.claro.cobillingweb.persistence.entity.SccRepasse;
 import com.claro.cobillingweb.persistence.entity.SccRepasseServicoAdicional;
 import com.claro.cobillingweb.persistence.view.RelPrestacaoServicoView;
+import com.claro.cobillingweb.persistence.view.SccRetornoRepasseView;
 import com.claro.sccweb.decorator.DemonstrativoRepassePosDecorator;
 import com.claro.sccweb.decorator.RepasseServicoAdicionalDecorator;
 import com.claro.sccweb.service.AbstractService;
@@ -57,11 +59,20 @@ public class RelatorioRepasseServiceImpl extends AbstractService implements Rela
 	private SccItemRepasseDAO itemRepasseDAO;
 	private SccTipoContratoDAO tipoContratoDAO;
 	private SccProdutoPrepagoDAO produtoPrepagoDAO;
+	private SccRetornoRepasseDAO retornoRepasseDAO;
 	
 	
 	
 	
 	 
+	public SccRetornoRepasseDAO getRetornoRepasseDAO() {
+		return retornoRepasseDAO;
+	}
+
+	public void setRetornoRepasseDAO(SccRetornoRepasseDAO retornoRepasseDAO) {
+		this.retornoRepasseDAO = retornoRepasseDAO;
+	}
+
 	public List<SolicitacaoRepassePosComposite> pesquisaRepassesProcessados(final String idProcesso,final int max) throws DAOException, ServiceException {		
 		List<SolicitacaoRepassePosComposite> resultado=null;
 		if (idProcesso.equals(RelatorioRepasseService.CD_PROCESSO_REPASSE))
@@ -800,7 +811,20 @@ public class RelatorioRepasseServiceImpl extends AbstractService implements Rela
 	}
 	
 	
+	public List<SccRetornoRepasseView> pesquisaRetornoRepasse(ConsultaRepassePosTO to) throws DAOException,ServiceException {
 
+		List<SccRetornoRepasseView> listRetornoRepasse = null;
+		if(to != null){
+			
+			listRetornoRepasse = getRetornoRepasseDAO().pesquisaRetornoRepasse(to.getCdEOTClaro(), 
+					to.getCdEOTLD(), to.getCdProdutoCobilling(), 
+					to.getDtInicialRepasse(), to.getDtFinalRepasse());
+			
+		}
+		
+		return listRetornoRepasse;
+
+	}
 	
 	
 	
