@@ -146,7 +146,7 @@
 
 <bean id="sccRelatorioChamadasRefaturamentoDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccRelatorioChamadasRefaturamentoDAOImpl" parent="sccDAO"/>
 
-<bean id="sccRetornoRepasseDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccRetornoRepasseDAOImpl" parent="sccDAO"/>
+<bean id="retornoRepasseDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccRetornoRepasseDAOImpl" parent="sccDAO"/>
 
 
 </beans>

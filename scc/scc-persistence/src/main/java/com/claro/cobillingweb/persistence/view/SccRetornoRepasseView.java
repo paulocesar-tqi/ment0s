@@ -12,7 +12,6 @@ public class SccRetornoRepasseView {
 	
 	private String csp;
 	private String operadoraLD;
-	private String operadoraClaro;
 	private String uf;
 	private String status;
 	private String mes;
@@ -30,12 +29,6 @@ public class SccRetornoRepasseView {
 	}
 	public void setOperadoraLD(String operadoraLD) {
 		this.operadoraLD = operadoraLD;
-	}
-	public String getOperadoraClaro() {
-		return operadoraClaro;
-	}
-	public void setOperadoraClaro(String operadoraClaro) {
-		this.operadoraClaro = operadoraClaro;
 	}
 	public String getUf() {
 		return uf;

@@ -43,14 +43,14 @@ public class SccRetornoRepasseDAOImpl extends HibernateBasicDAOImpl<List<Object[
 	 
 	public List<SccRetornoRepasseView> pesquisaRetornoRepasse(String cdEOTClaro, String cdEOTLD, Long cdProdutoCobilling, Date dtInicialRepasse, Date  dtFinalRepasse) throws DAOException {
 		List<SccRetornoRepasseView> list = null;
-		
+	
 		String sql = " SELECT B.CD_CSP as csp,   " +
 				     "  C.DS_OPERADORA as operadoraLD,   " +
 				     "  B.SG_UF as uf,   " +
 				     "  REP.CD_STATUS_REPASSE as status,   " +
+				     "  A.MM_CICLO || '/' || A.AA_CICLO as mes,   " +
 				     "  SUM(REP.VL_BRUTO_REPASSE) as valor,   " +
 				     "  REP.NU_REPASSE as numRepasse,   " +
-				     "  A.MM_CICLO || '/' || A.AA_CICLO as mes,   " +
 				     "  A.NO_ARQUIVO as arquivo   " +
 			"	FROM   SCC_RELATORIO_RETORNO_REPASSE A,   " +
 			"	       SCC_OPERADORA B,   " +
@@ -62,11 +62,12 @@ public class SccRetornoRepasseDAOImpl extends HibernateBasicDAOImpl<List<Object[
 			"	AND   A.CD_EOT_LD = REP.CD_EOT_LD   " +
 			"	AND   A.CD_EOT_CLARO = REP.CD_EOT_CLARO   " +
 			"	AND   A.CD_PRODUTO_COBILLING = REP.CD_PRODUTO_COBILLING   " +
-			"	AND   A.NU_QUINZENA = REP.NU_QUINZENA   ";
+			"	AND   A.NU_QUINZENA = REP.NU_QUINZENA   " +
+			"   AND   REP.CD_ITEM_REPASSE IN (30,32,34,100)  ";
 		
 		
-		String filtroDataInicialRepasse = "	AND   A.DT_INICIAL_REPASSE >= :dtInicialRepasse ";
-		String filtroDataFinalRepasse = " AND   A.DT_INICIAL_REPASSE <= :dtFinalRepasse ";
+		String filtroDataInicialRepasse = "	AND   A.DT_INICIAL_REPASSE >= TRUNC(:dtInicialRepasse) ";
+		String filtroDataFinalRepasse = " AND   A.DT_INICIAL_REPASSE <= TRUNC(:dtFinalRepasse) ";
 		String filtroCdProdutoCobilling = "	AND   A.CD_PRODUTO_COBILLING =  :cdProdutoCobilling  ";
 		String filtroCdEOTLD = " AND   A.CD_EOT_LD = :cdEOTLD  ";
 		String filtroCdEOTClaro = "	AND   A.CD_EOT_CLARO = :cdEOTClaro  ";
@@ -75,8 +76,8 @@ public class SccRetornoRepasseDAOImpl extends HibernateBasicDAOImpl<List<Object[
 					"	       C.DS_OPERADORA,   " +
 					"	       B.SG_UF,   " +
 					"	       REP.CD_STATUS_REPASSE,    " +
-					"	       REP.NU_REPASSE,   " +
 					"	       A.MM_CICLO || '/' || A.AA_CICLO,   " +
+					"	       REP.NU_REPASSE,   " +
 					"	       A.NO_ARQUIVO   ";
 	
 		
@@ -107,7 +108,7 @@ public class SccRetornoRepasseDAOImpl extends HibernateBasicDAOImpl<List<Object[
 			mapper.addResultMap("mes", String.class);
 			mapper.addResultMap("valor", Double.class);
 			mapper.addResultMap("numRepasse", Long.class);
-			mapper.addResultMap("numarquivo", String.class);
+			mapper.addResultMap("arquivo", String.class);
 
 			mapper.setProjections(projections);
 			
