@@ -27,7 +27,7 @@ public class ConsultaRetornoRepassePosValidator implements Validator {
 		if(form.getOperacao().equals(ConsultaRepassePosController.OPERACAO_PESQUISAR)){
 		if ((form.getCdEOTLD() == null) || (form.getCdEOTLD().equals(BasicDAO.NULL_STRING)) || (form.getCdEOTLD().equals(BasicDAO.GET_ALL_STRING)))
 			errors.rejectValue("cdEOTLD", "campoObrigatorio", "Campo Obrigatório");
-		if ((form.getCdEOTClaro() == null) || (form.getCdEOTClaro().equals(BasicDAO.NULL_STRING)) || (form.getCdEOTClaro().equals(BasicDAO.GET_ALL_STRING)))
+		if ((form.getCdEOTClaro() == null) || (form.getCdEOTClaro().equals(BasicDAO.NULL_STRING)) )
 			errors.rejectValue("cdEOTClaro", "campoObrigatorio", "Campo Obrigatório");
 
 		if ((form.getCdProdutoCobilling() == null) || (form.getCdProdutoCobilling().equals(BasicDAO.NULL)))

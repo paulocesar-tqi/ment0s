@@ -23,14 +23,12 @@ import com.claro.cobillingweb.persistence.dao.BasicDAO;
 import com.claro.cobillingweb.persistence.entity.SccOperadora;
 import com.claro.cobillingweb.persistence.entity.SccPeriodicidadeRepasse;
 import com.claro.cobillingweb.persistence.entity.SccProdutoCobilling;
+import com.claro.cobillingweb.persistence.view.SccRetornoRepasseView;
 import com.claro.sccweb.controller.BaseFormController;
 import com.claro.sccweb.controller.util.BasicIntegerItem;
 import com.claro.sccweb.controller.util.BasicStringItem;
 import com.claro.sccweb.controller.validator.ConsultaRetornoRepassePosValidator;
-import com.claro.sccweb.decorator.ConsultaRepassePosPagoDecorator;
 import com.claro.sccweb.form.ConsultaRepassePosForm;
-import com.claro.sccweb.service.RelatorioRepasseService;
-import com.claro.sccweb.service.composite.RepassePosPagoComposite;
 
 
 /**
@@ -91,19 +89,6 @@ public class ConsultaRetornoRepassePosController extends BaseFormController {
 		return mav;
 	}
 	
-	/**
-	 * Método handler para quando o usuário retorna à tela de resultados usando o botão Voltar.
-	 * Esse retorno ocorre a partir da tela de ajuste de repasses.
-	 * os repasses devem ser todos recarregados da base já que pode ter havido modificações.
-	 * @param request
-	 * @param response
-	 * @return
-	 * @throws Exception
-	 */
-	@RequestMapping(value="/back" , method = RequestMethod.POST)
-	public ModelAndView back(HttpServletRequest request, HttpServletResponse response) throws Exception {		
-		return consultaRepasses(request, response,(ConsultaRepassePosForm)getMyFormFromCache(getClass()) , null, null);
-	}
 	
 	/**
 	 * Método handler para esse controller.
@@ -122,7 +107,7 @@ public class ConsultaRetornoRepassePosController extends BaseFormController {
 		if (bindingResult.hasErrors()) {
 			mav = new ModelAndView("repasse_pos_retorno_filtro");
 		} else if (operacao.equalsIgnoreCase(OPERACAO_PESQUISAR)) {
-			mav = consultaRepasses(request, response, form, bindingResult, model);
+			mav = consultaRetornoRepasses(request, response, form, bindingResult, model);
 		} else if (operacao.equalsIgnoreCase(OPERACAO_VOLTAR)) {
 			mav = novaConsulta(request, response); 
 		} 
@@ -131,8 +116,7 @@ public class ConsultaRetornoRepassePosController extends BaseFormController {
 	
 	
 	/**
-	 * Realiza a consulta dos repasses para a operadora LD / produto / preíodo selecionados.
-	 * Para cada operadora Claro será executado o método do serviço {@link RelatorioRepasseService}
+	 * Realiza a consulta dos retornos dos repasses para a operadora LD / produto / preíodo selecionados.
 	 * @param request HTTP Request
 	 * @param response HTTP Response
 	 * @param form Form
@@ -141,29 +125,19 @@ public class ConsultaRetornoRepassePosController extends BaseFormController {
 	 * @return Model and View com o resultado da pesquisa.
 	 * @throws Exception
 	 */
-	private ModelAndView consultaRepasses(HttpServletRequest request, HttpServletResponse response,@Valid @ModelAttribute("filtro")  ConsultaRepassePosForm form,BindingResult bindingResult,Model model) throws Exception {
-		List<ConsultaRepassePosPagoDecorator> resultados = new ArrayList<ConsultaRepassePosPagoDecorator>();
+	private ModelAndView consultaRetornoRepasses(HttpServletRequest request, HttpServletResponse response,@Valid @ModelAttribute("filtro")  ConsultaRepassePosForm form,BindingResult bindingResult,Model model) throws Exception {
 		ModelAndView mav = new ModelAndView();
-		List<SccOperadora> operadorasClaro = getServiceManager().getPesquisaDominiosService().pequisaOperadorasClaro();
 		Date dtInicialPesquisa = getServiceManager().getPeriodicidadeService().calculaDataInicialPeriodo(form.getCdPeriodicidade(), form.getMesRelatorio(), form.getAnoRelatorio());
 		Date dtFinalPesquisa = getServiceManager().getPeriodicidadeService().calculaDataFinalPeriodo(form.getCdPeriodicidade(), form.getMesRelatorio(), form.getAnoRelatorio());
 		form.setDtInicialRepasse(dtInicialPesquisa);
 		form.setDtFinalRepasse(dtFinalPesquisa);
-		int index = 0;
 		mav.addObject("filtro", form);
-		for (int i=0;i<operadorasClaro.size();i++) {
-			form.setCdEOTClaro(operadorasClaro.get(i).getCdEot());
-			RepassePosPagoComposite composite = getServiceManager().getRepasseService().carregaDadosRepasse(form);
-			if (composite != null) {				  
-				ConsultaRepassePosPagoDecorator decorator = new ConsultaRepassePosPagoDecorator(composite, index);
-				decorator.setAnoMes(form.getAnoRelatorio()+"/"+form.getMesRelatorio());
-				resultados.add(decorator);  
-				index++;
-			}			  
-		}
-		storeInSession(getClass(), DISPLAY_TAG_SPACE_1, resultados, request);
+
+		List<SccRetornoRepasseView> rows = new ArrayList<SccRetornoRepasseView>();
+		rows = getServiceManager().getRepasseService().pesquisaRetornoRepasse(form);
+
+		storeInSession(getClass(), DISPLAY_TAG_SPACE_1, rows, request);
 		cacheMyForm(getClass(), form);
-		mav.setViewName("repasse_pos_retorno_resultados");
 		return mav;
 	}
 	

@@ -9,6 +9,7 @@ import com.claro.cobillingweb.persistence.entity.SccItemRepasse;
 import com.claro.cobillingweb.persistence.entity.SccRelatorioJurosMulta;
 import com.claro.cobillingweb.persistence.entity.SccRepasse;
 import com.claro.cobillingweb.persistence.view.RelPrestacaoServicoView;
+import com.claro.cobillingweb.persistence.view.SccRetornoRepasseView;
 import com.claro.sccweb.decorator.DemonstrativoRepassePosDecorator;
 import com.claro.sccweb.decorator.RepasseServicoAdicionalDecorator;
 import com.claro.sccweb.service.composite.RepassePosPagoComposite;
@@ -173,6 +174,15 @@ public interface RelatorioRepasseService {
 	
 	List<RelPrestacaoServicoView> gerarRelatorioPrestacaoServicoPre(ConsultaRepassePosTO consultaRepassePosTO)
 			throws DAOException;
-	
+
+	/**
+	 * Pesquisa os retornos de repasse.
+	 * @param TO com os parametros.
+	 * @return
+	 * @throws DAOException
+	 * @throws ServiceException
+	 */
+	public List<SccRetornoRepasseView> pesquisaRetornoRepasse(ConsultaRepassePosTO to) throws DAOException,ServiceException;
+
 	
 }
