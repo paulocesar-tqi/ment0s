@@ -72,6 +72,8 @@ public class ConsultaRetornoRepassePosController extends BaseFormController {
 	 */
 	public static final String OPERACAO_EFETIVAR = "efetivar";
 	
+	public static final String OPERACAO_EXCEL = "excel";
+	
 	/**
 	 * Handler de entrada na funcionaldidade. 
 	 * @param request HTTP Request
@@ -110,6 +112,8 @@ public class ConsultaRetornoRepassePosController extends BaseFormController {
 			mav = consultaRetornoRepasses(request, response, form, bindingResult, model);
 		} else if (operacao.equalsIgnoreCase(OPERACAO_VOLTAR)) {
 			mav = novaConsulta(request, response); 
+		}  else if (operacao.equalsIgnoreCase(OPERACAO_EXCEL)) {
+			mav = excel(request, response, form, bindingResult, model);
 		} 
 		return mav;		  
 	}
@@ -138,8 +142,17 @@ public class ConsultaRetornoRepassePosController extends BaseFormController {
 
 		storeInSession(getClass(), DISPLAY_TAG_SPACE_1, rows, request);
 		cacheMyForm(getClass(), form);
+		mav.setViewName("repasse_pos_retorno_filtro");
 		return mav;
 	}
+	
+	
+	public ModelAndView excel(HttpServletRequest request, HttpServletResponse response,@Valid @ModelAttribute("filtro")  ConsultaRepassePosForm form,BindingResult bindingResult,Model model) throws Exception {
+		info("Iniciando geração de Excel para pesquisa retorno de repasse");
+		ModelAndView mav = new ModelAndView("repasse_pos_retorno_excel");
+		return mav;
+	}
+
 	
 	/**
 	 * A displaytag em sua paginação necessita submeter o form. Esse método é o handler para esse request.

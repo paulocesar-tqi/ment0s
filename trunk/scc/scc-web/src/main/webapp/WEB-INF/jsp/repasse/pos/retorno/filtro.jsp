@@ -177,7 +177,6 @@ function mostraOperadoraClaro()
 <display:table style="width:100%"  name="sessionScope._DISPLAY_TAG_SPACE_1"   pagesize="20"  id="repasses" requestURI="/scc/user/repasse/pos/retorno/tab1.scc" class="ui-state-default">
 <display:column property="csp" title="CSP" />
 <display:column property="operadoraLD" title="Op. LD" />
-<display:column property="operadoraClaro" title="Op. Claro" />
 <display:column property="uf" title="UF" />
 <display:column property="status" title="Status" />
 <display:column property="mes" title="Mês Conta" />
