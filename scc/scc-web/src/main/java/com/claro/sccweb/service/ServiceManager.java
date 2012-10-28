@@ -121,6 +121,19 @@ public class ServiceManager {
 	@Autowired
 	private SccBatimentoWruppService sccBatimentoWruppService;
 	
+	@Autowired
+	private RelatorioAlarmeOperacionalService relatorioAlarmeOperacionalService;
+
+	
+	public RelatorioAlarmeOperacionalService getRelatorioAlarmeOperacionalService() {
+		return relatorioAlarmeOperacionalService;
+	}
+
+	public void setRelatorioAlarmeOperacionalService(
+			RelatorioAlarmeOperacionalService relatorioAlarmeOperacionalService) {
+		this.relatorioAlarmeOperacionalService = relatorioAlarmeOperacionalService;
+	}
+
 	public PesquisaDominiosService getPesquisaDominiosService() {
 		return pesquisaDominiosService;
 	}

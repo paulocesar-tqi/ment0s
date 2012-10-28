@@ -148,5 +148,7 @@
 
 <bean id="retornoRepasseDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccRetornoRepasseDAOImpl" parent="sccDAO"/>
 
+<bean id="sccRelatorioAlarmeOperacionalDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccRelatorioAlarmeOperacionalDAOImpl" parent="sccDAO"/>
+
 
 </beans>

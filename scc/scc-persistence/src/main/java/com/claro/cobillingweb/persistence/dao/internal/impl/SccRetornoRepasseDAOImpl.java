@@ -43,11 +43,11 @@ public class SccRetornoRepasseDAOImpl extends HibernateBasicDAOImpl<List<Object[
 	 
 	public List<SccRetornoRepasseView> pesquisaRetornoRepasse(String cdEOTClaro, String cdEOTLD, Long cdProdutoCobilling, Date dtInicialRepasse, Date  dtFinalRepasse) throws DAOException {
 		List<SccRetornoRepasseView> list = null;
-	
+
 		String sql = " SELECT B.CD_CSP as csp,   " +
-				     "  C.DS_OPERADORA as operadoraLD,   " +
+				     "  B.DS_OPERADORA as operadoraLD,   " +
 				     "  B.SG_UF as uf,   " +
-				     "  REP.CD_STATUS_REPASSE as status,   " +
+				     "  DECODE(REP.CD_STATUS_REPASSE, 'C', 'Confirmado', 'N', 'Cancelado', 'E', 'Nulo',REP.CD_STATUS_REPASSE) as status, " +
 				     "  A.MM_CICLO || '/' || A.AA_CICLO as mes,   " +
 				     "  SUM(REP.VL_BRUTO_REPASSE) as valor,   " +
 				     "  REP.NU_REPASSE as numRepasse,   " +
@@ -67,13 +67,13 @@ public class SccRetornoRepasseDAOImpl extends HibernateBasicDAOImpl<List<Object[
 		
 		
 		String filtroDataInicialRepasse = "	AND   A.DT_INICIAL_REPASSE >= TRUNC(:dtInicialRepasse) ";
-		String filtroDataFinalRepasse = " AND   A.DT_INICIAL_REPASSE <= TRUNC(:dtFinalRepasse) ";
+		String filtroDataFinalRepasse = " AND   A.DT_INICIAL_REPASSE < TRUNC(:dtFinalRepasse) + 1 ";
 		String filtroCdProdutoCobilling = "	AND   A.CD_PRODUTO_COBILLING =  :cdProdutoCobilling  ";
 		String filtroCdEOTLD = " AND   A.CD_EOT_LD = :cdEOTLD  ";
 		String filtroCdEOTClaro = "	AND   A.CD_EOT_CLARO = :cdEOTClaro  ";
 		
 		String projections = "	GROUP BY B.CD_CSP,   " +
-					"	       C.DS_OPERADORA,   " +
+					"	       B.DS_OPERADORA,   " +
 					"	       B.SG_UF,   " +
 					"	       REP.CD_STATUS_REPASSE,    " +
 					"	       A.MM_CICLO || '/' || A.AA_CICLO,   " +
