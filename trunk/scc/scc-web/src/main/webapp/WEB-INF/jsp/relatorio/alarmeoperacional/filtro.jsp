@@ -11,10 +11,10 @@
 
 <script>
 	$(document).ready(function(){	
-		$("#dtInicio").mask("99/99/9999");	
-		$("#dtFim").mask("99/99/9999");
-		$("#dtInicio").datepicker();
-		$("#dtFim").datepicker();		
+		$("#dataInicial").mask("99/99/9999");	
+		$("#dataFinal").mask("99/99/9999");
+		$("#dataInicial").datepicker();
+		$("#dataFinal").datepicker();		
 		$('#pesquisar_button').click(pesquisar);
 		$('#excel_button').click(excel);
 		$('#tabs').tabs();
@@ -54,20 +54,20 @@
 			<table width="100%" border="0" cellspacing="0" cellpadding="0" id="filtroPesquisaTable">
 				<tr>
     				<td width="10%"><spring:message code="relatorio.alarmeoperacional.label.nomearquivo"/></td>
-    				<td ><form:select path="nmArquivo" items="${nomesArquivo}" itemLabel="label" itemValue="key" /></td>
+    				<td ><form:select path="nomeRelatorio" items="${nomesRelatorios}" itemLabel="label" itemValue="key" /></td>
 				</tr>
 				
 				<tr>
     				<td width="10%"><spring:message code="relatorio.alarmeoperacional.label.datainicial"/></td>
-    				<td><form:input id="dtInicio" path="dtInicio" />
-    				<form:errors path="dtInicio" /></td>
+    				<td><form:input id="dataInicial" path="dataInicial" />
+    				<form:errors path="dataInicial" /></td>
 				</tr>
 
 				<tr>
     				<td width="10%"><spring:message code="relatorio.alarmeoperacional.label.datafinal"/></td>
     				<td>
-    					<form:input id="dtFim" path="dtFim" />
-    					<form:errors path="dtFim" />
+    					<form:input id="dataFinal" path="dataFinal" />
+    					<form:errors path="dataFinal" />
     				</td>
 				</tr>
 			</table>
@@ -84,17 +84,15 @@
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
 					<td>
-						<display:table style="width:90%" name="sessionScope._DISPLAY_TAG_SPACE_1" pagesize="20" id="repasses" requestURI="/scc/user/relatorio/batimento/arquivos/tab1.scc" class="ui-state-default">
+						<display:table style="width:90%" name="sessionScope._DISPLAY_TAG_SPACE_1" pagesize="20" id="repasses" requestURI="/scc/user/relatorio/alarmeoperacional/tab1.scc" class="ui-state-default">
 							<display:column property="nomA" title="Número de A"/>
-							<display:column property="qtdChamadas" title="Qtde Chamadas"/>
-							<display:column property="qtdMinutos" title="Qtde Minutos Tarifados"/>
-							<display:column property="valorLiquidoClaro" title="Valor Liquido Total das Chamadas" />
-							<display:column property="erroProtocoloClaro" title="Número da Fatura" />
-							<display:column property="descErroProtocoloClaro" title="Número da Nota Fiscal" />
-							<display:column property="nomeArquivoLD" title="Operadora LD" />
-							<display:column property="quantidadeLD" title="Data de Referência"  />
-							<display:column property="statusLD" title="Status"  />
-							<display:column property="quantidadeBat" title="Quantidade" />
+							<display:column property="qtdeChamadas" title="Qtde Chamadas"/>
+							<display:column property="qtdeMinutosTarifados" title="Qtde Minutos Tarifados"/>
+							<display:column property="valorTotalChamadas" title="Valor Liquido Total das Chamadas" />
+							<display:column property="nroFatura" title="Número da Fatura" />
+							<display:column property="nroNf" title="Número da Nota Fiscal" />
+							<display:column property="nomeOperadoraLD" title="Operadora LD" />
+							<display:column property="dataReferencia" title="Data de Referência"  />
 						</display:table>
 					</td>
 				</tr>

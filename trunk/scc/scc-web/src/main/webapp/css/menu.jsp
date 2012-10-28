@@ -275,7 +275,6 @@
 		<c:if test="${sessionScope['scopedTarget.sessionDataManager'].prePago}">
 			<li><a href="/scc/user/relatorio/batimento/wrupp/pre/new.scc"><spring:message code="menu.relatorio.batimento.wrupp"/></a></li>
 		</c:if>
-		<li><a href="/scc/user/relatorio/alarmeoperacional/new.scc"><spring:message code="menu.relatorio.alarme.operacional"/></a></li>
 		<li>
 			<a class="has-children" href="#"><spring:message code="menu.relatorio.processo"/></a>
 			<ul>
@@ -300,6 +299,7 @@
 		<li><a href="/scc/user/relatorio/alocadasMobileSemProcessamento/new.scc"><spring:message code="menu.relatorio.alocadas.mobile.sem.processamento"/></a></li>		
 		<li><a href="/scc/user/relatorio/extracaoCDRs/new.scc"><spring:message code="menu.relatorio.extracao.cdrs"/></a></li>		
 		<c:if test="${sessionScope['scopedTarget.sessionDataManager'].posPago}">
+			<li><a href="/scc/user/relatorio/alarmeoperacional/new.scc"><spring:message code="menu.relatorio.alarme.operacional"/></a></li>
 			<li>
 				<a class="has-children" href="#"><spring:message code="menu.relatorio.naoconf"/></a>
 				<ul>

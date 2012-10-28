@@ -348,5 +348,10 @@
 		<put-attribute name="body" value="/WEB-INF/jsp/repasse/pos/retorno/filtro.jsp" />
 		<put-attribute name="tituloTela" value="Consulta de Retorno de Repasse - Pós Pago" />
 	</definition>
+
+	<definition name="relatorio_alarme_operacional" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/relatorio/alarmeoperacional/filtro.jsp" />
+		<put-attribute name="tituloTela" value="SCC - Relatorio de Alarme Operacional" />
+	</definition>
 	
 </tiles-definitions>
