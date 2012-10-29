@@ -85,7 +85,7 @@
 				<tr>
 					<td>
 						<display:table style="width:90%" name="sessionScope._DISPLAY_TAG_SPACE_1" pagesize="20" id="repasses" requestURI="/scc/user/relatorio/alarmeoperacional/tab1.scc" class="ui-state-default">
-							<display:column property="nomA" title="Número de A"/>
+							<display:column property="numA" title="Número de A"/>
 							<display:column property="qtdeChamadas" title="Qtde Chamadas"/>
 							<display:column property="qtdeMinutosTarifados" title="Qtde Minutos Tarifados"/>
 							<display:column property="valorTotalChamadas" title="Valor Liquido Total das Chamadas" />
