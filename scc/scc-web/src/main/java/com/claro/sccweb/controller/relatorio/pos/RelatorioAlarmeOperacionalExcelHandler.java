@@ -32,12 +32,12 @@ public class RelatorioAlarmeOperacionalExcelHandler extends BasicExcelHandler {
 		List<ExcelColumnDefinition> columnDefinitions = new ArrayList<ExcelColumnDefinition>();
 		columnDefinitions.add(new ExcelColumnDefinition("getNumA", "Número de A", style, 20));
 		columnDefinitions.add(new ExcelColumnDefinition("getQtdeChamadas", "Qtde de Chamadas", style, 15));
-		columnDefinitions.add(new ExcelColumnDefinition("getQtdeMinutosTarifados", "Qtde de Minutos Tarifados", style, 15));
-		columnDefinitions.add(new ExcelColumnDefinition("getValorTotalChamadas", "Valor Líquido Total das Chamadas", style, 20));
+		columnDefinitions.add(new ExcelColumnDefinition("getQtdeMinutosTarifados", "Qtde de Minutos Tarifados", style, 40));
+		columnDefinitions.add(new ExcelColumnDefinition("getValorTotalChamadas", "Valor Líquido Total das Chamadas", style, 40));
 		columnDefinitions.add(new ExcelColumnDefinition("getNroFatura",	"Número da Fatura", style, 20));
 		columnDefinitions.add(new ExcelColumnDefinition("getNroNf",	"Número Nota Fiscal", style, 20));
 		columnDefinitions.add(new ExcelColumnDefinition("getNomeOperadoraLD", "Operadora LD", style, 20));
-		columnDefinitions.add(new ExcelColumnDefinition("getDataReferencia", "Data de Referência", style, 40));
+		columnDefinitions.add(new ExcelColumnDefinition("getDataReferencia", "Data de Referência", style, 20));
 		ExcelPrinter printer = new ExcelPrinter(columnDefinitions,workbook);
 		printer.addSheet("Alarme Operacional");
 		List<String> linhasCabecalho = new ArrayList<String>();
