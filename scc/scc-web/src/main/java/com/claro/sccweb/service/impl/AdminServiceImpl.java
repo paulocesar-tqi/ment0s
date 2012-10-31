@@ -14,6 +14,7 @@ import com.claro.cobillingweb.persistence.dao.internal.SccCtlParalizacaoPlatDAO;
 import com.claro.cobillingweb.persistence.dao.internal.SccFaixaPenalidadeDAO;
 import com.claro.cobillingweb.persistence.dao.internal.SccMapaStatusDAO;
 import com.claro.cobillingweb.persistence.dao.internal.SccMotivoRejeicaoDAO;
+import com.claro.cobillingweb.persistence.dao.internal.SccPenalidadePorRejeicaoDAO;
 import com.claro.cobillingweb.persistence.dao.internal.SccPreDominioDAO;
 import com.claro.cobillingweb.persistence.entity.SccAliquotaImposto;
 import com.claro.cobillingweb.persistence.entity.SccAssinanteCritica;
@@ -24,6 +25,7 @@ import com.claro.cobillingweb.persistence.entity.SccFaixaPenalidade;
 import com.claro.cobillingweb.persistence.entity.SccMapaStatus;
 import com.claro.cobillingweb.persistence.entity.SccMapaStatusPK;
 import com.claro.cobillingweb.persistence.entity.SccMotivoRejeicao;
+import com.claro.cobillingweb.persistence.entity.SccPenalidadePorRejeicao;
 import com.claro.cobillingweb.persistence.entity.SccPreDominio;
 import com.claro.sccweb.service.AbstractService;
 import com.claro.sccweb.service.AdminService;
@@ -39,7 +41,20 @@ public class AdminServiceImpl extends AbstractService implements AdminService {
 	private SccPreDominioDAO preDominioDAO;
 	private SccContaContabilDAO contaContabilDAO;
 	private SccCentroDAO centroDAO;
+	private SccPenalidadePorRejeicaoDAO penalidadePorRejeicaoDAO;
 	
+	
+	
+	
+	public SccPenalidadePorRejeicaoDAO getPenalidadePorRejeicaoDAO() {
+		return penalidadePorRejeicaoDAO;
+	}
+
+	public void setPenalidadePorRejeicaoDAO(
+			SccPenalidadePorRejeicaoDAO penalidadePorRejeicaoDAO) {
+		this.penalidadePorRejeicaoDAO = penalidadePorRejeicaoDAO;
+	}
+
 	public List<SccFaixaPenalidade> pesquisarPenalidadePorTipo(String tipo) throws DAOException {
 		return getFaixaPenalidadeDAO().pesquisarPorTipo(tipo);
 	}
@@ -307,6 +322,25 @@ public class AdminServiceImpl extends AbstractService implements AdminService {
 	@Transactional
 	public void delete(SccCentro entity) throws DAOException {
 		getCentroDAO().delete(entity);
+	}
+	
+	public List<SccPenalidadePorRejeicao> pesquisarPenalidadePorRejeicao(String cdEOTLd, String cdMotivoRejeicao) throws DAOException {
+		return penalidadePorRejeicaoDAO.pesquisar(cdEOTLd, cdMotivoRejeicao);
+	}
+	
+	@Transactional
+	public void update(SccPenalidadePorRejeicao entity) throws DAOException {
+		getPenalidadePorRejeicaoDAO().update(entity);
+	}
+	
+	@Transactional
+	public void create(SccPenalidadePorRejeicao entity) throws DAOException {
+		getPenalidadePorRejeicaoDAO().create(entity);
+	}
+	
+	@Transactional
+	public void delete(SccPenalidadePorRejeicao entity) throws DAOException {
+		getPenalidadePorRejeicaoDAO().delete(entity);
 	}
 	
 }

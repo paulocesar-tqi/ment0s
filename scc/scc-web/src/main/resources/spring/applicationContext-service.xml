@@ -290,6 +290,7 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 		<property name="preDominioDAO" ref="preDominioDAO" />
 		<property name="contaContabilDAO" ref="contaContabilDAO" />
 		<property name="centroDAO" ref="centroDAO" />
+		<property name="penalidadePorRejeicaoDAO" ref="penalidadePorRejeicaoDAO" />
 	</bean>
 
 	<bean id="estornoMobileService" class="com.claro.sccweb.service.impl.EstornoMobileServiceImpl"

@@ -150,5 +150,7 @@
 
 <bean id="sccRelatorioAlarmeOperacionalDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccRelatorioAlarmeOperacionalDAOImpl" parent="sccDAO"/>
 
+<bean id="penalidadePorRejeicaoDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccPenalidadePorRejeicaoDAOImpl" parent="sccDAO"/>
+
 
 </beans>
