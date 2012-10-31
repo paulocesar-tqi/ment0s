@@ -236,6 +236,7 @@
 <li><a href="/scc/user/admin/critica/new.scc">Crítica Assinante</a></li>
 <li><a href="/scc/user/admin/mapa/new.scc">Mapa de Status</a></li>
 <li><a href="/scc/user/admin/rejeicao/new.scc">Motivo de Rejeição</a></li>
+<li><a href="/scc/user/admin/configrejeicao/new.scc">Configuração de Rejeições</a></li>
 <li><a href="/scc/user/admin/estorno/new.scc">Estorno de Débito</a></li>
 <li><a href="/scc/user/admin/aliquotas/new.scc">Alíquotas e Tributos</a></li>
 <li><a href="/scc/user/admin/paralisacao/new.scc">Controle de Paralisação</a></li>

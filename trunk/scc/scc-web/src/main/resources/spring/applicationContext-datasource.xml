@@ -77,6 +77,7 @@
 				<value>com.claro.cobillingweb.persistence.entity.SccGrupoCobilling</value>
 				<value>com.claro.cobillingweb.persistence.entity.SccRelatorioCobilling</value>
 				<value>com.claro.cobillingweb.persistence.entity.SccEmailCobilling</value>
+				<value>com.claro.cobillingweb.persistence.entity.SccPenalidadePorRejeicao</value>
 			</list>
 		</property>
 	</bean>

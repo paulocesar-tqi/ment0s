@@ -134,5 +134,9 @@
 	<put-attribute name="tituloTela" value="Relatório de Batimentos Semanais" />
 </definition>
 
+<definition name="config_rejeicao_filtro" extends="basicLayout">
+<put-attribute name="body" value="/WEB-INF/jsp/admin/config_rejeicao/filtro.jsp" />
+<put-attribute name="tituloTela" value="Configuração de Rejeições" />
+</definition>
 
 </tiles-definitions>
