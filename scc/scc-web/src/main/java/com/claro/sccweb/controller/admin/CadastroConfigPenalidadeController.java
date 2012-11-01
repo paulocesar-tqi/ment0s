@@ -2,23 +2,29 @@ package com.claro.sccweb.controller.admin;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.codehaus.jettison.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.claro.cobillingweb.persistence.dao.BasicDAO;
 import com.claro.cobillingweb.persistence.entity.SccMotivoRejeicao;
 import com.claro.cobillingweb.persistence.entity.SccOperadora;
 import com.claro.cobillingweb.persistence.entity.SccPenalidadePorRejeicao;
+import com.claro.cobillingweb.persistence.entity.SccPenalidadePorRejeicaoPK;
+import com.claro.cobillingweb.persistence.entity.SccPeriodicidadeRepasse;
 import com.claro.sccweb.controller.BaseCRUDAndMethodController;
 import com.claro.sccweb.controller.util.BasicStringItem;
 import com.claro.sccweb.controller.validator.CadastroConfigPenalidadeValidator;
@@ -39,7 +45,7 @@ public class CadastroConfigPenalidadeController extends BaseCRUDAndMethodControl
 	
 	protected ModelAndView pesquisar(HttpServletRequest request, HttpServletResponse response, CadastroConfigPenalidadeForm form,BindingResult bindingResult, Model model) throws Exception {
 		ModelAndView mav = new ModelAndView(getViewName());
-		List<SccPenalidadePorRejeicao> rows = getServiceManager().getAdminService().pesquisarPenalidadePorRejeicao(form.getOperadoraLD().getCdEot(), form.getMotivoRejeicao().getCdMotivoRejeicao());
+		List<SccPenalidadePorRejeicao> rows = getServiceManager().getAdminService().pesquisarPenalidadePorRejeicao(form.getCdOperadoraLD(), form.getCdMotivoRejeicao());
 		List<SccPenalidadePorRejeicaoDecorator> decoratorList = new ArrayList<SccPenalidadePorRejeicaoDecorator>(rows.size());
 		for (int i=0;i<rows.size();i++) {
 			SccPenalidadePorRejeicaoDecorator decorator = new SccPenalidadePorRejeicaoDecorator(rows.get(i), i);
@@ -52,11 +58,34 @@ public class CadastroConfigPenalidadeController extends BaseCRUDAndMethodControl
 	}
 	
 	protected ModelAndView salvar(HttpServletRequest request, HttpServletResponse response, CadastroConfigPenalidadeForm form,BindingResult bindingResult, Model model) throws Exception {
-		ModelAndView mav = new ModelAndView(getViewName());
 		SccPenalidadePorRejeicao entity = form.getEntity();
+		entity.setDtCriacao(Calendar.getInstance().getTime());
+		entity.setCdUsuarioManut(getSessionDataManager().getUserPrincipal());
+		entity.setDtAtualizacao(Calendar.getInstance().getTime());
 		getServiceManager().getAdminService().create(entity);		
 		return limpar(request, response, form, bindingResult, model);
 	}
+	
+	/**
+	 * Salva por AJAX. 
+	 */	  
+	@RequestMapping(value="/json/salva_configrejeicao/{cdOperadoraLD}/{cdMotivoRejeicao}/{valorPenalidade}/{indCobraPenalidade}" , method=RequestMethod.GET)
+	public void pesquisaPeriodos(@PathVariable("cdOperadoraLD") String cdOperadoraLD,@PathVariable("cdMotivoRejeicao") String cdMotivoRejeicao,@PathVariable("valorPenalidade") String valorPenalidade,@PathVariable("indCobraPenalidade") String indCobraPenalidade, HttpServletRequest request, HttpServletResponse response) throws Exception {			
+		SccPenalidadePorRejeicao entity = new SccPenalidadePorRejeicao();
+		SccPenalidadePorRejeicaoPK pk = new SccPenalidadePorRejeicaoPK();
+		pk.setCdEotLd(cdOperadoraLD);
+		pk.setCdMotivoRejeicao(cdMotivoRejeicao);
+		entity.setId(pk);
+		entity.setCdUsuarioManut(getSessionDataManager().getUserPrincipal());
+		entity.setDtAtualizacao(Calendar.getInstance().getTime());
+		
+		getServiceManager().getAdminService().update(entity);
+
+		response.setContentType("application/json");
+		//response.getWriter().print(jsonResponse.toString());
+	}
+
+	
 	
 	protected ModelAndView remover(HttpServletRequest request, HttpServletResponse response, CadastroConfigPenalidadeForm form,BindingResult bindingResult, Model model) throws Exception {		
 		ModelAndView mav = new ModelAndView(getViewName());		
@@ -68,7 +97,10 @@ public class CadastroConfigPenalidadeController extends BaseCRUDAndMethodControl
 	
 	protected ModelAndView atualizar(HttpServletRequest request, HttpServletResponse response, CadastroConfigPenalidadeForm form,BindingResult bindingResult, Model model) throws Exception {
 		ModelAndView mav = new ModelAndView(getViewName());
-		getServiceManager().getAdminService().update(form.getEntity());
+		SccPenalidadePorRejeicao entity = form.getEntity();
+		entity.setCdUsuarioManut(getSessionDataManager().getUserPrincipal());
+		entity.setDtAtualizacao(Calendar.getInstance().getTime());
+		getServiceManager().getAdminService().update(entity);
 		mav.addObject(FORM_NAME, new CadastroConfigPenalidadeForm());
 		return mav;
 	}
@@ -101,7 +133,7 @@ public class CadastroConfigPenalidadeController extends BaseCRUDAndMethodControl
 	protected void atualizarDadosTabela(HttpServletRequest request) throws Exception {
 		CadastroConfigPenalidadeForm cachedForm = (CadastroConfigPenalidadeForm)getMyFormFromCache(getClass());
 		if (cachedForm != null) {
-			List<SccPenalidadePorRejeicao> rows = getServiceManager().getAdminService().pesquisarPenalidadePorRejeicao(cachedForm.getOperadoraLD().getCdEot(), cachedForm.getMotivoRejeicao().getCdMotivoRejeicao());
+			List<SccPenalidadePorRejeicao> rows = getServiceManager().getAdminService().pesquisarPenalidadePorRejeicao(cachedForm.getCdOperadoraLD(), cachedForm.getCdMotivoRejeicao());
 			List<SccPenalidadePorRejeicaoDecorator> decoratorList = new ArrayList<SccPenalidadePorRejeicaoDecorator>(rows.size());
 			for (int i=0;i<rows.size();i++) {
 				SccPenalidadePorRejeicaoDecorator decorator = new SccPenalidadePorRejeicaoDecorator(rows.get(i), i);
