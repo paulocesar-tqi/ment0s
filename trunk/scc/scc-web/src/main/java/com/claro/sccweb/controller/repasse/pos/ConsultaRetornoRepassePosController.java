@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.claro.cobillingweb.persistence.dao.BasicDAO;
@@ -25,6 +26,7 @@ import com.claro.cobillingweb.persistence.entity.SccPeriodicidadeRepasse;
 import com.claro.cobillingweb.persistence.entity.SccProdutoCobilling;
 import com.claro.cobillingweb.persistence.view.SccRetornoRepasseView;
 import com.claro.sccweb.controller.BaseFormController;
+import com.claro.sccweb.controller.ControllerExecutionException;
 import com.claro.sccweb.controller.util.BasicIntegerItem;
 import com.claro.sccweb.controller.util.BasicStringItem;
 import com.claro.sccweb.controller.validator.ConsultaRetornoRepassePosValidator;
@@ -36,6 +38,7 @@ import com.claro.sccweb.form.ConsultaRepassePosForm;
  *
  */
 @Controller
+@SessionAttributes({"produtos"})
 @RequestMapping(value="/user/repasse/pos/retorno")
 public class ConsultaRetornoRepassePosController extends BaseFormController {
 	
@@ -182,6 +185,8 @@ public class ConsultaRetornoRepassePosController extends BaseFormController {
 		for (int i=0;i<produtos.size();i++) {			
 			jsonResponse.put(produtos.get(i).getCdProdutoCobilling().toString(), produtos.get(i).getNoProdutoCobilling());			
 		}
+		if(produtos.size() > 0)
+			storeInSession(getClass(), DISPLAY_TAG_SPACE_2, produtos, request);
 		response.setContentType("application/json");
 		response.getWriter().print(jsonResponse.toString());
 	}
