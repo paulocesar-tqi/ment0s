@@ -41,6 +41,6 @@ public interface PesquisaDominiosService {
 	
 	List<SccStatusArquivo> findByStatus() throws DAOException;
 	
-	
+	public List<SccMotivoRejeicao> getAllConfigPenalidade() throws DAOException;
 	
 }

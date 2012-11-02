@@ -176,7 +176,8 @@ public class CadastroConfigPenalidadeController extends BaseCRUDAndMethodControl
 	@ModelAttribute("tiposRejeicaoTodos")	
 	public  List<SccMotivoRejeicao> populaTiposRejeicaoTodos() throws Exception
 	{
-		List<SccMotivoRejeicao> comboList = getServiceManager().getPesquisaDominiosService().getAllMotivosRejeicao();
+		List<SccMotivoRejeicao> comboList = getServiceManager().getPesquisaDominiosService().getAllConfigPenalidade();
+
 		SccMotivoRejeicao allValues = new SccMotivoRejeicao();
 		allValues.setCdMotivoRejeicao(BasicDAO.GET_ALL_STRING);
 		allValues.setDsMotivoRejeicao("Todos");
@@ -187,7 +188,10 @@ public class CadastroConfigPenalidadeController extends BaseCRUDAndMethodControl
 	@ModelAttribute("tiposRejeicao")	
 	public  List<SccMotivoRejeicao> populaTiposRejeicao() throws Exception
 	{
-		List<SccMotivoRejeicao> comboList = getServiceManager().getPesquisaDominiosService().getAllMotivosRejeicao();
+		List<SccMotivoRejeicao> comboList = getServiceManager().getPesquisaDominiosService().getAllConfigPenalidade();
+		for(SccMotivoRejeicao item : comboList)
+			item.setDsMotivoRejeicao(item.getCdMotivoRejeicao() + " - "  + item.getDsMotivoRejeicao());
+
 		return comboList;
 	}
 
