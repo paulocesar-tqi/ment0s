@@ -14,6 +14,7 @@ import com.claro.cobillingweb.persistence.entity.SccMapaStatus;
 import com.claro.cobillingweb.persistence.entity.SccMapaStatusPK;
 import com.claro.cobillingweb.persistence.entity.SccMotivoRejeicao;
 import com.claro.cobillingweb.persistence.entity.SccPenalidadePorRejeicao;
+import com.claro.cobillingweb.persistence.entity.SccPenalidadePorRejeicaoPK;
 import com.claro.cobillingweb.persistence.entity.SccPreDominio;
 
 /**
@@ -100,7 +101,9 @@ public interface AdminService {
     
     public List<SccPenalidadePorRejeicao> pesquisarPenalidadePorRejeicao(String cdEOTLd, String cdMotivoRejeicao) throws DAOException;
 	
-	public void delete(SccPenalidadePorRejeicao entity) throws DAOException;
+    public SccPenalidadePorRejeicao getSccPenalidadePorRejeicaoByPk(SccPenalidadePorRejeicaoPK pk) throws DAOException;
+	
+    public void delete(SccPenalidadePorRejeicao entity) throws DAOException;
 	
 	public void update(SccPenalidadePorRejeicao entity) throws DAOException;
 	

@@ -14,6 +14,7 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name="SCC_PENALIDADE_POR_REJEICAO")
+@org.hibernate.annotations.Entity(dynamicUpdate = true)
 public class SccPenalidadePorRejeicao {
 
 	private static final long serialVersionUID = 1L;

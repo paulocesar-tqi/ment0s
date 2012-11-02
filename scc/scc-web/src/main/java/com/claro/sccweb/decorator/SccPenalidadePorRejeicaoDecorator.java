@@ -40,7 +40,7 @@ public class SccPenalidadePorRejeicaoDecorator extends RownumDecorator<SccPenali
 	
 	public String getVlPenalidade() {
 		
-		return StringUtils.leftPad(formataDouble(getRow().getVlPenalidade()), 9, '0');
+		return formataDouble(getRow().getVlPenalidade());
 	}
 
 	public String getFgCobrarPenalidade() {
