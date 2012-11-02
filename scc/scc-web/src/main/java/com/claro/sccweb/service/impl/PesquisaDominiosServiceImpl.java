@@ -148,7 +148,8 @@ public class PesquisaDominiosServiceImpl extends AbstractService implements Pesq
 		return getCriticaPrebillingDAO().getAll();
 	}
 
-	
-	
+	public List<SccMotivoRejeicao> getAllConfigPenalidade() throws DAOException {
+		return getMotivoRejeicaoDAO().getAllConfigPenalidade();
+	}
 	
 }
