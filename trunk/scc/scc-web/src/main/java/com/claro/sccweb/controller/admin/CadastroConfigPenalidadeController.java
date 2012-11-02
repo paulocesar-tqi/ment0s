@@ -8,7 +8,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.codehaus.jettison.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,7 +23,6 @@ import com.claro.cobillingweb.persistence.entity.SccMotivoRejeicao;
 import com.claro.cobillingweb.persistence.entity.SccOperadora;
 import com.claro.cobillingweb.persistence.entity.SccPenalidadePorRejeicao;
 import com.claro.cobillingweb.persistence.entity.SccPenalidadePorRejeicaoPK;
-import com.claro.cobillingweb.persistence.entity.SccPeriodicidadeRepasse;
 import com.claro.sccweb.controller.BaseCRUDAndMethodController;
 import com.claro.sccweb.controller.util.BasicStringItem;
 import com.claro.sccweb.controller.validator.CadastroConfigPenalidadeValidator;
@@ -63,26 +61,31 @@ public class CadastroConfigPenalidadeController extends BaseCRUDAndMethodControl
 		entity.setCdUsuarioManut(getSessionDataManager().getUserPrincipal());
 		entity.setDtAtualizacao(Calendar.getInstance().getTime());
 		getServiceManager().getAdminService().create(entity);		
-		return limpar(request, response, form, bindingResult, model);
+		return pesquisar(request, response, form, bindingResult, model);
 	}
 	
 	/**
 	 * Salva por AJAX. 
 	 */	  
 	@RequestMapping(value="/json/salva_configrejeicao/{cdOperadoraLD}/{cdMotivoRejeicao}/{valorPenalidade}/{indCobraPenalidade}" , method=RequestMethod.GET)
-	public void pesquisaPeriodos(@PathVariable("cdOperadoraLD") String cdOperadoraLD,@PathVariable("cdMotivoRejeicao") String cdMotivoRejeicao,@PathVariable("valorPenalidade") String valorPenalidade,@PathVariable("indCobraPenalidade") String indCobraPenalidade, HttpServletRequest request, HttpServletResponse response) throws Exception {			
-		SccPenalidadePorRejeicao entity = new SccPenalidadePorRejeicao();
-		SccPenalidadePorRejeicaoPK pk = new SccPenalidadePorRejeicaoPK();
-		pk.setCdEotLd(cdOperadoraLD);
-		pk.setCdMotivoRejeicao(cdMotivoRejeicao);
-		entity.setId(pk);
-		entity.setCdUsuarioManut(getSessionDataManager().getUserPrincipal());
-		entity.setDtAtualizacao(Calendar.getInstance().getTime());
+	public void salvarLinha(@PathVariable("cdOperadoraLD") String cdOperadoraLD,@PathVariable("cdMotivoRejeicao") String cdMotivoRejeicao,@PathVariable("valorPenalidade") String valorPenalidade,@PathVariable("indCobraPenalidade") String indCobraPenalidade, HttpServletRequest request, HttpServletResponse response) throws Exception {			
+		String retorno = "{\"retorno\":\"true\"}";
+		try {
+			SccPenalidadePorRejeicaoPK pk = new SccPenalidadePorRejeicaoPK();
+			pk.setCdEotLd(cdOperadoraLD);
+			pk.setCdMotivoRejeicao(cdMotivoRejeicao);
+			SccPenalidadePorRejeicao entity = getServiceManager().getAdminService().getSccPenalidadePorRejeicaoByPk(pk);
+			entity.setCdUsuarioManut(getSessionDataManager().getUserPrincipal());
+			entity.setDtAtualizacao(Calendar.getInstance().getTime());
+			entity.setFgCobrarPenalidade(indCobraPenalidade.charAt(0)+"");
+			entity.setVlPenalidade(new Double(valorPenalidade.replaceAll("\\.", "").replace(',', '.')));
+			getServiceManager().getAdminService().update(entity);			
+		} catch (Exception e) {
+			retorno = "{\"retorno\":\"false\"}";
+		}
 		
-		getServiceManager().getAdminService().update(entity);
-
 		response.setContentType("application/json");
-		//response.getWriter().print(jsonResponse.toString());
+		response.getWriter().print(retorno);
 	}
 
 	

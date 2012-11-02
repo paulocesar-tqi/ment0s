@@ -26,6 +26,7 @@ import com.claro.cobillingweb.persistence.entity.SccMapaStatus;
 import com.claro.cobillingweb.persistence.entity.SccMapaStatusPK;
 import com.claro.cobillingweb.persistence.entity.SccMotivoRejeicao;
 import com.claro.cobillingweb.persistence.entity.SccPenalidadePorRejeicao;
+import com.claro.cobillingweb.persistence.entity.SccPenalidadePorRejeicaoPK;
 import com.claro.cobillingweb.persistence.entity.SccPreDominio;
 import com.claro.sccweb.service.AbstractService;
 import com.claro.sccweb.service.AdminService;
@@ -327,6 +328,11 @@ public class AdminServiceImpl extends AbstractService implements AdminService {
 	public List<SccPenalidadePorRejeicao> pesquisarPenalidadePorRejeicao(String cdEOTLd, String cdMotivoRejeicao) throws DAOException {
 		return penalidadePorRejeicaoDAO.pesquisar(cdEOTLd, cdMotivoRejeicao);
 	}
+
+	public SccPenalidadePorRejeicao getSccPenalidadePorRejeicaoByPk(SccPenalidadePorRejeicaoPK pk) throws DAOException {
+		return getPenalidadePorRejeicaoDAO().getByPk(pk, SccPenalidadePorRejeicao.class);		
+	}
+
 	
 	@Transactional
 	public void update(SccPenalidadePorRejeicao entity) throws DAOException {
