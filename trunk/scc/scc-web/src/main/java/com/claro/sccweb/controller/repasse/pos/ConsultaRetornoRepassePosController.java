@@ -105,6 +105,8 @@ public class ConsultaRetornoRepassePosController extends BaseFormController {
 	@RequestMapping(value="/execute" , method=RequestMethod.POST)
 	public ModelAndView executa(HttpServletRequest request, HttpServletResponse response,@Valid @ModelAttribute("filtro")  ConsultaRepassePosForm form,BindingResult bindingResult,Model model) throws Exception {
 		ModelAndView mav = null;
+		ConsultaRepassePosForm cachedForm = (ConsultaRepassePosForm) getMyFormFromCache(this.getClass());
+		form.setListProdutos(cachedForm.getListProdutos());
 		String operacao = form.getOperacao();
 		if (bindingResult.hasErrors()) {
 			mav = new ModelAndView("repasse_pos_retorno_filtro");
@@ -176,9 +178,15 @@ public class ConsultaRetornoRepassePosController extends BaseFormController {
 	 */
 	@RequestMapping(value="/json/lista_produtos/{cdEOT}" , method=RequestMethod.GET)
 	public void atualizaProdutos(@PathVariable("cdEOT") String cdEOT,HttpServletRequest request, HttpServletResponse response) throws Exception {
-		List<SccProdutoCobilling> produtos = getServiceManager().getContratoService().pesquisaProdutosOperadoraLD(cdEOT);		
+		List<SccProdutoCobilling> produtos = getServiceManager().getContratoService().pesquisaProdutosOperadoraLD(cdEOT);
+		ConsultaRepassePosForm form = (ConsultaRepassePosForm) getMyFormFromCache(this.getClass());
+		if(form == null)
+			form = new ConsultaRepassePosForm();
+		
+		form.setListProdutos(produtos);
+		cacheMyForm(getClass(), form);
 		JSONObject jsonResponse = new JSONObject();					
-		jsonResponse.put("0","Selecione....");		
+		//jsonResponse.put("0","Selecione....");		
 		for (int i=0;i<produtos.size();i++) {			
 			jsonResponse.put(produtos.get(i).getCdProdutoCobilling().toString(), produtos.get(i).getNoProdutoCobilling());			
 		}
@@ -200,8 +208,15 @@ public class ConsultaRetornoRepassePosController extends BaseFormController {
 	@RequestMapping(value="/json/lista_periodos/{cdProduto}/{cdEOT}" , method=RequestMethod.GET)
 	public void pesquisaPeriodos(@PathVariable("cdProduto") Long cdProduto,@PathVariable("cdEOT") String cdEOT,HttpServletRequest request, HttpServletResponse response) throws Exception {			
 		List<SccPeriodicidadeRepasse> repasses = getServiceManager().getContratoService().pesquisaPeriodicidadeRepasse(cdEOT, cdProduto);
+		ConsultaRepassePosForm form = (ConsultaRepassePosForm) getMyFormFromCache(this.getClass());
+		if(form == null)
+			form = new ConsultaRepassePosForm();
+		
+		form.setListPeriodos(repasses);
+		cacheMyForm(getClass(), form);
+
 		JSONObject jsonResponse = new JSONObject();					
-		jsonResponse.put("0","Selecione....");		
+		//jsonResponse.put("0","Selecione....");		
 		for (int i=0;i<repasses.size();i++) {			
 			jsonResponse.put(repasses.get(i).getCdPeriodicidadeRepasse().toString(), repasses.get(i).getNoPeriodicidadeRepasse());			
 		}
@@ -241,7 +256,14 @@ public class ConsultaRetornoRepassePosController extends BaseFormController {
 	 */
 	@ModelAttribute("produtos")
 	public List<SccProdutoCobilling> populaProdutosCobilling() throws Exception {
-		List<SccProdutoCobilling> comboList = new ArrayList<SccProdutoCobilling>();
+		List<SccProdutoCobilling> comboList = null;
+		
+		ConsultaRepassePosForm form = (ConsultaRepassePosForm) getMyFormFromCache(this.getClass());
+		if(form != null && form.getListProdutos() != null)
+			comboList = form.getListProdutos();
+		else
+			comboList = new ArrayList<SccProdutoCobilling>();
+
 		SccProdutoCobilling nullValue = new SccProdutoCobilling();
 		nullValue.setNoProdutoCobilling("Selecione...");
 		nullValue.setCdProdutoCobilling(BasicDAO.NULL);
@@ -257,7 +279,14 @@ public class ConsultaRetornoRepassePosController extends BaseFormController {
 	 */
 	@ModelAttribute("periodos")
 	public List<SccPeriodicidadeRepasse> populaPeriodosCobilling() throws Exception {
-		List<SccPeriodicidadeRepasse> comboList = new ArrayList<SccPeriodicidadeRepasse>();
+		List<SccPeriodicidadeRepasse> comboList = null;
+
+		ConsultaRepassePosForm form = (ConsultaRepassePosForm) getMyFormFromCache(this.getClass());
+		if(form != null && form.getListProdutos() != null)
+			comboList = form.getListPeriodos();
+		else
+			comboList = new ArrayList<SccPeriodicidadeRepasse>();
+
 		SccPeriodicidadeRepasse nullValue = new SccPeriodicidadeRepasse();
 		nullValue.setCdPeriodicidadeRepasse(BasicDAO.NULL);
 		nullValue.setNoPeriodicidadeRepasse("Selecione...");

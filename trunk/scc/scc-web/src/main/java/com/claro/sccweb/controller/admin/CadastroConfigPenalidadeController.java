@@ -189,9 +189,6 @@ public class CadastroConfigPenalidadeController extends BaseCRUDAndMethodControl
 	public  List<SccMotivoRejeicao> populaTiposRejeicao() throws Exception
 	{
 		List<SccMotivoRejeicao> comboList = getServiceManager().getPesquisaDominiosService().getAllConfigPenalidade();
-		for(SccMotivoRejeicao item : comboList)
-			item.setDsMotivoRejeicao(item.getCdMotivoRejeicao() + " - "  + item.getDsMotivoRejeicao());
-
 		return comboList;
 	}
 

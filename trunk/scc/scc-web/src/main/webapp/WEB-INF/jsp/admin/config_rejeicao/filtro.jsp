@@ -117,7 +117,7 @@ function salvarLinha(linha)
 		<td width="15%">Operadora LD:</td><td> <form:select path="cdOperadoraLD" items="${operadorasLDTodas}" itemValue="cdEot" itemLabel="dsOperadora"/> </td>
 	</tr>
 	<tr>
-		<td width="15%">Tipo Rejeição:</td><td> <form:select path="cdMotivoRejeicao" items="${tiposRejeicaoTodos}" itemValue="cdMotivoRejeicao" itemLabel="dsMotivoRejeicao"/> </td>
+		<td width="15%">Tipo Rejeição:</td><td> <form:select path="cdMotivoRejeicao" items="${tiposRejeicaoTodos}" itemValue="cdMotivoRejeicao" itemLabel="dsMotivoRejeicaoLabel"/> </td>
 	</tr>
 </table>
  
@@ -170,7 +170,7 @@ function salvarLinha(linha)
 
 <tr>
 <td width="15%">Tipo Rejeição:</td>
-<td ><form:select   path="entity.id.cdMotivoRejeicao" items="${tiposRejeicao}" itemLabel="dsMotivoRejeicao" itemValue="cdMotivoRejeicao"/>
+<td ><form:select   path="entity.id.cdMotivoRejeicao" items="${tiposRejeicao}" itemLabel="dsMotivoRejeicaoLabel" itemValue="cdMotivoRejeicao"/>
 </td>
 </tr>
 

@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name="SCC_MOTIVO_REJEICAO")
@@ -121,6 +122,13 @@ public class SccMotivoRejeicao {
 		this.txDetalhamentoMotivo = txDetalhamentoMotivo;
 	}
 
+	@Transient
+	public String getDsMotivoRejeicaoLabel() {
+		return this.cdMotivoRejeicao + " - " + this.dsMotivoRejeicao;
+	}
+	public void setDsMotivoRejeicaoLabel(String dsMotivoRejeicaoLabel) {
+
+	}
 
 	
 }
