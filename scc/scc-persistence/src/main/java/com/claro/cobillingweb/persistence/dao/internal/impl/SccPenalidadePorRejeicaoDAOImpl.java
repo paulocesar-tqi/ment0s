@@ -41,7 +41,5 @@ public class SccPenalidadePorRejeicaoDAOImpl extends HibernateBasicDAOImpl<SccPe
 			throw new DAOException(e.getMessage(), e);
 			}
 	}
-
 		
-	
 }

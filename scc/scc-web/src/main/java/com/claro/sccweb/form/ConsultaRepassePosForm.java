@@ -1,5 +1,9 @@
 package com.claro.sccweb.form;
 
+import java.util.List;
+
+import com.claro.cobillingweb.persistence.entity.SccPeriodicidadeRepasse;
+import com.claro.cobillingweb.persistence.entity.SccProdutoCobilling;
 import com.claro.sccweb.service.to.ConsultaRepassePosTO;
 
 /**
@@ -23,8 +27,28 @@ public class ConsultaRepassePosForm extends ConsultaRepassePosTO {
 	 * Ano do relatório.
 	 */
 	private Long anoRelatorio;
+
+	
+	private List<SccProdutoCobilling> listProdutos;
+	private List<SccPeriodicidadeRepasse> listPeriodos;
+
 	
 
+	public List<SccPeriodicidadeRepasse> getListPeriodos() {
+		return listPeriodos;
+	}
+
+	public void setListPeriodos(List<SccPeriodicidadeRepasse> listPeriodos) {
+		this.listPeriodos = listPeriodos;
+	}
+
+	public List<SccProdutoCobilling> getListProdutos() {
+		return listProdutos;
+	}
+
+	public void setListProdutos(List<SccProdutoCobilling> listProdutos) {
+		this.listProdutos = listProdutos;
+	}
 
 	public String getOperacao() {
 		return operacao;
