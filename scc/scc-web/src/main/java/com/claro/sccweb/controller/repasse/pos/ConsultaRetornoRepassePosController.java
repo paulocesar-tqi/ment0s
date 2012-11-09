@@ -106,7 +106,10 @@ public class ConsultaRetornoRepassePosController extends BaseFormController {
 	public ModelAndView executa(HttpServletRequest request, HttpServletResponse response,@Valid @ModelAttribute("filtro")  ConsultaRepassePosForm form,BindingResult bindingResult,Model model) throws Exception {
 		ModelAndView mav = null;
 		ConsultaRepassePosForm cachedForm = (ConsultaRepassePosForm) getMyFormFromCache(this.getClass());
-		form.setListProdutos(cachedForm.getListProdutos());
+		if(cachedForm != null) {
+			form.setListProdutos(cachedForm.getListProdutos());
+			form.setListPeriodos(cachedForm.getListPeriodos());
+		}
 		String operacao = form.getOperacao();
 		if (bindingResult.hasErrors()) {
 			mav = new ModelAndView("repasse_pos_retorno_filtro");
@@ -179,6 +182,11 @@ public class ConsultaRetornoRepassePosController extends BaseFormController {
 	@RequestMapping(value="/json/lista_produtos/{cdEOT}" , method=RequestMethod.GET)
 	public void atualizaProdutos(@PathVariable("cdEOT") String cdEOT,HttpServletRequest request, HttpServletResponse response) throws Exception {
 		List<SccProdutoCobilling> produtos = getServiceManager().getContratoService().pesquisaProdutosOperadoraLD(cdEOT);
+		SccProdutoCobilling nullValue = new SccProdutoCobilling();
+		nullValue.setNoProdutoCobilling("Selecione...");
+		nullValue.setCdProdutoCobilling(0L);
+		produtos.add(0,nullValue);
+
 		ConsultaRepassePosForm form = (ConsultaRepassePosForm) getMyFormFromCache(this.getClass());
 		if(form == null)
 			form = new ConsultaRepassePosForm();
@@ -186,12 +194,9 @@ public class ConsultaRetornoRepassePosController extends BaseFormController {
 		form.setListProdutos(produtos);
 		cacheMyForm(getClass(), form);
 		JSONObject jsonResponse = new JSONObject();					
-		//jsonResponse.put("0","Selecione....");		
 		for (int i=0;i<produtos.size();i++) {			
 			jsonResponse.put(produtos.get(i).getCdProdutoCobilling().toString(), produtos.get(i).getNoProdutoCobilling());			
 		}
-		if(produtos.size() > 0)
-			storeInSession(getClass(), DISPLAY_TAG_SPACE_2, produtos, request);
 		response.setContentType("application/json");
 		response.getWriter().print(jsonResponse.toString());
 	}
@@ -208,15 +213,18 @@ public class ConsultaRetornoRepassePosController extends BaseFormController {
 	@RequestMapping(value="/json/lista_periodos/{cdProduto}/{cdEOT}" , method=RequestMethod.GET)
 	public void pesquisaPeriodos(@PathVariable("cdProduto") Long cdProduto,@PathVariable("cdEOT") String cdEOT,HttpServletRequest request, HttpServletResponse response) throws Exception {			
 		List<SccPeriodicidadeRepasse> repasses = getServiceManager().getContratoService().pesquisaPeriodicidadeRepasse(cdEOT, cdProduto);
+		SccPeriodicidadeRepasse nullValue = new SccPeriodicidadeRepasse();
+		nullValue.setCdPeriodicidadeRepasse(0L);
+		nullValue.setNoPeriodicidadeRepasse("Selecione...");
+		repasses.add(0, nullValue);
 		ConsultaRepassePosForm form = (ConsultaRepassePosForm) getMyFormFromCache(this.getClass());
 		if(form == null)
 			form = new ConsultaRepassePosForm();
 		
 		form.setListPeriodos(repasses);
-		cacheMyForm(getClass(), form);
+		cacheMyForm(this.getClass(), form);
 
 		JSONObject jsonResponse = new JSONObject();					
-		//jsonResponse.put("0","Selecione....");		
 		for (int i=0;i<repasses.size();i++) {			
 			jsonResponse.put(repasses.get(i).getCdPeriodicidadeRepasse().toString(), repasses.get(i).getNoPeriodicidadeRepasse());			
 		}
@@ -261,13 +269,13 @@ public class ConsultaRetornoRepassePosController extends BaseFormController {
 		ConsultaRepassePosForm form = (ConsultaRepassePosForm) getMyFormFromCache(this.getClass());
 		if(form != null && form.getListProdutos() != null)
 			comboList = form.getListProdutos();
-		else
+		else {
 			comboList = new ArrayList<SccProdutoCobilling>();
-
-		SccProdutoCobilling nullValue = new SccProdutoCobilling();
-		nullValue.setNoProdutoCobilling("Selecione...");
-		nullValue.setCdProdutoCobilling(BasicDAO.NULL);
-		comboList.add(0,nullValue);
+			SccProdutoCobilling nullValue = new SccProdutoCobilling();
+			nullValue.setNoProdutoCobilling("Selecione...");
+			nullValue.setCdProdutoCobilling(BasicDAO.NULL);
+			comboList.add(0,nullValue);
+		}
 		return comboList;
 	}
 	
@@ -282,15 +290,15 @@ public class ConsultaRetornoRepassePosController extends BaseFormController {
 		List<SccPeriodicidadeRepasse> comboList = null;
 
 		ConsultaRepassePosForm form = (ConsultaRepassePosForm) getMyFormFromCache(this.getClass());
-		if(form != null && form.getListProdutos() != null)
+		if(form != null && form.getListPeriodos() != null)
 			comboList = form.getListPeriodos();
-		else
+		else {
 			comboList = new ArrayList<SccPeriodicidadeRepasse>();
-
-		SccPeriodicidadeRepasse nullValue = new SccPeriodicidadeRepasse();
-		nullValue.setCdPeriodicidadeRepasse(BasicDAO.NULL);
-		nullValue.setNoPeriodicidadeRepasse("Selecione...");
-		comboList.add(0,nullValue);
+			SccPeriodicidadeRepasse nullValue = new SccPeriodicidadeRepasse();
+			nullValue.setCdPeriodicidadeRepasse(BasicDAO.NULL);
+			nullValue.setNoPeriodicidadeRepasse("Selecione...");
+			comboList.add(0,nullValue);
+		}
 		return comboList;
 	}
 

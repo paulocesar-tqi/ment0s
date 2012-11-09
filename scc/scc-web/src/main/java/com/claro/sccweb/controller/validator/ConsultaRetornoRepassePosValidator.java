@@ -6,7 +6,6 @@ import org.springframework.validation.Validator;
 import com.claro.cobillingweb.persistence.dao.BasicDAO;
 import com.claro.sccweb.controller.repasse.pos.ConsultaRepassePosController;
 import com.claro.sccweb.form.ConsultaRepassePosForm;
-import com.claro.sccweb.form.DemonstrativoRepassePosPagoForm;
 
 
 /**
@@ -30,10 +29,10 @@ public class ConsultaRetornoRepassePosValidator implements Validator {
 		if ((form.getCdEOTClaro() == null) || (form.getCdEOTClaro().equals(BasicDAO.NULL_STRING)) )
 			errors.rejectValue("cdEOTClaro", "campoObrigatorio", "Campo Obrigatório");
 
-		if ((form.getCdProdutoCobilling() == null) || (form.getCdProdutoCobilling().equals(BasicDAO.NULL)))
+		if (form.getCdProdutoCobilling() == null || form.getCdProdutoCobilling().equals(BasicDAO.NULL) || form.getCdProdutoCobilling().equals(0L))
 			errors.rejectValue("cdProdutoCobilling", "campoObrigatorio", "Campo Obrigatório");
 		
-		if ((form.getCdPeriodicidade() == null) || (form.getCdPeriodicidade().equals(BasicDAO.NULL)))
+		if (form.getCdPeriodicidade() == null || form.getCdPeriodicidade().equals(BasicDAO.NULL)  || form.getCdPeriodicidade().equals(0L))
 			errors.rejectValue("cdPeriodicidade", "campoObrigatorio", "Campo Obrigatório");
 		
 		if ((form.getMesRelatorio() == null) || (form.getMesRelatorio().equals(BasicDAO.NULL)))
