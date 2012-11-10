@@ -8,6 +8,7 @@ import com.claro.cobillingweb.persistence.dao.DAOException;
 import com.claro.cobillingweb.persistence.entity.SccItemRepasse;
 import com.claro.cobillingweb.persistence.entity.SccRelatorioJurosMulta;
 import com.claro.cobillingweb.persistence.entity.SccRepasse;
+import com.claro.cobillingweb.persistence.view.PenalidadeRejeicaoView;
 import com.claro.cobillingweb.persistence.view.RelPrestacaoServicoView;
 import com.claro.cobillingweb.persistence.view.SccRetornoRepasseView;
 import com.claro.sccweb.decorator.DemonstrativoRepassePosDecorator;
@@ -184,5 +185,15 @@ public interface RelatorioRepasseService {
 	 */
 	public List<SccRetornoRepasseView> pesquisaRetornoRepasse(ConsultaRepassePosTO to) throws DAOException,ServiceException;
 
-	
+
+	/**
+	 * Pesquisa as penalidades por Rejeição.
+	 * @param TO com os parametros.
+	 * @return
+	 * @throws DAOException
+	 * @throws ServiceException
+	 */
+	public List<PenalidadeRejeicaoView> pesquisaPenalidadeRejeicao(ConsultaRepassePosTO to) throws DAOException,ServiceException;
+
+
 }

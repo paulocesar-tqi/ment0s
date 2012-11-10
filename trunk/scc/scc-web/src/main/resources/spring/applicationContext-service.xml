@@ -179,6 +179,7 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 		<property name="tipoContratoDAO" ref="tipoContratoDAO" />
 		<property name="produtoPrepagoDAO" ref="produtoPrepagoDAO" />
 		<property name="retornoRepasseDAO" ref="retornoRepasseDAO" />
+		<property name="penalidadePorRejeicaoDAO" ref="penalidadePorRejeicaoDAO" />
 	</bean>
 
 	<bean id="repassePreService" class="com.claro.sccweb.service.impl.RepassePreServiceImpl"
