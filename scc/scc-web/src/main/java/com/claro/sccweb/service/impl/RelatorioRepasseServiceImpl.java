@@ -14,6 +14,7 @@ import com.claro.cobillingweb.persistence.dao.internal.SccContratoAcordadoDAO;
 import com.claro.cobillingweb.persistence.dao.internal.SccItemRepasseDAO;
 import com.claro.cobillingweb.persistence.dao.internal.SccOperadoraDAO;
 import com.claro.cobillingweb.persistence.dao.internal.SccParamProcessoDAO;
+import com.claro.cobillingweb.persistence.dao.internal.SccPenalidadePorRejeicaoDAO;
 import com.claro.cobillingweb.persistence.dao.internal.SccPeriodicidadeRepasseDAO;
 import com.claro.cobillingweb.persistence.dao.internal.SccProdutoCobillingDAO;
 import com.claro.cobillingweb.persistence.dao.internal.SccProdutoPrepagoDAO;
@@ -32,6 +33,7 @@ import com.claro.cobillingweb.persistence.entity.SccProdutoCobilling;
 import com.claro.cobillingweb.persistence.entity.SccRelatorioJurosMulta;
 import com.claro.cobillingweb.persistence.entity.SccRepasse;
 import com.claro.cobillingweb.persistence.entity.SccRepasseServicoAdicional;
+import com.claro.cobillingweb.persistence.view.PenalidadeRejeicaoView;
 import com.claro.cobillingweb.persistence.view.RelPrestacaoServicoView;
 import com.claro.cobillingweb.persistence.view.SccRetornoRepasseView;
 import com.claro.sccweb.decorator.DemonstrativoRepassePosDecorator;
@@ -60,11 +62,21 @@ public class RelatorioRepasseServiceImpl extends AbstractService implements Rela
 	private SccTipoContratoDAO tipoContratoDAO;
 	private SccProdutoPrepagoDAO produtoPrepagoDAO;
 	private SccRetornoRepasseDAO retornoRepasseDAO;
+	private SccPenalidadePorRejeicaoDAO penalidadePorRejeicaoDAO;
 	
 	
 	
 	
 	 
+	public SccPenalidadePorRejeicaoDAO getPenalidadePorRejeicaoDAO() {
+		return penalidadePorRejeicaoDAO;
+	}
+
+	public void setPenalidadePorRejeicaoDAO(
+			SccPenalidadePorRejeicaoDAO penalidadePorRejeicaoDAO) {
+		this.penalidadePorRejeicaoDAO = penalidadePorRejeicaoDAO;
+	}
+
 	public SccRetornoRepasseDAO getRetornoRepasseDAO() {
 		return retornoRepasseDAO;
 	}
@@ -825,10 +837,19 @@ public class RelatorioRepasseServiceImpl extends AbstractService implements Rela
 		return listRetornoRepasse;
 
 	}
-	
-	
-	
 
-	
+	@Override
+	public List<PenalidadeRejeicaoView> pesquisaPenalidadeRejeicao(
+			ConsultaRepassePosTO to) throws DAOException, ServiceException {
+		List<PenalidadeRejeicaoView> listPenalidadeRejeicaoView = null;
+		if(to != null){
+			
+			listPenalidadeRejeicaoView = getPenalidadePorRejeicaoDAO().pesquisarRelatorioPenalidadeRejeicao(to.getCdEOTClaro(), 
+					to.getCdEOTLD(), to.getCdProdutoCobilling(), to.getDtInicialRepasse());
+			
+		}
+		
+		return listPenalidadeRejeicaoView;
+	}
 	
 }

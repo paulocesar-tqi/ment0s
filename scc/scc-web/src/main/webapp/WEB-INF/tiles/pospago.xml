@@ -353,5 +353,10 @@
 		<put-attribute name="body" value="/WEB-INF/jsp/relatorio/alarmeoperacional/filtro.jsp" />
 		<put-attribute name="tituloTela" value="SCC - Relatorio de Alarme Operacional" />
 	</definition>
+
+	<definition name="repasse.pos.penalidade_rejeicao.filtro" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/repasse/pos/penalidade_rejeicao/filtro.jsp" />
+		<put-attribute name="tituloTela" value="Penalidade por Rejeição - Pós Pago" />
+	</definition>
 	
 </tiles-definitions>
