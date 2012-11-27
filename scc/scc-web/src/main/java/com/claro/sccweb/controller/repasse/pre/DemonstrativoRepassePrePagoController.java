@@ -20,14 +20,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.claro.cobillingweb.persistence.constants.CobillingConstants;
 import com.claro.cobillingweb.persistence.dao.BasicDAO;
 import com.claro.cobillingweb.persistence.entity.SccOperadora;
+import com.claro.cobillingweb.persistence.entity.SccPreFechamentoAssinatura;
 import com.claro.cobillingweb.persistence.entity.SccProdutoPrepago;
+import com.claro.cobillingweb.persistence.view.ConsolidadoProdutoPreView;
+import com.claro.cobillingweb.persistence.view.RelApuracaoFechamentoPrePagoView;
+import com.claro.cobillingweb.persistence.view.RelSinteticoFechamentoPrePagoView;
 import com.claro.sccweb.controller.BaseFormController;
+import com.claro.sccweb.controller.BaseOperationController;
 import com.claro.sccweb.controller.util.BasicIntegerItem;
 import com.claro.sccweb.controller.validator.DemonstrativoRepassePrePagoValidator;
 import com.claro.sccweb.decorator.DemonstrativoRepassePreDecorator;
 import com.claro.sccweb.decorator.ParOperadorasRepassePreDecorator;
+import com.claro.sccweb.decorator.RelApuracaoFechamentoPrePagoViewDecorator;
+import com.claro.sccweb.decorator.SccPreFechamentoAssinaturaDecorator;
+import com.claro.sccweb.decorator.SccPreFechamentoAssinaturaDecorator.Tipo;
 import com.claro.sccweb.form.DemonstrativoRepassePrePagoForm;
 
 /**
@@ -47,7 +56,12 @@ public class DemonstrativoRepassePrePagoController extends BaseFormController {
 	public static final String DEMONSTRATIVO_HOLDING = "DEMONSTRATIVO_HOLDING";
 	public static final String DEMONSTRATIVO_OPERADORA = "DEMONSTRATIVO_OPERADORA";
 	public static final String DEMONSTRATIVO_ASSINATURAS= "DEMONSTRATIVO_ASSINATURAS"; 
+	
 	public static final String DEMONSTRATIVO_COMPLETO = "DEMONSTRATIVO_COMPLETO";
+	public static final String DEMONSTRATIVO_APURACAO = "DEMONSTRATIVO_APURACAO";
+	public static final String DEMONSTRATIVO_CONS_PRODUTO = "DEMONSTRATIVO_CONS_PRODUTO";
+	public static final String DEMONSTRATIVO_SINTETICO = "DEMONSTRATIVO_SINTETICO";
+	public static final String DEMONSTRATIVO_ASSINATURA= "DEMONSTRATIVO_ASSINATURA"; 
 	
 	DemonstrativoRepassePrePagoValidator validator  = new DemonstrativoRepassePrePagoValidator();
 	
@@ -116,17 +130,34 @@ public class DemonstrativoRepassePrePagoController extends BaseFormController {
 	
 	private ModelAndView geraExcel(HttpServletRequest request, HttpServletResponse response,@Valid @ModelAttribute("filtro")  DemonstrativoRepassePrePagoForm form,BindingResult bindingResult,Model model) throws Exception
 	{
+		boolean gerarApuracao = true;
+		boolean gerarSintetico = true;
+		boolean gerarConsolidado = false;
+		boolean gerarAssinatura = false;
+		
+		cleanSession(getClass(), request, DEMONSTRATIVO_APURACAO, DEMONSTRATIVO_SINTETICO, DEMONSTRATIVO_ASSINATURA, DEMONSTRATIVO_CONS_PRODUTO);
+		
 		info("Exportando demonstrativo de repasse pré-pago para Excel com filtro : "+form.toString());
+		
 		Map<SccOperadora, DemonstrativoRepassePreDecorator> excelModel = new HashMap<SccOperadora, DemonstrativoRepassePreDecorator>();
 		DemonstrativoRepassePrePagoForm cachedForm = (DemonstrativoRepassePrePagoForm)getMyFormFromCache(getClass());
 		SccOperadora operadoraLD = getServiceManager().getOperadoraService().pesquisaOperadoraByPk(cachedForm.getCdEOTLD());
 		SccProdutoPrepago produtoPrepago = getServiceManager().getContratoPrePagoService().getProdutoById(cachedForm.getCdProdutoPrepago());		
 		String cdEOTOperadoraOriginal = cachedForm.getCdEOTClaro();
+		
 		ModelAndView mav = new ModelAndView("repasse_demonstrativo_pre_excel");
+		
+		if (produtoPrepago.getCdProdutoPrepago().equals(CobillingConstants.CD_PRODUTO_PADRAO_PREPAGO)) {
+			
+		} else if (produtoPrepago.getCdProdutoPrepago().equals(CobillingConstants.CD_PRODUTO_TZLD_PREPAGO)) {
+			gerarAssinatura = true;
+			gerarConsolidado = true;
+		}
+		
 		List<SccOperadora> listaHolding = getServiceManager().getPesquisaDominiosService().pesquisaHoldingClaro();		
-		for (int i=0;i<listaHolding.size();i++)
-			{
-			SccOperadora holding = listaHolding.get(i);
+		List<SccPreFechamentoAssinaturaDecorator> lstAssinatura = new ArrayList<SccPreFechamentoAssinaturaDecorator>();
+		SccPreFechamentoAssinatura totalizador = new SccPreFechamentoAssinatura();
+		for (SccOperadora holding : listaHolding) {
 			List<SccOperadora> listaOperadorasHolding = getServiceManager().getOperadoraService().pesquisaOperarodasHolding(holding.getCdEot());
 			cachedForm.setCdEOTClaro(holding.getCdEot());
 			DemonstrativoRepassePreDecorator demonstrativoHolding = getServiceManager().getRepassePreService().carregaDemonstrativoHolding(cachedForm);
@@ -134,19 +165,71 @@ public class DemonstrativoRepassePrePagoController extends BaseFormController {
 			demonstrativoHolding.setProdutoPrepago(produtoPrepago);
 			demonstrativoHolding.setOperadoraLD(operadoraLD);
 			demonstrativoHolding.setPeriodo(cachedForm.getMesDemonstrativo()+"/"+cachedForm.getAnoDemonstrativo());
-			for (int o=0;o<listaOperadorasHolding.size();o++)
-				{
-				cachedForm.setCdEOTClaro(listaOperadorasHolding.get(o).getCdEot());
+			for (SccOperadora sccOperadora : listaOperadorasHolding) {
+				cachedForm.setCdEOTClaro(sccOperadora.getCdEot());
 				DemonstrativoRepassePreDecorator demonstrativoOperadora = getServiceManager().getRepassePreService().carregaDemonstrativoOperadoras(cachedForm);
-				demonstrativoOperadora.setOperadora(listaOperadorasHolding.get(o));
+				demonstrativoOperadora.setOperadora(sccOperadora);
 				demonstrativoOperadora.setProdutoPrepago(produtoPrepago);
 				demonstrativoOperadora.setOperadoraLD(operadoraLD);
 				demonstrativoOperadora.setPeriodo(cachedForm.getMesDemonstrativo()+"/"+cachedForm.getAnoDemonstrativo());
 				demonstrativoHolding.getDemonstrativosOperadorasHolding().add(demonstrativoOperadora);
-				}
-			excelModel.put(holding, demonstrativoHolding);			
 			}
+			if (gerarAssinatura) {
+				cachedForm.setCdEOTClaro(holding.getCdEot());
+				List<SccPreFechamentoAssinaturaDecorator> lst = getServiceManager().getRepassePreService().carregaAssinaturasHolding(cachedForm);
+				lstAssinatura.addAll(lst);
+				if (lst.size() > 0)
+					totalizador.append(lst.get(0).getEntity());
+			}
+			
+			excelModel.put(holding, demonstrativoHolding);			
+		}
+		
+		if (gerarApuracao) {
+			List<RelApuracaoFechamentoPrePagoView> lst = getServiceManager().getRepassePreService().geraRelatorioApuracao(cachedForm.getCdProdutoPrepago(), cachedForm.getCdEOTLD(),
+					BasicDAO.GET_ALL_STRING, BasicDAO.GET_ALL_STRING, cachedForm.getDtInicial(), cachedForm.getDtFinal());
+
+			List<RelApuracaoFechamentoPrePagoViewDecorator> decoratorList = new ArrayList<RelApuracaoFechamentoPrePagoViewDecorator>(lst.size());
+			for (int i = 0; i < lst.size(); i++) {
+				RelApuracaoFechamentoPrePagoViewDecorator decorator = new RelApuracaoFechamentoPrePagoViewDecorator(lst.get(i), i);
+				decoratorList.add(decorator);
+			}
+			storeInSession(getClass(), DEMONSTRATIVO_APURACAO, decoratorList, request);
+		}
+		
+		if (gerarSintetico) {
+			List<RelSinteticoFechamentoPrePagoView> lst = getServiceManager().getRepassePreService().geraRelatorioSintetico(cachedForm.getCdProdutoPrepago(), cachedForm.getCdEOTLD(),
+					BasicDAO.GET_ALL_STRING, BasicDAO.GET_ALL_STRING, cachedForm.getDtInicial(), cachedForm.getDtFinal());
+			storeInSession(getClass(), DEMONSTRATIVO_SINTETICO, lst, request);
+		}
+		
+		if (gerarAssinatura) {			
+
+			if (lstAssinatura.size() > 1) {
+				SccOperadora operadoraClaro = new SccOperadora();
+				operadoraClaro.setDsOperadora("Consolidado");
+				
+				SccPreFechamentoAssinaturaDecorator decorator = new SccPreFechamentoAssinaturaDecorator(totalizador, operadoraClaro, null, Tipo.TOTAL);
+				lstAssinatura.add(decorator);
+				
+				decorator = new SccPreFechamentoAssinaturaDecorator(totalizador, operadoraClaro, null, Tipo.MES_ANTERIOR);
+				lstAssinatura.add(decorator);
+				
+				decorator = new SccPreFechamentoAssinaturaDecorator(totalizador, operadoraClaro, null, Tipo.OUTROS_MESES);
+				lstAssinatura.add(decorator);
+			}
+			storeInSession(getClass(), DEMONSTRATIVO_ASSINATURA, lstAssinatura, request);
+		}
+		
+		if (gerarConsolidado) {
+			List<ConsolidadoProdutoPreView> lst = getServiceManager().getRepassePreService().gerarRelatorioConsolidadoProdutoPre(cachedForm.getCdEOTLD(), 
+					BasicDAO.GET_ALL_STRING, cachedForm.getCdProdutoPrepago(), cachedForm.getDtInicial(), cachedForm.getDtFinal());
+			
+			storeInSession(getClass(), DEMONSTRATIVO_CONS_PRODUTO, lst, request);
+		}
+		
 		storeInSession(getClass(), DEMONSTRATIVO_COMPLETO, excelModel, request);
+		storeInSession(getClass(), BaseOperationController.FORM_NAME, cachedForm, request);
 		cachedForm.setCdEOTClaro(cdEOTOperadoraOriginal);
 		return mav;
 	}

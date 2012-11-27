@@ -23,25 +23,28 @@ import com.claro.sccweb.excel.style.IntegerStyle;
 
 public class DemonstrativoAssinaturaPreExcelExportHandler extends BasicExcelHandler {
 
-SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-	
+	SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
 	ExcelStyle style = new DefaultStyle();
 	ExcelStyle currencyStyle = new CurrencyStyle();
 	ExcelStyle integerStyle = new IntegerStyle();
-	
-	protected void buildExcelDocument(Map<String, Object> model,HSSFWorkbook workbook, 
-			HttpServletRequest request, HttpServletResponse response) throws Exception {
-		
+
+	protected void buildExcelDocument(Map<String, Object> model, HSSFWorkbook workbook, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		@SuppressWarnings("unchecked")
 		List<SccPreFechamentoAssinaturaDecorator> decoratorList = (List<SccPreFechamentoAssinaturaDecorator>) getFromSession(DemonstrativoRepassePrePagoController.DEMONSTRATIVO_ASSINATURAS, request);
-		
-		if (decoratorList == null){
+
+		if (decoratorList == null) {
 			throw new ControllerExecutionException("Navegação inválida. Tabela é nula!.");
 		}
 
+		gerarPlanilha(workbook, request, decoratorList);
+	}
+
+	public void gerarPlanilha(HSSFWorkbook workbook, HttpServletRequest request, List<SccPreFechamentoAssinaturaDecorator> decoratorList) throws Exception {
+
 		List<ExcelColumnDefinition> columnDefinitions = new ArrayList<ExcelColumnDefinition>();
-		columnDefinitions.add(new ExcelColumnDefinition("getOperadoraClaroDs", "Operadora Claro", style, 30));
+		columnDefinitions.add(new ExcelColumnDefinition("getOperadoraClaroDs", "Operadora Claro", style, 50));
 		columnDefinitions.add(new ExcelColumnDefinition("getQtAssinaturas", "QTD Pacotes/Assinaturas", style, 20));
 		columnDefinitions.add(new ExcelColumnDefinition("getQtChamadas", "QTD Chamadas", style, 15));
 		columnDefinitions.add(new ExcelColumnDefinition("getQtMinutos", "QTE MINUTOS", style, 15));
@@ -57,25 +60,28 @@ SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		columnDefinitions.add(new ExcelColumnDefinition("getIcmsDescontarMesAnt", "ICMS A DESCONTAR (Repasse Próximo mês)", style, 15));
 		columnDefinitions.add(new ExcelColumnDefinition("getIcmsRepassarMesAnt", "ICMS A REPASSAR (Descontado Mês anterior)", style, 15));
 		columnDefinitions.add(new ExcelColumnDefinition("getRepasse", "Repasse", style, 15));
-	
-		ExcelPrinter printer = new ExcelPrinter(columnDefinitions,workbook);
+		columnDefinitions.add(new ExcelColumnDefinition("getValorNotaFiscal", "Valor Nota Fiscal", style, 15));
+		columnDefinitions.add(new ExcelColumnDefinition("getValorDestaqueIcms", "Destaque ICMS", style, 15));
+		columnDefinitions.add(new ExcelColumnDefinition("getPercIcms", "ICMS", style, 15));
+
+		ExcelPrinter printer = new ExcelPrinter(columnDefinitions, workbook);
 		printer.addSheet("Demonstrativo de Assinaturas");
 		List<String> linhasCabecalho = new ArrayList<String>();
-		//SccPreFechamentoAssinaturaDecorator demonstrativoAssinatura = (SccPreFechamentoAssinaturaDecorator) decoratorList;
+		// SccPreFechamentoAssinaturaDecorator demonstrativoAssinatura =
+		// (SccPreFechamentoAssinaturaDecorator) decoratorList;
 		linhasCabecalho.add("DEMONSTRATIVO DE ASSINATURAS PRÉ PAGO");
-		//linhasCabecalho.add("PRESTADORA LD: "+demonstrativoAssinatura.getOperadoraLD().getDsOperadora()+"("+demonstrativoAssinatura.getOperadoraLD().getCdEot()+")");
-		//linhasCabecalho.add("FILIAL CLARO: "+demonstrativoAssinatura.getOperadoraClaroDs()+"("+demonstrativoAssinatura.getOperadoraClaro().getCdEot()+")");
-		//linhasCabecalho.add("MÊS DE REFERÊNCIA: "+demonstrativoAssinatura.getPeriodo());
-		linhasCabecalho.add("DATA DO DEMONSTRATIVO: "+dateFormat.format(new Date()));			
-		//linhasCabecalho.add("PRODUTO: "+demonstrativoAssinatura.getProdutoPrepago().getNoProdutoPrepago());
+		// linhasCabecalho.add("PRESTADORA LD: "+demonstrativoAssinatura.getOperadoraLD().getDsOperadora()+"("+demonstrativoAssinatura.getOperadoraLD().getCdEot()+")");
+		// linhasCabecalho.add("FILIAL CLARO: "+demonstrativoAssinatura.getOperadoraClaroDs()+"("+demonstrativoAssinatura.getOperadoraClaro().getCdEot()+")");
+		// linhasCabecalho.add("MÊS DE REFERÊNCIA: "+demonstrativoAssinatura.getPeriodo());
+		linhasCabecalho.add("DATA DO DEMONSTRATIVO: " + dateFormat.format(new Date()));
+		// linhasCabecalho.add("PRODUTO: "+demonstrativoAssinatura.getProdutoPrepago().getNoProdutoPrepago());
 		printer.setHeaderLines(linhasCabecalho);
 		printer.generateHeader();
 		printer.addBlankLines(1);
 		printer.generateColumnsTitle();
+		printer.setEvenOddGroupQuantity(3);
 		printer.addData(decoratorList);
 		printer.writeData();
-
 	}
-
 
 }

@@ -30,6 +30,6 @@ public interface SccParamProcessoDAO extends BasicDAO<SccParamProcesso> {
 	public List<SccParamProcesso> listarTodos()throws DAOException;
 	List<String> listarProcesso()throws DAOException;
 	
-	
+	public void deleteParamProcesso(String idProcesso, String noRequisicao) throws DAOException;
 	
 }

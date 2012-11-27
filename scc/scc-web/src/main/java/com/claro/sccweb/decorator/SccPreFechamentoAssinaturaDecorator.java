@@ -10,20 +10,27 @@ import com.claro.cobillingweb.persistence.entity.SccProdutoPrepago;
  */
 public class SccPreFechamentoAssinaturaDecorator extends BasicSccDecorator {
 
+	public static enum Tipo {
+		TOTAL,
+		MES_ANTERIOR,
+		OUTROS_MESES
+	}
+	
 	private SccPreFechamentoAssinatura entity;
 	private SccOperadora operadoraClaro;
 	private SccOperadora operadoraLD;
 	private SccProdutoPrepago produtoPrepago;
 	
 	private String periodo;
-	
+	private Tipo tipo;
 
 	
-	public SccPreFechamentoAssinaturaDecorator(SccPreFechamentoAssinatura entity,SccOperadora operadoraClaro,SccOperadora operadoraLD)
+	public SccPreFechamentoAssinaturaDecorator(SccPreFechamentoAssinatura entity,SccOperadora operadoraClaro,SccOperadora operadoraLD, Tipo tipo)
 	{
 		this.entity = entity;
 		this.operadoraClaro = operadoraClaro;
 		this.operadoraLD = operadoraLD;
+		this.tipo = tipo;
 	}
 
 
@@ -53,129 +60,309 @@ public class SccPreFechamentoAssinaturaDecorator extends BasicSccDecorator {
 	
 
 	public String getOperadoraClaroDs() {
-		return operadoraClaro.getDsOperadora();
+		String ds = operadoraClaro.getDsOperadora();
+		switch (tipo) {
+		case TOTAL:
+			ds += " - TOTAL DO VALOR APURADO";
+			break;
+		case MES_ANTERIOR:
+			ds += " - VALOR ASSINATURAS APURADAS MÊS ANTERIOR";
+			break;
+		case OUTROS_MESES:
+			ds += " - VALOR ASSINATURAS APURADAS OUTROS MESES";
+			break;
+		}	
+		return ds;
 	}
 
 
 	public String getQtAssinaturas() {
-		if ((entity.getQtAssinaturas() == null) || (entity.getQtAssinaturas().equals(0L)))
+		Long val1 = (entity.getQtAssinaturas() == null) || (entity.getQtAssinaturas().equals(0L)) ? 0L : entity.getQtAssinaturas();
+		Long val2 = (entity.getQtdAssinaturasOm() == null) || (entity.getQtdAssinaturasOm().equals(0L)) ? 0L : entity.getQtdAssinaturasOm();
+		Long val = 0L;
+		switch (tipo) {
+		case TOTAL:
+			val = val1 + val2;
+			break;
+		case MES_ANTERIOR:
+			val = val1;
+			break;
+		case OUTROS_MESES:
+			val = val2;
+		}
+		if (val.equals(0L))
 			return "0.0";
-		return sccCurrencyFormat.format(entity.getQtAssinaturas());
+		return sccCurrencyFormat.format(val);
 	}
 
 
 	public String getQtChamadas() {
 		if ((entity.getQtCdrs() == null) || (entity.getQtCdrs().equals(0L)))
 			return "0.0";
-		return sccCurrencyFormat.format(entity.getQtCdrs());
+		Long val1 = (entity.getQtCdrs() == null) || (entity.getQtCdrs().equals(0L)) ? 0L : entity.getQtCdrs();
+		Long val2 = (entity.getQtCdrsOm() == null) || (entity.getQtCdrsOm().equals(0L)) ? 0L : entity.getQtCdrsOm();
+		Long val = 0L;
+		switch (tipo) {
+		case TOTAL:
+			val = val1 + val2;
+			break;
+		case MES_ANTERIOR:
+			val = val1;
+			break;
+		case OUTROS_MESES:
+			val = val2;
+		}
+		if (val.equals(0L))
+			return "0.0";
+		return sccCurrencyFormat.format(val);
 	}
 
 
 	public String getQtMinutos() {
-		if ((entity.getQtMinutosConcedidos() == null) || (entity.getQtMinutosConcedidos().equals(0.0)))
+		Double val1 = zeroIfNull(entity.getQtMinutosConcedidos());
+		Double val2 = zeroIfNull(entity.getQtMinutosConcedidosOm());
+		Double val = 0.0;
+		switch (tipo) {
+		case TOTAL:
+			val = val1 + val2;
+			break;
+		case MES_ANTERIOR:
+			val = val1;
+			break;
+		case OUTROS_MESES:
+			val = val2;
+		}
+		if (val.equals(0.0))
 			return "0.0";
-		return sccCurrencyFormat.format(entity.getQtMinutosConcedidos());
+		return sccCurrencyFormat.format(val);
 	}
 
 
 	public String getMinutosQueimados() {
-		if ((entity.getQtMinutosUtilizados() == null) || (entity.getQtMinutosUtilizados().equals(0.0)))
+		Double val1 = zeroIfNull(entity.getQtMinutosUtilizados());
+		Double val2 = zeroIfNull(entity.getQtMinutosUtilizadosOm());
+		Double val = 0.0;
+		switch (tipo) {
+		case TOTAL:
+			val = val1 + val2;
+			break;
+		case MES_ANTERIOR:
+			val = val1;
+			break;
+		case OUTROS_MESES:
+			val = val2;
+		}
+		if (val.equals(0.0))
 			return "0.0";
-		return sccCurrencyFormat.format(entity.getQtMinutosUtilizados());
+		return sccCurrencyFormat.format(val);
 	}
 
 
 	public String getMinutosExpirados() {
-		if ((entity.getQtMinutosExpirados() == null) || (entity.getQtMinutosExpirados().equals(0.0)))
+		Double val1 = zeroIfNull(entity.getQtMinutosExpirados());
+		Double val2 = zeroIfNull(entity.getQtMinutosExpiradosOm());
+		Double val = 0.0;
+		switch (tipo) {
+		case TOTAL:
+			val = val1 + val2;
+			break;
+		case MES_ANTERIOR:
+			val = val1;
+			break;
+		case OUTROS_MESES:
+			val = val2;
+		}
+		if (val.equals(0.0))
 			return "0.0";
-		return  sccCurrencyFormat.format(entity.getQtMinutosExpirados());
+		return sccCurrencyFormat.format(val);
 	}
 
 
 	public String getValorBruto() {
-		if ((entity.getVlBrutoAssinatura() == null) || (entity.getVlBrutoAssinatura().equals(0.0)))
+		Double val1 = zeroIfNull(entity.getVlBrutoAssinatura());
+		Double val2 = zeroIfNull(entity.getVlBrutoAssinaturaOm());
+		Double val = 0.0;
+		switch (tipo) {
+		case TOTAL:
+			val = val1 + val2;
+			break;
+		case MES_ANTERIOR:
+			val = val1;
+			break;
+		case OUTROS_MESES:
+			val = val2;
+		}
+		if (val.equals(0.0))
 			return "0.0";
-		return sccCurrencyFormat.format(entity.getVlBrutoAssinatura());
+		return sccCurrencyFormat.format(val);
 	}
 
 
 	public String getValorLiquido() {
-		if ((entity.getVlLiquidoAssinatura() == null) || (entity.getVlLiquidoAssinatura().equals(0.0)))
+		Double val1 = zeroIfNull(entity.getVlLiquidoAssinatura());
+		Double val2 = zeroIfNull(entity.getVlLiquidoAssinaturaOm());
+		Double val = 0.0;
+		switch (tipo) {
+		case TOTAL:
+			val = val1 + val2;
+			break;
+		case MES_ANTERIOR:
+			val = val1;
+			break;
+		case OUTROS_MESES:
+			val = val2;
+		}
+		if (val.equals(0.0))
 			return "0.0";
-		return sccCurrencyFormat.format(entity.getVlLiquidoAssinatura());
+		return sccCurrencyFormat.format(val);
 	}
 
 
 	public String getPisCofins() {
-		Double valor = zeroIfNull(entity.getVlCofins())+zeroIfNull(entity.getVlPis());
-		if (valor.equals(0.0))
+		Double val1 = zeroIfNull(entity.getVlCofins()) + zeroIfNull(entity.getVlPis());
+		Double val2 = zeroIfNull(entity.getVlCofinsOm()) + zeroIfNull(entity.getVlPisOm());
+		Double val = 0.0;
+		switch (tipo) {
+		case TOTAL:
+			val = val1 + val2;
+			break;
+		case MES_ANTERIOR:
+			val = val1;
+			break;
+		case OUTROS_MESES:
+			val = val2;
+		}
+		if (val.equals(0.0))
 			return "0.0";
-		return sccCurrencyFormat.format(valor);
+		return sccCurrencyFormat.format(val);
 	}
 
+	private String getValorIcms() {
+		Double val1 = zeroIfNull(entity.getVlIcms());
+		Double val2 = zeroIfNull(entity.getVlIcmsOm());
+		Double val = 0.0;
+		switch (tipo) {
+		case TOTAL:
+			val = val1 + val2;
+			break;
+		case MES_ANTERIOR:
+			val = val1;
+			break;
+		case OUTROS_MESES:
+			val = val2;
+		}
+		if (val.equals(0.0))
+			return "0.0";
+		return sccCurrencyFormat.format(val);
+	}
 
 	public String getIcmsRepassar() {
-		if (entity.repassaICMS())
-			{
-			if ((entity.getVlIcms() == null) || (entity.getVlIcms().equals(0.0)))
-				return "0.0";
-			return sccCurrencyFormat.format(entity.getVlIcms());
-			}
+		if (entity.repassaICMS()) {
+			return getValorIcms();
+		}
 		return "0.0";
 	}
 
 
 	public String getIcmsNaoRepassado() {
-		if (!entity.repassaICMS())
-		{
-		if ((entity.getVlIcms() == null) || (entity.getVlIcms().equals(0.0)))
-			return "0.0";
-		return sccCurrencyFormat.format(entity.getVlIcms());
+		if (!entity.repassaICMS()) {
+			return getValorIcms();
 		}
-	return "0.0";
+		return "0.0";
 	}
 
 
 	public String getValorRepassar() {
-		if ((entity.getVlRepasse() == null) || (entity.getVlRepasse().equals(0.0)))
+		Double val1 = zeroIfNull(entity.getVlRepasse());
+		Double val2 = zeroIfNull(entity.getVlRepasseOm());
+		Double val = 0.0;
+		switch (tipo) {
+		case TOTAL:
+			val = val1 + val2;
+			break;
+		case MES_ANTERIOR:
+			val = val1;
+			break;
+		case OUTROS_MESES:
+			val = val2;
+		}
+		if (val.equals(0.0))
 			return "0.0";
-		return sccCurrencyFormat.format(entity.getVlRepasse());
+		return sccCurrencyFormat.format(val);
 	}
 
 
 	public String getCusto() {
-		if ((entity.getVlCusto() == null) || (entity.getVlCusto().equals(0.0)))
+		Double val1 = zeroIfNull(entity.getVlCusto());
+		Double val2 = zeroIfNull(entity.getVlCustoOm());
+		Double val = 0.0;
+		switch (tipo) {
+		case TOTAL:
+			val = val1 + val2;
+			break;
+		case MES_ANTERIOR:
+			val = val1;
+			break;
+		case OUTROS_MESES:
+			val = val2;
+		}
+		if (val.equals(0.0))
 			return "0.0";
-		return sccCurrencyFormat.format(entity.getVlCusto());
+		return sccCurrencyFormat.format(val);
 	}
 
+	private String getValorIcmsAnt() {
+		Double val1 = zeroIfNull(entity.getVlIcmsAnt());
+		Double val2 = zeroIfNull(entity.getVlIcmsAntOm());
+		Double val = 0.0;
+		switch (tipo) {
+		case TOTAL:
+			val = val1 + val2;
+			break;
+		case MES_ANTERIOR:
+			val = val1;
+			break;
+		case OUTROS_MESES:
+			val = val2;
+		}
+		if (val.equals(0.0))
+			return "0.0";
+		return sccCurrencyFormat.format(val);
+	}
 
 	public String getIcmsDescontarMesAnt() {
-		if (!entity.repassaICMS())
-		{
-		if ((entity.getVlIcmsAnt() == null) || (entity.getVlIcmsAnt().equals(0.0)))
-			return "0.0";
-		return sccCurrencyFormat.format(entity.getVlIcmsAnt());
+		if (!entity.repassaICMS()) {
+			return getValorIcmsAnt();
 		}
-	return "0.0";
+		return "0.0";
 	}
 
 
 	public String getIcmsRepassarMesAnt() {
-		if (entity.repassaICMS())
-		{
-		if ((entity.getVlIcmsAnt() == null) || (entity.getVlIcmsAnt().equals(0.0)))
-			return "0.0";
-		return sccCurrencyFormat.format(entity.getVlIcmsAnt());
+		if (entity.repassaICMS()) {
+			return getValorIcmsAnt();
 		}
-	return "0.0";
+		return "0.0";
 	}
 
 
 	public String getRepasse() {
-		if ((entity.getVlRepasseFinal() == null) || (entity.getVlRepasseFinal().equals(0.0)))
+		Double val1 = zeroIfNull(entity.getVlRepasseFinal());
+		Double val2 = zeroIfNull(entity.getVlRepasseFinalOm());
+		Double val = 0.0;
+		switch (tipo) {
+		case TOTAL:
+			val = val1 + val2;
+			break;
+		case MES_ANTERIOR:
+			val = val1;
+			break;
+		case OUTROS_MESES:
+			val = val2;
+		}
+		if (val.equals(0.0))
 			return "0.0";
-		return sccCurrencyFormat.format(entity.getVlRepasseFinal());
+		return sccCurrencyFormat.format(val);
 	}
 	
 	public SccProdutoPrepago getProdutoPrepago() {
@@ -194,5 +381,36 @@ public class SccPreFechamentoAssinaturaDecorator extends BasicSccDecorator {
 		this.periodo = periodo;
 	}
 	
+	public String getValorNotaFiscal() {
+		String ds = operadoraClaro.getDsOperadora();
+		if (ds.equals("Consolidado")) return "";
+		return getValorRepassar();
+	}
 	
+	public String getValorDestaqueIcms() {
+		String ds = operadoraClaro.getDsOperadora();
+		if (ds.equals("Consolidado")) return "";
+		return getIcmsRepassar();
+	}
+	
+	public String getPercIcms() {
+		String ds = operadoraClaro.getDsOperadora();
+		if (ds.equals("Consolidado")) return "";
+		String vlNota = getValorNotaFiscal();
+		if (vlNota.equals("0.0"))
+			return "0.0";
+		
+		try {
+			Number vNf = sccCurrencyFormat.parse(vlNota);
+			Number vIcms = sccCurrencyFormat.parse(getValorDestaqueIcms());
+			
+			if (vIcms.doubleValue() == 0.0)
+				return "0%";
+			
+			Double val = vIcms.doubleValue() / vNf.doubleValue();			
+			return sccCurrencyFormat.format(val * 100) + "%";
+		} catch (Exception ex) {
+			return "ERRO";
+		}
+	}
 }

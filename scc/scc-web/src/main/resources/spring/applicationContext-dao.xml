@@ -41,6 +41,7 @@
 <bean id="sccBatimentoInterfaceDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccBatimentoInterfaceDAOImpl" parent="sccDAO"/>
 <bean id="sccRelatorioConciliacaoDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccRelatorioConciliacaoDAOImpl" parent="sccDAO"/>
 <bean id="sccBatimentoWruppDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccBatimentoWruppDAOImpl" parent="sccDAO"/>
+<bean id="sccAssinaturaPrePagoDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccAssinaturaPrePagoDAOImpl" parent="sccDAO"/>
 
 <bean id="contratoAcordadoDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccContratoAcordadoDAOImpl" parent="sccDAO">
 <property name="operadoraDAO" ref="sccOperadoraDAO"/>
@@ -94,7 +95,9 @@
 </bean>
 
 
-<bean id="preFechamentoAssinaturaDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccPreFechamentoAssinaturaDAOImpl" parent="sccDAO"/>
+<bean id="preFechamentoAssinaturaDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccPreFechamentoAssinaturaDAOImpl" parent="sccDAO">
+<property name="operadoraDAO" ref="sccOperadoraDAO"/>
+</bean>
 
 <bean id="creditoDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccCreditoDAOImpl" parent="sccDAO"/>
 

@@ -22,12 +22,18 @@ public class RelatorioApuracaoPreExcelHandler extends BasicExcelHandler {
 
 	 
 	protected void buildExcelDocument(Map<String, Object> model,HSSFWorkbook workbook, HttpServletRequest request,HttpServletResponse response) throws Exception {
+		@SuppressWarnings("unchecked")
 		List<RelApuracaoFechamentoPrePagoViewDecorator> tabela = (List<RelApuracaoFechamentoPrePagoViewDecorator>)getFromSession(BaseFormController.DISPLAY_TAG_SPACE_1, request);
 		if (tabela == null)
 			throw new ControllerExecutionException("Navegação inválida. Tabela é nula!.");
 		RelatoriosRepassePreForm form = (RelatoriosRepassePreForm)getFormFromCache(RelatoriosRepassePreController.class, request);
 		if (form == null)
 			throw new ControllerExecutionException("Navegação inválida. Form é nulo!.");
+		
+		gerarPlanilha(form, workbook, request, tabela);
+	}
+
+	public void gerarPlanilha(RelatoriosRepassePreForm form, HSSFWorkbook workbook, HttpServletRequest request, List<RelApuracaoFechamentoPrePagoViewDecorator> tabela) throws Exception {
 		List<ExcelColumnDefinition> columnDefinitions = new ArrayList<ExcelColumnDefinition>();
 		columnDefinitions.add(new ExcelColumnDefinition("getOperadoraClaro", "UF - OP Claro", style, 30));
 		columnDefinitions.add(new ExcelColumnDefinition("getValorApuradoLiquido", "Vlr Apurado Liquido", style, 30));
@@ -84,7 +90,6 @@ public class RelatorioApuracaoPreExcelHandler extends BasicExcelHandler {
 		printer.addData(tabela);
 		printer.writeData();
 	}
-
 	
 	
 }

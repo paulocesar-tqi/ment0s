@@ -14,7 +14,6 @@ import com.claro.cobillingweb.persistence.view.RelSinteticoFechamentoPrePagoView
 import com.claro.sccweb.controller.BaseFormController;
 import com.claro.sccweb.controller.BasicExcelHandler;
 import com.claro.sccweb.controller.ControllerExecutionException;
-import com.claro.sccweb.decorator.RelSinteticoFechamentoPrePagoViewDecorator;
 import com.claro.sccweb.excel.ExcelColumnDefinition;
 import com.claro.sccweb.excel.ExcelPrinter;
 import com.claro.sccweb.form.RelatoriosRepassePreForm;
@@ -23,12 +22,18 @@ public class RelatorioSinteticoPreExcelHandler extends BasicExcelHandler {
 
 	 
 	protected void buildExcelDocument(Map<String, Object> model,HSSFWorkbook workbook, HttpServletRequest request,HttpServletResponse response) throws Exception {
+		@SuppressWarnings("unchecked")
 		List<RelSinteticoFechamentoPrePagoView> tabela = (List<RelSinteticoFechamentoPrePagoView>)getFromSession(BaseFormController.DISPLAY_TAG_SPACE_1, request);
 		if (tabela == null)
 			throw new ControllerExecutionException("Navegação inválida. Tabela é nula!.");
 		RelatoriosRepassePreForm form = (RelatoriosRepassePreForm)getFormFromCache(RelatoriosRepassePreController.class, request);
 		if (form == null)
 			throw new ControllerExecutionException("Navegação inválida. Form é nulo!.");
+		
+		gerarPlanilha(form, workbook, request, tabela);
+	}
+
+	public void gerarPlanilha(RelatoriosRepassePreForm form, HSSFWorkbook workbook, HttpServletRequest request, List<RelSinteticoFechamentoPrePagoView> tabela) throws Exception {
 		List<ExcelColumnDefinition> columnDefinitions = new ArrayList<ExcelColumnDefinition>();
 		columnDefinitions.add(new ExcelColumnDefinition("getOperadoraClaro", "Op. Claro", style, 30));
 		columnDefinitions.add(new ExcelColumnDefinition("getUf", "UF", style, 30));
@@ -79,9 +84,7 @@ public class RelatorioSinteticoPreExcelHandler extends BasicExcelHandler {
 		printer.generateColumnsTitle();
 		printer.addData(tabela);
 		printer.writeData();
-		
 	}
-
 	
 	
 }

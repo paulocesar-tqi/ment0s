@@ -122,6 +122,12 @@ public class ServiceManager {
 	private SccBatimentoWruppService sccBatimentoWruppService;
 	
 	@Autowired
+	private SccSolicitacaoVumService sccSolicitacaoVumService;
+	
+	@Autowired
+	private SccAssinaturaPreService sccAssinaturaPreService;
+	
+	@Autowired
 	private RelatorioAlarmeOperacionalService relatorioAlarmeOperacionalService;
 
 	
@@ -562,6 +568,24 @@ public class ServiceManager {
 			SccBatimentoWruppService sccBatimentoWruppService) {
 		this.sccBatimentoWruppService = sccBatimentoWruppService;
 	}
+
+	public SccSolicitacaoVumService getSccSolicitacaoVumService() {
+		return sccSolicitacaoVumService;
+	}
+
+	public void setSccSolicitacaoVumService(SccSolicitacaoVumService sccSolicitacaoVumService) {
+		this.sccSolicitacaoVumService = sccSolicitacaoVumService;
+	}
+
+	public SccAssinaturaPreService getSccAssinaturaPreService() {
+		return sccAssinaturaPreService;
+	}
+
+	public void setSccAssinaturaPreService(SccAssinaturaPreService sccAssinaturaPreService) {
+		this.sccAssinaturaPreService = sccAssinaturaPreService;
+	}
+
+
 	
 	
 }

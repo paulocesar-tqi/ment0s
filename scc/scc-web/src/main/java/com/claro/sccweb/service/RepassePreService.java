@@ -6,6 +6,7 @@ import java.util.List;
 import com.claro.cobillingweb.persistence.dao.DAOException;
 import com.claro.cobillingweb.persistence.entity.SccParamProcessoPK;
 import com.claro.cobillingweb.persistence.entity.SccPreFechamento;
+import com.claro.cobillingweb.persistence.view.ConsolidadoProdutoPreView;
 import com.claro.cobillingweb.persistence.view.RelApuracaoFechamentoPrePagoView;
 import com.claro.cobillingweb.persistence.view.RelSinteticoFechamentoPrePagoView;
 import com.claro.cobillingweb.persistence.view.RelSinteticoServicoPrePagoView;
@@ -114,6 +115,8 @@ public interface RepassePreService {
 	 */
 	public List<SccPreFechamentoAssinaturaDecorator> carregaAssinaturas(DemonstrativoRepassePrePagoTO to) throws DAOException,ServiceException;
 	
+	public List<SccPreFechamentoAssinaturaDecorator> carregaAssinaturasHolding(DemonstrativoRepassePrePagoTO to) throws DAOException,ServiceException;
+	
 	public List<RelSinteticoFechamentoPrePagoView> geraRelatorioSintetico(String cdProduto,String cdEOTLD, String cdEOTClaro, String cdStatusFechamento,Date dataInicial, Date dataFinal) throws DAOException;
 	
 	public List<RelSinteticoServicoPrePagoView> geraRelatorioSinteticoService(String cdProduto,String cdEOTLD, String cdEOTClaro, String cdStatusFechamento,Date dataInicial, Date dataFinal) throws DAOException; 
@@ -121,5 +124,7 @@ public interface RepassePreService {
 	public List<RelApuracaoFechamentoPrePagoView> geraRelatorioApuracao(String cdProduto, String cdEOTLD, String cdEOTClaro,String cdStatusFechamento, Date dataInicial, Date dataFinal) throws DAOException;
 	
 	public List<DemonstrativoRepassePreItemDecorator> geraLinhasDemonstrativo(SccPreFechamento preFechamento) throws ServiceException;
+	
+	public List<ConsolidadoProdutoPreView> gerarRelatorioConsolidadoProdutoPre(String cdEOTLD, String cdEOTClaro, String cdProduto, Date dataInicial, Date dataFinal) throws DAOException;
 	
 }
