@@ -27,12 +27,14 @@ import com.claro.cobillingweb.persistence.entity.SccParamProcessoPK;
 import com.claro.cobillingweb.persistence.entity.SccPreFechamento;
 import com.claro.cobillingweb.persistence.entity.SccPreFechamentoAssinatura;
 import com.claro.cobillingweb.persistence.entity.SccProdutoPrepago;
+import com.claro.cobillingweb.persistence.view.ConsolidadoProdutoPreView;
 import com.claro.cobillingweb.persistence.view.RelApuracaoFechamentoPrePagoView;
 import com.claro.cobillingweb.persistence.view.RelSinteticoFechamentoPrePagoView;
 import com.claro.cobillingweb.persistence.view.RelSinteticoServicoPrePagoView;
 import com.claro.sccweb.decorator.DemonstrativoRepassePreDecorator;
 import com.claro.sccweb.decorator.DemonstrativoRepassePreItemDecorator;
 import com.claro.sccweb.decorator.SccPreFechamentoAssinaturaDecorator;
+import com.claro.sccweb.decorator.SccPreFechamentoAssinaturaDecorator.Tipo;
 import com.claro.sccweb.service.AbstractService;
 import com.claro.sccweb.service.RepassePreService;
 import com.claro.sccweb.service.ServiceException;
@@ -389,16 +391,77 @@ public class RepassePreServiceImpl extends AbstractService implements RepassePre
 			filtro.setDtInicialFechamento(to.getDtInicial());
 			filtro.setDtFimFechamento(to.getDtFinal());
 			List<SccPreFechamentoAssinatura> assinaturas = getPreFechamentoAssinaturaDAO().pesquisaAssinaturas(filtro);
+			SccPreFechamentoAssinatura totalizador = new SccPreFechamentoAssinatura();
+			
 			for (int i=0;i<assinaturas.size();i++) {
-				operadoraLD = getOperadoraDAO().getByPk(to.getCdEOTLD(), SccOperadora.class);
-				operadoraClaro = getOperadoraDAO().getByPk(to.getCdEOTClaro(), SccOperadora.class);
-				SccPreFechamentoAssinaturaDecorator decorator = new SccPreFechamentoAssinaturaDecorator(assinaturas.get(i), operadoraClaro, operadoraLD);
+				SccPreFechamentoAssinatura ass = assinaturas.get(i);
+				operadoraLD = getOperadoraDAO().getByPk(ass.getCdEOTLD(), SccOperadora.class);
+				operadoraClaro = getOperadoraDAO().getByPk(ass.getCdEOTClaro(), SccOperadora.class);
+				
+				SccPreFechamentoAssinaturaDecorator decorator = new SccPreFechamentoAssinaturaDecorator(ass, operadoraClaro, operadoraLD, Tipo.TOTAL);
+				resultados.add(decorator);
+				
+				decorator = new SccPreFechamentoAssinaturaDecorator(ass, operadoraClaro, operadoraLD, Tipo.MES_ANTERIOR);
+				resultados.add(decorator);
+				
+				decorator = new SccPreFechamentoAssinaturaDecorator(ass, operadoraClaro, operadoraLD, Tipo.OUTROS_MESES);
+				resultados.add(decorator);
+				
+				totalizador.append(ass);
+			}
+			
+			if (assinaturas.size() > 1) {
+				operadoraClaro = new SccOperadora();
+				operadoraClaro.setDsOperadora("Consolidado");
+				
+				SccPreFechamentoAssinaturaDecorator decorator = new SccPreFechamentoAssinaturaDecorator(totalizador, operadoraClaro, null, Tipo.TOTAL);
+				resultados.add(decorator);
+				
+				decorator = new SccPreFechamentoAssinaturaDecorator(totalizador, operadoraClaro, null, Tipo.MES_ANTERIOR);
+				resultados.add(decorator);
+				
+				decorator = new SccPreFechamentoAssinaturaDecorator(totalizador, operadoraClaro, null, Tipo.OUTROS_MESES);
 				resultados.add(decorator);
 			}
+			
 			return resultados;
 		} catch (DAOException daoEx) { throw daoEx;
 		} catch (Exception e) { throw new ServiceException(e.getMessage(), e); }
 	}
+	
+	public List<SccPreFechamentoAssinaturaDecorator> carregaAssinaturasHolding(DemonstrativoRepassePrePagoTO to) throws DAOException,ServiceException {
+		List<SccPreFechamentoAssinaturaDecorator> resultados = new ArrayList<SccPreFechamentoAssinaturaDecorator>();
+		SccOperadora operadoraClaro;
+		SccOperadora operadoraLD;
+		try {			
+			SccPreFechamentoAssinatura filtro = new SccPreFechamentoAssinatura();
+			filtro.setCdEOTClaro(to.getCdEOTClaro());
+			filtro.setCdEOTLD(to.getCdEOTLD());
+			filtro.setCdProdutoPrepago(to.getCdProdutoPrepago());
+			filtro.setDtInicialFechamento(to.getDtInicial());
+			filtro.setDtFimFechamento(to.getDtFinal());
+			List<SccPreFechamentoAssinatura> assinaturas = getPreFechamentoAssinaturaDAO().pesquisaAssinaturasHolding(filtro);
+			
+			for (int i=0;i<assinaturas.size();i++) {
+				SccPreFechamentoAssinatura ass = assinaturas.get(i);
+				operadoraLD = getOperadoraDAO().getByPk(ass.getCdEOTLD(), SccOperadora.class);
+				operadoraClaro = getOperadoraDAO().getByPk(to.getCdEOTClaro(), SccOperadora.class);
+				
+				SccPreFechamentoAssinaturaDecorator decorator = new SccPreFechamentoAssinaturaDecorator(ass, operadoraClaro, operadoraLD, Tipo.TOTAL);
+				resultados.add(decorator);
+				
+				decorator = new SccPreFechamentoAssinaturaDecorator(ass, operadoraClaro, operadoraLD, Tipo.MES_ANTERIOR);
+				resultados.add(decorator);
+				
+				decorator = new SccPreFechamentoAssinaturaDecorator(ass, operadoraClaro, operadoraLD, Tipo.OUTROS_MESES);
+				resultados.add(decorator);
+			}			
+			
+			return resultados;
+		} catch (DAOException daoEx) { throw daoEx;
+		} catch (Exception e) { throw new ServiceException(e.getMessage(), e); }
+	}
+	
 	
 	public SccPreFechamentoAssinaturaDAO getPreFechamentoAssinaturaDAO() {
 		return preFechamentoAssinaturaDAO;
@@ -420,4 +483,9 @@ public class RepassePreServiceImpl extends AbstractService implements RepassePre
 		return getPreFechamentoDAO().geraRelatorioApuracao(cdProduto, cdEOTLD, cdEOTClaro, cdStatusFechamento, dataInicial, dataFinal);		
 	}
 	
+
+	@Override
+	public List<ConsolidadoProdutoPreView> gerarRelatorioConsolidadoProdutoPre(String cdEOTLD, String cdEOTClaro, String cdProduto, Date dataInicial, Date dataFinal) throws DAOException {
+		return getRepasseDAO().gerarRelatorioConsolidadoProdutoPre(cdEOTClaro, cdEOTClaro, cdProduto, dataInicial, dataFinal);
+	}
 }

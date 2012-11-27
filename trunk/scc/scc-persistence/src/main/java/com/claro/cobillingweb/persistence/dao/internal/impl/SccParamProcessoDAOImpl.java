@@ -143,6 +143,18 @@ public class SccParamProcessoDAOImpl extends HibernateBasicDAOImpl<SccParamProce
 			}
 		
 	}
+	
+	public void deleteParamProcesso(String idProcesso, String noRequisicao) throws DAOException {
+		try {
+			String deleteHql = "DELETE SccParamProcesso s WHERE s.id.nmParametro = :noRequisicao AND s.id.cdProcesso = :idProcesso AND s.cdTipoParametro = 'TOLOAD' ";
+			Query query = getSessionFactory().getCurrentSession().createQuery(deleteHql);
+			query.setString("noRequisicao", noRequisicao);
+			query.setString("idProcesso", idProcesso);
+			query.executeUpdate();
+		} catch (Exception e) {
+			throw new DAOException(e.getMessage(), "SccParamProcessoDAO.deleteParamProcesso");
+		}
+	}
 
 
 	@SuppressWarnings("unchecked")

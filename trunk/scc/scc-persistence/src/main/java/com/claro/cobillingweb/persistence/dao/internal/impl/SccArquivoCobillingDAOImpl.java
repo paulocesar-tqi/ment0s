@@ -1,8 +1,8 @@
 package com.claro.cobillingweb.persistence.dao.internal.impl;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -362,7 +362,52 @@ public class SccArquivoCobillingDAOImpl extends HibernateBasicDAOImpl<SccArquivo
 		}
 	}
 
-
+	@SuppressWarnings("unchecked")
+	public List<SccArquivoCobilling> pesquisaArquivosVum(String cdEOTLD, String plataforma, long tipoArquivo, Date dataInicial, Date dataFinal) throws DAOException {
+		try {
+			Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(SccArquivoCobilling.class);
+			
+			SimpleDateFormat df = new SimpleDateFormat("ddMMyyyy");
+			//SCC.VUM.pppEOT.IddMMyyyy.FddMMyyyy.PddMMyyyy.txt.parcial
+//			
+//			if (dataInicial != null)
+//				criteria.add(Restrictions.eq("dtInicioTrafego", dataInicial));
+//			
+//			if (dataFinal != null)
+//				criteria.add(Restrictions.eq("dtFimTrafego", dataFinal));
+//						
+			String filtroNome = "SCC.VUM.%s%s.I%s.F%s.P%%";
+			String strPlat = "___";
+			String strEot = "___";
+			String strDtInicio = "________";
+			String strDtFinal = "________";
+			
+			if (plataforma != null && !plataforma.equals(BasicDAO.GET_ALL_STRING))
+				strPlat = plataforma.equals("0000") ? "pos" : "pre";
+			
+			if (cdEOTLD != null && !cdEOTLD.equals(BasicDAO.GET_ALL_STRING)) {
+				criteria.add(Restrictions.eq("operadoraExterna.cdEot", cdEOTLD));
+				strEot = cdEOTLD;
+			}
+			
+			if (dataInicial != null) {
+				strDtInicio = df.format(dataInicial);
+			}
+			
+			if (dataFinal != null) {
+				strDtFinal = df.format(dataFinal);
+			}
+						
+			filtroNome = String.format(filtroNome, strPlat, strEot, strDtInicio, strDtFinal);
+			
+			criteria.add(Restrictions.ilike("noArquivo", filtroNome.toLowerCase()));
+			
+			criteria.add(Restrictions.eq("tipoArquivo.cdTipoArquivo", tipoArquivo));
+			return criteria.list();
+		} catch (Exception e) {
+			throw new DAOException(e.getMessage(), e);
+		}
+	}
 
 
 }

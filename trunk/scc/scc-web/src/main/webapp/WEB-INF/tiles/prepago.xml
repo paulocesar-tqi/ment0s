@@ -123,10 +123,21 @@
 <put-attribute name="tituloTela" value="Relatório Conciliação" />
 </definition>
 
+<definition name="repasse_consolidado_produto_pre_filtro" extends="basicLayout">
+<put-attribute name="body" value="/WEB-INF/jsp/repasse/pre/consolidadoProduto/filtro.jsp" />
+<put-attribute name="tituloTela" value="Consolidado Produtos" />
+</definition>
+
 <definition name="relatorio_batimento_wrupp_pre_filtro" extends="basicLayout">
 <put-attribute name="body" value="/WEB-INF/jsp/relatorio/batimento/wrupp/pre/filtro.jsp" />
 <put-attribute name="tituloTela" value="Relatório Batimento Wrupp" />
 </definition>
+
+<definition name="relatorio_disponibilizacao_pacotes_pre_filtro" extends="basicLayout">
+<put-attribute name="body" value="/WEB-INF/jsp/relatorio/disponibilizacaoPacotes/pre/filtro.jsp" />
+<put-attribute name="tituloTela" value="Relatório Disponibilização Pacotes" />
+</definition>
+
 
 </tiles-definitions>
 

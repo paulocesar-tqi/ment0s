@@ -1,0 +1,122 @@
+package com.claro.sccweb.controller.relatorio.pre;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.claro.cobillingweb.persistence.dao.BasicDAO;
+import com.claro.cobillingweb.persistence.entity.SccAssinaturaPrePago;
+import com.claro.cobillingweb.persistence.entity.SccOperadora;
+import com.claro.cobillingweb.persistence.entity.SccPacotePrepago;
+import com.claro.sccweb.controller.BaseOperationController;
+import com.claro.sccweb.decorator.rownum.entity.SccAssinaturaPrePagoDecorator;
+import com.claro.sccweb.form.BaseForm;
+import com.claro.sccweb.form.DisponibilizacaoPacotesPreForm;
+
+@Controller
+@RequestMapping(value = "/user/relatorio/disponibilizacaoPacotes/pre")
+public class DisponibilizacaoPacotesController extends BaseOperationController<DisponibilizacaoPacotesPreForm> {
+
+	@Override
+	protected String getViewName() {
+		return "relatorio_disponibilizacao_pacotes_pre_filtro";
+	}
+
+	@Override
+	protected DisponibilizacaoPacotesPreForm getForm() {
+		return new DisponibilizacaoPacotesPreForm();
+	}
+
+	@Override
+	protected Validator getValidator() {
+		return null;
+	}
+
+	/**
+	 * Popula combo com a lista de operadoras Claro
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	@ModelAttribute("operadorasClaro")
+	public List<SccOperadora> populaOperadorasClaro() throws Exception {
+		List<SccOperadora> comboList = new ArrayList<SccOperadora>();
+		SccOperadora allValues = new SccOperadora();
+		allValues.setCdEot(BasicDAO.GET_ALL_STRING);
+		allValues.setDsOperadora("Todas");
+		comboList.add(0, allValues);
+		comboList.addAll(getServiceManager().getPesquisaDominiosService().pequisaOperadorasClaroComM());
+
+		return comboList;
+	}
+
+	/**
+	 * Popula combo com a lista de operadoras LD (externas).
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	@ModelAttribute("operadorasExternas")
+	public List<SccOperadora> populaOperadorasExternas() throws Exception {
+		List<SccOperadora> comboList = new ArrayList<SccOperadora>();
+		SccOperadora nullValue = new SccOperadora();
+		nullValue.setCdEot(BasicDAO.GET_ALL_STRING);
+		nullValue.setDsOperadora("Todas");
+		comboList.add(0, nullValue);
+		comboList.addAll(getServiceManager().getPesquisaDominiosService().pesquisaOperadorasExternas());
+		return comboList;
+	}
+
+	/**
+	 * Popula combo com a lista de pacotes de assinatura
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	@ModelAttribute("pacotes")
+	public List<SccPacotePrepago> populaPacotes() throws Exception {
+		List<SccPacotePrepago> comboList = new ArrayList<SccPacotePrepago>();
+		SccPacotePrepago nullValue = new SccPacotePrepago();
+		nullValue.setCdPacotePrepago(BasicDAO.GET_ALL);
+		nullValue.setNoPacotePrepago("Todos");
+		comboList.add(0, nullValue);
+		comboList.addAll(getServiceManager().getSccAssinaturaPreService().findPacotesAssinatura());
+		return comboList;
+	}
+
+	public ModelAndView pesquisar(HttpServletRequest request, HttpServletResponse response,
+			@Valid @ModelAttribute(FORM_NAME) BaseForm _form, BindingResult bindingResult, Model model)
+			throws Exception {
+		ModelAndView mav = new ModelAndView(getViewName());
+		DisponibilizacaoPacotesPreForm form = (DisponibilizacaoPacotesPreForm) _form;
+
+		List<SccAssinaturaPrePago> rows = getServiceManager().getSccAssinaturaPreService().pesquisarDisponibilidade(
+				form.getCdEOTClaro(), form.getCdEOTLD(), form.getCdPacote(), form.getDtInicio(), form.getDtFim());
+
+		List<SccAssinaturaPrePagoDecorator> decoratorList = new ArrayList<SccAssinaturaPrePagoDecorator>(rows.size());
+		for (int i = 0; i < rows.size(); i++) {
+			SccAssinaturaPrePagoDecorator decorator = new SccAssinaturaPrePagoDecorator(rows.get(i), i);
+			decoratorList.add(decorator);
+		}
+		storeInSession(getClass(), DISPLAY_TAG_SPACE_1, decoratorList, request);
+		return mav;
+	}
+
+	public ModelAndView excel(HttpServletRequest request, HttpServletResponse response,
+			@Valid @ModelAttribute(FORM_NAME) BaseForm form, BindingResult bindingResult, Model model) throws Exception {
+		info("Iniciando geração de Excel para pesquisa de batimento wrupp pré-pago");
+		ModelAndView mav = new ModelAndView("relatorio_disponibilizacao_pacotes_pre_excel");
+		return mav;
+	}
+}

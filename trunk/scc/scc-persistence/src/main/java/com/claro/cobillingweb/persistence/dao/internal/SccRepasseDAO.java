@@ -6,6 +6,7 @@ import java.util.List;
 import com.claro.cobillingweb.persistence.dao.BasicDAO;
 import com.claro.cobillingweb.persistence.dao.DAOException;
 import com.claro.cobillingweb.persistence.entity.SccRepasse;
+import com.claro.cobillingweb.persistence.view.ConsolidadoProdutoPreView;
 import com.claro.cobillingweb.persistence.view.RelContabilView;
 import com.claro.cobillingweb.persistence.view.RelPrestacaoServicoView;
 import com.claro.cobillingweb.persistence.view.mapper.LongEntity;
@@ -68,6 +69,8 @@ public interface SccRepasseDAO extends BasicDAO<SccRepasse> {
 	List<RelPrestacaoServicoView> gerarRelatorioPrestacaoServicoPos(String cdEOTClaro, String cdEOTLd, Long cdProdutoCobilling, Date dataInicial, Date dataFinal)throws DAOException;
 	
 	List<RelPrestacaoServicoView> gerarRelatorioPrestacaoServicoPre(String cdEOTClaro, String cdEOTLd, Long cdProdutoPrepago, String dataFechamento) throws DAOException;
+
+	public List<ConsolidadoProdutoPreView> gerarRelatorioConsolidadoProdutoPre(String cdEOTClaro, String cdEOTLD, String cdProdutoprepago, Date dataInicial, Date dataFinal) throws DAOException;
 
 		
 }

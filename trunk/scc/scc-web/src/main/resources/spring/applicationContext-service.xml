@@ -88,6 +88,8 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 		<property name="sccBatimentoInterfaceService" ref="sccBatimentoInterfaceService"/>
 		<property name="sccRelatorioConciliacaoService" ref="sccRelatorioConciliacaoService"/>
 		<property name="sccBatimentoWruppService" ref="sccBatimentoWruppService"/>
+		<property name="sccSolicitacaoVumService" ref="sccSolicitacaoVumService"/>
+		<property name="sccAssinaturaPreService" ref="sccAssinaturaPreService"/>
 		<property name="relatorioAlarmeOperacionalService" ref="relatorioAlarmeOperacionalService"/>
 	</bean>
 
@@ -450,7 +452,21 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 		parent="sccService">
 		<property name="sccBatimentoWruppDAO" ref="sccBatimentoWruppDAO" />
 	</bean>
+	
 
+	<bean id="sccSolicitacaoVumService" class="com.claro.sccweb.service.impl.SccSolicitacaoVumServiceImpl"
+		parent="sccService">
+		<property name="paramProcessoDAO" ref="paramProcessoDAO" />
+		<property name="sccOperadoraDAO" ref="sccOperadoraDAO" />
+		<property name="sccArquivoCobillingDAO" ref="sccArquivoCobillingDAO" />
+		<property name="ftpService" ref="FTPService" />
+	</bean>
+	
+	<bean id="sccAssinaturaPreService" class="com.claro.sccweb.service.impl.SccAssinaturaPreServiceImpl"
+		parent="sccService">
+		<property name="sccAssinaturaPrePagoDAO" ref="sccAssinaturaPrePagoDAO" />
+		<property name="sccOperadoraDAO" ref="sccOperadoraDAO" />
+	</bean>
 	<bean id="relatorioAlarmeOperacionalService" class="com.claro.sccweb.service.impl.RelatorioAlarmeOperacionalServiceImpl"
 		parent="sccService">
 		<property name="sccRelatorioAlarmeOperacionalDAO" ref="sccRelatorioAlarmeOperacionalDAO" />

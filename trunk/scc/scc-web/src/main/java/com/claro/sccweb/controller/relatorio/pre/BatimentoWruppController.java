@@ -1,6 +1,7 @@
 package com.claro.sccweb.controller.relatorio.pre;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -81,7 +82,9 @@ public class BatimentoWruppController extends BaseOperationController<BatimentoW
 		info("Pesquisando batimento wrupp pré-pago:  "+myForm.toString());
 		
 		List<BatimentoWruppPrePagoView> rows = null;
-		rows = getServiceManager().getSccBatimentoWruppService().listarBatimentos(myForm.getCdEOTLD(), myForm.getCdEOTClaro(), myForm.getMesRelatorio(), myForm.getAnoRelatorio());
+		Date dataInicio = calculaDataInicialPeriodo(myForm.getMesRelatorio().longValue(), myForm.getAnoRelatorio().longValue());
+		Date dataFim = calculaDataFinalPeriodo(myForm.getMesRelatorio().longValue(), myForm.getAnoRelatorio().longValue());
+		rows = getServiceManager().getSccBatimentoWruppService().listarBatimentos(myForm.getCdEOTLD(), myForm.getCdEOTClaro(), dataInicio, dataFim);
 		
 		debug("Pesquisa de batimento wrup pré-pago retornou "+rows.size()+" linhas com filtro "+myForm.toString());
 		List<SccBatimentoWruppPrePagoViewDecorator> decoratorList = new ArrayList<SccBatimentoWruppPrePagoViewDecorator>(rows.size());	

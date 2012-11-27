@@ -88,6 +88,10 @@ public class ExcelPrinter {
 	 */
 	private List<ExcelColumnDefinition> columnsDefinition = new ArrayList<ExcelColumnDefinition>();
 	
+	/**
+	 * Quantidade de linhas para cor even e cor odd
+	 */
+	private int evenOddGroupQuantity = 1;
 	
 	/**
 	 * Construtor
@@ -238,10 +242,12 @@ public class ExcelPrinter {
 	{
 		if (data == null)
 			return;
-		int relativePosition = 1;
-			
+		int relativePosition = 0;
+		int mod = getEvenOddGroupQuantity();
 		for (int i=0;i<data.size();i++)
 			{
+			if (i%mod == 0)
+				relativePosition++;
 			boolean isEven = (relativePosition%2==0);	
 			Class clazz = data.get(i).getClass();			
 			for (int d=0;d<columnsDefinition.size();d++)
@@ -287,7 +293,7 @@ public class ExcelPrinter {
 					cell.setCellValue(methodReturn.toString());
 				
 				}			
-			relativePosition++;
+
 			currentRow++;
 			}
 	}
@@ -493,4 +499,13 @@ public class ExcelPrinter {
 		workbook.write(fos);
 		fos.close();
 	}
+
+	public int getEvenOddGroupQuantity() {
+		return evenOddGroupQuantity;
+	}
+
+	public void setEvenOddGroupQuantity(int evenOddGroupQuantity) {
+		this.evenOddGroupQuantity = evenOddGroupQuantity;
+	}
+	
 }

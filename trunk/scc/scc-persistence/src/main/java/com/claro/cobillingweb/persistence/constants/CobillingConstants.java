@@ -220,6 +220,15 @@ public class CobillingConstants implements Serializable {
      * TO LOAD Value
      */
     public static final String TO_LOAD = "TOLOAD";
+	/**
+	 * LOADING
+	 */
+	public static final String LOADING = "LOADING";
+	
+	/**
+	 * LOADED
+	 */
+	public static final String LOADED = "LOADED";
     /**
      * ALFA Value
      */
@@ -400,6 +409,7 @@ public class CobillingConstants implements Serializable {
      */
     public static final String PARAMETER_PREPAGO_FECHAMENTO = "FECHAMENTO_PRE";
     public static final String PARAMETER_PREPAGO_MAB = "MAB_TCOR";
+    public static final String PARAMETER_ARQ_VUM = "ARQ_VUM";
     
     /**
      * OS Plugin Fase 2
@@ -407,11 +417,19 @@ public class CobillingConstants implements Serializable {
     public static final String DESABILITAR_REPASSE_PRODUTO = "P";
     public static final String DESABILITAR_REPASSE_EVENTO = "E";
     public static final String CD_PRODUTO_PADRAO_PREPAGO = "0";
+    public static final String CD_PRODUTO_TZLD_PREPAGO = "1";
     
     /**
      * Username
      */
     public static final String SESSION_USER = "user";
+    
+    /**
+     * Arquivos VUM
+     */
+    public static final long ARQUIVO_VUM_TOTAL = 910;
+    public static final long ARQUIVO_VUM_PARCIAL = 915;
+    
     
     public static final String LGN_ADMIN = "Admin";
     public static final String LGN_USER = "User";

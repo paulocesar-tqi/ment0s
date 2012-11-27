@@ -211,6 +211,10 @@
 <li><a href="/scc/user/repasse/pre/consulta/new.scc"><spring:message code="menu.repasse.pre.consulta"/></a></li>
 </c:if>
 
+<c:if test="${sessionScope['scopedTarget.sessionDataManager'].prePago}">
+<li><a href="/scc/user/repasse/consolidado/produto/pre/new.scc"><spring:message code="menu.repasse.pre.consolidado.produto"/></a></li>
+</c:if>
+
 
 <c:if test="${sessionScope['scopedTarget.sessionDataManager'].prePago}">
 <li><a href="/scc/user/repasse/pre/relatorios/new.scc"><spring:message code="menu.repasse.pre.relatorios"/></a></li>
@@ -256,6 +260,12 @@
 			<li><a href="/scc/user/admin/email/new.scc"><spring:message code="menu.administracao.acompanhamento.email"/></a>	</li>
 		</ul>
 	</li>
+<li><a class="has-children" href="#">VUM</a>
+	<ul>	
+	<li><a href="/scc/user/admin/vum/cadastro/new.scc"><spring:message code="menu.administracao.vum.cadastro"/></a></li>	
+	<li><a href="/scc/user/admin/vum/download/new.scc"><spring:message code="menu.administracao.vum.download"/></a></li>	
+	<ul>	
+</li>
 
 </ul>
 </li>
@@ -280,6 +290,10 @@
 		<c:if test="${sessionScope['scopedTarget.sessionDataManager'].prePago}">
 			<li><a href="/scc/user/relatorio/batimento/wrupp/pre/new.scc"><spring:message code="menu.relatorio.batimento.wrupp"/></a></li>
 		</c:if>
+		<c:if test="${sessionScope['scopedTarget.sessionDataManager'].prePago}">
+			<li><a href="/scc/user/relatorio/disponibilizacaoPacotes/pre/new.scc"><spring:message code="menu.relatorio.disponibilizacao.pacotes"/></a></li>
+		</c:if>
+		<li><a href="/scc/user/relatorio/alarmeoperacional/new.scc"><spring:message code="menu.relatorio.alarme.operacional"/></a></li>
 		<li>
 			<a class="has-children" href="#"><spring:message code="menu.relatorio.processo"/></a>
 			<ul>

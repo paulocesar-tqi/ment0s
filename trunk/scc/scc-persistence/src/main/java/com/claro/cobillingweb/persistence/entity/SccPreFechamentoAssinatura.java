@@ -14,7 +14,6 @@ import javax.persistence.Transient;
 @Table(name="SCC_PRE_FECHAMENTO_ASSINATURA")
 public class SccPreFechamentoAssinatura {
 
-	private static final long serialVersionUID = 1L;
 	private Long sqPreFechamentoAssinatura;
 	private String cdStatusFechamento;
 	private Date dtFechamento;
@@ -36,6 +35,21 @@ public class SccPreFechamentoAssinatura {
 	private Double vlPis;
 	private Double vlRepasse;
 	private Double vlRepasseFinal;
+	
+	private Long qtCdrsOm;
+	private Long qtdAssinaturasOm;
+	private Double qtMinutosConcedidosOm;
+	private Double qtMinutosExpiradosOm;
+	private Double qtMinutosUtilizadosOm;
+	private Double vlBrutoAssinaturaOm;
+	private Double vlLiquidoAssinaturaOm;
+	private Double vlPisOm;
+	private Double vlCofinsOm;
+	private Double vlIcmsOm;
+	private Double vlIcmsAntOm;
+	private Double vlRepasseOm;
+	private Double vlRepasseFinalOm;
+	private Double vlCustoOm;
 	
 	private String cdEOTClaro;
 	private String cdEOTLD;
@@ -295,6 +309,148 @@ public class SccPreFechamentoAssinatura {
 		this.cdProdutoPrepago = cdProdutoPrepago;
 	}
 	
+	
+	@Column(name="QT_CDRS_OM")
+	public Long getQtCdrsOm() {
+		return qtCdrsOm;
+	}
+
+
+	public void setQtCdrsOm(Long qtCdrsOm) {
+		this.qtCdrsOm = qtCdrsOm;
+	}
+
+	@Column(name="QT_ASSINATURAS_OM")
+	public Long getQtdAssinaturasOm() {
+		return qtdAssinaturasOm;
+	}
+
+
+	public void setQtdAssinaturasOm(Long qtdAssinaturasOm) {
+		this.qtdAssinaturasOm = qtdAssinaturasOm;
+	}
+
+	@Column(name="QT_MINUTOS_CONCEDIDOS_OM")
+	public Double getQtMinutosConcedidosOm() {
+		return qtMinutosConcedidosOm;
+	}
+
+
+	public void setQtMinutosConcedidosOm(Double qtMinutosConcedidosOm) {
+		this.qtMinutosConcedidosOm = qtMinutosConcedidosOm;
+	}
+
+	@Column(name="QT_MINUTOS_EXPIRADOS_OM")
+	public Double getQtMinutosExpiradosOm() {
+		return qtMinutosExpiradosOm;
+	}
+
+
+	public void setQtMinutosExpiradosOm(Double qtMinutosExpiradosOm) {
+		this.qtMinutosExpiradosOm = qtMinutosExpiradosOm;
+	}
+
+	@Column(name="QT_MINUTOS_UTILIZADOS_OM")
+	public Double getQtMinutosUtilizadosOm() {
+		return qtMinutosUtilizadosOm;
+	}
+
+
+	public void setQtMinutosUtilizadosOm(Double qtMinutosUtilizadosOm) {
+		this.qtMinutosUtilizadosOm = qtMinutosUtilizadosOm;
+	}
+
+	@Column(name="VL_BRUTO_ASSINATURA_OM")
+	public Double getVlBrutoAssinaturaOm() {
+		return vlBrutoAssinaturaOm;
+	}
+
+
+	public void setVlBrutoAssinaturaOm(Double vlBrutoAssinaturaOm) {
+		this.vlBrutoAssinaturaOm = vlBrutoAssinaturaOm;
+	}
+
+	@Column(name="VL_LIQUIDO_ASSINATURA_OM")
+	public Double getVlLiquidoAssinaturaOm() {
+		return vlLiquidoAssinaturaOm;
+	}
+
+
+	public void setVlLiquidoAssinaturaOm(Double vlLiquidoAssinaturaOm) {
+		this.vlLiquidoAssinaturaOm = vlLiquidoAssinaturaOm;
+	}
+
+	@Column(name="VL_PIS_OM")
+	public Double getVlPisOm() {
+		return vlPisOm;
+	}
+
+
+	public void setVlPisOm(Double vlPisOm) {
+		this.vlPisOm = vlPisOm;
+	}
+
+	@Column(name="VL_COFINS_OM")
+	public Double getVlCofinsOm() {
+		return vlCofinsOm;
+	}
+
+
+	public void setVlCofinsOm(Double vlCofinsOm) {
+		this.vlCofinsOm = vlCofinsOm;
+	}
+
+	@Column(name="VL_ICMS_OM")
+	public Double getVlIcmsOm() {
+		return vlIcmsOm;
+	}
+
+
+	public void setVlIcmsOm(Double vlIcmsOm) {
+		this.vlIcmsOm = vlIcmsOm;
+	}
+
+	@Column(name="VL_ICMS_ANT_OM")
+	public Double getVlIcmsAntOm() {
+		return vlIcmsAntOm;
+	}
+
+
+	public void setVlIcmsAntOm(Double vlIcmsAntOm) {
+		this.vlIcmsAntOm = vlIcmsAntOm;
+	}
+
+	@Column(name="VL_REPASSE_OM")
+	public Double getVlRepasseOm() {
+		return vlRepasseOm;
+	}
+
+
+	public void setVlRepasseOm(Double vlRepasseOm) {
+		this.vlRepasseOm = vlRepasseOm;
+	}
+
+	@Column(name="VL_REPASSE_FINAL_OM")
+	public Double getVlRepasseFinalOm() {
+		return vlRepasseFinalOm;
+	}
+
+
+	public void setVlRepasseFinalOm(Double vlRepasseFinalOm) {
+		this.vlRepasseFinalOm = vlRepasseFinalOm;
+	}
+
+	@Column(name="VL_CUSTO_OM")
+	public Double getVlCustoOm() {
+		return vlCustoOm;
+	}
+
+
+	public void setVlCustoOm(Double vlCustoOm) {
+		this.vlCustoOm = vlCustoOm;
+	}
+
+
 	@Transient
 	public boolean repassaICMS()
 	{
@@ -304,4 +460,55 @@ public class SccPreFechamentoAssinatura {
 			return this.flRepassaIcms.equalsIgnoreCase("S");
 	}
 	
+	public void append(SccPreFechamentoAssinatura valor) {
+		SccPreFechamentoAssinatura total = this;
+		total.setQtCdrs(somaValores(total.getQtCdrs(),valor.getQtCdrs()));
+		total.setQtCdrsOm(somaValores(total.getQtCdrsOm(),valor.getQtCdrsOm()));
+		total.setQtAssinaturas(somaValores(total.getQtAssinaturas(), valor.getQtAssinaturas()));
+		total.setQtdAssinaturasOm(somaValores(total.getQtdAssinaturasOm(), valor.getQtdAssinaturasOm()));
+		total.setQtMinutosConcedidos(somaValores(total.getQtMinutosConcedidos(), valor.getQtMinutosConcedidos()));
+		total.setQtMinutosConcedidosOm(somaValores(total.getQtMinutosConcedidosOm(), valor.getQtMinutosConcedidosOm()));
+		total.setQtMinutosExpirados(somaValores(total.getQtMinutosExpirados(), valor.getQtMinutosExpirados()));
+		total.setQtMinutosExpiradosOm(somaValores(total.getQtMinutosExpiradosOm(), valor.getQtMinutosExpiradosOm()));
+		total.setQtMinutosUtilizados(somaValores(total.getQtMinutosUtilizados(), valor.getQtMinutosUtilizados()));
+		total.setQtMinutosUtilizadosOm(somaValores(total.getQtMinutosUtilizadosOm(), valor.getQtMinutosUtilizadosOm()));
+		total.setVlBrutoAssinatura(somaValores(total.getVlBrutoAssinatura(), valor.getVlBrutoAssinatura()));
+		total.setVlBrutoAssinaturaOm(somaValores(total.getVlBrutoAssinaturaOm(), valor.getVlBrutoAssinaturaOm()));
+		total.setVlCofins(somaValores(total.getVlCofins(), valor.getVlCofins()));
+		total.setVlCofinsOm(somaValores(total.getVlCofinsOm(), valor.getVlCofinsOm()));
+		total.setVlCusto(somaValores(total.getVlCusto(), valor.getVlCusto()));
+		total.setVlCustoOm(somaValores(total.getVlCustoOm(), valor.getVlCustoOm()));
+		total.setVlIcms(somaValores(total.getVlIcms(), valor.getVlIcms()));
+		total.setVlIcmsOm(somaValores(total.getVlIcmsOm(), valor.getVlIcmsOm()));
+		total.setVlIcmsAnt(somaValores(total.getVlIcmsAnt(), valor.getVlIcmsAnt()));
+		total.setVlIcmsAntOm(somaValores(total.getVlIcmsAntOm(), valor.getVlIcmsAntOm()));
+		total.setVlLiquidoAssinatura(somaValores(total.getVlLiquidoAssinatura(), valor.getVlLiquidoAssinatura()));
+		total.setVlLiquidoAssinaturaOm(somaValores(total.getVlLiquidoAssinaturaOm(), valor.getVlLiquidoAssinaturaOm()));
+		total.setVlPis(somaValores(total.getVlPis(), valor.getVlPis()));
+		total.setVlPisOm(somaValores(total.getVlPisOm(), valor.getVlPisOm()));
+		total.setVlRepasse(somaValores(total.getVlRepasse(), valor.getVlRepasse()));
+		total.setVlRepasseOm(somaValores(total.getVlRepasseOm(), valor.getVlRepasseOm()));
+		total.setVlRepasseFinal(somaValores(total.getVlRepasseFinal(), valor.getVlRepasseFinal()));
+		total.setVlRepasseFinalOm(somaValores(total.getVlRepasseFinalOm(), valor.getVlRepasseFinalOm()));
+	}
+	private Long somaValores(Long v1, Long v2) {
+		Long val = null;
+		if (v1 != null && v2 != null)
+			val = v1 + v2;
+		else if (v1 != null)
+			val = v1;
+		else
+			val = v2;
+		return val;
+	}
+	private Double somaValores(Double v1, Double v2) {
+		Double val = null;
+		if (v1 != null && v2 != null)
+			val = v1 + v2;
+		else if (v1 != null)
+			val = v1;
+		else
+			val = v2;
+		return val;
+	}
 }

@@ -18,11 +18,13 @@ import com.claro.cobillingweb.persistence.dao.DAOException;
 import com.claro.cobillingweb.persistence.dao.impl.HibernateBasicDAOImpl;
 import com.claro.cobillingweb.persistence.dao.internal.SccOperadoraDAO;
 import com.claro.cobillingweb.persistence.dao.internal.SccRepasseDAO;
+import com.claro.cobillingweb.persistence.dao.query.ConsolidadoProdutoSQL;
 import com.claro.cobillingweb.persistence.dao.query.RelContabilViewSQL;
 import com.claro.cobillingweb.persistence.dao.query.RelPrestacaoServicoSQL;
 import com.claro.cobillingweb.persistence.dao.query.SccRepasseDAONativeSQL;
 import com.claro.cobillingweb.persistence.entity.SccOperadora;
 import com.claro.cobillingweb.persistence.entity.SccRepasse;
+import com.claro.cobillingweb.persistence.view.ConsolidadoProdutoPreView;
 import com.claro.cobillingweb.persistence.view.RelContabilView;
 import com.claro.cobillingweb.persistence.view.RelPrestacaoServicoView;
 import com.claro.cobillingweb.persistence.view.mapper.LongEntity;
@@ -277,7 +279,6 @@ public class SccRepasseDAOImpl extends HibernateBasicDAOImpl<SccRepasse> impleme
 		
 	}
 	
-	@SuppressWarnings("unused")
 	private NativeSQLViewMapper<RelPrestacaoServicoView> montarCamposQueryServicoPre(Session session){
 		
 		return new NativeSQLViewMapper<RelPrestacaoServicoView>(session, RelPrestacaoServicoSQL.SQL_PRE, RelPrestacaoServicoView.class);
@@ -395,7 +396,66 @@ public class SccRepasseDAOImpl extends HibernateBasicDAOImpl<SccRepasse> impleme
 		return listRelPrestServico;
 
 	}
-	
+
+	private NativeSQLViewMapper<ConsolidadoProdutoPreView> montarCamposQueryConsolidadoProdutoPre(Session session) {
+		return new NativeSQLViewMapper<ConsolidadoProdutoPreView>(session, ConsolidadoProdutoSQL.SQL_PRE, ConsolidadoProdutoPreView.class);
+	}
+
+	@Override
+	public List<ConsolidadoProdutoPreView> gerarRelatorioConsolidadoProdutoPre(String cdEOTClaro, String cdEOTLD, String cdProdutoPrepago, Date dataInicial, Date dataFinal) throws DAOException {
+		List<ConsolidadoProdutoPreView> lst = null;
+		try {
+
+			Session session = getSessionFactory().getCurrentSession();
+			NativeSQLViewMapper<ConsolidadoProdutoPreView> mapper = montarCamposQueryConsolidadoProdutoPre(session);
+
+			if (cdEOTLD != null && !cdEOTLD.equals(BasicDAO.GET_ALL_STRING)) {
+				mapper.addArgument("cdEOTLd", cdEOTLD, ConsolidadoProdutoSQL.CD_EOT_LD_PRE);
+			}
+
+			if (cdEOTClaro != null && !cdEOTClaro.equals(BasicDAO.GET_ALL_STRING)) {
+				mapper.addArgument("cdEOTClaro", cdEOTClaro, ConsolidadoProdutoSQL.CD_EOT_CLARO_PRE);
+			}
+
+			if (cdProdutoPrepago != null && !cdProdutoPrepago.equals(BasicDAO.GET_ALL_STRING)) {
+				mapper.addArgument("cdProdutoPrepago", cdProdutoPrepago, ConsolidadoProdutoSQL.CD_PRODUTO_PREPAGO);
+			}
+
+			if (dataInicial != null) {
+				mapper.addArgument("dataInicial", dataInicial, ConsolidadoProdutoSQL.DT_INICIAL_REPASSE);
+			}
+
+			if (dataFinal != null) {
+				mapper.addArgument("dataFinal", dataFinal, ConsolidadoProdutoSQL.DT_FIM_REPASSE);
+			}
+
+			mapper.addResultMap("qtCdrs", Long.class);
+			mapper.addResultMap("cdCSPLD", String.class);
+			mapper.addResultMap("cdEOTClaro", String.class);
+			mapper.addResultMap("cdProdutoPrepago", String.class);
+			mapper.addResultMap("cdTipoEvento", String.class);
+			mapper.addResultMap("dtChamada", Date.class);
+			mapper.addResultMap("inChamadaRepassada", String.class);
+			mapper.addResultMap("dtRepasse", Date.class);
+			mapper.addResultMap("miDuracaoTarifada", Long.class);
+			mapper.addResultMap("vlBruto", Double.class);
+
+			for (int i = 1; i <= 10; ++i) {
+				String pId = i < 10 ? "0" + i : i + "";
+				mapper.addResultMap("cdPacote" + pId, Integer.class);
+				mapper.addResultMap("miDuracaoPacote" + pId, Long.class);
+				mapper.addResultMap("vlPacote" + pId, Double.class);
+			}
+
+			mapper.setProjections(ConsolidadoProdutoSQL.PROJECTIONS);
+			lst = mapper.execute();
+
+		} catch (Exception e) {
+			throw new DAOException(e.getMessage(), e);
+		}
+
+		return lst;
+	}
 	
 	
 
