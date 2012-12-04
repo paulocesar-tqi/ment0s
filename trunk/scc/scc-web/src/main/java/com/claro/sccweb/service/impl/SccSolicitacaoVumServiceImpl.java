@@ -1,9 +1,5 @@
 package com.claro.sccweb.service.impl;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -164,31 +160,16 @@ public class SccSolicitacaoVumServiceImpl extends AbstractService implements Scc
 
 	@Override
 	public boolean fileExists(CadastroSolicitacaoVUMForm form) throws ServiceException {
-		File f = new File(form.getNomeDiretorio(), form.getNomeArquivo());
-		return f.exists();
-		
-		//String ret = ftpService.fileExists(form.getNomeArquivo());
-		//return ret != null;
+		String ret = ftpService.fileExists(form.getNomeDiretorio(), form.getNomeArquivo());
+		return ret != null;
 	}
 
 	@Override
 	public void writeFile(CadastroSolicitacaoVUMForm form, OutputStream stream) throws ServiceException {
 		try {
-			File f = new File(form.getNomeDiretorio(), form.getNomeArquivo());
-			FileInputStream fis = new FileInputStream(f);
-			copyStream(fis, stream);
-			fis.close();
-			//ftpService.writeFile(stream, form.getNomeDiretorio() + form.getNomeArquivo());
+			ftpService.writeFile(stream, form.getNomeDiretorio(), form.getNomeArquivo());
 		} catch (Exception ex) {
 			throw new ServiceException(ex.getMessage(), ex);
-		}
-	}
-
-	private static void copyStream(InputStream input, OutputStream output) throws IOException {
-		byte[] buffer = new byte[1024]; // Adjust if you want
-		int bytesRead;
-		while ((bytesRead = input.read(buffer)) != -1) {
-			output.write(buffer, 0, bytesRead);
 		}
 	}
 
