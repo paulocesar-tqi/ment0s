@@ -14,5 +14,8 @@ public interface FTPService {
 	
 	public String fileExists(String fileName) throws ServiceException;
 	
+	public void writeFile(OutputStream output, String dir, String fileName) throws ServiceException;
+	
+	public String fileExists(String dir, String fileName) throws ServiceException;
 	
 }
