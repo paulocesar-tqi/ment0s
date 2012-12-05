@@ -62,6 +62,86 @@ public class SccPreFechamentoDAOImpl extends HibernateBasicDAOImpl<SccPreFechame
 		return list;
 	}
 	
+	@SuppressWarnings("unchecked")
+	public List<SccPreFechamento> carregaDemonstrativoOperadoras(String cdEOTLD,String cdEOTClaro,String cdProdutoPrepago, String statusRepasse, Date dtInicial,Date dtFinal,boolean holding) throws DAOException {
+		
+		List<SccPreFechamento> list = null;
+		try {
+			Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(SccPreFechamento.class);
+						
+			criteria.add(Restrictions.eq("cdEotLd", cdEOTLD));
+			if ((cdEOTClaro != null) && (!cdEOTClaro.equals(BasicDAO.GET_ALL_STRING))) {				
+				if (holding) {
+					criteria.add(Restrictions.in("cdEotClaro", getOperadoraDAO().pesquisaOperadorasHolding(cdEOTClaro)));
+				} else {
+					criteria.add(Restrictions.eq("cdEotClaro", cdEOTClaro));
+				}
+			}
+			if ((statusRepasse != null) && (!statusRepasse.equals(BasicDAO.GET_ALL_STRING))) {
+				criteria.add(Restrictions.eq("cdStatusFechamento", statusRepasse));
+			}
+			if (cdProdutoPrepago != null) {
+				criteria.add(Restrictions.eq("cdProdutoPrepago", cdProdutoPrepago));
+			}
+			criteria.add(Restrictions.eq("dtInicialFechamento", dtInicial));
+			criteria.add(Restrictions.eq("dtFimFechamento", dtFinal));
+			
+			ProjectionList projectionList = Projections.projectionList();
+			projectionList.add(Projections.sum("qtCdrs").as("qtCdrs"));
+			projectionList.add(Projections.sum("qtCdrs226").as("qtCdrs226"));
+			projectionList.add(Projections.sum("qtCdrsOm").as("qtCdrsOm"));
+			projectionList.add(Projections.sum("qtDuracaoReal").as("qtDuracaoReal"));
+			projectionList.add(Projections.sum("qtDuracaoRealOm").as("qtDuracaoRealOm"));
+			projectionList.add(Projections.sum("qtDuracaoTarifada").as("qtDuracaoTarifada"));
+			projectionList.add(Projections.sum("qtDuracaoTarifada226").as("qtDuracaoTarifada226"));
+			projectionList.add(Projections.sum("qtDuracaoTarifadaOm").as("qtDuracaoTarifadaOm"));
+			
+			projectionList.add(Projections.sum("vlAcertoClaro").as("vlAcertoClaro"));
+			projectionList.add(Projections.sum("vlAcertoLd").as("vlAcertoLd"));
+			projectionList.add(Projections.sum("vlBrutoChamada").as("vlBrutoChamada"));
+			projectionList.add(Projections.sum("vlBrutoChamadaOm").as("vlBrutoChamadaOm"));
+			projectionList.add(Projections.sum("vlCofins").as("vlCofins"));
+			
+			projectionList.add(Projections.sum("vlCofinsOm").as("vlCofinsOm"));
+			projectionList.add(Projections.sum("vlCpmf").as("vlCpmf"));
+			projectionList.add(Projections.sum("vlCredito226").as("vlCredito226"));
+			projectionList.add(Projections.sum("vlBrutoChamadaOm").as("vlBrutoChamadaOm"));
+			projectionList.add(Projections.sum("vlCreditoAut").as("vlCreditoAut"));
+			
+			projectionList.add(Projections.sum("vlFinalRepassar").as("vlFinalRepassar"));
+			projectionList.add(Projections.sum("vlIcms").as("vlIcms"));
+			projectionList.add(Projections.sum("vlIcms226").as("vlIcms226"));
+			projectionList.add(Projections.sum("vlIcmsAnt").as("vlIcmsAnt"));
+			projectionList.add(Projections.sum("vlIcmsOm").as("vlIcmsOm"));
+			
+			projectionList.add(Projections.sum("vlLiquido226").as("vlLiquido226"));
+			projectionList.add(Projections.sum("vlLiquidoChamada").as("vlLiquidoChamada"));
+			projectionList.add(Projections.sum("vlLiquidoChamadaOm").as("vlLiquidoChamadaOm"));
+			projectionList.add(Projections.sum("vlMultasClaro").as("vlMultasClaro"));
+			projectionList.add(Projections.sum("vlMultasLd").as("vlMultasLd"));
+			
+			
+			projectionList.add(Projections.sum("vlPenalMinPerd").as("vlPenalMinPerd"));
+			projectionList.add(Projections.sum("vlPis").as("vlPis"));
+			projectionList.add(Projections.sum("vlPisCofins226").as("vlPisCofins226"));
+			projectionList.add(Projections.sum("vlPisOm").as("vlPisOm"));
+			projectionList.add(Projections.sum("vlServPrestBruto").as("vlServPrestBruto"));
+			
+			projectionList.add(Projections.sum("vlServPrestCofins").as("vlServPrestCofins"));
+			projectionList.add(Projections.sum("vlServPrestIss").as("vlServPrestIss"));
+			projectionList.add(Projections.sum("vlServPrestPis").as("vlServPrestPis"));
+			projectionList.add(Projections.groupProperty("flRepassaIcms").as("flRepassaIcms"));
+			criteria.setProjection(projectionList);
+			ResultTransformer resultTransformer = Transformers.aliasToBean(SccPreFechamento.class);			
+			criteria.setResultTransformer(resultTransformer);				
+			list = (List<SccPreFechamento>)criteria.list();
+		} catch (Exception e) { 
+			throw new DAOException(e.getMessage(), "SccPreFechamentoDAO.carregaDemonstrativoOperadoras"); 
+		}
+		
+		return list;
+	}
+	
 	public SccOperadoraDAO getOperadoraDAO() {
 		return operadoraDAO;
 	}
@@ -283,7 +363,7 @@ public class SccPreFechamentoDAOImpl extends HibernateBasicDAOImpl<SccPreFechame
 	}
 	
 	public List<RelApuracaoFechamentoPrePagoView> geraRelatorioApuracao(String cdProduto, String cdEOTLD, String cdEOTClaro,String cdStatusFechamento, Date dataInicial, Date dataFinal) throws DAOException {
-		String sql = "SELECT spf.SQ_PRE_FECHAMENTO, "+
+		String sql = "SELECT " +
                      " spf.CD_EOT_LD,   "+
                      " spf.DT_INICIAL_FECHAMENTO, "+  
                      " spf.DT_FIM_FECHAMENTO, "+  
@@ -291,42 +371,42 @@ public class SccPreFechamentoDAOImpl extends HibernateBasicDAOImpl<SccPreFechame
                      " spf.DT_FECHAMENTO,   "+
                      " spf.CD_STATUS_FECHAMENTO, "+ 
                      " spf.SQ_PEDIDO,   "+
-                     " NVL(spf.QT_CDRS,0) AS QT_CDRS, "+  
-                     " NVL(spf.VL_LIQUIDO_CHAMADA,0) VL_LIQUIDO_CHAMADA, "+ 
-                     " NVL(spf.VL_BRUTO_CHAMADA,0) VL_BRUTO_CHAMADA,   "+
-                     " NVL(spf.QT_DURACAO_REAL,0) QT_DURACAO_REAL,   "+
-                     " NVL(spf.QT_DURACAO_TARIFADA,0) QT_DURACAO_TARIFADA, "+  
-                     " NVL(spf.VL_ICMS,0) VL_ICMS,   "+
-                     " NVL(spf.VL_PIS,0) VL_PIS,   "+
-                     " NVL(spf.VL_COFINS,0) VL_COFINS, "+  
-                     " NVL(spf.QT_CDRS_OM,0) AS QT_CDRS_OM, "+  
-                     " NVL(spf.VL_LIQUIDO_CHAMADA_OM,0) VL_LIQUIDO_CHAMADA_OM, "+  
-                     " NVL(spf.VL_BRUTO_CHAMADA_OM,0) VL_BRUTO_CHAMADA_OM,   "+
-                     " NVL(spf.QT_DURACAO_REAL_OM,0) QT_DURACAO_REAL_OM,   "+
-                     " NVL(spf.QT_DURACAO_TARIFADA_OM,0) QT_DURACAO_TARIFADA_OM, "+  
-                     " NVL(spf.VL_ICMS_OM,0) VL_ICMS_OM,   "+
-                     " NVL(spf.VL_PIS_OM,0) VL_PIS_OM,   "+
-                     " NVL(spf.VL_COFINS_OM,0) VL_COFINS_OM, "+  
-                     " NVL(spf.VL_SERV_PREST_BRUTO,0) VL_SERV_PREST_BRUTO, "+  
-                     " NVL(spf.VL_SERV_PREST_PIS,0) VL_SERV_PREST_PIS,   "+
-                     " NVL(spf.VL_SERV_PREST_COFINS,0) VL_SERV_PREST_COFINS, "+  
-                     " NVL(spf.VL_SERV_PREST_ISS,0) VL_SERV_PREST_ISS,   "+
-                     " NVL(spf.VL_CREDITO_AUT,0) VL_CREDITO_AUT,   "+
-                     " NVL(spf.QT_CDRS_226,0) AS QT_CDRS_226,   "+
-                     " NVL(spf.QT_DURACAO_TARIFADA_226,0) QT_DURACAO_TARIFADA_226, "+  
-                     " NVL(spf.VL_CREDITO_226,0) VL_CREDITO_226,   "+
-                     " NVL(spf.VL_PENAL_MIN_PERD,0) VL_PENAL_MIN_PERD, "+  
-                     " NVL(spf.VL_MULTAS_CLARO,0) VL_MULTAS_CLARO,   "+
-                     " NVL(spf.VL_MULTAS_LD,0) VL_MULTAS_LD,   "+
-                     " NVL(spf.VL_ACERTO_CLARO,0) VL_ACERTO_CLARO, "+  
-                     " NVL(spf.VL_ACERTO_LD,0) VL_ACERTO_LD,   "+
-                     " NVL(spf.VL_ICMS_ANT,0) VL_ICMS_ANT,   "+
-                     " NVL(spf.VL_CPMF,0) VL_CPMF,   "+
+                     " SUM(NVL(spf.QT_CDRS,0)) AS QT_CDRS, "+  
+                     " SUM(NVL(spf.VL_LIQUIDO_CHAMADA,0)) VL_LIQUIDO_CHAMADA, "+ 
+                     " SUM(NVL(spf.VL_BRUTO_CHAMADA,0)) VL_BRUTO_CHAMADA,   "+
+                     " SUM(NVL(spf.QT_DURACAO_REAL,0)) QT_DURACAO_REAL,   "+
+                     " SUM(NVL(spf.QT_DURACAO_TARIFADA,0)) QT_DURACAO_TARIFADA, "+  
+                     " SUM(NVL(spf.VL_ICMS,0)) VL_ICMS,   "+
+                     " SUM(NVL(spf.VL_PIS,0)) VL_PIS,   "+
+                     " SUM(NVL(spf.VL_COFINS,0)) VL_COFINS, "+  
+                     " SUM(NVL(spf.QT_CDRS_OM,0)) AS QT_CDRS_OM, "+  
+                     " SUM(NVL(spf.VL_LIQUIDO_CHAMADA_OM,0)) VL_LIQUIDO_CHAMADA_OM, "+  
+                     " SUM(NVL(spf.VL_BRUTO_CHAMADA_OM,0)) VL_BRUTO_CHAMADA_OM,   "+
+                     " SUM(NVL(spf.QT_DURACAO_REAL_OM,0)) QT_DURACAO_REAL_OM,   "+
+                     " SUM(NVL(spf.QT_DURACAO_TARIFADA_OM,0)) QT_DURACAO_TARIFADA_OM, "+  
+                     " SUM(NVL(spf.VL_ICMS_OM,0)) VL_ICMS_OM,   "+
+                     " SUM(NVL(spf.VL_PIS_OM,0)) VL_PIS_OM,   "+
+                     " SUM(NVL(spf.VL_COFINS_OM,0)) VL_COFINS_OM, "+  
+                     " SUM(NVL(spf.VL_SERV_PREST_BRUTO,0)) VL_SERV_PREST_BRUTO, "+  
+                     " SUM(NVL(spf.VL_SERV_PREST_PIS,0)) VL_SERV_PREST_PIS,   "+
+                     " SUM(NVL(spf.VL_SERV_PREST_COFINS,0)) VL_SERV_PREST_COFINS, "+  
+                     " SUM(NVL(spf.VL_SERV_PREST_ISS,0)) VL_SERV_PREST_ISS,   "+
+                     " SUM(NVL(spf.VL_CREDITO_AUT,0)) VL_CREDITO_AUT,   "+
+                     " SUM(NVL(spf.QT_CDRS_226,0)) AS QT_CDRS_226,   "+
+                     " SUM(NVL(spf.QT_DURACAO_TARIFADA_226,0)) QT_DURACAO_TARIFADA_226, "+  
+                     " SUM(NVL(spf.VL_CREDITO_226,0)) VL_CREDITO_226,   "+
+                     " SUM(NVL(spf.VL_PENAL_MIN_PERD,0)) VL_PENAL_MIN_PERD, "+  
+                     " SUM(NVL(spf.VL_MULTAS_CLARO,0)) VL_MULTAS_CLARO,   "+
+                     " SUM(NVL(spf.VL_MULTAS_LD,0)) VL_MULTAS_LD,   "+
+                     " SUM(NVL(spf.VL_ACERTO_CLARO,0)) VL_ACERTO_CLARO, "+  
+                     " SUM(NVL(spf.VL_ACERTO_LD,0)) VL_ACERTO_LD,   "+
+                     " SUM(NVL(spf.VL_ICMS_ANT,0)) VL_ICMS_ANT,   "+
+                     " SUM(NVL(spf.VL_CPMF,0)) VL_CPMF,   "+
                      " spf.FL_REPASSA_CPMF,   "+
                      " spf.FL_REPASSA_ICMS,   "+
-                     " NVL(VL_LIQUIDO_226,0) VL_LIQUIDO_226, "+  
-                     " NVL(VL_PIS_COFINS_226,0) VL_PIS_COFINS_226, "+  
-                     " NVL(VL_ICMS_226,0) VL_ICMS_226,   "+
+                     " SUM(NVL(VL_LIQUIDO_226,0)) VL_LIQUIDO_226, "+  
+                     " SUM(NVL(VL_PIS_COFINS_226,0)) VL_PIS_COFINS_226, "+  
+                     " SUM(NVL(VL_ICMS_226,0)) VL_ICMS_226,   "+
                      " (SELECT SO.DS_OPERADORA FROM SCC_OPERADORA SO WHERE CD_EOT IN (SELECT O.CD_EOT_HOLDING FROM SCC_OPERADORA O WHERE O.CD_EOT = CD_EOT_CLARO)), "+ 
                      " NVL(DS_CRITERIO_CUSTO,'POR CHAMADA') CRITERIO_CUSTO,   "+
                      " (SELECT CAST(O.SG_UF AS VARCHAR2(2)) FROM SCC_OPERADORA O WHERE O.CD_EOT = CD_EOT_CLARO) SG_UF_CLARO  "+                    
@@ -360,7 +440,16 @@ public class SccPreFechamentoDAOImpl extends HibernateBasicDAOImpl<SccPreFechame
 				viewMapper.appendSQL("AND spf.CD_PRODUTO_PREPAGO = :cdProduto ");
 				viewMapper.addArgument("cdProduto", cdProduto);
 			}
-			viewMapper.addResultMap("sqPreFechamento",Long.class);
+			
+			viewMapper.setProjections(" GROUP BY spf.CD_EOT_LD, spf.DT_INICIAL_FECHAMENTO,spf.DT_FIM_FECHAMENTO, "+  
+                     " spf.CD_EOT_CLARO,   "+
+                     " spf.DT_FECHAMENTO,   "+
+                     " spf.CD_STATUS_FECHAMENTO, "+ 
+                     " spf.SQ_PEDIDO,   "+
+                     " spf.FL_REPASSA_CPMF,   "+
+                     " spf.FL_REPASSA_ICMS,   "+
+                     " NVL(DS_CRITERIO_CUSTO,'POR CHAMADA') ");
+
 			viewMapper.addResultMap("cdEOTLD",String.class);
 			viewMapper.addResultMap("dtInicialFechamento",Date.class);
 			viewMapper.addResultMap("dtFinalFechamento",Date.class);

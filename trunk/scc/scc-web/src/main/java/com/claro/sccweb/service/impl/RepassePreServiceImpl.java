@@ -313,7 +313,7 @@ public class RepassePreServiceImpl extends AbstractService implements RepassePre
 					decorator.setItens(geraLinhasDemonstrativo(fechamentoHolding.get(0)));
 					resultado.add(decorator);
 				}
-				List<SccPreFechamento> fechamentoOperadoras = getPreFechamentoDAO().pesquisaRepassesPreOperadora(to.getCdEOTLD(), to.getCdEOTClaro(), to.getCdProdutoPrepago(), to.getCdStatusRepasse(), calculaDataInicialPeriodoPrePago(to.getMes(), to.getAno()), calculaDataFinalPeriodoPrePago(to.getMes(), to.getAno()),full);
+				List<SccPreFechamento> fechamentoOperadoras = getPreFechamentoDAO().carregaDemonstrativoOperadoras(to.getCdEOTLD(), to.getCdEOTClaro(), to.getCdProdutoPrepago(), to.getCdStatusRepasse(), calculaDataInicialPeriodoPrePago(to.getMes(), to.getAno()), calculaDataFinalPeriodoPrePago(to.getMes(), to.getAno()),full);
 				for (int o=0;o<fechamentoOperadoras.size();o++) {
 					DemonstrativoRepassePreDecorator decorator = new DemonstrativoRepassePreDecorator();
 					decorator.setHolding(false);
@@ -368,7 +368,7 @@ public class RepassePreServiceImpl extends AbstractService implements RepassePre
 	
 	public DemonstrativoRepassePreDecorator carregaDemonstrativoOperadoras(DemonstrativoRepassePrePagoTO to) throws DAOException,ServiceException {
 		try {
-			List<SccPreFechamento> fechamentoOperadoras = getPreFechamentoDAO().pesquisaRepassesPreOperadora(to.getCdEOTLD(), to.getCdEOTClaro(), to.getCdProdutoPrepago(),BasicDAO.GET_ALL_STRING, to.getDtInicial(), to.getDtFinal(),false);
+			List<SccPreFechamento> fechamentoOperadoras = getPreFechamentoDAO().carregaDemonstrativoOperadoras(to.getCdEOTLD(), to.getCdEOTClaro(), to.getCdProdutoPrepago(),BasicDAO.GET_ALL_STRING, to.getDtInicial(), to.getDtFinal(),false);
 			DemonstrativoRepassePreDecorator decorator = new DemonstrativoRepassePreDecorator();
 			for (int o=0;o<fechamentoOperadoras.size();o++) {				
 				decorator.setHolding(false);

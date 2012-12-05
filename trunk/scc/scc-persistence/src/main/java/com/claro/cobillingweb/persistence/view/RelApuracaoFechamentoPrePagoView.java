@@ -14,7 +14,6 @@ import java.util.Date;
  * */
 public class RelApuracaoFechamentoPrePagoView {
 
-	private Long sqPreFechamento;
 	private String cdEOTLD;
 	private Date dtInicialFechamento;
 	private Date dtFinalFechamento;
@@ -61,12 +60,7 @@ public class RelApuracaoFechamentoPrePagoView {
 	private String dsOperadora;
 	private String criterioCusto;
 	private String ufClaro;
-	public Long getSqPreFechamento() {
-		return sqPreFechamento;
-	}
-	public void setSqPreFechamento(Long sqPreFechamento) {
-		this.sqPreFechamento = sqPreFechamento;
-	}
+
 	public String getCdEOTLD() {
 		return cdEOTLD;
 	}

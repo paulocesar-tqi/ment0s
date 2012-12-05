@@ -26,6 +26,9 @@ public interface SccPreFechamentoDAO extends BasicDAO<SccPreFechamento> {
 	 */
 	public List<SccPreFechamento> pesquisaRepassesPreOperadora(String cdEOTLD,String cdEOTClaro,String cdProdutoCobilling, String statusRepasse, Date dtInicial,Date dtFinal,boolean holding)
 			throws DAOException;
+	
+	public List<SccPreFechamento> carregaDemonstrativoOperadoras(String cdEOTLD,String cdEOTClaro,String cdProdutoCobilling, String statusRepasse, Date dtInicial,Date dtFinal,boolean holding)
+			throws DAOException;
 
 	/**
 	 * Pesquisa repasses de pré-pago de uma holding calculando somatório dos campos (GROUP BY).
