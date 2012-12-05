@@ -212,7 +212,7 @@ public class SccAssinaturaPrePago implements Serializable {
 		this.produtoPrepago = produtoPrepago;
 	}
 
-	@Column(name = "QT_TARIF_FRANQUIA")
+	@Column(name = "QT_MIN_TARIFADOS_FRANQUIA")
 	public Double getQtTarifaFranquia() {
 		return qtTarifaFranquia;
 	}
@@ -230,7 +230,7 @@ public class SccAssinaturaPrePago implements Serializable {
 		this.hrDuracaoReal = hrDuracaoReal;
 	}
 
-	@Column(name = "QTD_CDRS")
+	@Column(name = "QT_CDRS")
 	public Long getQtdCdr() {
 		return qtdCdr;
 	}
