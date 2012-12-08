@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 import com.claro.cobillingweb.persistence.dao.DAOException;
 import com.claro.cobillingweb.persistence.dao.internal.SccAssinaturaPrePagoDAO;
 import com.claro.cobillingweb.persistence.dao.internal.SccOperadoraDAO;
-import com.claro.cobillingweb.persistence.entity.SccAssinaturaPrePago;
 import com.claro.cobillingweb.persistence.entity.SccPacotePrepago;
+import com.claro.cobillingweb.persistence.view.DisponibilizacaoPacotePrePagoView;
 import com.claro.sccweb.service.AbstractService;
 import com.claro.sccweb.service.SccAssinaturaPreService;
 import com.claro.sccweb.service.ServiceException;
@@ -29,9 +29,15 @@ public class SccAssinaturaPreServiceImpl extends AbstractService implements SccA
 	}
 
 	@Override
-	public List<SccAssinaturaPrePago> pesquisarDisponibilidade(String cdEOTClaro, String cdEOTLD, Long cdPacote,
+	public List<DisponibilizacaoPacotePrePagoView> pesquisarDisponibilidade(String cdEOTClaro, String cdEOTLD, Long cdPacote,
 			Date dtInicio, Date dtFim) throws ServiceException, DAOException {
 		return getSccAssinaturaPrePagoDAO().pesquisarDisponibilidade(cdEOTClaro, cdEOTLD, cdPacote, dtInicio, dtFim);
+	}
+	
+	@Override
+	public DisponibilizacaoPacotePrePagoView pesquisarSumarioDisponibilidade(String cdEOTClaro, String cdEOTLD, Long cdPacote, Date dtInicioProcExterna, Date dtFimProcExterna)
+			throws ServiceException, DAOException {
+		return getSccAssinaturaPrePagoDAO().pesquisarSumarioDisponibilidade(cdEOTClaro, cdEOTLD, cdPacote, dtInicioProcExterna, dtFimProcExterna);
 	}
 
 	public SccAssinaturaPrePagoDAO getSccAssinaturaPrePagoDAO() {

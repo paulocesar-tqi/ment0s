@@ -9,6 +9,8 @@ public class DisponibilizacaoPacotesPreForm extends BaseForm {
 	private Long cdPacote;
 	private Date dtInicio;
 	private Date dtFim;
+	private Date dtInicioProcExterna;
+	private Date dtFimProcExterna;
 	public String getCdEOTClaro() {
 		return cdEOTClaro;
 	}
@@ -38,6 +40,18 @@ public class DisponibilizacaoPacotesPreForm extends BaseForm {
 	}
 	public void setDtFim(Date dtFim) {
 		this.dtFim = dtFim;
+	}
+	public Date getDtInicioProcExterna() {
+		return dtInicioProcExterna;
+	}
+	public void setDtInicioProcExterna(Date dtInicioProcExterna) {
+		this.dtInicioProcExterna = dtInicioProcExterna;
+	}
+	public Date getDtFimProcExterna() {
+		return dtFimProcExterna;
+	}
+	public void setDtFimProcExterna(Date dtFimProcExterna) {
+		this.dtFimProcExterna = dtFimProcExterna;
 	}
 	
 	

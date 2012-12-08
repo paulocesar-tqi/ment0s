@@ -3,20 +3,17 @@ package com.claro.cobillingweb.persistence.dao.internal.impl;
 import java.util.Date;
 import java.util.List;
 
-import org.hibernate.Criteria;
 import org.hibernate.Query;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.ProjectionList;
-import org.hibernate.criterion.Projections;
-import org.hibernate.criterion.Restrictions;
-import org.hibernate.transform.ResultTransformer;
-import org.hibernate.transform.Transformers;
+import org.hibernate.Session;
 
 import com.claro.cobillingweb.persistence.dao.DAOException;
 import com.claro.cobillingweb.persistence.dao.impl.HibernateBasicDAOImpl;
 import com.claro.cobillingweb.persistence.dao.internal.SccAssinaturaPrePagoDAO;
+import com.claro.cobillingweb.persistence.dao.query.DisponibilizacaoPacotePrePagoDAONativeSQL;
 import com.claro.cobillingweb.persistence.entity.SccAssinaturaPrePago;
 import com.claro.cobillingweb.persistence.entity.SccPacotePrepago;
+import com.claro.cobillingweb.persistence.view.DisponibilizacaoPacotePrePagoView;
+import com.claro.cobillingweb.persistence.view.mapper.NativeSQLViewMapper;
 
 public class SccAssinaturaPrePagoDAOImpl extends HibernateBasicDAOImpl<SccAssinaturaPrePago> implements
 		SccAssinaturaPrePagoDAO {
@@ -33,6 +30,7 @@ public class SccAssinaturaPrePagoDAOImpl extends HibernateBasicDAOImpl<SccAssina
 			
 			Query q = getSessionFactory().getCurrentSession().createQuery(hql);
 			
+			@SuppressWarnings("unchecked")
 			List<SccPacotePrepago> lst = q.list();
 			
 			return lst;			
@@ -42,44 +40,63 @@ public class SccAssinaturaPrePagoDAOImpl extends HibernateBasicDAOImpl<SccAssina
 	}
 
 	@Override
-	public List<SccAssinaturaPrePago> pesquisarDisponibilidade(String cdEOTClaro, String cdEOTLD, Long cdPacote,
+	public List<DisponibilizacaoPacotePrePagoView> pesquisarDisponibilidade(String cdEOTClaro, String cdEOTLD, Long cdPacote,
 			Date dtInicio, Date dtFim) throws DAOException {
-		Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(SccAssinaturaPrePago.class);
-
+		Session session = getSessionFactory().getCurrentSession();
+		NativeSQLViewMapper<DisponibilizacaoPacotePrePagoView> mapper = new NativeSQLViewMapper<DisponibilizacaoPacotePrePagoView>(session, DisponibilizacaoPacotePrePagoDAONativeSQL.SQL, DisponibilizacaoPacotePrePagoView.class);
+				
 		if (cdEOTLD != null && !cdEOTLD.equals(GET_ALL_STRING))
-			criteria.add(Restrictions.eq("operadoraLD.cdEot", cdEOTLD));
+			mapper.addArgument("cdEOTLD", cdEOTLD, DisponibilizacaoPacotePrePagoDAONativeSQL.FILTRO_OPERADORA_EXTERNA);
 		if (cdEOTClaro != null && !cdEOTClaro.equals(GET_ALL_STRING))
-			criteria.add(Restrictions.eq("operadoraClaro.cdEot", cdEOTClaro));
-
+			mapper.addArgument("cdEOTClaro", cdEOTClaro, DisponibilizacaoPacotePrePagoDAONativeSQL.FILTRO_OPERADORA_CLARO);
 		if (cdPacote != null && !cdPacote.equals(GET_ALL))
-			criteria.add(Restrictions.eq("pacotePrepago.cdPacotePrepago", cdPacote));
-
+			mapper.addArgument("cdPacote", cdPacote, DisponibilizacaoPacotePrePagoDAONativeSQL.FILTRO_PACOTE);
 		if (dtInicio != null)
-			criteria.add(Restrictions.ge("dtInicioFranquia", dtInicio));
-
+			mapper.addArgument("dataInicial", dtInicio, DisponibilizacaoPacotePrePagoDAONativeSQL.FILTRO_DATA_INICIAL);
 		if (dtFim != null)
-			criteria.add(Restrictions.le("dtInicioFranquia", dtFim));
+			mapper.addArgument("dataFinal", dtFim, DisponibilizacaoPacotePrePagoDAONativeSQL.FILTRO_DATA_FINAL);
 
-		ProjectionList projectionList = Projections.projectionList();
-		projectionList.add(Projections.sum("qtdCdr").as("qtdCdr"));
-		projectionList.add(Projections.sum("qtTarifaFranquia").as("qtTarifaFranquia"));
-		projectionList.add(Projections.sum("hrDuracaoReal").as("hrDuracaoReal"));
-		projectionList.add(Projections.sum("vlBrutoPacote").as("vlBrutoPacote"));
-		projectionList.add(Projections.count("nuTelefone").as("sqArquivo"));
+		mapper.addResultMap("dataReferencia", Date.class);
+		mapper.addResultMap("operadoraClaro", String.class);
+		mapper.addResultMap("operadoraLD", String.class);
+		mapper.addResultMap("terminal", String.class);
+		mapper.addResultMap("status", String.class);
+		mapper.addResultMap("descricaoPacote", String.class);
+		mapper.addResultMap("cdProdutoPrepago", String.class);
+		mapper.addResultMap("qtdChamadas", Integer.class);
+		mapper.addResultMap("qtdPacotes", Integer.class);
+		mapper.addResultMap("duracaoReal", Integer.class);
+		mapper.addResultMap("qtdConsumida", Double.class);
+		mapper.addResultMap("valorBruto", Double.class);
+		
+		mapper.setProjections(DisponibilizacaoPacotePrePagoDAONativeSQL.PROJECTIONS);
+		
+		return mapper.execute();
+	}
+	
+	@Override
+	public DisponibilizacaoPacotePrePagoView pesquisarSumarioDisponibilidade(String cdEOTClaro, String cdEOTLD, Long cdPacote,
+			Date dtInicioProcExterna, Date dtFimProcExterna) throws DAOException {
+		Session session = getSessionFactory().getCurrentSession();
+		NativeSQLViewMapper<DisponibilizacaoPacotePrePagoView> mapper = new NativeSQLViewMapper<DisponibilizacaoPacotePrePagoView>(session, DisponibilizacaoPacotePrePagoDAONativeSQL.SQL_TOTAL, DisponibilizacaoPacotePrePagoView.class);
+				
+		if (cdEOTLD != null && !cdEOTLD.equals(GET_ALL_STRING))
+			mapper.addArgument("cdEOTLD", cdEOTLD, DisponibilizacaoPacotePrePagoDAONativeSQL.FILTRO_OPERADORA_EXTERNA);
+		if (cdEOTClaro != null && !cdEOTClaro.equals(GET_ALL_STRING))
+			mapper.addArgument("cdEOTClaro", cdEOTClaro, DisponibilizacaoPacotePrePagoDAONativeSQL.FILTRO_OPERADORA_CLARO);
+		if (cdPacote != null && !cdPacote.equals(GET_ALL))
+			mapper.addArgument("cdPacote", cdPacote, DisponibilizacaoPacotePrePagoDAONativeSQL.FILTRO_PACOTE);
+		if (dtInicioProcExterna != null)
+			mapper.addArgument("dataInicialProcExterna", dtInicioProcExterna, DisponibilizacaoPacotePrePagoDAONativeSQL.FILTRO_DATA_INICIAL_PROC_EXTERNA);
+		if (dtFimProcExterna != null)
+			mapper.addArgument("dataFinalProcExterna", dtFimProcExterna, DisponibilizacaoPacotePrePagoDAONativeSQL.FILTRO_DATA_FINAL_PROC_EXTERNA);
 
-		projectionList.add(Projections.groupProperty("dtInicioFranquia").as("dtInicioFranquia"));
-		projectionList.add(Projections.groupProperty("operadoraLD").as("operadoraLD"));
-		projectionList.add(Projections.groupProperty("operadoraClaro").as("operadoraClaro"));
-		projectionList.add(Projections.groupProperty("pacotePrepago").as("pacotePrepago"));
-		projectionList.add(Projections.groupProperty("nuTelefone").as("nuTelefone"));
-		projectionList.add(Projections.groupProperty("qtMinutosAdquiridos").as("qtMinutosAdquiridos"));
-		projectionList.add(Projections.groupProperty("produtoPrepago").as("produtoPrepago"));
-		projectionList.add(Projections.groupProperty("statusAssinatura").as("statusAssinatura"));
-
-		criteria.setProjection(projectionList);
-		criteria.addOrder(Order.asc("dtInicioFranquia"));
-		ResultTransformer resultTransformer = Transformers.aliasToBean(SccAssinaturaPrePago.class);
-		criteria.setResultTransformer(resultTransformer);
-		return criteria.list();
+		mapper.addResultMap("qtdChamadas", Integer.class);
+		mapper.addResultMap("duracaoReal", Integer.class);
+		mapper.addResultMap("qtdConsumida", Double.class);
+		
+		List<DisponibilizacaoPacotePrePagoView> lst = mapper.execute();
+		if (lst.size() > 0) return lst.get(0);
+		return null;
 	}
 }

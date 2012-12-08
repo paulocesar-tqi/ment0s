@@ -21,6 +21,16 @@ th.fundoVermelho {background:#FF5544;}
 		$('#pesquisar_button').click(pesquisar);
 		$('#excel_button').click(excel);
 		
+		$("#dtInicio").mask("99/99/9999");	
+		$("#dtFim").mask("99/99/9999");
+		$("#dtInicio" ).datepicker();
+		$("#dtFim" ).datepicker();		
+		
+		$("#dtInicioProcExterna").mask("99/99/9999");	
+		$("#dtFimProcExterna").mask("99/99/9999");
+		$("#dtInicioProcExterna" ).datepicker();
+		$("#dtFimProcExterna" ).datepicker();	
+		
 		function pesquisar() {
 			$('#pesquisar_button').attr('disabled', 'disabled');
 			$('#excel_button').attr('disabled', 'disabled');
@@ -80,12 +90,18 @@ th.fundoVermelho {background:#FF5544;}
 				<tr>
 					<td width="10%"><spring:message code="relatorio.label.dtInicial"/>:</td>
 					<td><form:input path="dtInicio"/><form:errors path="dtInicio" /></td>
+					<td width="10%"><spring:message code="relatorio.label.dtFinal"/>:</td>
+					<td><form:input path="dtFim"/><form:errors path="dtFim" /></td>
+					<td width="30%"></td>
 				</tr>
 				
 				<tr>
-					<td width="10%"><spring:message code="relatorio.label.dtFinal"/>:</td>
-					<td><form:input path="dtFim"/><form:errors path="dtFim" /></td>
+					<td width="15%"><spring:message code="relatorio.label.dtInicialProcExterna"/>:</td>
+					<td><form:input path="dtInicioProcExterna"/><form:errors path="dtInicioProcExterna" /></td>
+					<td width="15%"><spring:message code="relatorio.label.dtFinalProcExterna"/>:</td>
+					<td><form:input path="dtFimProcExterna"/><form:errors path="dtFimProcExterna" /></td>
 				</tr>
+				
 			</table>
 			<br />
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">				
@@ -98,12 +114,12 @@ th.fundoVermelho {background:#FF5544;}
 							<display:column property="terminal" title="Terminal"/>
 							<display:column property="status" title="Status"/>
 							<display:column property="descricaoPacote" title="Descrição dos Pacotes"/>
-							<display:column property="produto" title="Produtos"/>
-							<display:column property="qtdChamadas" title="Qtd CDRs"/>
+							<display:column property="produto" title="Cod Produto"/>
 							<display:column property="qtdPacotes" title="Qtd Pacotes"/>
+							<display:column property="vlBruto" title="Valor Bruto"/>		
+							<display:column property="qtdChamadas" title="Qtd CDRs"/>
 							<display:column property="duracaoReal" title="Duração Real"/>
 							<display:column property="qtdConsumida" title="Duração Tarifada"/>
-							<display:column property="vlBruto" title="Valor Bruto"/>
 						</display:table>
 					</td>
 				</tr>
