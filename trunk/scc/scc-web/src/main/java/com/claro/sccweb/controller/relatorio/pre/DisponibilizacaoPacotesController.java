@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.claro.cobillingweb.persistence.dao.BasicDAO;
-import com.claro.cobillingweb.persistence.entity.SccAssinaturaPrePago;
 import com.claro.cobillingweb.persistence.entity.SccOperadora;
 import com.claro.cobillingweb.persistence.entity.SccPacotePrepago;
+import com.claro.cobillingweb.persistence.view.DisponibilizacaoPacotePrePagoView;
 import com.claro.sccweb.controller.BaseOperationController;
-import com.claro.sccweb.decorator.rownum.entity.SccAssinaturaPrePagoDecorator;
+import com.claro.sccweb.decorator.rownum.view.DisponibilizacaoPacotePrePagoViewDecorator;
 import com.claro.sccweb.form.BaseForm;
 import com.claro.sccweb.form.DisponibilizacaoPacotesPreForm;
 
@@ -101,15 +101,24 @@ public class DisponibilizacaoPacotesController extends BaseOperationController<D
 		ModelAndView mav = new ModelAndView(getViewName());
 		DisponibilizacaoPacotesPreForm form = (DisponibilizacaoPacotesPreForm) _form;
 
-		List<SccAssinaturaPrePago> rows = getServiceManager().getSccAssinaturaPreService().pesquisarDisponibilidade(
+		List<DisponibilizacaoPacotePrePagoView> rows = getServiceManager().getSccAssinaturaPreService().pesquisarDisponibilidade(
 				form.getCdEOTClaro(), form.getCdEOTLD(), form.getCdPacote(), form.getDtInicio(), form.getDtFim());
+		DisponibilizacaoPacotePrePagoView total = null;
+		
+		if (rows.size() > 0)
+			total = getServiceManager().getSccAssinaturaPreService().pesquisarSumarioDisponibilidade(
+				form.getCdEOTClaro(), form.getCdEOTLD(), form.getCdPacote(), form.getDtInicioProcExterna(), form.getDtFimProcExterna());
 
-		List<SccAssinaturaPrePagoDecorator> decoratorList = new ArrayList<SccAssinaturaPrePagoDecorator>(rows.size());
+		List<DisponibilizacaoPacotePrePagoViewDecorator> decoratorList = new ArrayList<DisponibilizacaoPacotePrePagoViewDecorator>(rows.size());
 		for (int i = 0; i < rows.size(); i++) {
-			SccAssinaturaPrePagoDecorator decorator = new SccAssinaturaPrePagoDecorator(rows.get(i), i);
+			DisponibilizacaoPacotePrePagoViewDecorator decorator = new DisponibilizacaoPacotePrePagoViewDecorator(rows.get(i), i);
 			decoratorList.add(decorator);
 		}
+		if (total != null)
+			decoratorList.add(new DisponibilizacaoPacotePrePagoViewDecorator(total, rows.size()));
+		
 		storeInSession(getClass(), DISPLAY_TAG_SPACE_1, decoratorList, request);
+		
 		return mav;
 	}
 
