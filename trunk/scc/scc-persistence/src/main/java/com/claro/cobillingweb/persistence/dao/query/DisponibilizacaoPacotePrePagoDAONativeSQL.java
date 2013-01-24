@@ -27,6 +27,7 @@ public class DisponibilizacaoPacotePrePagoDAONativeSQL {
 	public static final String FILTRO_DATA_INICIAL = " AND A.DT_INICIO_FRANQUIA  >= :dataInicial ";
 	public static final String FILTRO_DATA_FINAL = " AND A.DT_INICIO_FRANQUIA  <= :dataFinal ";
 	public static final String FILTRO_PACOTE = " AND A.CD_PACOTE_PREPAGO = :cdPacote ";
+	public static final String FILTRO_MINUTOS = " AND A.QT_MINUTOS_ADQUIRIDOS = :qtdMinutos ";
 	public static final String FILTRO_OPERADORA_CLARO = " AND CLARO.CD_EOT = :cdEOTClaro ";
 	public static final String FILTRO_OPERADORA_EXTERNA = " AND LD.CD_EOT  = :cdEOTLD ";
 	public static final String FILTRO_DATA_INICIAL_PROC_EXTERNA = " AND CC.DT_PROC_EXTERNA >= :dataInicialProcExterna ";

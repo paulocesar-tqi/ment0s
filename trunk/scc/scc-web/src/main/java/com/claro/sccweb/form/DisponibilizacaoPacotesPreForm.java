@@ -6,7 +6,7 @@ public class DisponibilizacaoPacotesPreForm extends BaseForm {
 
 	private String cdEOTClaro;
 	private String cdEOTLD;
-	private Long cdPacote;
+	private String cdPacoteMinuto;
 	private Date dtInicio;
 	private Date dtFim;
 	private Date dtInicioProcExterna;
@@ -23,11 +23,11 @@ public class DisponibilizacaoPacotesPreForm extends BaseForm {
 	public void setCdEOTLD(String cdEOTLD) {
 		this.cdEOTLD = cdEOTLD;
 	}
-	public Long getCdPacote() {
-		return cdPacote;
+	public String getCdPacoteMinuto() {
+		return cdPacoteMinuto;
 	}
-	public void setCdPacote(Long cdPacote) {
-		this.cdPacote = cdPacote;
+	public void setCdPacoteMinuto(String cdPacoteMinuto) {
+		this.cdPacoteMinuto = cdPacoteMinuto;
 	}
 	public Date getDtInicio() {
 		return dtInicio;

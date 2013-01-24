@@ -17,9 +17,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.claro.cobillingweb.persistence.dao.BasicDAO;
 import com.claro.cobillingweb.persistence.entity.SccOperadora;
-import com.claro.cobillingweb.persistence.entity.SccPacotePrepago;
 import com.claro.cobillingweb.persistence.view.DisponibilizacaoPacotePrePagoView;
 import com.claro.sccweb.controller.BaseOperationController;
+import com.claro.sccweb.controller.util.BasicStringItem;
 import com.claro.sccweb.decorator.rownum.view.DisponibilizacaoPacotePrePagoViewDecorator;
 import com.claro.sccweb.form.BaseForm;
 import com.claro.sccweb.form.DisponibilizacaoPacotesPreForm;
@@ -85,11 +85,9 @@ public class DisponibilizacaoPacotesController extends BaseOperationController<D
 	 * @throws Exception
 	 */
 	@ModelAttribute("pacotes")
-	public List<SccPacotePrepago> populaPacotes() throws Exception {
-		List<SccPacotePrepago> comboList = new ArrayList<SccPacotePrepago>();
-		SccPacotePrepago nullValue = new SccPacotePrepago();
-		nullValue.setCdPacotePrepago(BasicDAO.GET_ALL);
-		nullValue.setNoPacotePrepago("Todos");
+	public List<BasicStringItem> populaPacotes() throws Exception {
+		List<BasicStringItem> comboList = new ArrayList<BasicStringItem>();
+		BasicStringItem nullValue = new BasicStringItem(BasicDAO.GET_ALL_STRING, "Todos");
 		comboList.add(0, nullValue);
 		comboList.addAll(getServiceManager().getSccAssinaturaPreService().findPacotesAssinatura());
 		return comboList;
@@ -101,13 +99,20 @@ public class DisponibilizacaoPacotesController extends BaseOperationController<D
 		ModelAndView mav = new ModelAndView(getViewName());
 		DisponibilizacaoPacotesPreForm form = (DisponibilizacaoPacotesPreForm) _form;
 
+		Long cdPacote = null;
+		Integer qtdMinutos = null;
+		if (form.getCdPacoteMinuto() != null && !form.getCdPacoteMinuto().equals(BasicDAO.GET_ALL_STRING)) {
+			String[] parts = form.getCdPacoteMinuto().split("_");
+			cdPacote = Long.parseLong(parts[0]);
+			qtdMinutos = Integer.parseInt(parts[1]);
+		}
 		List<DisponibilizacaoPacotePrePagoView> rows = getServiceManager().getSccAssinaturaPreService().pesquisarDisponibilidade(
-				form.getCdEOTClaro(), form.getCdEOTLD(), form.getCdPacote(), form.getDtInicio(), form.getDtFim());
+				form.getCdEOTClaro(), form.getCdEOTLD(), cdPacote, qtdMinutos, form.getDtInicio(), form.getDtFim());
 		DisponibilizacaoPacotePrePagoView total = null;
 		
 		if (rows.size() > 0)
 			total = getServiceManager().getSccAssinaturaPreService().pesquisarSumarioDisponibilidade(
-				form.getCdEOTClaro(), form.getCdEOTLD(), form.getCdPacote(), form.getDtInicioProcExterna(), form.getDtFimProcExterna());
+				form.getCdEOTClaro(), form.getCdEOTLD(), cdPacote, qtdMinutos, form.getDtInicioProcExterna(), form.getDtFimProcExterna());
 
 		List<DisponibilizacaoPacotePrePagoViewDecorator> decoratorList = new ArrayList<DisponibilizacaoPacotePrePagoViewDecorator>(rows.size());
 		for (int i = 0; i < rows.size(); i++) {
