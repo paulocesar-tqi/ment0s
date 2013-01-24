@@ -84,7 +84,7 @@ th.fundoVermelho {background:#FF5544;}
 				</tr>
 				<tr>    
 				    <td width="10%"><spring:message code="relatorio.label.pacote"/>:</td>
-				    <td ><form:select path="cdPacote" id="cdPacote" items="${pacotes}" itemLabel="noPacotePrepago" itemValue="cdPacotePrepago" /></td>    
+				    <td ><form:select path="cdPacoteMinuto" id="cdPacoteMinuto" items="${pacotes}" itemLabel="label" itemValue="key" /></td>    
 				</tr>
 
 				<tr>
