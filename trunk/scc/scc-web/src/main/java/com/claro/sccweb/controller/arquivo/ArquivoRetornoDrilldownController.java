@@ -112,6 +112,34 @@ public class ArquivoRetornoDrilldownController extends BaseOperationController<A
 		return mav;
 	}
 	
+	public ModelAndView csvCDRs(HttpServletRequest request, HttpServletResponse response,@Valid @ModelAttribute(FORM_NAME)  BaseForm form,BindingResult bindingResult,Model model) throws Exception {
+		info("Iniciando geração do CSV com CDRs para pesquisa de arquivos processados pós-pago");
+		ModelAndView mav = new ModelAndView("pesquisa_arquivos_processados_cdrs_csv");
+		ArquivoRetornoDrillDownPosForm myForm = (ArquivoRetornoDrillDownPosForm)getMyFormFromCache(getClass());
+		List<SccCdrCobilling> rows = getServiceManager().getArquivosService().listaCDRsStatus(myForm.getFiltroSelecionado().getStatusCdr().getCdStatusCdr(), myForm.getCdEOTClaro(), myForm.getCdEOTLD(), myForm.getDataInicial(), myForm.getDataFinal(), -1, -1);
+		List<SccCdrCobillingDecorator> decoratorList = new ArrayList<SccCdrCobillingDecorator>(rows.size());
+		for (int i=0;i<rows.size();i++) {
+			SccCdrCobillingDecorator cdrDecorator = new SccCdrCobillingDecorator(rows.get(i), i);
+			decoratorList.add(cdrDecorator);			
+		}
+		storeInSession(getClass(), DISPLAY_TAG_SPACE_4, decoratorList, request);
+		return mav;
+	}
+	
+	public ModelAndView txtCDRs(HttpServletRequest request, HttpServletResponse response,@Valid @ModelAttribute(FORM_NAME)  BaseForm form,BindingResult bindingResult,Model model) throws Exception {
+		info("Iniciando geração do TXT com CDRs para pesquisa de arquivos processados pós-pago");
+		ModelAndView mav = new ModelAndView("pesquisa_arquivos_processados_cdrs_txt");
+		ArquivoRetornoDrillDownPosForm myForm = (ArquivoRetornoDrillDownPosForm)getMyFormFromCache(getClass());
+		List<SccCdrCobilling> rows = getServiceManager().getArquivosService().listaCDRsStatus(myForm.getFiltroSelecionado().getStatusCdr().getCdStatusCdr(), myForm.getCdEOTClaro(), myForm.getCdEOTLD(), myForm.getDataInicial(), myForm.getDataFinal(), -1, -1);
+		List<SccCdrCobillingDecorator> decoratorList = new ArrayList<SccCdrCobillingDecorator>(rows.size());
+		for (int i=0;i<rows.size();i++) {
+			SccCdrCobillingDecorator cdrDecorator = new SccCdrCobillingDecorator(rows.get(i), i);
+			decoratorList.add(cdrDecorator);			
+		}
+		storeInSession(getClass(), DISPLAY_TAG_SPACE_4, decoratorList, request);
+		return mav;
+	}
+	
 	public ModelAndView voltar(HttpServletRequest request, HttpServletResponse response,@Valid @ModelAttribute(FORM_NAME)  BaseForm form,BindingResult bindingResult,Model model) throws Exception {
 		ModelAndView mav = new ModelAndView(getViewName());
 		return mav;	
