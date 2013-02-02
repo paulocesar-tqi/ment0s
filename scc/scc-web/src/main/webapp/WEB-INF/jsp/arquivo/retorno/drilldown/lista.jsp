@@ -12,6 +12,8 @@
 $(document).ready(function(){
 	$('#voltar_button').click(voltar)	
 	$('#excel_button').click(excel)
+	$('#csv_button').click(csv)
+	$('#txt_button').click(txt)
 	$('#tabs').tabs();
 });
 
@@ -34,6 +36,18 @@ function selecionar(linha)
 function excel()
 {
 	$('#operacao').val("excelCDRs");
+	$('#form1').submit();
+}
+
+function csv()
+{
+	$('#operacao').val("csvCDRs");
+	$('#form1').submit();
+}
+
+function txt()
+{
+	$('#operacao').val("txtCDRs");
 	$('#form1').submit();
 }
 
@@ -84,6 +98,8 @@ function excel()
     <td colspan="1" align="right" class="TdFormularioUp" nowrap="nowrap">    
     <input id="voltar_button" type="button" value="Voltar" />
     <input id="excel_button" type="button" value="Excel" />
+    <input id="csv_button" type="button" value="CSV" />
+    <input id="txt_button" type="button" value="TXT" />
     </td>
 </tr>
 </table>
