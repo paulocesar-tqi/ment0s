@@ -8,7 +8,7 @@
         <dependent-module archiveName="scc-persistence-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/scc-persistence/scc-persistence">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <property name="context-root" value="scc"/>
         <property name="java-output-path" value="/scc-web/target/classes"/>
+        <property name="context-root" value="scc-web"/>
     </wb-module>
 </project-modules>
