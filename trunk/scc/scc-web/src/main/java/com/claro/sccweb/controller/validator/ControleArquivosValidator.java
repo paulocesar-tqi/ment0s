@@ -5,6 +5,7 @@ import java.util.Date;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+import com.claro.sccweb.form.ControleArquivoForm;
 import com.claro.sccweb.form.SearchResultForm;
 import com.claro.sccweb.service.to.PesquisaArquivosConnectTO;
 
@@ -17,37 +18,37 @@ public class ControleArquivosValidator implements Validator {
 	 
 	public boolean supports(Class<?> clazz) {		
 		
-		return ((PesquisaArquivosConnectTO.class.equals(clazz)) || (SearchResultForm.class.equals(clazz)));
+		return ((ControleArquivoForm.class.equals(clazz)) || (SearchResultForm.class.equals(clazz)));
 	}
 
 	 
 	public void validate(Object arg0, Errors errors) {
-		if (arg0 instanceof PesquisaArquivosConnectTO){
+		if (arg0 instanceof ControleArquivoForm){
 		Date now = new Date();		
-		PesquisaArquivosConnectTO form = (PesquisaArquivosConnectTO)arg0;
+		ControleArquivoForm form = (ControleArquivoForm)arg0;
 		
-		if ((form.getDataInicio() == null) || (form.getDataFinal() == null)){
-			if (form.getDataInicio() == null)
+		if ((form.getFiltro().getDataInicio() == null) || (form.getFiltro().getDataFinal() == null)){
+			if (form.getFiltro().getDataInicio() == null)
 				{
 				errors.rejectValue("dataInicio", "periodoInvalido","Campo Obrigatório");
 				}		
-			if (form.getDataFinal() == null)
+			if (form.getFiltro().getDataFinal() == null)
 				{
 				errors.rejectValue("dataFinal", "periodoInvalido","Campo Obrigatório");
 				}
 		}
-		else if ((form.getDataInicio() != null) && (form.getDataFinal() != null))
+		else if ((form.getFiltro().getDataInicio() != null) && (form.getFiltro().getDataFinal() != null))
 			{
-				if (form.getDataFinal().before(form.getDataInicio()))
+				if (form.getFiltro().getDataFinal().before(form.getFiltro().getDataInicio()))
 					{
 					errors.rejectValue("dataInicio", "periodoInvalido","Período Inválido");
 					}
 			}
-		else if ((form.getDataInicio() != null) && (form.getDataInicio().after(now)))
+		else if ((form.getFiltro().getDataInicio() != null) && (form.getFiltro().getDataInicio().after(now)))
 			{
 				errors.rejectValue("dataInicio", "dataNoFuturo","Período no Futuro");
 			}
-		else if ((form.getDataFinal() != null) && (form.getDataFinal().after(now)))
+		else if ((form.getFiltro().getDataFinal() != null) && (form.getFiltro().getDataFinal().after(now)))
 			{
 				errors.rejectValue("dataFinal", "dataNoFuturo","Período no Futuro");
 			}}

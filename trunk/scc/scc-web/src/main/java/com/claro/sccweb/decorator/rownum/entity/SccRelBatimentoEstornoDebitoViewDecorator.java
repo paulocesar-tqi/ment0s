@@ -74,7 +74,7 @@ import com.claro.sccweb.decorator.rownum.RownumDecorator;
 		}
 		
 		public String getValorTotalNf(){
-			String value = "";
+			String value = "0.00";
 			if(getRow().getValorTotalNf() != null){
 				value = formataDouble(getRow().getValorTotalNf());
 			}
@@ -83,7 +83,7 @@ import com.claro.sccweb.decorator.rownum.RownumDecorator;
 		
 	
 		public String getValorTotalImpugnado(){
-			String value = "";
+			String value = "0.00";
 			if(getRow().getValorTotalImpugnado() != null){
 				value = formataDouble(getRow().getValorTotalImpugnado());
 			}
@@ -99,5 +99,18 @@ import com.claro.sccweb.decorator.rownum.RownumDecorator;
 			return value;
 		}
 		
-
+		
+		public String getMesAno(){
+			String value = "";
+			if(StringUtils.isNotEmpty(getRow().getMesAno())){
+				value = getRow().getMesAno();
+			}
+			return value;
+		}
+		
+		public String getSistema(){
+			return "SCC";
+		}
+		
+		
 }

@@ -30,7 +30,8 @@
 
 	function pesquisar() {
 		$('#pesquisar_button').attr('disabled', 'disabled');
-		$('#excel_button').attr('disabled', 'disabled');
+		$('#excel_button').removeAttr('disabled');
+		
 		$('#operacao').val("pesquisar");
 		$('#form1').submit();
 	}
@@ -81,7 +82,7 @@
 	<ul>
 		<li><a href="#tabs-1"><spring:message code="crud.titulo.pesquisar" /></a></li>
 	</ul>
-	<form:form modelAttribute="filtro" method="post" action="/scc/user/relatorio/faturas/aging/execute.scc" id="form1">
+	<form:form modelAttribute="filtro" method="post" action="/scc/user/relatorio/faturas/aging/listar.scc" id="form1">
 		<form:hidden path="operacao" id="operacao" />
 		<form:hidden path="itemSelecionado" id="itemSelecionado" />
 
@@ -91,25 +92,25 @@
 			
 				<tr>
 					<td width="15%"><spring:message code="controle.remessa.evento.label.eot.externa" /></td>
-					<td id="cdEOTLD"><form:select path="operadoraLd" id="cdEOTLD" items="${operadorasExternas}" itemLabel="dsOperadora" itemValue="cdCsp" /></td>
+					<td><form:select path="filtro.operadoraLd" id="cdEOTLD" items="${operadorasExternas}" itemLabel="dsOperadoraForCombos" itemValue="cdCsp" /></td>
 				</tr>
 				
 				<tr>
 					<td width="15%"><spring:message code="controle.remessa.evento.label.eot.claro" /></td>
-					<td id="comboOperadoraClaro"><form:select path="operadoraClaro" id="cdEOTClaro" items="${operadorasClaro}" itemLabel="dsOperadora" itemValue="cdEot" /></td>
+					<td><form:select path="filtro.operadoraClaro" id="cdEOTClaro" items="${operadorasClaro}" itemLabel="dsOperadoraForCombos" itemValue="cdEot" /></td>
 				</tr>
 
 				<tr>
     				<td width="10%"><spring:message code="relatorio.faturas.controle.label.datainicial"/></td>
-    				<td><form:input id="dataInicial" path="dataInicialPeriodo" />
-    				<form:errors path="dataInicialPeriodo" /></td>
+    				<td><form:input id="dataInicial" path="filtro.dataInicialPeriodo" />
+    				<form:errors path="filtro.dataInicialPeriodo" /></td>
 				</tr>
 
 				<tr>
     				<td width="10%"><spring:message code="relatorio.faturas.controle.label.datafinal"/></td>
     				<td>
-    					<form:input id="dataFinal" path="dataFinalPeriodo" />
-    					<form:errors path="dataFinalPeriodo" />
+    					<form:input id="dataFinal" path="filtro.dataFinalPeriodo" />
+    					<form:errors path="filtro.dataFinalPeriodo" />
     				</td>
 				</tr>
 			</table>
@@ -126,16 +127,16 @@
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
 					<td>
-						<display:table style="width:90%" name="sessionScope._DISPLAY_TAG_SPACE_1" pagesize="20" id="repasses" requestURI="/scc/user/relatorio/faturas/aging/tab1.scc" class="ui-state-default">
-							<display:column property="operadoraLd" title="Operadora LD"/>
+						<display:table style="width:90%" name="requestScope.filtro.listAgingFaturas" pagesize="20" id="repasses" requestURI="/scc/user/relatorio/faturas/aging/listar.scc" class="ui-state-default">
+							<display:column property="operadoraLD" title="Operadora LD"/>
 							<display:column property="operadoraClaro" title="Operadora Claro"/>
 							<display:column property="vencer" title="A vencer" style="text-align:right"/>
-							<display:column property="valor1a10Dias" title="1 a 10 dias" style="text-align:right"/>
-							<display:column property="valor11a20Dias" title="11 a 20 dias" style="text-align:right"/>
-							<display:column property="valor21a30Dias" title="21 a 30 dias" style="text-align:right"/>
-							<display:column property="valor31a60Dias" title="31 a 60" style="text-align:right"/>
-							<display:column property="valor61a90Dias" title="61 a 90 dias " style="text-align:right"/>
-							<display:column property="maior90Dias" title="> 90 dias" style="text-align:right"/>
+							<display:column property="valor1a10Dias" title="1 a 10 dias" format="{0, number, #,##0.00}" style="text-align:right"/>
+							<display:column property="valor11a20Dias" title="11 a 20 dias" format="{0, number, #,##0.00}" style="text-align:right"/>
+							<display:column property="valor21a30Dias" title="21 a 30 dias" format="{0, number, #,##0.00}" style="text-align:right"/>
+							<display:column property="valor31a60Dias" title="31 a 60" format="{0, number, #,##0.00}" style="text-align:right"/>
+							<display:column property="valor61a90Dias" title="61 a 90 dias" format="{0, number, #,##0.00}" style="text-align:right"/>
+							<display:column property="maior90Dias" title="> 90 dias" format="{0, number, #,##0.00}" style="text-align:right"/>
 						</display:table>
 					</td>
 				</tr>

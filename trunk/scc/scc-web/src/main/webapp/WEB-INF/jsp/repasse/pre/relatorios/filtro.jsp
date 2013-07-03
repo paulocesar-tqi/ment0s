@@ -12,6 +12,8 @@
 $(document).ready(function(){
 	$('#tabs').tabs();
 	$("#anoRelatorio").mask("9999");
+	$('#cdEOTLD').change(selecionaOperadora);
+	$('#cdEOTClaro').change(selecionaOperadora);
 	
 	
 	
@@ -23,7 +25,27 @@ $(document).ready(function(){
 		
 });
 
-
+function selecionaOperadora()
+{
+ $("#cdProdutoPrepago").empty().append('<option selected="selected" value="0">Carregando...</option>');
+ $("#periodo").empty().append('<option selected="selected" value="0">Selecione...</option>');
+ var eotLD = $("#cdEOTLD option:selected");
+ var eotClaro = $("#cdEOTClaro option:selected");
+ 
+  $.ajax({   
+	 url: "/scc/user/repasse/pre/relatorios/json/lista_produtos/"+eotLD.val()+"/"+eotClaro.val()+".scc",	 
+	 dataType: "json",   success: function(data) 
+	   	{     
+		var name, select, option;        
+	    select = document.getElementById('cdProdutoPrepago');      
+	        select.options.length = 0;         
+	        for (name in data) 
+	           {       
+	           if (data.hasOwnProperty(name)) {         
+			select.options.add(new Option(data[name], name));  
+	            }}}});
+    
+}
 
 
 </script>
@@ -37,12 +59,12 @@ $(document).ready(function(){
 <div id="tabs-1">
 <table width="100%" border="0" cellspacing="0" cellpadding="0" >
 <tr>
-    <td width="10%"><spring:message code="repasse_pre_relatorios.operadoraLD"/>:</td>
-    <td ><form:select path="cdEOTLD" id="cdEOTLD" items="${operadorasExternas}" itemLabel="dsOperadora" itemValue="cdEot" />    
+	<td width="10%"><spring:message code="repasse_pre_relatorios.operadoraClaro"/>:</td>
+    <td ><form:select path="cdEOTClaro" id="cdEOTClaro" items="${operadorasClaro}" itemLabel="dsOperadoraForCombos" itemValue="cdEot" />    
 </tr>
 <tr>
-	<td width="10%"><spring:message code="repasse_pre_relatorios.operadoraClaro"/>:</td>
-    <td ><form:select path="cdEOTClaro" id="cdEOTClaro" items="${operadorasClaro}" itemLabel="dsOperadora" itemValue="cdEot" />    
+    <td width="10%"><spring:message code="repasse_pre_relatorios.operadoraLD"/>:</td>
+    <td ><form:select path="cdEOTLD" id="cdEOTLD" items="${operadorasExternas}" itemLabel="dsOperadoraForCombos" itemValue="cdEot" />    
 </tr>
 <tr>    
     <td width="10%"><spring:message code="repasse_pre_relatorios.statusRepasse"/>:</td>

@@ -8,22 +8,20 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.claro.cobillingweb.persistence.dao.BasicDAO;
 import com.claro.cobillingweb.persistence.dao.DAOException;
-import com.claro.cobillingweb.persistence.filtro.SccFiltro;
+import com.claro.cobillingweb.persistence.entity.SccOperadora;
+import com.claro.cobillingweb.persistence.filtro.SccFiltroAcoesCobranca;
 import com.claro.cobillingweb.persistence.view.SccAcoesCobrancaView;
 import com.claro.sccweb.controller.BaseOperationController;
 import com.claro.sccweb.controller.util.BasicIntegerItem;
 import com.claro.sccweb.controller.validator.SccAcoesCobrancaValidator;
-import com.claro.sccweb.decorator.view.SccAcoesCobrancaViewDecorator;
-import com.claro.sccweb.form.BaseForm;
 import com.claro.sccweb.form.SccAcoesCobrancaForm;
 import com.claro.sccweb.service.SccAcoesCobrancaService;
 import com.claro.sccweb.service.ServiceException;
@@ -34,45 +32,49 @@ public class SccAcoesCobrancaController extends BaseOperationController<SccAcoes
 	
 	@Autowired
 	private SccAcoesCobrancaService sccAcoesCobrancaService;
+	public static final String FWD_VIEW_ACOES_COBRANCA   = "relatorio_acoes_cobranca";
+	public static final String FWD_EXCEL_ACOES_COBRANCA   = "relatorio_acoes_cobranca_excel";
 	
 	private final SccAcoesCobrancaValidator validator = new SccAcoesCobrancaValidator();
 	
-	public ModelAndView pesquisar(HttpServletRequest request, HttpServletResponse response, BaseForm _form, BindingResult bindingResult, Model model) throws Exception {
+	@RequestMapping(value="listar", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView pesquisar(HttpServletRequest request, HttpServletResponse response, SccAcoesCobrancaForm form) throws Exception {
 		
-		SccAcoesCobrancaForm form = (SccAcoesCobrancaForm)_form;
-		SccFiltro filtro = getFiltro(form);
+		ModelAndView mav = null;
 		
-		List<SccAcoesCobrancaView> rows = gerarRelatorioAcoesCobranca(filtro);
-		
-		List<SccAcoesCobrancaViewDecorator> decoratorList = new ArrayList<SccAcoesCobrancaViewDecorator>(rows.size());
-		
-		for (int i = 0; i < rows.size(); i++) {
-			
-			SccAcoesCobrancaViewDecorator decorator = new SccAcoesCobrancaViewDecorator(rows.get(i), i);
-			decoratorList.add(decorator);
+		form.setListAcoesCobranca(gerarRelatorioAcoesCobranca(form.getFiltro()));
+
+		if(form.getOperacao().equals("excel")){
+			if(form.getListAcoesCobranca() != null && form.getListAcoesCobranca().size() > 0){
+				mav = new ModelAndView(FWD_EXCEL_ACOES_COBRANCA, "filtro", form);
+			}
+		}else{
+
+			mav = new ModelAndView(FWD_VIEW_ACOES_COBRANCA, "filtro", form);
 		}
 		
-		storeInSession(getClass(), DISPLAY_TAG_SPACE_1, decoratorList, request);
-		ModelAndView mav = new ModelAndView(getViewName());
 		return mav;
-		
-	}
-	
-	private SccFiltro getFiltro(SccAcoesCobrancaForm form){
-		
-		SccFiltro filtro = new SccFiltro();
-		filtro.setCdCsp(form.getCdCsp());
-		filtro.setDataInicialPeriodo(calculaDataInicialPeriodo(form.getMes(), form.getAno()));
-		filtro.setDataFinalPeriodo(calculaDataFinalPeriodo(form.getMes(), form.getAno()));
-		
-		return filtro;
 	}
 	
 	
-	private List<SccAcoesCobrancaView> gerarRelatorioAcoesCobranca(SccFiltro filtro) throws DAOException, ServiceException {
+	
+	private List<SccAcoesCobrancaView> gerarRelatorioAcoesCobranca(SccFiltroAcoesCobranca filtro) throws DAOException, ServiceException {
 		
 		return sccAcoesCobrancaService.gerarRelatorioControleAcoesCobranca(filtro);
 	}
+	
+	
+	@ModelAttribute("operadorasExternas")
+	public List<SccOperadora> populaOperadorasExternas() throws Exception {
+		List<SccOperadora> comboList = new ArrayList<SccOperadora>();
+		SccOperadora allValues = new SccOperadora();
+		allValues.setCdCsp(BasicDAO.GET_ALL_STRING);
+		allValues.setDsOperadora("Todas");
+		comboList.add(0,allValues);
+		comboList.addAll(getServiceManager().getPesquisaDominiosService().pesquisaOperadorasExternas());
+		return comboList;
+	}
+
 	
 	@ModelAttribute("meses")
 	public List<BasicIntegerItem> populaComboMeses() {

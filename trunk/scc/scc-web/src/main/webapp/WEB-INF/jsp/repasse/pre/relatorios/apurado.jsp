@@ -31,7 +31,7 @@ $('#tabs').tabs();
 	<ul>
 		<li><a href="#tabs-1"><spring:message code="repasse_pre_relatorios.apurado.titulo"/></a></li>
 	</ul>
-	<div id="tabs-1">
+	<div id="tabs-1">	
 		<form:form  modelAttribute="filtro"  method="POST" action="/scc/user/repasse/pre/relatorios/execute.scc" id="form1">
 			<form:hidden path="operacao" id="operacao"/>
 			<form:hidden path="cdTipoRelatorio" id="cdTipoRelatorio"/>
@@ -41,32 +41,79 @@ $('#tabs').tabs();
 					<td align="center"><h3>Cobilling Pré Pago - Relatório Resumo de Apuração</h3></td>
 				</tr>
 				
-				
 				 <tr>
-				 	<td>                            
-						<display:table  name="sessionScope._DISPLAY_TAG_SPACE_1"   pagesize="20"  id="sintetico" requestURI="/scc/user/repasse/pre/relatorios/tab1_apurado.scc" class="ui-state-default">
-							<display:column property="operadoraClaro" title="Op. Claro" />
-							<display:column property="valorApuradoLiquido" title="Vl. Apurado Liq." />
-							<display:column property="pisCofins" title="Pis/Cofins" />
-							<display:column property="valorIcmsRepassar" title="ICMS a Repassar" />
-							<display:column property="valorIcmsNaoRepassado" title="ICMS Não Repassado" />
-							<display:column property="valorRepassar" title="Valor Repassar" />
-							<display:column property="servicoPrestadoLiquido" title="Ser. Prest. Líquido" />
-							<display:column property="pisCofinsServicePrestado" title="Pis/Cofins Ser. Prestado" />
-							<display:column property="iss" title="ISS" />
-							<display:column property="valorBrutoServico" title="Vlr. Bruto Serv." />
-							<display:column property="creditosAutorizados" title="Créd. Autorizados" />
-							<display:column property="creditos226" title="Créd. 226" />
-							<display:column property="penalidadesMinutosPerdidos" title="Penalidades Min. Perd." />
-							<display:column property="totalMultasJuros" title="Total Jutos e Multas" />
-							<display:column property="totalAcertosConciliacoes" title="Total Acertos e Conc." />
-							<display:column property="cpmfDescontar" title="CPMF Descontar" />
-							<display:column property="icmsDescontar" title="ICMS Descontar" />
-							<display:column property="icmsRepassar" title="ICMS Repassar" />
-							<display:column property="valorFinalRepassar" title="Vlr. Final Repassar" />
-							<display:column property="valorNotaFiscal" title="Valor Nota Fiscal" />
-							<display:column property="destaqueIcms" title="Destaque ICMS" />
+				 	<td>                  
+          		
+						<display:table  
+							name="sessionScope._DISPLAY_TAG_SPACE_1"  
+							pagesize="20" 
+							id="sintetico" 
+							requestURI="/scc/user/repasse/pre/relatorios/tab1_apurado.scc" 									
+							class="ui-state-default"
+							varTotals="totals"
+							
+							decorator="com.claro.sccweb.decorator.view.RelApuracaoFechamentoPrePagoView3Decorator">
+							<display:column property="dsOperadora" title="UF - OP Claro" style="width:70%" />							
+							<display:column property="valorApuradoLiquido" title="Vlr Apurado Liquido"  style="width:20%;text-align:right" />
+							<display:column property="pisCofins" title="Pis Cofins"  style="width:20%;text-align:right"/>
+							<display:column property="valorIcmsRepassar" title="ICMS A Repassar"  style="width:20%;text-align:right"/>
+							<display:column property="valorIcmsNaoRepassado" title="ICMS Não Repassado"   />
+							<display:column property="valorRepassar" title="Vlr A Repassar"  style="width:20%;text-align:right" />
+							<display:column property="servicoPrestadoLiquido" title="Serv Prest Liquido"  style="width:20%;text-align:right"/>
+							<display:column property="pisCofinsServicePrestado" title="Pis Cofins Serv Prest"  style="width:20%;text-align:right"/>
+							<display:column property="iss" title="Iss"  style="width:20%;text-align:right"/>
+							<display:column property="valorBrutoServico" title="Vlr Bruto Serv Prest"  style="width:20%;text-align:right" />
+							<display:column property="creditosAutorizados" title="Créditos Autorizados"   style="width:20%;text-align:right"/>
+							<display:column property="creditos226" title="Créditos 226"  style="width:20%;text-align:right"/>
+							<display:column property="penalidadesMinutosPerdidos" title="Penalidades Minutos Perdidos"  style="width:20%;text-align:right"/>
+							<display:column property="totalMultasJuros" title="Total Multas e Juros"  style="width:20%;text-align:right"/>
+							<display:column property="totalAcertosConciliacoes" title="Total Acertos Conciliações"  style="width:20%;text-align:right" />
+							<display:column property="cpmfDescontar" title="CPMF A Descontar"   style="width:20%;text-align:right"/>
+							<display:column property="icmsDescontar" title="ICMS A Descontar"  style="width:20%;text-align:right" />
+							<display:column property="icmsRepassar" title="ICMS A Repassar"   style="width:20%;text-align:right"/>
+							<display:column property="valorFinalRepassar" title="Vlr Final A Repassar"  style="width:20%;text-align:right" />
+							<display:column property="valorNotaFiscal" title="Valor Nota Fiscal"   style="width:20%;text-align:right" />
+							<display:column property="destaqueIcms" title="Destaque ICMS"  style="width:20%; text-align:right"/>
+														
+							<display:footer >
+							</display:footer>
 						</display:table>
+					</td>
+				</tr>
+				<tr>
+					<td>
+					
+						<display:table  
+							name="sessionScope._DISPLAY_TAG_SPACE_2"  
+							pagesize="1"  
+							id="sintetico" 
+							requestURI="/scc/user/repasse/pre/relatorios/tab1_apurado.scc" 									
+							class="ui-state-default">
+							<display:setProperty name="basic.show.header" value="false"/>							
+							<display:column property="dsOperadora" title="UF - OP Claro" style="width:20%" />							
+							<display:column property="valorApuradoLiquido" title="Vlr Apurado Liquido"  style="width:10%;text-align:right" />
+							<display:column property="pisCofins" title="Pis Cofins"  style="width:10%;text-align:right"/>
+							<display:column property="valorIcmsRepassar" title="ICMS A Repassar"  style="width:10%;text-align:right"/>
+							<display:column property="valorIcmsNaoRepassado" title="ICMS Não Repassado" style="width:10%;text-align:right"/>
+							<display:column property="valorRepassar" title="Vlr A Repassar"  style="width:10%;text-align:right"/>
+							<display:column property="servicoPrestadoLiquido" title="Serv Prest Liquido"  style="width:10%;text-align:right"/>
+							<display:column property="pisCofinsServicePrestado" title="Pis Cofins Serv Prest"  style="width:10%;text-align:right"/>
+							<display:column property="iss" title="Iss"  style="width:10%;text-align:right"/>
+							<display:column property="valorBrutoServico" title="Vlr Bruto Serv Prest"  style="width:10%;text-align:right"/>
+							<display:column property="creditosAutorizados" title="Créditos Autorizados"   style="width:10%;text-align:right"/>
+							<display:column property="creditos226" title="Créditos 226"  style="width:10%;text-align:right"/>
+							<display:column property="penalidadesMinutosPerdidos" title="Penalidades Minutos Perdidos"  style="width:10%;text-align:right"/>
+							<display:column property="totalMultasJuros" title="Total Multas e Juros"  style="width:10%;text-align:right"/>
+							<display:column property="totalAcertosConciliacoes" title="Total Acertos Conciliações"  style="width:10%;text-align:right"/>
+							<display:column property="cpmfDescontar" title="CPMF A Descontar"   style="width:10%;text-align:right"/>
+							<display:column property="icmsDescontar" title="ICMS A Descontar"  style="width:10%;text-align:right" />
+							<display:column property="icmsRepassar" title="ICMS A Repassar"   style="width:10%;text-align:right"/>
+							<display:column property="valorFinalRepassar" title="Vlr Final A Repassar"  style="width:10%;text-align:right" />
+							<display:column property="valorNotaFiscal" title="Valor Nota Fiscal"   style="width:10%;text-align:right" />
+							<display:column property="destaqueIcms" title="Destaque ICMS"   style="width:10%; text-align:right" format="{0, number, #,##0.00}"/>
+							
+						</display:table>				
+					
 					</td>
 				</tr>
 			</table>

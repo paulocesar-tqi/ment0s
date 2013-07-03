@@ -21,7 +21,7 @@ public interface SccCreditoDAO extends BasicDAO<SccCredito> {
 	 * @return
 	 * @throws DAOException
 	 */
-	public List<RelCreditosPrePagoView> carregaRelatorioCreditos(String cdEOTLD,String cdEOTClaro,String tipoCredito,String statusCredito,Date dtInicio,Date dtFinal,int tamanhoPagina,int pagina)
+	public List<RelCreditosPrePagoView> carregaRelatorioCreditos(String cdEOTLD,String cdEOTClaro,String tipoCredito,String statusCredito,Date dtInicio,Date dtFinal)
 	throws DAOException;
 	
 	/**

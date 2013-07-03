@@ -42,6 +42,8 @@ import com.claro.sccweb.service.to.ConsultaRepassePosTO;
 public class RelatorioServicoPosController extends BaseOperationController<RelPrestacaoServicoPosForm>{
 	
 	
+	
+	private static final String FWD_EXCEL_PRESTACAO_SERVICO = "relatorio_prestacao_servico_pos_filtro_excel";
 	private final RelatorioPrestacaoServicoPosValidator validator = new RelatorioPrestacaoServicoPosValidator();
 	
 	public ModelAndView pesquisar(HttpServletRequest request, HttpServletResponse response, BaseForm _form,	BindingResult bindingResult,Model model) throws Exception	{
@@ -62,6 +64,15 @@ public class RelatorioServicoPosController extends BaseOperationController<RelPr
 		storeInSession(getClass(), DISPLAY_TAG_SPACE_1, decoratorList, request);
 		return mav;
 	}
+	
+	public ModelAndView excel(HttpServletRequest request, HttpServletResponse response,
+			@Valid @ModelAttribute(FORM_NAME)  BaseForm _form,BindingResult bindingResult,Model model) throws Exception	{
+		ModelAndView mav = new ModelAndView(FWD_EXCEL_PRESTACAO_SERVICO);
+		return mav;
+	}
+	
+
+	
 	
 	private ConsultaRepassePosTO criarTo(RelPrestacaoServicoPosForm form) {
 		ConsultaRepassePosTO consultaRepassePosTO = new ConsultaRepassePosTO();
@@ -120,13 +131,6 @@ public class RelatorioServicoPosController extends BaseOperationController<RelPr
 	}
 	
 	
-	public ModelAndView excel(HttpServletRequest request, HttpServletResponse response,
-			@Valid @ModelAttribute(FORM_NAME)  BaseForm _form,BindingResult bindingResult,Model model) throws Exception	{
-		ModelAndView mav = new ModelAndView("relatorio_prestacao_servico_pos_filtro");
-		return mav;
-	}
-	
-	 
 	protected String getViewName() {
 		return "relatorio_prestacao_servico_pos_filtro";
 	}
@@ -185,7 +189,7 @@ public class RelatorioServicoPosController extends BaseOperationController<RelPr
 		
 		List<SccProdutoCobilling> produtos = null;
 		
-		if(StringUtils.isNotEmpty(cdEOT) && cdEOT.equals("*") && cdEOTClaro.equals("*")){
+		if(cdEOT.equals("*") && cdEOTClaro.equals("*")){
 			produtos = getServiceManager().getContratoService().pesquisaProdutosOperadoraLDTodas();
 		}else{
 			produtos = getServiceManager().getContratoService().pesquisaProdutosOperadoraLD(cdEOT);

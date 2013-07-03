@@ -95,12 +95,12 @@ function excel()
 
 <tr>
     <td width="15%">Operadora Claro:</td>    
-    <td ><form:select id="comboOperadora" path="cdEOTClaro"  items="${operadorasClaro}" itemLabel="dsOperadora" itemValue="cdEot" /></td>    
+    <td ><form:select id="comboOperadora" path="cdEOTClaro"  items="${operadorasClaro}" itemLabel="dsOperadoraForCombos" itemValue="cdEot" /></td>    
 </tr>
 
 <tr>
     <td width="15%">Operadora LD:</td>    
-    <td><form:select path="cdEOTLD" id ="cdEOTLD" items="${operadorasExternas}" itemLabel="dsOperadora" itemValue="cdEot" /></td>    
+    <td><form:select path="cdEOTLD" id ="cdEOTLD" items="${operadorasExternas}" itemLabel="dsOperadoraForCombos" itemValue="cdEot" /></td>    
 </tr>
 
 <tr>
@@ -124,9 +124,9 @@ function excel()
 <tr>
     <td colspan="3" class="TdFormularioUp">&nbsp;</td>    
     <td colspan="1" align="right" class="TdFormularioUp" nowrap="nowrap">
-    <input id="gerar_button" type="button" value="Gerar" />
+    <input id="gerar_button" type="button" value="Pesquisar" />
     <c:if test="${!empty sessionScope._DISPLAY_TAG_SPACE_1}">
-    <input id="excel_button" type="button" value="Exportar" />
+    <input id="excel_button" type="button" value="Excel" />
     </c:if>
     </td>
 </tr>

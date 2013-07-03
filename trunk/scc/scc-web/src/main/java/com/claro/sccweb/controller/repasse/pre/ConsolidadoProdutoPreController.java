@@ -131,7 +131,7 @@ public class ConsolidadoProdutoPreController extends BaseOperationController<Con
 		for (int i = 0; i < produtos.size(); i++) {
 			jsonResponse.put(produtos.get(i).getCdProdutoPrepago().toString(), produtos.get(i).getNoProdutoPrepago());
 		}
-		response.setContentType("application/json");
+		response.setContentType("application/json;charset=UTF-8");
 		response.getWriter().print(jsonResponse.toString());
 	}
 }

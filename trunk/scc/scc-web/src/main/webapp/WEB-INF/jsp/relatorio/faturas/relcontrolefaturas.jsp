@@ -113,7 +113,7 @@
 	<ul>
 		<li><a href="#tabs-1"><spring:message code="crud.titulo.pesquisar" /></a></li>
 	</ul>
-	<form:form modelAttribute="filtro" method="post" action="/scc/user/relatorio/faturas/controle/execute.scc" id="form1">
+	<form:form modelAttribute="filtro" method="post" action="/scc/user/relatorio/faturas/controle/listar.scc" id="form1">
 		<form:hidden path="operacao" id="operacao" />
 		<form:hidden path="itemSelecionado" id="itemSelecionado" />
 
@@ -122,45 +122,45 @@
 			<table width="100%" border="0" cellspacing="0" cellpadding="0" id="filtroPesquisaTable">
 			
 				<tr>
-					<td width="15%"><spring:message code="relatorio.faturas.controle.label.tiporelatorio" /></td>
-					<td><form:select path="relatorioSelecionado" id="tipoRelatorio" items="${tipoRelatorio}" itemLabel="label" itemValue="key" /></td>
+					<td width="10%"><spring:message code="relatorio.faturas.controle.label.tiporelatorio" /></td>
+					<td><form:select path="filtro.relatorioSelecionado" id="tipoRelatorio" items="${tipoRelatorio}" itemLabel="label" itemValue="key" /></td>
 				</tr>
 			
 
 				<tr>
-					<td width="15%"><spring:message code="controle.remessa.evento.label.eot.externa" /></td>
-					<td id="cdEOTLD"><form:select path="entity.csp" id="cdEOTLD" items="${operadorasExternas}" itemLabel="dsOperadora" itemValue="cdCsp" /></td>
+					<td width="10%"><spring:message code="controle.remessa.evento.label.eot.externa" /></td>
+					<td><form:select path="filtro.cdCsp" id="cdEOTLD" items="${operadorasExternas}" itemLabel="dsOperadoraForCombos" itemValue="cdCsp" /></td>
 				</tr>
 				
 				<tr>
-					<td width="15%"><spring:message code="controle.remessa.evento.label.eot.claro" /></td>
-					<td id="comboOperadoraClaro"><form:select path="entity.eotClaro" id="cdEOTClaro" items="${operadorasClaro}" itemLabel="dsOperadora" itemValue="cdEot" /></td>
+					<td width="10%"><spring:message code="controle.remessa.evento.label.eot.claro" /></td>
+					<td><form:select path="filtro.cdEOTClaro" id="cdEOTClaro" items="${operadorasClaro}" itemLabel="dsOperadoraForCombos" itemValue="cdEot" /></td>
 				</tr>
 
 				<tr>
     				<td width="10%"><spring:message code="relatorio.faturas.controle.label.status"/></td>
-    				<td ><form:select path="status" items="${statusFatura}" itemLabel="label" itemValue="key" /></td>
+    				<td ><form:select path="filtro.status" items="${statusFatura}" itemLabel="label" itemValue="key" /></td>
 				</tr>
 				
 				<tr>
-					<td width="15%"><spring:message code="relatorio.faturas.controle.label.filtrapor" /></td>
-					<td ><form:select path="tipoData" id="tipoDatas" items="${tipoData}" itemLabel="label" itemValue="key" /></td>
+					<td width="10%"><spring:message code="relatorio.faturas.controle.label.filtrapor" /></td>
+					<td ><form:select path="filtro.tipoData" id="tipoDatas" items="${tipoData}" itemLabel="label" itemValue="key" /></td>
 				</tr>
 				<tr>
-					<td width="30%"><spring:message code="relatorio.faturas.controle.label.numerofatura"/></td>
-					<td id="numerofatura"><form:input path="numeroFatura" id="fatura" disabled="true"/>
+					<td width="10%"><spring:message code="relatorio.faturas.controle.label.numerofatura"/></td>
+					<td id="numerofatura"><form:input path="filtro.numeroFatura" id="fatura" disabled="true"/>
 				</tr>			
 				<tr>
     				<td width="10%"><spring:message code="relatorio.faturas.controle.label.datainicial"/></td>
-    				<td><form:input id="dataInicial" path="dataInicialPeriodo" />
-    				<form:errors path="dataInicialPeriodo" /></td>
+    				<td><form:input id="dataInicial" path="filtro.dataInicialPeriodo" />
+    				<form:errors path="filtro.dataInicialPeriodo" /></td>
 				</tr>
 
 				<tr>
     				<td width="10%"><spring:message code="relatorio.faturas.controle.label.datafinal"/></td>
     				<td>
-    					<form:input id="dataFinal" path="dataFinalPeriodo" />
-    					<form:errors path="dataFinalPeriodo" />
+    					<form:input id="dataFinal" path="filtro.dataFinalPeriodo" />
+    					<form:errors path="filtro.dataFinalPeriodo" />
     				</td>
 				</tr>
 			</table>
@@ -177,32 +177,34 @@
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
 					<td>
-						<display:table style="width:90%" name="sessionScope._DISPLAY_TAG_SPACE_1" pagesize="20" id="repasses" requestURI="/scc/user/relatorio/faturas/controle/tab1.scc" class="ui-state-default">
-							<display:column property="operadoraClaro" title="Operadora Claro"/>
+						<display:table style="width:90%" name="requestScope.filtro.listFaturas" pagesize="20" id="repasses" requestURI="/scc/user/relatorio/faturas/controle/listar.scc" class="ui-state-default">
+							<display:column property="eotClaro" title="Operadora Claro"/>
 							<display:column property="csp" title="Csp"/>
-							<display:column property="operadoraLd" title="Operadora Ld"/>
+							<display:column property="operadoraLD" title="Operadora Ld"/>
 							<display:column property="uf" title="UF"/>
 							<display:column property="cicloMesAno" title="Ciclo"/>
 							<display:column property="numeroFatura" title="Numero da Fatura"/>
-							<display:column property="dataEmissao" title="Data Emissão" style="text-align:right"/>
-							<display:column property="dataVencimento" title="Vencimento " style="text-align:right"/>
-							<display:column property="valor" title="Valor" />
-							<display:column property="valorOriginal" title="Valor Original"  />
-							<display:column property="valorIcms" title="Valor ICMS" />
+							<display:column property="dataEmissao" title="Data Emissão" format="{0,date,dd-MM-yyyy}" style="width:30%; text-align:right"/>
+							<display:column property="dataVencimento" title="Vencimento " format="{0,date,dd-MM-yyyy}" style="text-align:right"/>
+							<display:column property="valor" title="Valor" format="{0, number, #,##0.00}" style="width:15%; text-align:right"/>
+							<display:column property="valorOriginal" title="Valor Original" format="{0, number, #,##0.00}" style="width:15%; text-align:right" />
+							<display:column property="valorICMS" title="Valor ICMS" format="{0, number, #,##0.00}" style="width:15%; text-align:right"/>
 							<display:column property="status" title="Status" style="text-align:right" />
-							<display:column property="situacaoEvento" title="Situação Evento"  />		
+							<display:column property="situacaoEvento" title="Situação/Evento"  />		
 							<display:column property="aging" title="Aging " />
-							<display:column property="ajuste" title="Ajuste" />
+							<display:column property="ajuste" title="Ajuste" format="{0, number, #,##0.00}" style="width:15%; text-align:right"/>
 							<display:column property="numeroNotaFiscal" title="Numero Nota Fiscal"  />
 							<display:column property="serie" title="Serie" />
 							<display:column property="subSerie" title="SubSerie" style="text-align:right" />
-							<display:column property="totalCreditos" title="Total de Créditos" style="text-align:right" />
-							<display:column property="valorOfertasLd" title="Ofertas LD" style="text-align:right"/>
-							<display:column property="descontosLd" title="Descontos LD" style="text-align:right"/>
-							<display:column property="valorCreditoLd" title="Creditos LD" style="text-align:right"/>
-							<display:column property="juros" title="juros" style="text-align:right"/>
-							<display:column property="valorPago" title="Valor Pago" style="text-align:right"/>
-							<display:column property="multa" title="Multa" style="text-align:right"/>					
+							<display:column property="totalCreditos" title="Total de Créditos" format="{0, number, #,##0.00}" style="width:15%; text-align:right" />
+							<display:column property="valorOfertasLD" title="Ofertas LD" format="{0, number, #,##0.00}" style="width:15%; text-align:right"/>
+							<display:column property="valorDescontosLD" title="Descontos LD" format="{0, number, #,##0.00}" style="width:15%; text-align:right"/>
+							<display:column property="valorCreditosLD" title="Creditos LD" format="{0, number, #,##0.00}" style="width:15%; text-align:right"/>
+							<display:column property="juros" title="juros" format="{0, number, #,##0.00}" style="width:15%; text-align:right"/>
+							<display:column property="valorPago" title="Valor Pago" format="{0, number, #,##0.00}" style="width:15%; text-align:right"/>
+							<display:column property="quantidadeEventos" title="Qtde. Eventos" style="width:15%; text-align:right"/>
+							<display:column property="juros" title="juros" format="{0, number, #,##0.00}" style="width:15%; text-align:right"/>
+							<display:column property="multas" title="Multa" format="{0, number, #,##0.00}" style="width:15%; text-align:right"/>					
 						</display:table>
 					</td>
 				</tr>

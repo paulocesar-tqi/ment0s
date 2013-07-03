@@ -1,6 +1,10 @@
 package com.claro.sccweb.form;
 
 import java.util.Date;
+import java.util.List;
+
+import com.claro.cobillingweb.persistence.view.RelCreditosPrePagoView;
+import com.claro.cobillingweb.persistence.view.RelDetalheCreditoPrePagoView;
 
 public class CreditosForm {
 
@@ -31,6 +35,10 @@ public class CreditosForm {
 	private int paginaSelecionada;
 	
 	private Date dataFinal;
+	
+	private List<RelCreditosPrePagoView> listCreditosPrePago;
+	
+	private List<RelDetalheCreditoPrePagoView> listDetalhes;
 	
 	
 		
@@ -124,6 +132,22 @@ public class CreditosForm {
 		this.quantidadeResultados = quantidadeResultados;
 	}
 
+	public List<RelCreditosPrePagoView> getListCreditosPrePago() {
+		return listCreditosPrePago;
+	}
+
+	public void setListCreditosPrePago(
+			List<RelCreditosPrePagoView> listCreditosPrePago) {
+		this.listCreditosPrePago = listCreditosPrePago;
+	}
+
+	public List<RelDetalheCreditoPrePagoView> getListDetalhes() {
+		return listDetalhes;
+	}
+
+	public void setListDetalhes(List<RelDetalheCreditoPrePagoView> listDetalhes) {
+		this.listDetalhes = listDetalhes;
+	}
 
 	
 }

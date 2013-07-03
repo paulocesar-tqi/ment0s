@@ -1,18 +1,24 @@
 package com.claro.cobillingweb.persistence.entity;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 @Entity
 @Table(name="SCC_PRE_TARIFA_ACB")
-public class SccPreTarifaAcb {
+public class SccPreTarifaAcb extends FwjBaseEntidade {
 
 	private static final long serialVersionUID = 1L;
 	private long sqPreTarifaAcb;
@@ -26,6 +32,8 @@ public class SccPreTarifaAcb {
 	private Date dtFimVigencia;
 	private Date dtIniVigencia;
 	private String nmPlano;
+	
+	private List<SccPreItemTarifaAcb> listItems = new ArrayList<SccPreItemTarifaAcb>();
 
     public SccPreTarifaAcb() {
     }
@@ -144,4 +152,17 @@ public class SccPreTarifaAcb {
 	public void setNmPlano(String nmPlano) {
 		this.nmPlano = nmPlano;
 	}
+
+	
+	@OneToMany(mappedBy="id.sqPreTarifaAcb", fetch = FetchType.LAZY)
+	public List<SccPreItemTarifaAcb> getListItems() {
+		return listItems;
+	}
+
+
+	public void setListItems(List<SccPreItemTarifaAcb> listItems) {
+		this.listItems = listItems;
+	}
+	
+	
 }

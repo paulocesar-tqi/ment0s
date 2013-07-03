@@ -7,7 +7,7 @@ public class ControleRemessaCDRPreForm extends BaseForm {
 	private String tipoOperadora = "O";
 	private String cdEOTClaro;
 	private String cdEOTLD;
-	private String tipoPeriodo = "C";
+	private String tipoPeriodo;
 	private Date dataInicial;
 	private Date dataFinal;
 	

@@ -21,6 +21,38 @@ import com.claro.sccweb.form.LoginForm;
 @RequestMapping("/login")
 public class LoginController extends BaseFormController {
 
+//	@RequestMapping(method = RequestMethod.GET)
+//	public ModelAndView novoLogin(HttpServletRequest request, HttpServletResponse response) throws Exception {
+//		SecurityContextHolder.clearContext();
+//		HttpSession session = request.getSession(false);
+//		if (session != null) {
+//			session.invalidate();
+//		}
+//		getSessionDataManager().setModule("POS");		
+//		ModelAndView mav = new ModelAndView();
+//		mav.setViewName("scc.login");
+//		mav.addObject("loginUsuario", new LoginForm());
+//		return mav;
+//	}
+
+/*	@RequestMapping(method = RequestMethod.GET)
+	public String novoLogin(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		HttpSession session = request.getSession(false);
+		if (session != null) {
+			session.invalidate();
+		}
+		SecurityContextHolder.clearContext();
+		response.sendRedirect("login.jsp");
+		return null;
+	}
+	
+	
+	@RequestMapping(method = RequestMethod.POST)
+	public String login(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		return novoLogin(request, response);
+	}
+	*/
+	
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView novoLogin(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		SecurityContextHolder.clearContext();
@@ -34,7 +66,7 @@ public class LoginController extends BaseFormController {
 		mav.addObject("loginUsuario", new LoginForm());
 		mav.addObject("sessionDataManager", getSessionDataManager());
 		return mav;
-	}
+	}	
 	
 	@ModelAttribute("modulos")
 	public List<BasicStringItem> populaMododulosDisponiveis() {

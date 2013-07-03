@@ -146,7 +146,9 @@ public class ConsultaRepassePosController extends BaseFormController {
 	 * @return Model and View com refresh na tela de resultados.
 	 * @throws Exception
 	 */
+	@SuppressWarnings("unchecked")
 	private ModelAndView efetivar(HttpServletRequest request, HttpServletResponse response,@Valid @ModelAttribute("filtro")  ConsultaRepassePosForm form,BindingResult bindingResult,Model model) throws Exception {
+		
 		List<ConsultaRepassePosPagoDecorator> tabelaRepasses = (List<ConsultaRepassePosPagoDecorator>)request.getSession().getAttribute(DISPLAY_TAG_SPACE_1);
 		if (tabelaRepasses != null) {
 			for (int i=0;i<tabelaRepasses.size();i++) {
@@ -249,8 +251,10 @@ public class ConsultaRepassePosController extends BaseFormController {
 	 * @param response
 	 * @throws Exception
 	 */
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value="/json/mudaStatus/{index}" , method=RequestMethod.GET)
 	public void mudaStatus(@PathVariable("index") String index,HttpServletRequest request, HttpServletResponse response) throws Exception {		
+		
 		List<ConsultaRepassePosPagoDecorator> items = (List<ConsultaRepassePosPagoDecorator>)request.getSession().getAttribute(DISPLAY_TAG_SPACE_1);
 		String novoStatus = index.substring(0, 1);		  
 		items.get(Integer.parseInt(index.substring(1))).setNovoStatus(novoStatus);

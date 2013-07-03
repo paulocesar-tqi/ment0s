@@ -6,9 +6,13 @@ import com.claro.cobillingweb.persistence.view.SccAcordoParcelamentoView;
 import com.claro.sccweb.decorator.rownum.RownumDecorator;
 
 public class SccAcordoParcelamentoViewDecorator extends RownumDecorator<SccAcordoParcelamentoView> {
+	
+	private double totalAcordado = 0.0;
 
 	public SccAcordoParcelamentoViewDecorator(SccAcordoParcelamentoView entity,	int rownum) {
 		super(entity, rownum);
+		
+		totalAcordado = totalAcordado + entity.getValorAcordado();
 		
 	}
 
@@ -37,7 +41,7 @@ public class SccAcordoParcelamentoViewDecorator extends RownumDecorator<SccAcord
 	public String getCodAcordo() {
 		String value = "";
 		if(getRow().getCodAcordo() != null){
-			value = formataDouble(getRow().getCodAcordo());
+			value = formataDouble2(getRow().getCodAcordo());
 		}
 		return value;
 	}
@@ -61,11 +65,11 @@ public class SccAcordoParcelamentoViewDecorator extends RownumDecorator<SccAcord
 	public String  getNumAcordoParcelamento() {
 		String value = "";
 		if(getRow().getNuAcordoParcelamento() != null){
-			value = formataLong(getRow().getNuAcordoParcelamento());
+			value = getRow().getNuAcordoParcelamento().toString();
 		}
 		return value;
 	}
-
+	
 	public String getNumFatura() {
 		String value = "";
 		if(StringUtils.isNotEmpty(getRow().getNuFatura())){
@@ -77,7 +81,7 @@ public class SccAcordoParcelamentoViewDecorator extends RownumDecorator<SccAcord
 	public String getNumConta() {
 		String value = "";
 		if(getRow().getNumConta() != null){
-			value = formataLong(getRow().getNumConta());
+			value = getRow().getNumConta().toString();
 		}
 		return value;
 	}
@@ -99,21 +103,31 @@ public class SccAcordoParcelamentoViewDecorator extends RownumDecorator<SccAcord
 	}
 
 	public String getQtdParcelas() {
-		String value = "";
-		if(getRow().getQtdParcelas() != null){
-			value = formataDouble(getRow().getQtdParcelas());
-		}
-		return value;
+		if(getRow().getQtdParcelas() != null)
+			return getRow().getQtdParcelas().toString();
+		return " ";
 	}
-	
 	
 	public String getNumeroParcela(){
 		String value = "";
 		if(getRow().getNuParcela() != null){
-			value = formataLong(getRow().getNuParcela());
+			value = getRow().getNuParcela().toString();
 		}
 		return value;
 	}
+	
+	public String getTotalAcordado(){
+		
+		Double total = totalAcordado;
+		return total.toString();
+		
+	}
+
+	public void setTotalAcordado(double totalAcordado) {
+		this.totalAcordado = totalAcordado;
+	}
+	
+	
 	
 	
 }

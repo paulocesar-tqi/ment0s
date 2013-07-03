@@ -22,6 +22,9 @@
 <td>
 <p></p>
 <div class="TituloTela" align="center"><u><tiles:getAsString name="tituloTela"/></u></div>
+	<tr>
+		<td align="right" ><font face="Verdana" color="#000"><a style=font-size:10px>Versão: 8.0.2</a></font></td>
+	</tr>
 <tiles:insertAttribute name="body" />
 </td>
 </tr>

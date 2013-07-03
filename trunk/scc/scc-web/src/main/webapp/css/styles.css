@@ -501,6 +501,12 @@ font-weight:bold;
 background-color:#cae6d6;
 text-align:center}
 
+.SubtituloRed{
+color:#FF0000;
+font-weight:bold;
+background-color:#cae6d6;
+text-align:center}
+
 .tabNormal {
 	font-family: Trebuchet MS;
 	font-size: 11px;

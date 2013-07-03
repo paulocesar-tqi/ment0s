@@ -72,5 +72,9 @@ public interface SccRepasseDAO extends BasicDAO<SccRepasse> {
 
 	public List<ConsolidadoProdutoPreView> gerarRelatorioConsolidadoProdutoPre(String cdEOTClaro, String cdEOTLD, String cdProdutoprepago, Date dataInicial, Date dataFinal) throws DAOException;
 
+	List<SccRepasse> carregarRepasseConsolidadoPosPago(String cdEOT,
+			String cdEOTLD, Long cdProduto, Date dtInicial, Date dtFinal,
+			String cdStatusRepasse, boolean holding) throws DAOException;
+
 		
 }

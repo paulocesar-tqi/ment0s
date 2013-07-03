@@ -96,13 +96,13 @@ function selecionarParOperadoras(cdEOT)
 <table width="100%" border="0" cellspacing="0" cellpadding="0" >
 <tr>
     <td width="10%"><spring:message code="repasse_pos_demonstrativo.claro"/>:</td>
-    <td ><form:select path="cdEOTHolding" id="cdEOTHolding" items="${holdingClaro}" itemLabel="dsOperadora" itemValue="cdEot" />
+    <td ><form:select path="cdEOTHolding" id="cdEOTHolding" items="${holdingClaro}" itemLabel="dsOperadoraForCombos" itemValue="cdEot" />
     <form:errors path="cdEOTHolding" /></td>
 </tr>
 
 <tr>
     <td width="10%"><spring:message code="repasse_pos_demonstrativo.ld"/>:</td>
-    <td ><form:select path="cdEOTLD" id="cdEOTLD" items="${operadorasExternas}" itemLabel="dsOperadora" itemValue="cdEot" />
+    <td ><form:select path="cdEOTLD" id="cdEOTLD" items="${operadorasExternas}" itemLabel="dsOperadoraForCombos" itemValue="cdEot" />
     <form:errors path="cdEOTLD" /></td>
 </tr>
 <tr>
@@ -132,7 +132,7 @@ function selecionarParOperadoras(cdEOT)
 <c:if test="${!empty sessionScope._DISPLAY_TAG_SPACE_1}">
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr><td>
-<display:table style="width: 100%;" name="sessionScope._DISPLAY_TAG_SPACE_1" pagesize="25"  id="par_operadoras" requestURI="/scc/user/repasse/pos/demonstrativo/tab1.scc" class="ui-state-default">
+<display:table style="width: 100%;" name="sessionScope._DISPLAY_TAG_SPACE_1" pagesize="25"  id="par_operadoras" requestURI="/scc/user/repasse/pre/demonstrativo/tab1.scc" class="ui-state-default">
 <display:column property="dsOperadoraClaro" title="Operadora Claro" />
 <display:column property="dsOperadoraLD" title="Operadora LD" />
 </display:table>

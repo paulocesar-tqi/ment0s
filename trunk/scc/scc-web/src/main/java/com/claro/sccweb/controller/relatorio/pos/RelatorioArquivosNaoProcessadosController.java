@@ -5,12 +5,14 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -29,6 +31,8 @@ import com.claro.sccweb.service.ServiceException;
 @RequestMapping(value="/user/relatorio/arquivosNaoProcessados")
 public class RelatorioArquivosNaoProcessadosController extends
 		BaseOperationController<RelatorioArquivosNaoProcessadosForm> {
+	
+	public static final String FWD_EXCEL_ARQUIVOS_NAO_PROCESSAODS = "relatorio_arquivos_nao_processados_filtro_excel";
 	
 	@Autowired
 	private SccArquivosNaoProcessadosService sccArquivosNaoProcessadosService;
@@ -52,6 +56,13 @@ public class RelatorioArquivosNaoProcessadosController extends
 		return mav;
 
 	}
+	
+	public ModelAndView excel(HttpServletRequest request, HttpServletResponse response,
+			@Valid @ModelAttribute(FORM_NAME)  BaseForm _form,BindingResult bindingResult,Model model) throws Exception	{
+		ModelAndView mav = new ModelAndView(FWD_EXCEL_ARQUIVOS_NAO_PROCESSAODS);
+		return mav;
+	}
+
 	
 	private List<SccArquivosNaoProcessadosView> gerarRelatorioArquivosNaoProcessados(RelatorioArquivosNaoProcessadosForm form) throws DAOException, ServiceException {
 		return sccArquivosNaoProcessadosService.gerarRelatorioArquivosNaoProcessados(form.getDtInicial(), form.getDtFinal(), form.getNoArquivoGerado());

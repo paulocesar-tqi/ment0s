@@ -1,7 +1,5 @@
 package com.claro.sccweb.controller.admin;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -11,22 +9,25 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.claro.cobillingweb.persistence.entity.SccGrupoCobilling;
-import com.claro.sccweb.controller.BaseCRUDAndMethodController;
+import com.claro.sccweb.controller.BaseOperationController;
 import com.claro.sccweb.controller.validator.CadastroGrupoCobillingValidator;
-import com.claro.sccweb.decorator.rownum.entity.SccGrupoCobillingDecorator;
 import com.claro.sccweb.form.CadastroGrupoCobillingForm;
 import com.claro.sccweb.service.SccGrupoCobillingService;
+import com.claro.sccweb.service.SessionDataManager;
 
 @Controller
 @RequestMapping(value="/user/admin/grupo")
-public class CadastroGrupoCobillingController extends BaseCRUDAndMethodController<CadastroGrupoCobillingForm> {
+public class CadastroGrupoCobillingController extends BaseOperationController<CadastroGrupoCobillingForm> {
+	
+	private static final String FWD_VIEW_LISTA_GRUPO = "cadastro_grupo_cobilling_filtro";
 	
 	@Autowired
 	private SccGrupoCobillingService sccGrupoCobillingService;
@@ -34,95 +35,91 @@ public class CadastroGrupoCobillingController extends BaseCRUDAndMethodControlle
 	private CadastroGrupoCobillingValidator validator = new CadastroGrupoCobillingValidator();
 	
 	
-	@RequestMapping(value="/new") 
-	public ModelAndView iniciar(HttpServletRequest request,HttpServletResponse response) throws Exception {
-
-		ModelAndView mav = new ModelAndView(getViewName());
-		super.iniciar(request, response);
+	@Autowired
+	private SessionDataManager sessionDataManager;
+	
+	
+	@RequestMapping(value="grupo", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView listarTodos(HttpServletRequest request, HttpServletResponse response, CadastroGrupoCobillingForm form) throws Exception {
 		
-		List<SccGrupoCobilling> rows = sccGrupoCobillingService.findAll();
-		List<SccGrupoCobillingDecorator> decoratorList = new ArrayList<SccGrupoCobillingDecorator>(rows.size());
-		for (int i=0;i<rows.size();i++) {
-			SccGrupoCobillingDecorator decorator = new SccGrupoCobillingDecorator(rows.get(i), i);
-			decoratorList.add(decorator);
+		List<SccGrupoCobilling> lstSccGrupo = (List<SccGrupoCobilling>) sccGrupoCobillingService.findAll();
+		
+		form.setListGrupo(lstSccGrupo);
+		form.setEntity(new SccGrupoCobilling());
+		
+		ModelAndView mav = new ModelAndView(FWD_VIEW_LISTA_GRUPO, "filtro", form);
+		
+		return mav;
+		
+	}
+	
+	@RequestMapping(value = "/atualizarGrupo", method=RequestMethod.POST)
+	public @ResponseBody ModelAndView updateEntity(HttpServletRequest request, HttpServletResponse response, CadastroGrupoCobillingForm form) throws Exception {
+		ModelAndView mav = new ModelAndView(FWD_VIEW_LISTA_GRUPO);
+		
+		String usuario = this.sessionDataManager.getUserPrincipal();
+		form.getEntity().setCdUsuarioManut(usuario);
+		form.getEntity().setDtAtualizacao(new Date());
+		setarDataVigencia(form.getEntity());
+		this.sccGrupoCobillingService.update(form.getEntity());
+
+		
+		return mav;
+	}
+	
+	private void setarDataVigencia(SccGrupoCobilling entity){
+		if(entity.getDtInicioVigencia() == null){
+			entity.setDtInicioVigencia(new Date());
 		}
-		
-		storeInSession(getClass(), DISPLAY_TAG_SPACE_1, decoratorList, request);
-		cacheMyForm(getClass(), getForm());
-		mav.addObject(FORM_NAME, getForm());
-		return mav;
-	}
-
-
-	@Override
-	protected ModelAndView limpar(HttpServletRequest request, HttpServletResponse response, CadastroGrupoCobillingForm form,
-			BindingResult bindingResult, Model model) throws Exception {
-		
-		ModelAndView mav = new ModelAndView(getViewName());
-		mav.addObject(FORM_NAME, getForm());
-		return mav;
-
-	}
-
-	@Override
-	protected ModelAndView pesquisar(HttpServletRequest request, HttpServletResponse response, CadastroGrupoCobillingForm form,
-			BindingResult bindingResult, Model model) throws Exception {
-		
-		ModelAndView mav = new ModelAndView(getViewName());
-		return mav;
-
-	}
-
-	@Override
-	protected ModelAndView salvar(HttpServletRequest request, HttpServletResponse response, CadastroGrupoCobillingForm form,
-			BindingResult bindingResult, Model model) throws Exception {
-		
-		Date data = Calendar.getInstance().getTime();
-		
-		ModelAndView mav = new ModelAndView(getViewName());
-		form.getEntity().setDtCriacao(data);
-		form.getEntity().setDtInicioVigencia(data);
-		form.getEntity().setCdUsuarioManutencao(getSessionDataManager().getUserPrincipal());
-		sccGrupoCobillingService.create(form.getEntity());
-		return mav;
-
-	}
-
-	@Override
-	protected ModelAndView remover(HttpServletRequest request, HttpServletResponse response, CadastroGrupoCobillingForm form,
-			BindingResult bindingResult, Model model) throws Exception {
-		
-		ModelAndView mav = new ModelAndView(getViewName());
-		SccGrupoCobillingDecorator decorator =  (SccGrupoCobillingDecorator)form.getEntidadeSelecionada();
-		sccGrupoCobillingService.delete(decorator.getRow());
-		return mav;
-
+		if(entity.getDtFimVigencia() == null){
+			entity.setDtFimVigencia(new Date());
+		}
 	}
 	
-	
-	@Override
-	protected ModelAndView atualizar(HttpServletRequest request, HttpServletResponse response, CadastroGrupoCobillingForm form,
-			BindingResult bindingResult, Model model) throws Exception {
-		
-		ModelAndView mav = new ModelAndView(getViewName());
+	@RequestMapping(value="/salvarGrupo", method=RequestMethod.POST)
+	public @ResponseBody ModelAndView saveEntity(HttpServletRequest request, HttpServletResponse response, CadastroGrupoCobillingForm form) throws Exception {
+		ModelAndView mav = new ModelAndView(FWD_VIEW_LISTA_GRUPO);
+		String usuario = this.sessionDataManager.getUserPrincipal();
+		form.getEntity().setCdUsuarioManut(usuario);
 		form.getEntity().setDtAtualizacao(Calendar.getInstance().getTime());
-		sccGrupoCobillingService.update(form.getEntity());
+		form.getEntity().setDtCriacao(Calendar.getInstance().getTime());
+		setarDataVigencia(form.getEntity());
+		this.sccGrupoCobillingService.create(form.getEntity());
+
 		return mav;
 	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	protected ModelAndView editar(HttpServletRequest request, HttpServletResponse response, 
-			CadastroGrupoCobillingForm form, BindingResult bindingResult, Model model) throws Exception {
+	
+	
+	
+	@RequestMapping(value = "/editarGrupo", method=RequestMethod.GET)
+	public @ResponseBody SccGrupoCobilling editEntity(@RequestParam("sqGrupo") Long sqGrupo , HttpServletRequest request,HttpServletResponse response, CadastroGrupoCobillingForm form) throws Exception {
 		
-		ModelAndView mav = new ModelAndView(getViewName());
-		List<SccGrupoCobillingDecorator> decoratorList = (List<SccGrupoCobillingDecorator>)request.getSession().getAttribute(DISPLAY_TAG_SPACE_1);
-		SccGrupoCobillingDecorator decorator = decoratorList.get(form.getItemSelecionado());
-		form.setEntity(decorator.getRow());
-		mav.addObject(FORM_NAME, form);
-		return mav;
-
+		SccGrupoCobilling entity = this.sccGrupoCobillingService.findById(sqGrupo);
+		form.setEntity(entity);
+		
+		return form.getEntity();
 	}
+	
+	@RequestMapping(value = "/removerGrupo", method=RequestMethod.DELETE)
+	public @ResponseBody ModelAndView removerGrupo(@RequestParam("sqGrupo") Long sqGrupo , HttpServletRequest request,HttpServletResponse response, CadastroGrupoCobillingForm form) throws Exception {
+		
+		ModelAndView mav = new ModelAndView(FWD_VIEW_LISTA_GRUPO);
+		
+		this.sccGrupoCobillingService.deleteGrupo(sqGrupo);
+		
+		mav.addObject("filtro", form);
+		return mav;
+	}
+	
+	
+	public Date setarData(Date data){
+		Date dtAtual = null;
+		if(data == null){
+			dtAtual = new Date();
+		}
+		return dtAtual;
+	}
+	
 
 	@Override
 	protected String getViewName() {
@@ -141,24 +138,6 @@ public class CadastroGrupoCobillingController extends BaseCRUDAndMethodControlle
 		return this.validator;
 	}
 
-	@Override
-	protected Serializable getPkEntidade(Object entidadeSelecionada) {
-		SccGrupoCobillingDecorator decorator = (SccGrupoCobillingDecorator)entidadeSelecionada;
-		return decorator.getRow().getCodigo();
-	}
-
-	@Override
-	protected void atualizarDadosTabela(HttpServletRequest request)	throws Exception {
-		
-		List<SccGrupoCobilling> rows = sccGrupoCobillingService.findAll();
-		List<SccGrupoCobillingDecorator> decoratorList = new ArrayList<SccGrupoCobillingDecorator>(rows.size());
-		for (int i = 0; i < rows.size(); i++) {
-			SccGrupoCobillingDecorator decorator = new SccGrupoCobillingDecorator(rows.get(i), i);
-			decoratorList.add(decorator);
-		}
-		storeInSession(getClass(), DISPLAY_TAG_SPACE_1, decoratorList, request);
-		
-	}
 
 	public SccGrupoCobillingService getSccGrupoCobillingService() {
 		return sccGrupoCobillingService;
@@ -169,5 +148,11 @@ public class CadastroGrupoCobillingController extends BaseCRUDAndMethodControlle
 			SccGrupoCobillingService sccGrupoCobillingService) {
 		this.sccGrupoCobillingService = sccGrupoCobillingService;
 	}
+
+	public void setSessionDataManager(SessionDataManager sessionDataManager) {
+		this.sessionDataManager = sessionDataManager;
+	}
+	
+	
 
 }

@@ -22,15 +22,64 @@ public class EvolucaoCDRServiceImpl extends AbstractService implements EvolucaoC
 
 	private SccArquivoSumarizadoDAO arquivoSumarizadoDAO;
 	
-	 
-	public List<PeriodoCDR> geraEvolucaoCDRs(String cdEOTClaro, String cdEOTLD, Long produto, Date dataInicial, Date dataFinal,boolean holding) throws DAOException, ServiceException {
+	
+	private PeriodoCDR gerarPeriodoCDR(SccArquivoSumarizado sccArquivoSumarizado) throws Exception{
+		PeriodoCDR periodoCDR = new PeriodoCDR();
+		periodoCDR.setCdrs(iniciaMapStatus());
+		periodoCDR.setMesAno(sccArquivoSumarizado.getMesAno());		
+		periodoCDR.setAno(sccArquivoSumarizado.getAaCiclo());
+		periodoCDR.setMes(sccArquivoSumarizado.getMmCiclo());
+
+		return periodoCDR;
+		
+	}
+	public List<PeriodoCDR> geraEvolucaoCDRs(String grpCdr, String cdEOTClaro, String cdEOTLD, Long produto, Date dataInicial, Date dataFinal,boolean holding) throws DAOException, ServiceException {
 		List<PeriodoCDR> resultados = new ArrayList<PeriodoCDR>();
 		Map<String, PeriodoCDR> tempMap = new HashMap<String, PeriodoCDR>();
 		try {
-			List<SccArquivoSumarizado> sumarioPorPeriodoCiclo = getArquivoSumarizadoDAO().geraSumarizadoPeriodoCiclo(cdEOTClaro, cdEOTLD, dataInicial, dataFinal, holding);
+			
+			List<SccArquivoSumarizado> sumarizado = getArquivoSumarizadoDAO().geraEvolucaoCDRs(grpCdr, cdEOTClaro, cdEOTLD, dataInicial, dataFinal, produto, holding);
+			//PeriodoCDR periodoCDR = null;
+			for (SccArquivoSumarizado sccArquivoSumarizado : sumarizado) {
+				String key = sccArquivoSumarizado.getMesAno();
+				sccArquivoSumarizado.setMmCiclo(new Long(sccArquivoSumarizado.getMesAno().substring(0,2)));
+				sccArquivoSumarizado.setAaCiclo(new Long(sccArquivoSumarizado.getMesAno().substring(3,7)));
+
+				if (!tempMap.containsKey(key)){
+					tempMap.put(key, gerarPeriodoCDR(sccArquivoSumarizado));
+				}
+				tempMap.get(key).addSumario(sccArquivoSumarizado);
+				
+			}	
+			resultados.addAll(tempMap.values());
+			//gerarPercentual(resultados);
+			Collections.sort(resultados);
+			return resultados;
+		} catch (DAOException daoEx){
+			throw daoEx;
+		}catch (Exception e){
+			throw new ServiceException(e.getMessage(), e);
+		}
+	}
+	
+	private void gerarPercentual(List<PeriodoCDR> resultados){
+		
+		Long aceito = resultados.get(0).getAceitos();
+		for (PeriodoCDR periodoCDR : resultados) {
+			periodoCDR.setPercentual((periodoCDR.getTotalCDRs().doubleValue() / aceito.doubleValue()) * 100);
+		}
+	}
+
+	
+/*	public List<PeriodoCDR> geraEvolucaoCDRs(String cdEOTClaro, String cdEOTLD, Long produto, Date dataInicial, Date dataFinal,boolean holding) throws DAOException, ServiceException {
+		List<PeriodoCDR> resultados = new ArrayList<PeriodoCDR>();
+		Map<String, PeriodoCDR> tempMap = new HashMap<String, PeriodoCDR>();
+		try {
+			
+			List<SccArquivoSumarizado> sumarizado = getArquivoSumarizadoDAO().geraEvolucaoCDRs(cdEOTClaro, cdEOTLD, dataInicial, dataFinal, produto, holding);
 			PeriodoCDR periodoCDR = null;
-			for (SccArquivoSumarizado sccArquivoSumarizado : sumarioPorPeriodoCiclo) {
-				String key = sccArquivoSumarizado.getMmCiclo()+"/"+sccArquivoSumarizado.getAaCiclo();
+			for (SccArquivoSumarizado sccArquivoSumarizado : sumarizado) {
+				String key = sccArquivoSumarizado.getMesAno();//sccArquivoSumarizado.getMmCiclo()+"/"+sccArquivoSumarizado.getAaCiclo();
 				if (!key.equals("0/0"))
 					{
 					if (!tempMap.containsKey(key))
@@ -58,7 +107,7 @@ public class EvolucaoCDRServiceImpl extends AbstractService implements EvolucaoC
 			}
 	}
 
-	public SccArquivoSumarizadoDAO getArquivoSumarizadoDAO() {
+*/	public SccArquivoSumarizadoDAO getArquivoSumarizadoDAO() {
 		return arquivoSumarizadoDAO;
 	}
 
@@ -69,7 +118,7 @@ public class EvolucaoCDRServiceImpl extends AbstractService implements EvolucaoC
 	private List<GrupoCDR> iniciaMapStatus() throws Exception
 	{
 		List<GrupoCDR> list = new ArrayList<GrupoCDR>();
-				list.add(new GrupoCDR("Encaminhado",GrupoStatusConstants.GRUPO_CDR_ENCAMINHADO,StatusCDRConstants.CDRSTATUS_ENCAMINHADO_ESB,StatusCDRConstants.CDRSTATUS_ENCAMINHADO_ESB));
+				list.add(new GrupoCDR("Encaminhado",GrupoStatusConstants.GRUPO_CDR_ENCAMINHADO,StatusCDRConstants.CDRSTATUS_ENCAMINHADO_ESB,StatusCDRConstants.CDRSTATUS_ENCAMINHADO_MOB));
 				list.add(new GrupoCDR("Rejeitado",GrupoStatusConstants.GRUPO_CDR_REJEITADO,StatusCDRConstants.CDRSTATUS_REJEITADO_C1,StatusCDRConstants.CDRSTATUS_REJEITADO_C2_ESB,StatusCDRConstants.CDRSTATUS_REJEITADO_C2_MOB));
 				list.add(new GrupoCDR("Excluído",GrupoStatusConstants.GRUPO_CDR_EXCLUIDO,StatusCDRConstants.CDRSTATUS_EXCLUIDO_X1,StatusCDRConstants.CDRSTATUS_EXCLUIDO_X2_ESB,StatusCDRConstants.CDRSTATUS_EXCLUIDO_X2_MOB));
 				list.add(new GrupoCDR("Perdido",GrupoStatusConstants.GRUPO_CDR_PERDIDO,StatusCDRConstants.CDRSTATUS_PERDIDO_PPC,StatusCDRConstants.CDRSTATUS_PERDIDO_ESB,StatusCDRConstants.CDRSTATUS_PERDIDO_MOB));
@@ -92,4 +141,6 @@ public class EvolucaoCDRServiceImpl extends AbstractService implements EvolucaoC
 				list.add(new GrupoCDR("Alteração de Vencimento",StatusCDRConstants.CDRSTATUS_ALTERACAO_VCTO,StatusCDRConstants.CDRSTATUS_ALTERACAO_VCTO));				
 				return list;
 	}
+
+
 }

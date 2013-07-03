@@ -87,6 +87,7 @@ public class ConfigRepasseContratoController extends BaseCRUDAndMethodController
 	protected ModelAndView limpar(HttpServletRequest request,HttpServletResponse response, ConfigRepasseContratoForm form,BindingResult bindingResult, Model model) throws Exception {
 		ModelAndView mav = new ModelAndView(getViewName());
 		SccProdutoContratadoPK pk = (SccProdutoContratadoPK)request.getSession().getAttribute(PRODUTO_CONTRATO_CACHE);
+		cleanSession(getClass(), request);
 		form.setEntity(new SccConfigRepasseCobranca());
 		SccContratoCobl cobl = getServiceManager().getContratoService().getByPk(pk.getCdContratoCobilling());
 		SccProdutoCobilling produtoCobilling = getServiceManager().getProdutoService().getByPk(pk.getCdProdutoCobilling());

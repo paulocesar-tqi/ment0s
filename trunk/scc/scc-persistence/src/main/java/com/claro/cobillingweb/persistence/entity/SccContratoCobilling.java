@@ -12,7 +12,7 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name="SCC_CONTRATO_COBILLING")
-public class SccContratoCobilling {
+public class SccContratoCobilling extends FwjBaseEntidade {
 	
 	private static final long serialVersionUID = 1L;
 	private SccContratoCobillingPK id;

@@ -7,6 +7,7 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 import com.claro.cobillingweb.persistence.dao.BasicDAO;
@@ -56,6 +57,7 @@ public class SccContratoAcordadoDAOImpl extends HibernateBasicDAOImpl<SccContrat
 				else
 					criteria.add(Restrictions.eq("operadoraClaro.cdEot", cdEOTClaro));
 				}
+			criteria.createAlias("operadoraClaro", "op").addOrder(Order.asc("op.dsOperadora"));  
 			List<SccContratoAcordado> acordos = criteria.list();
 			if (acordos != null)
 				{

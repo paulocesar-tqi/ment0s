@@ -62,7 +62,8 @@ public class SccRelBatimentoEstornoDebitoDAOImpl extends HibernateBasicDAOImpl<S
 		mapper.addResultMap("operadoraClaro", String.class);
 		mapper.addResultMap("uf", String.class);
 		mapper.addResultMap("noArquivo", String.class);
-		mapper.addResultMap("dsStatus", Date.class);
+		mapper.addResultMap("dsStatus", String.class);
+		mapper.addResultMap("mesAno", String.class);
 		mapper.addResultMap("valorTotalNf", Double.class);
 		mapper.addResultMap("valorTotalImpugnado", Double.class);
 		mapper.addResultMap("dtConnect", Date.class);

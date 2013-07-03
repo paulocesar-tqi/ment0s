@@ -102,11 +102,11 @@
 				</tr>
 				<tr>
 					<td width="15%"><spring:message code="relatorio.perda.faturamento.label.operadoraclaro" /></td>
-					<td id="comboOperadoraClaro"><form:select path="cdEOTClaro" id="cdEOTClaro" items="${operadorasClaro}" itemLabel="dsOperadora" itemValue="cdEot" /></td>
+					<td id="comboOperadoraClaro"><form:select path="cdEOTClaro" id="cdEOTClaro" items="${operadorasClaro}" itemLabel="dsOperadoraForCombos" itemValue="cdEot" /></td>
 				</tr>
 				<tr>
 					<td width="15%"><spring:message code="relatorio.perda.faturamento.label.operadorald" /></td>
-					<td id="cdEOTLD"><form:select path="cdEOTLD" id="cdEOTLD" items="${operadorasExternas}" itemLabel="dsOperadora" itemValue="cdEot" /></td>
+					<td id="cdEOTLD"><form:select path="cdEOTLD" id="cdEOTLD" items="${operadorasExternas}" itemLabel="dsOperadoraForCombos" itemValue="cdEot" /></td>
 				</tr>
 
 				

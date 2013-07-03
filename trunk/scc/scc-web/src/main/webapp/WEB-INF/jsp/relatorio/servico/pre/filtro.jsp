@@ -95,11 +95,11 @@
 			<table width="100%" border="0" cellspacing="0" cellpadding="0" >
 				<tr>
 					<td width="10%"><spring:message code="relatorio.label.operadora.claro"/>:</td>
-    				<td ><form:select path="cdEOTClaro" id="cdEOTClaro" items="${operadorasClaro}" itemLabel="dsOperadora" itemValue="cdEot" />    
+    				<td ><form:select path="cdEOTClaro" id="cdEOTClaro" items="${operadorasClaro}" itemLabel="dsOperadoraForCombos" itemValue="cdEot" />    
 				</tr>
 				<tr>
     				<td width="10%"><spring:message code="relatorio.label.operadora.ld"/>:</td>
-    				<td ><form:select path="cdEOTLD" id="cdEOTLD" items="${operadorasExternas}" itemLabel="dsOperadora" itemValue="cdEot" />    
+    				<td ><form:select path="cdEOTLD" id="cdEOTLD" items="${operadorasExternas}" itemLabel="dsOperadoraForCombos" itemValue="cdEot" />    
 				</tr>
 				<tr>
 					<td width="10%"><spring:message code="relatorio.label.produto.cobilling"/>:</td>
@@ -135,6 +135,8 @@
 							<display:column property="telemar" title="Telemar"/>
 							<display:column property="ipCorp" title="IPCORP" />
 							<display:column property="nexus" title="Nexus"/>
+							<display:column property="telecom65" title="Telecom65"/>
+							<display:column property="cambridge" title="Cambridge"/>
 						</display:table>
 					</td>
 				</tr>

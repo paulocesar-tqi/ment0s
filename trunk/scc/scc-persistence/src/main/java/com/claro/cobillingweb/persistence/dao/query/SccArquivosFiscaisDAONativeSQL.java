@@ -12,7 +12,7 @@ public class SccArquivosFiscaisDAONativeSQL {
 	public static final String SQL = "SELECT /*+PARALLEL(A,8)*/" +
 											 " CAST(O2.CD_CSP AS VARCHAR(2)) AS cdCSP, "+
 											 " CAST(O1.SG_UF AS VARCHAR(2)) AS sgUF, "+
-											 " ARQ.AA_CICLO AS anoCiclo, "+
+											 " CAST(ARQ.AA_CICLO AS VARCHAR2(4)) AS anoCiclo, "+
 											 " ARQ.MM_CICLO AS mesCiclo, "+
 											 " ARQ.CD_CICLO AS codigoCiclo, "+
 											 " ARQ.NO_ARQUIVO AS noArquivo, "+

@@ -10,6 +10,8 @@ public class DemonstrativoRepassePreDecorator {
 
 	private boolean holding;
 	
+	private boolean consolidadoGeral;
+	
 	private SccOperadora operadora;
 	
 	private SccOperadora operadoraLD;
@@ -33,6 +35,13 @@ public class DemonstrativoRepassePreDecorator {
 		this.holding = holding;
 	}
 
+	public boolean isConsolidadoGeral() {
+		return consolidadoGeral;
+	}
+
+	public void setConsolidadoGeral(boolean consolidadoGeral) {
+		this.consolidadoGeral = consolidadoGeral;
+	}
 
 	public List<DemonstrativoRepassePreItemDecorator> getItens() {
 		return itens;
@@ -54,11 +63,11 @@ public class DemonstrativoRepassePreDecorator {
 	public SccOperadora getOperadora() {
 		return operadora;
 	}
-
+	
 	public void setOperadora(SccOperadora operadora) {
 		this.operadora = operadora;
 	}
-
+	
 	public SccProdutoPrepago getProdutoPrepago() {
 		return produtoPrepago;
 	}

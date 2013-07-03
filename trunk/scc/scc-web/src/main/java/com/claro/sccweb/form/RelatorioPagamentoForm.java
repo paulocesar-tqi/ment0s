@@ -1,21 +1,35 @@
 package com.claro.sccweb.form;
 
-public class RelatorioPagamentoForm {
+import java.util.List;
 
-	private String cdEOTClaro;
+import com.claro.sccweb.decorator.PagamentoSAPDecorator;
+
+public class RelatorioPagamentoForm extends BaseForm{
+
+	private String cdEOT;
 	private String cdEOTLD;
-	private String cdProdutoPrepago;
+	private String cdProdutoPrePago;
 	private Long cdProdutoCobilling;
 	private Long cdPeriodicidade;	
 	private Long mesRepasse;	
 	private Long anoRepasse;
 	private String cdTipoContrato;
 	
-	public String getCdEOTClaro() {
-		return cdEOTClaro;
+	private List<PagamentoSAPDecorator> listPagamentoSAPDecorator;
+	
+	private String operacao;
+	private int linhaSelacionada;
+	
+	private Long[] nuRepasse;
+	
+	private Long[] lancadosSelecionados;
+	
+
+	public String getCdEOT() {
+		return cdEOT;
 	}
-	public void setCdEOTClaro(String cdEOTClaro) {
-		this.cdEOTClaro = cdEOTClaro;
+	public void setCdEOT(String cdEOT) {
+		this.cdEOT = cdEOT;
 	}
 	public String getCdEOTLD() {
 		return cdEOTLD;
@@ -23,11 +37,13 @@ public class RelatorioPagamentoForm {
 	public void setCdEOTLD(String cdEOTLD) {
 		this.cdEOTLD = cdEOTLD;
 	}
-	public String getCdProdutoPrepago() {
-		return cdProdutoPrepago;
+
+	
+	public String getCdProdutoPrePago() {
+		return cdProdutoPrePago;
 	}
-	public void setCdProdutoPrepago(String cdProdutoPrepago) {
-		this.cdProdutoPrepago = cdProdutoPrepago;
+	public void setCdProdutoPrePago(String cdProdutoPrePago) {
+		this.cdProdutoPrePago = cdProdutoPrePago;
 	}
 	public Long getCdProdutoCobilling() {
 		return cdProdutoCobilling;
@@ -59,7 +75,38 @@ public class RelatorioPagamentoForm {
 	public void setCdTipoContrato(String cdTipoContrato) {
 		this.cdTipoContrato = cdTipoContrato;
 	}
+	public String getOperacao() {
+		return operacao;
+	}
+	public void setOperacao(String operacao) {
+		this.operacao = operacao;
+	}
+	public int getLinhaSelacionada() {
+		return linhaSelacionada;
+	}
+	public void setLinhaSelacionada(int linhaSelacionada) {
+		this.linhaSelacionada = linhaSelacionada;
+	}
+	public List<PagamentoSAPDecorator> getListPagamentoSAPDecorator() {
+		return listPagamentoSAPDecorator;
+	}
+	public void setListPagamentoSAPDecorator(
+			List<PagamentoSAPDecorator> listPagamentoSAPDecorator) {
+		this.listPagamentoSAPDecorator = listPagamentoSAPDecorator;
+	}
+	public Long[] getNuRepasse() {
+		return nuRepasse;
+	}
+	public void setNuRepasse(Long[] nuRepasse) {
+		this.nuRepasse = nuRepasse;
+	}
+	public Long[] getLancadosSelecionados() {
+		return lancadosSelecionados;
+	}
+	public void setLancadosSelecionados(Long[] lancadosSelecionados) {
+		this.lancadosSelecionados = lancadosSelecionados;
+	}
 	
-	
+
 	
 }

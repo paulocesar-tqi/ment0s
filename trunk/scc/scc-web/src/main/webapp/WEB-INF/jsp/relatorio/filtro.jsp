@@ -70,26 +70,26 @@
     				</td>
 				</tr>
 			</table>
-			<table width="100%" border="0" cellspacing="0" cellpadding="0">
-				<tr>
-					<td colspan="3" class="TdFormularioUp">&nbsp;</td>
-					<td colspan="1" align="right" class="TdFormularioUp" nowrap="nowrap">
-						<input id="pesquisar_button" type="button" value=<spring:message code="comum.botao.pesquisar"/> />
-						<input id="excel_button" type="button" value=<spring:message code="comum.botao.excel"/> />
-					</td>
-				</tr>
-			</table>
 			<br />
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
 					<td>
 						<display:table style="width:90%" name="sessionScope._DISPLAY_TAG_SPACE_1" pagesize="20" id="repasses" requestURI="/scc/user/relatorio/processo/parametro/tab1.scc" class="ui-state-default">
 							<display:column property="processo" title="Processo"/>
-							<display:column property="dtExercicio" title="DT Exercicio"/>
+							<display:column property="dtExercicio" title="DT Exercicio" format="{0, date, dd/MM/yyyy }"/>
 							<display:column property="parametro" title="Parametro"/>
 							<display:column property="tipo" title="Tipo"/>
 							<display:column property="valor" title="Valor"/>
 						</display:table>
+					</td>
+				</tr>
+			</table>
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<td colspan="3" class="TdFormularioUp">&nbsp;</td>
+					<td colspan="1" align="right" class="TdFormularioUp" nowrap="nowrap">
+						<input id="pesquisar_button" type="button" value=<spring:message code="comum.botao.pesquisar"/> />
+						<input id="excel_button" type="button" value=<spring:message code="comum.botao.excel"/> />
 					</td>
 				</tr>
 			</table>

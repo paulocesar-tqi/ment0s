@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -84,13 +85,6 @@ public class RelatorioContabilController extends BaseOperationController<Relator
 		comboList.addAll(getServiceManager().getPesquisaDominiosService().pequisaOperadorasClaroComM());
 		return comboList;
 	}
-	/*
-	@ModelAttribute("operadorasClaro")
-	public List<SccOperadora> populaOperadoras() throws Exception
-	{
-		return super.populaOperadorasClaro(false);
-	}
-	*/
 	
 	@ModelAttribute("operadorasExternas")
 	public List<SccOperadora> populaOperadorasExternas() throws Exception {
@@ -102,21 +96,15 @@ public class RelatorioContabilController extends BaseOperationController<Relator
 		comboList.addAll(getServiceManager().getPesquisaDominiosService().pesquisaOperadorasExternas());
 		return comboList;
 	}
-	/*
-	@ModelAttribute("operadorasExternas")
-	public List<SccOperadora> populaOperadorasExternas() throws Exception
-	{
-		return super.populaOperadorasExternas(false);
-	}
-	*/
 	
 	@ModelAttribute("motivos")	
 	public  List<BasicStringItem> populaMotivos() throws Exception
 	{
 		List<BasicStringItem> comboList = new ArrayList<BasicStringItem>();
+		comboList.add(new BasicStringItem(BasicDAO.GET_ALL_STRING, "Todos"));
 		List<SccMotivoRejeicao> rows = getServiceManager().getPesquisaDominiosService().getAllMotivosRejeicao();
 		for (SccMotivoRejeicao row : rows) {
-			comboList.add(new BasicStringItem(row.getCdMotivoRejeicao(), row.getCdMotivoRejeicao()+" "+row.getDsMotivoRejeicao()));
+			comboList.add(new BasicStringItem(row.getCdMotivoRejeicao(), row.getCdMotivoRejeicao()+" " +"-"+ " "+(StringUtils.isNotEmpty(row.getTxComentarioMotivo()) ?  row.getTxComentarioMotivo() : "")));
 		}
 		return comboList;
 	}

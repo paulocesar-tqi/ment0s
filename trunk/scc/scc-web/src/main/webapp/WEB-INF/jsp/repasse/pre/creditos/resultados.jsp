@@ -47,7 +47,7 @@ $('#form1').submit();
 <c:if test="${!empty sessionScope._DISPLAY_TAG_SPACE_1}">
 <table  width="100%" border="0" cellspacing="0" cellpadding="0" >
  <tr><td>                            
-<display:table  name="sessionScope._DISPLAY_TAG_SPACE_1"  decorator="com.claro.sccweb.decorator.RelCreditosPrePagoDecorator" pagesize="50"  id="repasses" partialList="true" size="sessionScope._DISPLAY_TAG_SPACE_1.fullListSize" requestURI="/scc/user/repasse/pre/creditos/pagina" class="ui-state-default">
+<display:table  name="sessionScope._DISPLAY_TAG_SPACE_1"  decorator="com.claro.sccweb.decorator.RelCreditosPrePagoDecorator" pagesize="20"  id="repasses" requestURI="/scc/user/repasse/pre/creditos/execute.scc" class="ui-state-default">
 <display:column property="nomeArquivo" title="Nome do Aquivo" />
 <display:column property="operadoraLD" title="EOT LD" />
 <display:column property="operadoraClaro" title="EOT Claro" />

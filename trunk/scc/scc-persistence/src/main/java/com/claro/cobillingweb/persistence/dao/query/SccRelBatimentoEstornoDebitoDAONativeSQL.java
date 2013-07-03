@@ -4,16 +4,12 @@ public class SccRelBatimentoEstornoDebitoDAONativeSQL {
 	
 	public static final String SQL = "Select " +
 			   "ARQ.sq_arquivo, "+ 
-		       "ARQ.cd_eot_ld, "+
-		       "ARQ.cd_eot_claro, "+ 
 		       "OP.no_operadora_ld, "+ 
 		       "OP_CLARO.ds_operadora, "+ 
-		       "OP.sg_uf, "+
+		       "CAST(OP.sg_uf AS VARCHAR2(2)), "+
 		       "ARQ.no_arquivo, "+ 
-		       "ST_ARQ.cd_status_arquivo, "+ 
 		       "ST_ARQ.ds_status_arquivo, "+
-		       "ARQ.mm_ciclo, "+
-		       "ARQ.aa_ciclo, "+
+		       "ARQ.mm_ciclo ||'/'|| ARQ.aa_ciclo as mesAno, "+
 		       "ARQ.vl_total_nf, "+
 		       "ARQ.vl_total_impugnado, "+ 
 		       "ARQ.dt_connect "+ 

@@ -75,6 +75,13 @@ public class RelatorioPrestacaoServicoPreDecorator extends RownumDecorator<RelPr
 		return formataDouble(getRow().getNexus());
 	}
 	
+	public String getTelecom65(){
+		return formataDouble(getRow().getTelecom65());
+	}
+	
+	public String getCambridge(){
+		return formataDouble(getRow().getCambridge());
+	}
 	
 
 }

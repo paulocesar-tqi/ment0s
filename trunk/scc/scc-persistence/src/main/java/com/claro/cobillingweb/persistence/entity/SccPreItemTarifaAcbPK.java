@@ -8,20 +8,26 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class SccPreItemTarifaAcbPK implements Serializable {
 
+
 	private static final long serialVersionUID = 1L;
-	private long sqPreTarifaAcb;
+	private Long  sqPreTarifaAcb;
 	private String sgUf;
 
     public SccPreItemTarifaAcbPK() {
     }
 
 	@Column(name="SQ_PRE_TARIFA_ACB")
-	public long getSqPreTarifaAcb() {
-		return this.sqPreTarifaAcb;
+	public Long getSqPreTarifaAcb() {
+		return sqPreTarifaAcb;
 	}
-	public void setSqPreTarifaAcb(long sqPreTarifaAcb) {
+
+	public void setSqPreTarifaAcb(Long sqPreTarifaAcb) {
 		this.sqPreTarifaAcb = sqPreTarifaAcb;
 	}
+	
+	//@ManyToOne
+	//@JoinColumn(name="SQ_PRE_TARIFA_ACB")
+	
 
 	@Column(name="SG_UF")
 	public String getSgUf() {
@@ -31,7 +37,7 @@ public class SccPreItemTarifaAcbPK implements Serializable {
 		this.sgUf = sgUf;
 	}
 
-	public boolean equals(Object other) {
+/*	public boolean equals(Object other) {
 		if (this == other) {
 			return true;
 		}
@@ -52,6 +58,6 @@ public class SccPreItemTarifaAcbPK implements Serializable {
 		hash = hash * prime + this.sgUf.hashCode();
 		
 		return hash;
-    }
+    }*/
 	
 }

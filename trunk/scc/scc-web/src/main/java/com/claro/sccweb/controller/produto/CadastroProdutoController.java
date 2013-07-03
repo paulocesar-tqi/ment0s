@@ -59,7 +59,8 @@ public class CadastroProdutoController extends BaseCRUDAndMethodController<Cadas
 	protected ModelAndView salvar(HttpServletRequest request,HttpServletResponse response, CadastroProdutoForm form,BindingResult bindingResult, Model model) throws Exception {		
 		form.getEntity().setDtCriacao(Calendar.getInstance().getTime());
 		form.getEntity().setCdUsuarioManut(getSessionDataManager().getUserPrincipal());
-		getServiceManager().getProdutoService().create(form.getEntity());				
+		getServiceManager().getProdutoService().create(form.getEntity());	
+		atualizarResultados(request, response, form, bindingResult, model);
 		return limpar(request, response, form, bindingResult, model);
 	}
 
@@ -74,7 +75,8 @@ public class CadastroProdutoController extends BaseCRUDAndMethodController<Cadas
 	protected ModelAndView atualizar(HttpServletRequest request,HttpServletResponse response, CadastroProdutoForm form,BindingResult bindingResult, Model model) throws Exception {
 		form.getEntity().setDtAtualizacao(Calendar.getInstance().getTime());
 		form.getEntity().setCdUsuarioManut(getSessionDataManager().getUserPrincipal());
-		getServiceManager().getProdutoService().update(form.getEntity());				
+		getServiceManager().getProdutoService().update(form.getEntity());	
+		atualizarResultados(request, response, form, bindingResult, model);
 		return limpar(request, response, form, bindingResult, model);
 	}
 

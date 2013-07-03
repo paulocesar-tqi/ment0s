@@ -11,7 +11,7 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name="SCC_CRITICA_PREBILLING")
-public class SccCriticaPrebilling {
+public class SccCriticaPrebilling extends FwjBaseEntidade{
 
 	private static final long serialVersionUID = 1L;
 	private String cdCritica;

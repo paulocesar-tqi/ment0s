@@ -80,6 +80,8 @@ public interface SccPreFechamentoDAO extends BasicDAO<SccPreFechamento> {
 	 * @throws DAOException
 	 */
 	public List<RelApuracaoFechamentoPrePagoView> geraRelatorioApuracao(String cdProduto,String cdEOTLD,String cdEOTClaro,String cdStatusFechamento,Date dataInicial,Date dataFinal) throws DAOException;
+
+	void updateEntity(SccPreFechamento entity) throws DAOException;
 	
 	
 }

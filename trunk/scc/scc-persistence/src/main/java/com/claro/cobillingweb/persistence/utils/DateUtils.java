@@ -47,7 +47,16 @@ public class DateUtils {
         aux.roll(Calendar.DATE, true); //vai para o dia seguinte   
         aux.roll(Calendar.MILLISECOND, false); //reduz 1 milisegundo   
         return aux.getTime();   
-    }   
+    } 
+    
+    public static Date highDateTime2(Date date) {   
+        Calendar aux = Calendar.getInstance();   
+        aux.setTime(date);   
+        toOnlyDate2(aux); //zera os parametros de hour,min,sec,milisec   
+        //aux.roll(Calendar.DATE, true); //vai para o dia seguinte   
+        //aux.roll(Calendar.SECOND, false); //reduz 1 milisegundo   
+        return aux.getTime();   
+    }
   
     /**  
      * Zera todas as referencias de hora, minuto, segundo e milesegundo do  
@@ -60,8 +69,16 @@ public class DateUtils {
         date.set(Calendar.SECOND, 0);   
         date.set(Calendar.MILLISECOND, 0);   
     }  
+    
+    public static void toOnlyDate2(Calendar date){
+    	date.set(Calendar.HOUR_OF_DAY, 23);
+        date.set(Calendar.MINUTE, 59);   
+        date.set(Calendar.SECOND, 59);   
+        //date.set(Calendar.MILLISECOND, );   
 
-	public Date calculaDataFinalPeriodo(Long mes,Long ano) {
+    }
+
+	public static Date calculaDataFinalPeriodo(Long mes,Long ano) {
 		Calendar cal = Calendar.getInstance();
 		cal.set(Calendar.YEAR, ano.intValue());
 		cal.set(Calendar.MONTH,mes.intValue()-1);
@@ -72,7 +89,7 @@ public class DateUtils {
 	/**
 	 *  Retorna um objeto Date apontando para o primeiro dia do período informado.
 	 */
-	public Date calculaDataInicialPeriodo(Long mes,Long ano) {
+	public static Date calculaDataInicialPeriodo(Long mes,Long ano) {
 		Calendar cal = Calendar.getInstance();
 		cal.set(Calendar.YEAR, ano.intValue());
 		cal.set(Calendar.MONTH,mes.intValue()-1);

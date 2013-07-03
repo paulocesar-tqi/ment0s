@@ -3,6 +3,8 @@ package com.claro.sccweb.service.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.claro.cobillingweb.persistence.dao.DAOException;
@@ -28,20 +30,31 @@ import com.claro.cobillingweb.persistence.entity.SccMotivoRejeicao;
 import com.claro.cobillingweb.persistence.entity.SccPenalidadePorRejeicao;
 import com.claro.cobillingweb.persistence.entity.SccPenalidadePorRejeicaoPK;
 import com.claro.cobillingweb.persistence.entity.SccPreDominio;
+import com.claro.cobillingweb.persistence.service.ServiceException;
 import com.claro.sccweb.service.AbstractService;
 import com.claro.sccweb.service.AdminService;
-
+@Service
 public class AdminServiceImpl extends AbstractService implements AdminService {
 
+	@Autowired
 	private SccFaixaPenalidadeDAO faixaPenalidadeDAO;
+	@Autowired
 	private SccAssinanteCriticaDAO assinanteCriticaDAO;
+	@Autowired
 	private SccMapaStatusDAO mapaStatusDAO;
+	@Autowired
 	private SccMotivoRejeicaoDAO motivoRejeicaoDAO;
+	@Autowired
 	private SccAliquotaImpostoDAO aliquotaImpostoDAO;
+	@Autowired
 	private SccCtlParalizacaoPlatDAO ctlParalizacaoPlatDAO;
+	@Autowired
 	private SccPreDominioDAO preDominioDAO;
+	@Autowired
 	private SccContaContabilDAO contaContabilDAO;
+	@Autowired
 	private SccCentroDAO centroDAO;
+	@Autowired
 	private SccPenalidadePorRejeicaoDAO penalidadePorRejeicaoDAO;
 	
 	
@@ -60,21 +73,39 @@ public class AdminServiceImpl extends AbstractService implements AdminService {
 		return getFaixaPenalidadeDAO().pesquisarPorTipo(tipo);
 	}
 	
-	@Transactional
-	public void delete(SccFaixaPenalidade entity) throws DAOException {
-		getFaixaPenalidadeDAO().delete(entity);
+	
+	@Override
+	public SccFaixaPenalidade findById(Long id)throws DAOException, ServiceException{
+		return this.faixaPenalidadeDAO.findById(id);
 	}
 	
 	@Transactional
-	public void update(SccFaixaPenalidade entity) throws DAOException {
-		getFaixaPenalidadeDAO().update(entity);
+	@Override
+	public void delete(SccFaixaPenalidade entity) throws DAOException, ServiceException {
+		this.faixaPenalidadeDAO.delete(entity);
 	}
 	
 	@Transactional
-	public void create(SccFaixaPenalidade entity) throws DAOException {
-		getFaixaPenalidadeDAO().create(entity);
+	@Override
+	public void update(SccFaixaPenalidade entity) throws DAOException, ServiceException {
+		this.faixaPenalidadeDAO.update(entity);
 	}
 	
+	@Transactional
+	@Override
+	public void create(SccFaixaPenalidade entity) throws DAOException, ServiceException {
+		this.faixaPenalidadeDAO.create(entity);
+	}
+	
+	
+	@Transactional
+	@Override
+	public void deleteEntity(Long cdFaixaPenalidade) throws DAOException {
+		
+		this.faixaPenalidadeDAO.deleteEntity(cdFaixaPenalidade);
+		
+	}
+
 	public SccFaixaPenalidadeDAO getFaixaPenalidadeDAO() {
 		return faixaPenalidadeDAO;
 	}
@@ -348,5 +379,7 @@ public class AdminServiceImpl extends AbstractService implements AdminService {
 	public void delete(SccPenalidadePorRejeicao entity) throws DAOException {
 		getPenalidadePorRejeicaoDAO().delete(entity);
 	}
+	
+	
 	
 }

@@ -47,8 +47,7 @@
 		
 	});
 	
-	function selecionaLD()
-	{
+	function selecionaLD(){
 	 $("#cdProdutoCobilling").empty().append('<option selected="selected" value="0">Selecione...</option>');
 	 $("#cdPeriodicidade").empty().append('<option selected="selected" value="0">Selecione...</option>');
 	 
@@ -105,11 +104,11 @@
 			<table width="100%" border="0" cellspacing="0" cellpadding="0" >
 				<tr>
 					<td width="10%"><spring:message code="relatorio.label.operadora.claro"/>:</td>
-    				<td ><form:select path="cdEOTClaro" id="cdEOTClaro" items="${operadorasClaro}" itemLabel="dsOperadora" itemValue="cdEot" />    
+    				<td ><form:select path="cdEOTClaro" id="cdEOTClaro" items="${operadorasClaro}" itemLabel="dsOperadoraForCombos" itemValue="cdEot" />    
 				</tr>
 				<tr>
     				<td width="10%"><spring:message code="relatorio.label.operadora.ld"/>:</td>
-    				<td ><form:select path="cdEOTLD" id="cdEOTLD" items="${operadorasExternas}" itemLabel="dsOperadora" itemValue="cdEot" />    
+    				<td ><form:select path="cdEOTLD" id="cdEOTLD" items="${operadorasExternas}" itemLabel="dsOperadoraForCombos" itemValue="cdEot" />    
 				</tr>
 
 				<tr>    
@@ -148,12 +147,14 @@
 							<display:column property="telefonica" title="Telefonica"/>
 							<display:column property="tnl" title="TNL"/>
 							<display:column property="gvt" title="GVT"/>
-							<display:column property="sercontel" title="Sercontel"/>
+							<display:column property="sercontel" title="Sercomtel"/>
 							<display:column property="tim" title="TIM"/>
 							<display:column property="ctbc" title="CTBC"/>
 							<display:column property="telemar" title="Telemar"/>
 							<display:column property="ipCorp" title="IPCORP" />
 							<display:column property="nexus" title="Nexus"/>
+							<display:column property="telecom65" title="Telecom65"/>
+							<display:column property="cambridge" title="Cambridge"/>
 						</display:table>
 					</td>
 				</tr>

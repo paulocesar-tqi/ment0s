@@ -53,6 +53,16 @@
 <put-attribute name="tituloTela" value="Cadastro de Operadoras" />
 </definition>
 
+<definition name="cadastro_critica_prebilling" extends="basicLayout">
+<put-attribute name="body" value="/WEB-INF/jsp/admin/critica_prebilling/filtro.jsp" />
+<put-attribute name="tituloTela" value="Critica Prebilling" />
+</definition>
+
+<definition name="cadastro_dados_bancarios" extends="basicLayout">
+<put-attribute name="body" value="/WEB-INF/jsp/admin/dados_bancarios/dadosbancarios.jsp" />
+<put-attribute name="tituloTela" value="Dados Bancários" />
+</definition>
+
 <definition name="gestao_penalidade_filtro" extends="basicLayout">
 <put-attribute name="body" value="/WEB-INF/jsp/admin/penalidade/filtro.jsp" />
 <put-attribute name="tituloTela" value="Gestão de Penalidades" />
@@ -129,6 +139,12 @@
 	<put-attribute name="tituloTela" value="Gestão de Relatórios Cobilling" />
 </definition>
 
+<definition name="cadastro_email_grupo" extends="basicLayout">
+	<put-attribute name="body" value="/WEB-INF/jsp/admin/relatorio/cadastroEmailGrupo.jsp" />
+	<put-attribute name="tituloTela" value="Associar Email's X Grupos" />
+</definition>
+
+
 <definition name="relatorio_batimento_arquivos_filtro" extends="basicLayout">
 	<put-attribute name="body" value="/WEB-INF/jsp/relatorio/batimento/filtro.jsp" />
 	<put-attribute name="tituloTela" value="Relatório de Batimentos Semanais" />
@@ -145,6 +161,31 @@
 <definition name="config_rejeicao_filtro" extends="basicLayout">
 <put-attribute name="body" value="/WEB-INF/jsp/admin/config_rejeicao/filtro.jsp" />
 <put-attribute name="tituloTela" value="Configuração de Rejeições" />
+</definition>
+
+<definition name="cadastro_grupo_relatorio_cobilling_filtro" extends="basicLayout">
+	<put-attribute name="body" value="/WEB-INF/jsp/admin/relatorio/relatorioGrupo.jsp" />
+	<put-attribute name="tituloTela" value="Grupo Associado ao Relatório Alteração de Vencimento" />
+</definition>
+
+<definition name="relatorio_resultado_indicador" extends="basicLayout">
+	<put-attribute name="body" value="/WEB-INF/jsp/indicador/resultadoIndicador.jsp"></put-attribute>
+	<put-attribute name="tituloTela" value="Relatório de Resultado de Indicador"></put-attribute>
+</definition>
+
+<definition name="relatorio_resultado_indicador_arq" extends="basicLayout">
+	<put-attribute name="body" value="/WEB-INF/jsp/indicador/resultadoIndicadorArq.jsp"></put-attribute>
+	<put-attribute name="tituloTela" value="Relatório de Resultado de Indicador"></put-attribute>
+</definition>
+
+<definition name="cad_tarifas_cobrar" extends="basicLayout">
+	<put-attribute name="body" value="/WEB-INF/jsp/admin/tarifas/tarifasCobrar.jsp"></put-attribute>
+	<put-attribute name="tituloTela" value="Consulta de Tarifas para Chamadas ACB"></put-attribute>
+</definition>
+
+<definition name="relatorio_questionamento_requisicao" extends="basicLayout">
+	<put-attribute name="body" value="/WEB-INF/jsp/questionamento/requisicao.jsp"></put-attribute>
+	<put-attribute name="tituloTela" value="Solicitação de Apuração"></put-attribute>
 </definition>
 
 </tiles-definitions>

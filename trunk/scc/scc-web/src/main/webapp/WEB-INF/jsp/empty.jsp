@@ -10,6 +10,6 @@
 </div>
 <table width="100%" border="0" cellspacing="0" cellpadding="0" class="TabelaFormulario">
 <tr>
-    <td width="100%"  align="center"><u><b><spring:message code="comum.inicial.titulo" arguments="${sessionScope['scopedTarget.sessionDataManager'].userDisplayName}"/></b></u></td>
+    <td width="100%"  align="center"><spring:message code="comum.inicial.titulo" arguments="${sessionScope['scopedTarget.sessionDataManager'].userDisplayName}"/></td>
 </tr>
 </table>

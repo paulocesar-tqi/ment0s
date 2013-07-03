@@ -35,6 +35,8 @@ import com.claro.sccweb.service.ServiceException;
 public class SccNaoConfAplBatimentoEstornoDebitoController extends
 		BaseOperationController<RelatorioNaoConfBatimentoEstornoDebitoForm> {
 	
+	private static final String FWD_VIEW_EXCEL ="relatorio_nao_conformidade_batimento_estorno_debito_excel";
+	
 	@Autowired
 	private SccNaoConfAplBatimentoEstornoDebitoService sccNaoConfAplBatimentoEstornoDebitoService;
 	
@@ -60,10 +62,16 @@ public class SccNaoConfAplBatimentoEstornoDebitoController extends
 		
 	}
 	
+	public ModelAndView excel(HttpServletRequest request,HttpServletResponse response, BaseForm _form,BindingResult bindingResult, Model model) throws Exception {
+		ModelAndView mav = new ModelAndView(FWD_VIEW_EXCEL);
+		return mav;
+	}
+	
+	
 	private SccFiltro getFiltro(RelatorioNaoConfBatimentoEstornoDebitoForm form) {
 		
 		SccFiltro filtro = new SccFiltro();
-		filtro.setOperadoraClaro(form.getEntity().getOperadoraClaro());
+		filtro.setOperadoraClaro(form.getCdEOTClaro());
 		filtro.setOperadoraExterna(form.getEntity().getOperadoraLD());
 		filtro.setMmCiclo(form.getMesReferencia());
 		filtro.setAaCiclo(form.getAnoReferencia());

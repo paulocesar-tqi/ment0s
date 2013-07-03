@@ -43,7 +43,7 @@ $('#tabs').tabs();
 <td align="center"><h3>Cobilling Pré Pago - Relatório Sintético de Chamadas</h3></td>
 </tr>
  <tr><td>                            
-<display:table style="width:90%" name="sessionScope._DISPLAY_TAG_SPACE_1" export="true"  decorator="com.claro.sccweb.decorator.RelSinteticoFechamentoPrePagoViewDecorator" pagesize="20"  id="sintetico" requestURI="/scc/user/repasse/pre/relatorios/tab1_sintetico.scc" class="ui-state-default">
+<display:table style="width:90%" name="sessionScope._DISPLAY_TAG_SPACE_1" export="false"  pagesize="20"  id="sintetico" requestURI="/scc/user/repasse/pre/relatorios/tab1_sintetico.scc" class="ui-state-default">
 <display:column property="operadoraClaro" title="Op. Claro" />
 <display:column property="uf" title="UF" />
 <display:column property="trafego" title="Tráfego" />

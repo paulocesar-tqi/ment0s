@@ -8,6 +8,8 @@ public class ItemGraficoDistribuicao {
 	private String descricao;
 	private Long aaCiclo;
 	private Long mmCiclo;
+	private Long cdStatusCdr;
+	private Double valor;
 	public Double getValorAlocado() {
 		return valorAlocado;
 	}
@@ -44,6 +46,22 @@ public class ItemGraficoDistribuicao {
 	public void setMmCiclo(Long mmCiclo) {
 		this.mmCiclo = mmCiclo;
 	}
+	public Long getCdStatusCdr() {
+		return cdStatusCdr;
+	}
+	public void setCdStatusCdr(Long cdStatusCdr) {
+		this.cdStatusCdr = cdStatusCdr;
+	}
+	public Double getValor() {
+		return valor;
+	}
+	public void setValor(Double valor) {
+		this.valor = valor;
+	}
+	
+	
+	
+	
 	
 	
 	

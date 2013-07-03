@@ -46,7 +46,7 @@ public class SccEncaminhadoMobileDAOImpl extends HibernateBasicDAOImpl<SccEncami
 			mapper.addResultMap("dtRelatorio", Date.class);
 			mapper.addResultMap("noArquivoReferencia", String.class);
 			mapper.addResultMap("qtChamadas", Integer.class);
-			mapper.addResultMap("qtMinutoTarifados", Integer.class);
+			mapper.addResultMap("qtMinutoTarifados", Double.class);
 			mapper.addResultMap("vlLiquido", Double.class);
 			mapper.addResultMap("nuItem", Integer.class);
 			mapper.addResultMap("sqRelatorioSumarizado", Integer.class);

@@ -15,7 +15,7 @@
 	</parent>
 
 	<build>
-		<finalName>scc.ear</finalName>
+		<finalName>scc</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -30,7 +30,6 @@
 							<groupId>com.claro</groupId>
 							<artifactId>scc-web</artifactId>
 							<contextRoot>/scc</contextRoot>
-							<unpack>true</unpack>
 						</webModule>
 					</modules>
 				</configuration>

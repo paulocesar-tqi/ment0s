@@ -8,13 +8,27 @@ import com.claro.sccweb.form.RelatorioPagamentoForm;
 public class RelatorioPagamentoValidator implements Validator {
 
 	 
+	@Override
 	public boolean supports(Class<?> clazz) {
 		return clazz.equals(RelatorioPagamentoForm.class);
 	}
 
-	 
-	public void validate(Object arg, Errors errors) {
-		// TODO Auto-generated method stub
+	@Override 
+	public void validate(Object obj, Errors errors) {
+		RelatorioPagamentoForm form = (RelatorioPagamentoForm)obj;
+		if(form.getOperacao() != null  && form.getOperacao().equalsIgnoreCase("pesquisar")){
+/*			if(form.getCdProdutoCobilling() == null){
+				errors.rejectValue("cdProdutoCobilling", "campoObrigatorio", "Campo Obrigatório");
+			}
+			
+			if(form.getAnoRepasse() == null){
+				errors.rejectValue("anoRepasse", "campoObrigatorio", "Campo Obrigatório");
+			}
+			if(form.getMesRepasse() == null){
+				errors.rejectValue("mesRepasse", "campoObrigatorio", "Campo Obrigatório");
+			}
+*/			
+		}
 		
 	}
 

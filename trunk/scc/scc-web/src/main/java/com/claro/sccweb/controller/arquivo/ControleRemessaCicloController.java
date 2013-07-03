@@ -36,6 +36,7 @@ public class ControleRemessaCicloController extends BaseOperationController<Cont
 
 	private final ControleRemessaCicloValidator validator = new ControleRemessaCicloValidator();
 	public static final String FORM_NAME = "filtro";
+	public static final String FWD_VIEW_EXCEL ="arquivo_controle_remessa_ciclo_excel";
 	
 	public ModelAndView pesquisar(HttpServletRequest request,HttpServletResponse response, BaseForm _form,BindingResult bindingResult, Model model) throws Exception {		
 		ControleRemessaCicloForm form = (ControleRemessaCicloForm)_form;
@@ -74,7 +75,7 @@ public class ControleRemessaCicloController extends BaseOperationController<Cont
 	}
 	
 	public ModelAndView excel(HttpServletRequest request,HttpServletResponse response, BaseForm _form,BindingResult bindingResult, Model model) throws Exception {
-		ModelAndView mav = new ModelAndView(getViewName()+"_excel");
+		ModelAndView mav = new ModelAndView(FWD_VIEW_EXCEL);
 		return mav;
 	}
 	

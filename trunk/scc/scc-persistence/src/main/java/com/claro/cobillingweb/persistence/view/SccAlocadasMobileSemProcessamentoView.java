@@ -3,7 +3,10 @@
  */
 package com.claro.cobillingweb.persistence.view;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * @author 92031709
@@ -11,11 +14,23 @@ import java.util.Date;
  */
 public class SccAlocadasMobileSemProcessamentoView {
 	
+	protected static NumberFormat decimalFormat = new DecimalFormat("#.##");
+	protected static NumberFormat integerFormat = new DecimalFormat("#.##");
+	static {
+    	Locale locale = new Locale("pt","BR");
+    	decimalFormat = NumberFormat.getInstance(locale);
+    	decimalFormat.setMinimumFractionDigits(2);
+    	decimalFormat.setMaximumFractionDigits(2);
+    	integerFormat = NumberFormat.getInstance(locale);
+    	integerFormat.setMinimumFractionDigits(0);
+    	integerFormat.setMaximumFractionDigits(0);
+    }
+	
 	private String noArquivoReferencia;
 	private Date dtRelatorio;
 	private Integer cdCiclo;
 	private Integer qtChamadas;
-	private Integer qtMinutoTarifados;
+	private Double qtMinutoTarifados;
 	private Double vlLiquido;
 	private Date dtReferencia;
 
@@ -43,18 +58,38 @@ public class SccAlocadasMobileSemProcessamentoView {
 	public void setQtChamadas(Integer qtChamadas) {
 		this.qtChamadas = qtChamadas;
 	}
-	public Integer getQtMinutoTarifados() {
+	public Double getQtMinutoTarifados() {
 		return qtMinutoTarifados;
 	}
-	public void setQtMinutoTarifados(Integer qtMinutoTarifados) {
+	public void setQtMinutoTarifados(Double qtMinutoTarifados) {
 		this.qtMinutoTarifados = qtMinutoTarifados;
 	}
+	
+	public String getQtMinutoTarifadosStr(){
+		String value = "";
+		if(this.qtMinutoTarifados != null){
+			value = decimalFormat.format(this.getQtMinutoTarifados());
+		}
+		return value;
+	}
+	
+	
 	public Double getVlLiquido() {
 		return vlLiquido;
 	}
 	public void setVlLiquido(Double vlLiquido) {
 		this.vlLiquido = vlLiquido;
 	}
+	
+	public String getVlLiquidoStr(){
+		String value = "";
+		if(this.vlLiquido != null){
+			value = decimalFormat.format(this.getVlLiquido());
+		}
+		return value;
+	}
+	
+	
 	public Date getDtReferencia() {
 		return dtReferencia;
 	}

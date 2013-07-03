@@ -1,6 +1,9 @@
 package com.claro.sccweb.service.to;
 
 import java.util.Date;
+import java.util.List;
+
+import com.claro.cobillingweb.persistence.entity.external.ControlConnectFile;
 
 public class PesquisaArquivosConnectTO {
 	
@@ -28,6 +31,8 @@ public class PesquisaArquivosConnectTO {
 	 * Final do período de pesquisa para data de término do processamento do arquivo.
 	 */
 	private Date dataFinal;
+	
+	private List<ControlConnectFile> listControlConnectFiles;
 	
 	public Long getStatusArquivo() {
 		return statusArquivo;
@@ -68,5 +73,14 @@ public class PesquisaArquivosConnectTO {
 	public void setDataFinal(Date dataFinal) {
 		this.dataFinal = dataFinal;
 	}
+
+	public List<ControlConnectFile> getListControlConnectFiles() {
+		return listControlConnectFiles;
+	}
+
+	public void setListControlConnectFiles(	List<ControlConnectFile> listControlConnectFiles) {
+		this.listControlConnectFiles = listControlConnectFiles;
+	}
+	
 	
 }

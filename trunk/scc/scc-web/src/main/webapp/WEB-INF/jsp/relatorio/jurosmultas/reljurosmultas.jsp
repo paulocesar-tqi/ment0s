@@ -20,13 +20,6 @@
 		$('#tabs').tabs();
 	});
 
-	$(document).ready(function() {
-
-		$('#pesquisar_button').click(pesquisar);
-		$('#excel_button').click(excel);
-		$('#excel_button').attr('disabled', 'disabled');
-		$('#tabs').tabs();
-	});
 
 	function pesquisar() {
 		$('#pesquisar_button').attr('disabled', 'disabled');
@@ -72,12 +65,12 @@
 						
 				<tr>
 					<td width="15%"><spring:message code="controle.remessa.evento.label.eot.externa" /></td>
-					<td id="cdEOTLD"><form:select path="entity.csp" id="cdEOTLD" items="${operadorasExternas}" itemLabel="dsOperadora" itemValue="cdCsp" /></td>
+					<td><form:select path="csp" id="cdEOTLD" items="${operadorasExternas}" itemLabel="dsOperadoraForCombos" itemValue="cdCsp" /></td>
 				</tr>
 				
 				<tr>
 					<td width="15%"><spring:message code="controle.remessa.evento.label.eot.claro" /></td>
-					<td id="comboOperadoraClaro"><form:select path="entity.eotClaro" id="cdEOTClaro" items="${operadorasClaro}" itemLabel="dsOperadora" itemValue="cdEot" /></td>
+					<td><form:select path="cdEotClaro" id="cdEOTClaro" items="${operadorasClaro}" itemLabel="dsOperadoraForCombos" itemValue="cdEot" /></td>
 				</tr>
 				
 				<tr>
@@ -108,12 +101,12 @@
 				<tr>
 					<td>
 						<display:table style="width:90%" name="sessionScope._DISPLAY_TAG_SPACE_1" pagesize="20" id="repasses" requestURI="/scc/user/relatorio/juros/multas/tab1.scc" class="ui-state-default">
-							<display:column property="csp" title="Csp" style="text-align:right"/>						
-							<display:column property="operadoraClaro" title="Operadora Claro" style="text-align:right"/>
+							<display:column property="csp" title="Csp" />						
+							<display:column property="operadoraClaro" title="Operadora Claro" />
 							<display:column property="uf" title="UF"/>
-							<display:column property="numeroFatura" title="Fatura destino" style="text-align:right"/>
-							<display:column property="dataEmissao" title="Data Emissão" style="text-align:right"/>
-							<display:column property="dataVencimento" title="Vencimento " style="text-align:right"/>
+							<display:column property="numeroFatura" title="Fatura destino" />
+							<display:column property="dataEmissao" title="Data Emissão (Destino)" />
+							<display:column property="dataVencimento" title="Vencimento (Destino)" />
 							<display:column property="juros" title="Valor de Juros" style="text-align:right"/>							
 							<display:column property="multa" title="Valor Multa" style="text-align:right" />							
 							<display:column property="valor" title="Total" style="text-align:right" />

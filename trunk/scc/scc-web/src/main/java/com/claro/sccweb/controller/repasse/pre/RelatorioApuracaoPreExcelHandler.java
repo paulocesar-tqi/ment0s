@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
+import com.claro.cobillingweb.persistence.view.RelatorioApuracaoPreSumarizado;
 import com.claro.sccweb.controller.BaseFormController;
 import com.claro.sccweb.controller.BasicExcelHandler;
 import com.claro.sccweb.controller.ControllerExecutionException;
@@ -23,7 +24,7 @@ public class RelatorioApuracaoPreExcelHandler extends BasicExcelHandler {
 	 
 	protected void buildExcelDocument(Map<String, Object> model,HSSFWorkbook workbook, HttpServletRequest request,HttpServletResponse response) throws Exception {
 		@SuppressWarnings("unchecked")
-		List<RelApuracaoFechamentoPrePagoViewDecorator> tabela = (List<RelApuracaoFechamentoPrePagoViewDecorator>)getFromSession(BaseFormController.DISPLAY_TAG_SPACE_1, request);
+		List<RelatorioApuracaoPreSumarizado> tabela = (List<RelatorioApuracaoPreSumarizado>)getFromSession(BaseFormController.DISPLAY_TAG_SPACE_1, request);
 		if (tabela == null)
 			throw new ControllerExecutionException("Navegação inválida. Tabela é nula!.");
 		RelatoriosRepassePreForm form = (RelatoriosRepassePreForm)getFormFromCache(RelatoriosRepassePreController.class, request);
@@ -33,7 +34,7 @@ public class RelatorioApuracaoPreExcelHandler extends BasicExcelHandler {
 		gerarPlanilha(form, workbook, request, tabela);
 	}
 
-	public void gerarPlanilha(RelatoriosRepassePreForm form, HSSFWorkbook workbook, HttpServletRequest request, List<RelApuracaoFechamentoPrePagoViewDecorator> tabela) throws Exception {
+	public void gerarPlanilha(RelatoriosRepassePreForm form, HSSFWorkbook workbook, HttpServletRequest request, List<RelatorioApuracaoPreSumarizado> tabela) throws Exception {
 		List<ExcelColumnDefinition> columnDefinitions = new ArrayList<ExcelColumnDefinition>();
 		columnDefinitions.add(new ExcelColumnDefinition("getOperadoraClaro", "UF - OP Claro", style, 30));
 		columnDefinitions.add(new ExcelColumnDefinition("getValorApuradoLiquido", "Vlr Apurado Liquido", style, 30));

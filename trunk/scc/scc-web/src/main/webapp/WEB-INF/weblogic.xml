@@ -5,11 +5,11 @@
 		<wls:jndi-name>SCCDB</wls:jndi-name>
 		<wls:res-ref-name>SCCDB</wls:res-ref-name>
 	</wls:resource-description>
-	
+
 	<wls:container-descriptor>
 		<wls:show-archived-real-path-enabled>true</wls:show-archived-real-path-enabled>
 		<wls:prefer-web-inf-classes>true</wls:prefer-web-inf-classes>
 	</wls:container-descriptor>
-    <wls:context-root>scc</wls:context-root>
+    <wls:context-root>scc-web</wls:context-root>
 
 </wls:weblogic-web-app>

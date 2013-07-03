@@ -25,7 +25,7 @@ public class SccAlocadasMobileSemProcessamentoDAONativeSQL {
 									   " AND  RS.DT_RELATORIO <= :dtFinal "+
 									   " AND  RS.SQ_RELATORIO = 5";									 
 									 	
-	public static final String FILTRO_NO_ARQUIVO_GERADO = " AND RS.NO_ARQUIVO_GERADO = :noArquivoGerado ";
+	public static final String FILTRO_NO_ARQUIVO_GERADO = " AND RI.NO_ARQUIVO_REFERENCIA = :noArquivoGerado ";
 	
 	public static final String SQL_GROUP = " ORDER BY RI.DT_CHAMADA ";
 						

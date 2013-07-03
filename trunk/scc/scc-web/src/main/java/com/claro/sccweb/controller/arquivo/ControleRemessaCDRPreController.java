@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.claro.cobillingweb.persistence.dao.BasicDAO;
 import com.claro.cobillingweb.persistence.entity.SccOperadora;
 import com.claro.cobillingweb.persistence.view.RelCDRPrePagoView;
 import com.claro.cobillingweb.persistence.view.SomatorioRelCDRPrePagoView;
@@ -79,15 +80,25 @@ public class ControleRemessaCDRPreController extends BaseOperationController<Con
 	}
 
 	@ModelAttribute("operadorasClaro")
-	public List<SccOperadora> populaOperadoras() throws Exception
-	{
-		return super.populaOperadorasClaro(false);
+	public List<SccOperadora> populaOperadorasClaro() throws Exception {
+		List<SccOperadora> comboList = new ArrayList<SccOperadora>();
+		SccOperadora allValues = new SccOperadora();
+		allValues.setCdEot(BasicDAO.GET_ALL_STRING);
+		allValues.setDsOperadora("Todas");
+		comboList.add(0,allValues);
+		comboList.addAll(getServiceManager().getPesquisaDominiosService().pequisaOperadorasClaroComM());
+		return comboList;
 	}
 	
 	@ModelAttribute("operadorasExternas")
-	public List<SccOperadora> populaOperadorasExternas() throws Exception
-	{
-		return super.populaOperadorasExternas(false);
+	public List<SccOperadora> populaOperadorasExternas() throws Exception {
+		List<SccOperadora> comboList = new ArrayList<SccOperadora>();
+		SccOperadora allValues = new SccOperadora();
+		allValues.setCdEot(BasicDAO.GET_ALL_STRING);
+		allValues.setDsOperadora("Todas");
+		comboList.add(0,allValues);
+		comboList.addAll(getServiceManager().getPesquisaDominiosService().pesquisaOperadorasExternas());
+		return comboList;
 	}
 	
 	@ModelAttribute("tiposOperadora")
@@ -101,15 +112,13 @@ public class ControleRemessaCDRPreController extends BaseOperationController<Con
 	
 	
 	@ModelAttribute("tiposPeriodo")
-	public List<BasicStringItem> populaTiposPeriodo()
+	public List<BasicStringItem> populaTiposPeriodo() throws Exception
 	{
-		List<BasicStringItem> radioButtonList = new ArrayList<BasicStringItem>();
-		radioButtonList.add(new BasicStringItem("C", "Data da Chamada"));
-		radioButtonList.add(new BasicStringItem("A", "Data da Apuração"));
-		radioButtonList.add(new BasicStringItem("F", "Data do Fechamento"));
-		return radioButtonList;
+		List<BasicStringItem> comboList = new ArrayList<BasicStringItem>();
+		comboList.add(new BasicStringItem("C", "Data da Chamada"));
+		comboList.add(new BasicStringItem("A", "Data da Apuração"));
+		comboList.add(new BasicStringItem("F", "Data do Fechamento"));
+		return comboList;
 	}
-	
-	
 	
 }

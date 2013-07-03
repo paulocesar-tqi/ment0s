@@ -8,7 +8,7 @@ import com.claro.sccweb.service.data.PeriodoCDR;
 
 public interface EvolucaoCDRService {
 
-	public List<PeriodoCDR> geraEvolucaoCDRs(String cdEOTClaro,String cdEOTLD,Long produto,Date dataInicial,Date dataFinal,boolean holding)
+	public List<PeriodoCDR> geraEvolucaoCDRs(String grpCdr, String cdEOTClaro,String cdEOTLD,Long produto,Date dataInicial,Date dataFinal,boolean holding)
 	throws DAOException,ServiceException;
 	 
 	

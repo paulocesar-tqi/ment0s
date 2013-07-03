@@ -16,6 +16,7 @@ $(document).ready(function(){
 	$( "#dataInicial" ).datepicker();
 	$('#gerar_button').click(gerar);	
 	$("#tipoOperadora").change(trocaTipoOperadora); 
+	$('#cdEOT').change(selecionaLD);
 	$('#tabs').tabs();
 });
 
@@ -69,6 +70,27 @@ function mostraOperadoraClaro()
 		            }}}}); 
 }
 
+function selecionaLD()
+{
+ $("#cdProdutoCobilling").empty().append('<option selected="selected" value="-1">Carregando...</option>');
+ var sel = $("#cdEOT option:selected");
+ 
+  $.ajax({   
+	 url: "/scc/user/cdr/distribuicao/json/lista_produtos/"+sel.val()+".scc",	 
+	 dataType: "json",   success: function(data) 
+	   	{     
+		var name, select, option;
+	    select = document.getElementById('cdProdutoCobilling');      
+	        select.options.length = 0;         
+	        for (name in data) 
+	           {       
+	           if (data.hasOwnProperty(name)) {         
+			select.options.add(new Option(data[name], name));  
+	            }}}});
+    
+}
+
+
 </script>
 
 
@@ -77,7 +99,7 @@ function mostraOperadoraClaro()
 <ul>
 <li><a href="#tabs-1"><spring:message code="crud.titulo.pesquisar"/></a></li>
 </ul>
-<form:form modelAttribute="filtro" method="post" action="/scc/user/cdr/distribuicao/execute.scc" id="form1">
+<form:form modelAttribute="filtro" method="post" action="/scc/user/cdr/distribuicao/listar.scc" id="form1">
 <form:hidden path="operacao" id="operacao"/>
 <form:hidden path="itemSelecionado" id="itemSelecionado"/>
 <form:hidden path="dadosDisponiveis" id="dadosDisponiveis"/>
@@ -91,14 +113,18 @@ function mostraOperadoraClaro()
 
 <tr>
 <td width="15%">Operadora Claro:</td>
-<td> <form:select id="comboOperadora" path="cdEOTClaro" items="${operadorasClaro}" itemLabel="dsOperadora" itemValue="cdEot"></form:select> </td>
+<td> <form:select id="comboOperadora" path="cdEOTClaro" items="${operadorasClaro}" itemLabel="dsOperadoraForCombos" itemValue="cdEot"></form:select> </td>
 </tr>
 
 <tr>
 <td width="15%">Operadora LD:</td>
-<td> <form:select path="cdEOTLD" items="${operadorasExternas}" itemLabel="dsOperadora" itemValue="cdEot"></form:select> </td>
+<td> <form:select path="cdEOTLD" id="cdEOT" items="${operadorasExternas}" itemLabel="dsOperadoraForCombos" itemValue="cdEot"></form:select> </td>
 </tr>
 
+<tr>
+<td width="15%">Produto:</td>
+<td> <form:select path="produto" id="cdProdutoCobilling" items="${produtos}" itemLabel="noProdutoCobilling" itemValue="cdProdutoCobilling"></form:select> </td>
+</tr>
 
 <tr>
 <td width="15%">Data Inicial:</td>
@@ -120,21 +146,25 @@ function mostraOperadoraClaro()
 </tr>
 </table>
 <br/>
+	<c:if test="${confirmacao == 'SIM'}">
 
-<c:if test="${!empty confirmacao}"> 
-
-    <c:if test="${confirmacao == 'SIM'}">
+    	<c:if test="${!empty filtro.lstSumarizado}">
    
-		<c:if test="${!empty sessionScope._DISPLAY_TAG_SPACE_1}">
+		
 			<table  width="100%" border="0" cellspacing="0" cellpadding="0" >
 			 <tr><td>                            
-			<display:table style="width:90%"  name="sessionScope._DISPLAY_TAG_SPACE_1"   pagesize="40"  id="cdrs" requestURI="/scc/user/cdr/distribuicao/tab1.scc" class="ui-state-default">
-			<display:column property="statusComposto" title="Status"/>
-			<display:column property="quantidade" title="Quantidade"/>
-			<display:column property="valorLiquido" title="Vlr. Líquido"/>
-			<display:column property="valorBruto" title="Vlr. Bruto"/>
-			<display:column property="duracaoTarifada" title="Duração Tarifada"/>
-			<display:column property="metrica" title="Métrica"/>
+			<display:table style="width:90%"  name="requestScope.filtro.lstSumarizado"   pagesize="40"  id="cdrs" requestURI="/scc/user/cdr/distribuicao/listar.scc" class="ui-state-default">
+			<display:column property="dsStatusCdr" title="Status"/>
+			<display:column title="Quantidade"  style="text-align:right">
+				<fmt:formatNumber value="${cdrs.qtCdrs}" type="number"/>
+			</display:column>
+			
+			<display:column property="vlLiquidoChamada" title="Vlr. Líquido" format="{0, number, #,##0.00}" style="text-align:right"/>
+			<display:column property="vlBrutoChamada" title="Vlr. Bruto" format="{0, number, #,##0.00}" style="text-align:right"/>
+			<display:column property="qtDuracaoTarifada" title="Duração Tarifada" format="{0, number, #,##0.00}" style="text-align:right"/>
+			<display:column title="Métrica %" style="text-align:right">
+				<fmt:formatNumber value="${cdrs.metrica}" maxFractionDigits="4" /> %
+			</display:column>
 			</display:table>
 			</td></tr>
 			</table>
@@ -142,31 +172,38 @@ function mostraOperadoraClaro()
 		
 		<c:if test="${!empty sessionScope._DISPLAY_TAG_SPACE_2}">
 			<br/>
-			<center><img src="/scc/user/cdr/distribuicao/grafico.scc" width='550'  border='1'/></center>
+			<center><img src="/scc/user/cdr/distribuicao/grafico/graficoBarras.scc" width='550'  border='1'/></center>
 		</c:if>
 		
-		<c:if test="${!empty sessionScope._DISPLAY_TAG_SPACE_3}">
+		<c:if test="${!empty filtro.lstAlocados}">
 			<br/>
 			<center>
-			<display:table  style="width:550px"  name="sessionScope._DISPLAY_TAG_SPACE_3"   pagesize="6"  id="cdrs" requestURI="/scc/user/cdr/distribuicao/tab1.scc" class="ui-state-default">
+			<display:table  style="width:550px"  name="requestScope.filtro.lstAlocados"   pagesize="6"  id="cdrs" 
+							requestURI="/scc/user/cdr/distribuicao/listar.scc" 
+							class="ui-state-default" decorator="com.claro.sccweb.decorator.view.SccDistribuicaoCDRDecorator">
 			<display:column property="mesAno" title="Mês/Ano"/>
-			<display:column property="quantidade" title="Quantidade"/>
+			<display:column property="qtCdrs" title="Quantidade"/>
 			</display:table>
 			</center>
 		</c:if>
 		
-		<c:if test="${!empty sessionScope._DISPLAY_TAG_SPACE_4}">
+		<c:if test="${!empty filtro.lstFaturados}">
 			<br/>
 			<center>
-			<display:table  style="width:550px"  name="sessionScope._DISPLAY_TAG_SPACE_4"   pagesize="6"  id="cdrs" requestURI="/scc/user/cdr/distribuicao/tab1.scc" class="ui-state-default">
+			<display:table  style="width:550px"  name="requestScope.filtro.lstFaturados"   pagesize="6"  id="cdrs" 
+							requestURI="/scc/user/cdr/distribuicao/listar.scc" 
+							class="ui-state-default" decorator="com.claro.sccweb.decorator.view.SccDistribuicaoCDRDecorator">
 			<display:column property="mesAno" title="Mês/Ano"/>
-			<display:column property="quantidade" title="Total"/>
-			<display:column property="metrica" title="% Fat Acum"/>
+			<display:column property="qtCdrs" title="Total"/>
+			<display:column  title="% Fat Acum"  style="text-align:right">
+				<fmt:formatNumber value="${cdrs.metrica}" maxFractionDigits="4" /> %
+			
+			</display:column>
 			</display:table>
 			</center>
+		
 		</c:if>
 	</c:if>
-</c:if>
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 	<tr>

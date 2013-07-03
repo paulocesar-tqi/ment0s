@@ -16,6 +16,7 @@ $(document).ready(function(){
 	$('#cancelar_button').click(cancelar);
 	$('#pesquisar_button').click(pesquisar);
 	$('#salvar_button').click(salvar);
+	$('#excel_button').click(excel)
 	$('#dtExpiracao').datepicker();
 	$('#dtExpiracao').mask("99/99/9999");
 	$('#tabs').tabs();
@@ -72,6 +73,12 @@ function cancelar() {
 	$('#form1').submit();
 }
 
+function excel() {
+	$('#operacao').val("excel");
+	$('#form1').submit();
+}
+
+
 function num(dom) {
     dom.value=dom.value.replace(/\D/g,""); 
 }
@@ -97,7 +104,7 @@ function num(dom) {
     <input id="novo_button" type="button" value=<spring:message code="crud.botao.novo"/> />
     <input id="pesquisar_button" type="button" value="Pesquisar" />
     <c:if test="${!empty sessionScope._DISPLAY_TAG_SPACE_1}">
-    <input id="novo_button" type="button" value="Excel" />
+    <input id="excel_button" type="button" value="Excel" />
     </c:if>
     </td>
 </tr>
@@ -113,7 +120,7 @@ function num(dom) {
 <display:column property="row.contaDebito.dsConta" title="Conta Débito" />
 <display:column property="dtExpiracao" title="Data Expiração" />
 <display:column property="row.txHistoricoAtividade" title="Histórico" />
-<display:column property="row.operadoraLD.dsOperadora" title="Opeeradora LD" />
+<display:column property="row.operadoraLD.cdEot" title="Operadora LD" />
 <display:column property="editar" title="Editar" />
 <display:column property="remover" title="Remover" />
 </display:table>
@@ -132,7 +139,7 @@ function num(dom) {
 </tr>
 
 <tr><td width="15%">Operadora LD:</td>
-<td><form:select path="entity.operadoraLD.cdEot" items="${operadorasExternas}" itemLabel="dsOperadora" itemValue="cdEot"/></td>
+<td><form:select path="entity.operadoraLD.cdEot" items="${operadorasExternas}" itemLabel="dsOperadoraForCombos" itemValue="cdEot"/></td>
 </tr>
 
 <tr><td width="15%">Descrição:</td>

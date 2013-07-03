@@ -7,6 +7,7 @@ import com.claro.cobillingweb.persistence.entity.SccComposicaoProduto;
 import com.claro.cobillingweb.persistence.entity.SccItemCobilling;
 import com.claro.cobillingweb.persistence.entity.SccProdutoCobilling;
 import com.claro.cobillingweb.persistence.entity.SccServicoAdicional;
+import com.claro.cobillingweb.persistence.service.ServiceException;
 
 public interface ProdutoService {
 
@@ -16,9 +17,9 @@ public interface ProdutoService {
 	
 	public SccProdutoCobilling getByPk(Long cdProdutoCobilling) throws DAOException;
 	
-	public void create(SccComposicaoProduto entity) throws DAOException;
-	public void update(SccComposicaoProduto entity) throws DAOException;
-	public void delete(SccComposicaoProduto entity) throws DAOException;
+	public void create(SccComposicaoProduto entity) throws DAOException, ServiceException;
+	public void update(SccComposicaoProduto entity) throws DAOException, ServiceException;
+	public void delete(SccComposicaoProduto entity) throws DAOException, ServiceException;
 	
 	public void create(SccProdutoCobilling entity) throws DAOException;
 	public void update(SccProdutoCobilling entity) throws DAOException;
@@ -33,6 +34,9 @@ public interface ProdutoService {
 	public void create(SccServicoAdicional entity) throws DAOException;
 	public void update(SccServicoAdicional entity) throws DAOException;
 	public void delete(SccServicoAdicional entity) throws DAOException;
+	SccComposicaoProduto carregarEntidade(Long cdComponente) throws DAOException;
+	SccComposicaoProduto findById(Long id)throws DAOException, ServiceException;
+	void deleteEntity(Long cdComponente) throws DAOException, ServiceException;
 	
 	
 }

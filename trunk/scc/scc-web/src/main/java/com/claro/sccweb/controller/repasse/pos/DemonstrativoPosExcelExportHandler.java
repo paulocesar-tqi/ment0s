@@ -7,7 +7,10 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.hssf.util.HSSFColor;
 import org.springframework.stereotype.Controller;
 
 import com.claro.cobillingweb.persistence.entity.SccOperadora;
@@ -18,6 +21,7 @@ import com.claro.sccweb.decorator.DemonstrativoRepassePosDecorator;
 import com.claro.sccweb.decorator.TotaisRepasseDecorator;
 import com.claro.sccweb.excel.ExcelColumnDefinition;
 import com.claro.sccweb.excel.ExcelPrinter;
+import com.claro.sccweb.excel.style.ExcelStyle;
 import com.claro.sccweb.form.DemonstrativoRepassePosPagoForm;
 
 /**
@@ -34,6 +38,7 @@ public class DemonstrativoPosExcelExportHandler extends BasicExcelHandler {
 	protected void buildExcelDocument(Map<String, Object> model,HSSFWorkbook workbook, HttpServletRequest request,HttpServletResponse response) throws Exception {
 		
 		List<TotaisRepasseDecorator> totaisRepasse = new ArrayList<TotaisRepasseDecorator>();
+		
 		DemonstrativoRepassePosPagoForm form = (DemonstrativoRepassePosPagoForm)getFormFromCache(DemonstrativoRepassePosPagoController.class,request);
 		if (form == null)
 			throw new ControllerExecutionException("Navegação inválida. DemonstrativoRepassePosPagoForm não encontrado no cache.");
@@ -58,7 +63,7 @@ public class DemonstrativoPosExcelExportHandler extends BasicExcelHandler {
 		for (int h=0;h<listaHolding.size();h++)
 			{			
 			TotaisRepasseDecorator totaisRepasseDecorator = new TotaisRepasseDecorator();
-			totaisRepasseDecorator.setOperadoraClaro(listaHolding.get(h).getDsOperadora());
+			totaisRepasseDecorator.setOperadoraClaro(listaHolding.get(h).getOperadoraClaroSemUF().replaceAll("/", " ")  + "(" + listaHolding.get(h).getCdOperadoraHolding() + ")");
 			totaisRepasseDecorator.setOperadoraLD(operadoraLD.getDsOperadora());			
 			List<DemonstrativoRepassePosDecorator> data = getServiceManager(request).getRepasseService().carregaDemonstrativoRepasse(listaHolding.get(h).getCdEot(), form.getCdEOT(), form.getCdProdutoCobilling(), form.getDtInicialPeriodo(), form.getDtFinalPeriodo(), true);
 			for (int d=0;d<data.size();d++)
@@ -71,7 +76,7 @@ public class DemonstrativoPosExcelExportHandler extends BasicExcelHandler {
 				}
 			totaisRepasse.add(totaisRepasseDecorator);
 			operadoraClaro = listaHolding.get(h);
-			printer.addSheet(operadoraClaro.getDsOperadora().replaceAll("/", " "));
+			printer.addSheet(operadoraClaro.getOperadoraClaroSemUF().replaceAll("/", " ") + "(" + operadoraClaro.getCdOperadoraHolding() + ")");
 			linhasCabecalho = new ArrayList<String>();			 
 			linhasCabecalho.add("DEMONSTRATIVO DE REPASSE PÓS PAGO");
 			linhasCabecalho.add("PRESTADORA LD: "+operadoraLD.getDsOperadora());
@@ -107,18 +112,101 @@ public class DemonstrativoPosExcelExportHandler extends BasicExcelHandler {
 					}
 				}
 			}
+		geraTotaisRepasse(printer,totaisRepasse, model, workbook, request, response);
 		geraConsolidado(printer,model, workbook, request, response);
-		geraTotaisRepasse(printer,totaisRepasse);
+		//printer.adjustAlignForAllColumns();
+		printer.getCurrentSheet().setColumnWidth((short) 3,(short) 1000);
 	}
 
 	
 	private void geraConsolidado(ExcelPrinter printer,Map<String, Object> model,HSSFWorkbook workbook, HttpServletRequest request,HttpServletResponse response)
 	throws Exception
-	{		
-		printer.addSheet("Consolidado");
+	{
+		List<ExcelColumnDefinition> columnDefinitions = new ArrayList<ExcelColumnDefinition>();
+		columnDefinitions.add(new ExcelColumnDefinition("getDescricao", "DESCRIÇÃO", style, 80));
+		columnDefinitions.add(new ExcelColumnDefinition("getChamadas", "CHAMADAS", style, 15));
+		columnDefinitions.add(new ExcelColumnDefinition("getMinutos", "MINUTOS", style, 15));
+		columnDefinitions.add(new ExcelColumnDefinition("getLiquido", "LÍQUIDO", style, 15));
+		columnDefinitions.add(new ExcelColumnDefinition("getPis", "PIS", style, 15));
+		columnDefinitions.add(new ExcelColumnDefinition("getCofins", "COFINS", style, 15));
+		columnDefinitions.add(new ExcelColumnDefinition("getIcms", "ICMS", style, 15));
+		columnDefinitions.add(new ExcelColumnDefinition("getIss", "ISS", style, 15));
+		columnDefinitions.add(new ExcelColumnDefinition("getBruto", "VALOR BRUTO", style, 15));
+		printer.setNewDefinition(columnDefinitions, false);
 		DemonstrativoRepassePosPagoForm form = (DemonstrativoRepassePosPagoForm)getFormFromCache(DemonstrativoRepassePosPagoController.class,request);
 		if (form == null)
 			throw new ControllerExecutionException("Navegação inválida. DemonstrativoRepassePosPagoForm não encontrado no cache.");
+		List<DemonstrativoRepassePosDecorator> data = getServiceManager(request).getRepasseService().carregarDemonstrativoRepasseConsolidado(null, form.getCdEOT(), form.getCdProdutoCobilling(), form.getDtInicialPeriodo(), form.getDtFinalPeriodo(), true);
+		printer.addData(data);
+		printer.generateColumnsTitleAtColumn(4,6);
+		printer.writeDataAtColumn(4,7);
+	}
+	
+	private void incluirTotal(List<TotaisRepasseDecorator> list){
+		
+		double total = 0;
+		String operadoraLd = "";
+		for (TotaisRepasseDecorator totaisRepasseDecorator : list) {
+			operadoraLd = totaisRepasseDecorator.getOperadoraLD();
+			total = total + totaisRepasseDecorator.getValorRepasse();
+		}
+		TotaisRepasseDecorator totalGeral = new TotaisRepasseDecorator();
+		totalGeral.setOperadoraLD(operadoraLd);
+		totalGeral.setOperadoraClaro("Total");
+		totalGeral.setValorRepasse(total);
+		list.add(totalGeral);
+	}
+
+	
+	private void geraTotaisRepasse(ExcelPrinter printer,List<TotaisRepasseDecorator> totais, Map<String, Object> model,HSSFWorkbook workbook, HttpServletRequest request,HttpServletResponse response) throws Exception{
+		
+		incluirTotal(totais);
+		printer.addSheet("Consolidado");
+		List<ExcelColumnDefinition> columnDefinitions = new ArrayList<ExcelColumnDefinition>();
+		columnDefinitions.add(new ExcelColumnDefinition("getOperadoraLD", "Operadora LD", style, 40));
+		columnDefinitions.add(new ExcelColumnDefinition("getOperadoraClaro", "Operadora Claro", style, 15));
+		columnDefinitions.add(new ExcelColumnDefinition("getValorRepasseTotal", "Total", style, 15));
+		printer.setNewDefinition(columnDefinitions, false);
+		List<Short> mergeRanges = new ArrayList<Short>();
+		mergeRanges.add((short) 0);
+		mergeRanges.add((short) 2);
+		ExcelStyle myStyle = new ExcelStyle() {
+			
+			public String getFontName() {
+				return "Arial";
+			}
+			 
+			public short getFontColor() {
+				return HSSFColor.BLUE.index;
+			}
+
+			public short getFontHeight() {
+				return 8;
+			}
+
+			public short getBoldweight() {
+				return HSSFFont.BOLDWEIGHT_BOLD;
+			}
+
+			public short getAlignment() {
+				return HSSFCellStyle.ALIGN_CENTER;
+			}
+
+			public boolean getWrapText() {
+				return true;
+			}
+
+			public String getFormat() {		
+				return null;
+			}
+
+		};
+		List<String> linha = new ArrayList<String>();
+		linha.add("Valores Finais a Repassar");
+		linha.add("");
+		linha.add("");
+		
+		DemonstrativoRepassePosPagoForm form = (DemonstrativoRepassePosPagoForm)getFormFromCache(DemonstrativoRepassePosPagoController.class,request);
 		SccProdutoCobilling produtoCobilling = getServiceManager(request).getContratoService().pesquisaProdutoByPk(form.getCdProdutoCobilling());
 		SccOperadora operadoraLD = getServiceManager(request).getOperadoraService().pesquisaOperadoraByPk(form.getCdEOT());
 		List<String> linhasCabecalho = new ArrayList<String>();
@@ -130,26 +218,10 @@ public class DemonstrativoPosExcelExportHandler extends BasicExcelHandler {
 		printer.setHeaderLines(linhasCabecalho);
 		printer.generateHeader();
 		printer.addBlankLines(1);
-		List<DemonstrativoRepassePosDecorator> data = getServiceManager(request).getRepasseService().carregaDemonstrativoRepasse(null, form.getCdEOT(), form.getCdProdutoCobilling(), form.getDtInicialPeriodo(), form.getDtFinalPeriodo(), true);
-		printer.addData(data);
-		printer.generateColumnsTitle();
-		printer.writeData();
-	}
-	
-	private void geraTotaisRepasse(ExcelPrinter printer,List<TotaisRepasseDecorator> totais) throws Exception
-	{
-		printer.addSheet("Totais");
-		List<ExcelColumnDefinition> columnDefinitions = new ArrayList<ExcelColumnDefinition>();
-		columnDefinitions.add(new ExcelColumnDefinition("getOperadoraLD", "Operadora LD", style, 40));
-		columnDefinitions.add(new ExcelColumnDefinition("getOperadoraClaro", "Operadora Claro", style, 40));
-		columnDefinitions.add(new ExcelColumnDefinition("getValorRepasse", "Total", currencyStyle, 40));
-		printer.setNewDefinition(columnDefinitions, false);		
-		List<String> linhasCabecalho = new ArrayList<String>();
-		linhasCabecalho.add("Valores Finais a Repassar");
-		printer.generateHeader();
+
+		printer.addLine(linha, mergeRanges, myStyle);
 		printer.generateColumnsTitle();
 		printer.addData(totais);
 		printer.writeSum();
 	}
-	
 }

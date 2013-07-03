@@ -15,14 +15,22 @@ public class SccProdutoContratadoDecorator extends RownumDecorator<SccProdutoCon
 
 
 	public String getContrato() {
-		return getRow().getSccContratoCobl().getDsContratoCobilling();
+		String value = "";
+		if(getRow().getSccContratoCobl() != null && getRow().getSccContratoCobl().getDsContratoCobilling() != null){
+			value = getRow().getSccContratoCobl().getDsContratoCobilling();
+		}
+		return value;
 	}
 
 
 
 
 	public String getProduto() {
-		return getRow().getSccProdutoCobilling().getNoProdutoCobilling();
+		String value = "";
+		if(getRow().getSccProdutoCobilling() != null &&  getRow().getSccProdutoCobilling().getNoProdutoCobilling() != null){
+			value =  getRow().getSccProdutoCobilling().getNoProdutoCobilling();
+		}
+		return value;
 	}
 
 

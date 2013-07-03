@@ -11,7 +11,15 @@ import org.springframework.stereotype.Service;
 public class ServiceManager {
 
 	private PesquisaDominiosService pesquisaDominiosService;	
+	@Autowired
 	private ArquivosService arquivosService;
+	
+	@Autowired
+	private SccResultadoIndicadorService sccResultadoIndicadorService;
+	
+	@Autowired
+	private SccComposicaoGrupoEmailService sccComposicaoGrupoEmailService;
+	
 	private SumarioService sumarioService;
 	private CDRService cdrService;
 	private ContratoService contratoService;
@@ -29,17 +37,30 @@ public class ServiceManager {
 	private VolumeSuspeitoService volumeSuspeitoService;
 	private EvolucaoCDRService evolucaoCDRService;
 	private SaldosService saldosService;
+	
+	@Autowired
 	private FTPService ftpService;
+	
 	private AdminService adminService;
 	private EstornoMobileService estornoMobileService;
 	private ContabilService contabilService;
 	private SccParamProcessoService sccParamProcessoService;
-		
-	@SuppressWarnings("unused")
+	
+	@Autowired
+	private SccContestacaoPrePagoService sccContestacaoPrePagoService;
+	
+	@Autowired
+	private SccDisputaPrePagoService sccDisputaPrePagoService;
+	
+	@Autowired
+	private SccDisputaService sccDisputaService;
+	
+	@Autowired
+	private SccQuestionamentoService sccQuestionamentoService;
+	
 	@Autowired
 	private SccRelBatimentoEstornoDebitoService sccRelBatimentoEstornoDebitoService;
 	
-	@SuppressWarnings("unused")
 	@Autowired
 	private SccFinanceiroService sccFinanceiroService;
 	
@@ -69,6 +90,9 @@ public class ServiceManager {
 	
 	@Autowired
 	private SccGrupoCobillingService sccGrupoCobillingService;
+	
+	@Autowired
+	private SccAssociacaoRelatorioGrupoService sccAssociacaoRelatorioGrupoService;
 	
 	@Autowired
 	private SccEmailCobillingService sccEmailCobillingService;
@@ -111,7 +135,7 @@ public class ServiceManager {
 
 	@Autowired
 	private SccArquivosFiscaisService sccArquivosFiscaisService;
-
+	
 	@Autowired
 	private SccBatimentoInterfaceService sccBatimentoInterfaceService;
 
@@ -129,6 +153,12 @@ public class ServiceManager {
 	
 	@Autowired
 	private RelatorioAlarmeOperacionalService relatorioAlarmeOperacionalService;
+	
+	@Autowired
+	private SccChamadasRefaturamentoService sccChamadasRefaturamentoService;
+	
+	@Autowired
+	private SccPreFechamentoService sccPreFechamentoService;
 
 	
 	public RelatorioAlarmeOperacionalService getRelatorioAlarmeOperacionalService() {
@@ -139,6 +169,34 @@ public class ServiceManager {
 			RelatorioAlarmeOperacionalService relatorioAlarmeOperacionalService) {
 		this.relatorioAlarmeOperacionalService = relatorioAlarmeOperacionalService;
 	}
+
+	@Autowired
+	private SccPreRelatorioCriticasService sccPreRelatorioCriticasService;
+	
+	@Autowired
+	private SccRelatorioQuestionamentoService sccRelatorioQuestionamentoService;
+	
+	@Autowired
+	private SccRelatorioQuestionamentoResultadoService sccRelatorioQuestionamentoResultadoService;
+	
+	@Autowired
+	private SccPosRelatorioDisputaDetalheService sccPosRelatorioDisputaDetalheService;
+	
+	@Autowired
+	private SccRelDemonstrativoDesempenhoPenalidadeService sccRelDemonstrativoDesempenhoPenalidadeService;
+	
+	@Autowired
+	private CadastroCriticaPrebillingService cadastroCriticaPrebillingService;
+	
+	@Autowired
+	private CadastroDadosBancariosService cadastroDadosBancariosService;
+	
+	@Autowired
+	private SccPrePagoCreditosService sccPrePagoCreditosService;
+
+	@Autowired
+	private SccTarifasCobrarService sccTarifasCobrarService;
+	
 
 	public PesquisaDominiosService getPesquisaDominiosService() {
 		return pesquisaDominiosService;
@@ -541,7 +599,7 @@ public class ServiceManager {
 			SccRelatorioChamadasRefaturamentoService sccRelatorioChamadasRefaturamentoService) {
 		this.sccRelatorioChamadasRefaturamentoService = sccRelatorioChamadasRefaturamentoService;
 	}
-	
+
 	public SccBatimentoInterfaceService getSccBatimentoInterfaceService() {
 		return sccBatimentoInterfaceService;
 	}
@@ -585,7 +643,141 @@ public class ServiceManager {
 		this.sccAssinaturaPreService = sccAssinaturaPreService;
 	}
 
+	public SccPreRelatorioCriticasService getSccPreRelatorioCriticasService() {
+		return sccPreRelatorioCriticasService;
+	}
 
+	public void setSccPreRelatorioCriticasService(
+			SccPreRelatorioCriticasService sccPreRelatorioCriticasService) {
+		this.sccPreRelatorioCriticasService = sccPreRelatorioCriticasService;
+	}
+
+	public SccRelatorioQuestionamentoService getSccRelatorioQuestionamentoService() {
+		return sccRelatorioQuestionamentoService;
+	}
+
+	public void setSccRelatorioQuestionamentoService(
+			SccRelatorioQuestionamentoService sccRelatorioQuestionamentoService) {
+		this.sccRelatorioQuestionamentoService = sccRelatorioQuestionamentoService;
+	}
+
+	public SccRelatorioQuestionamentoResultadoService getSccRelatorioQuestionamentoResultadoService() {
+		return sccRelatorioQuestionamentoResultadoService;
+	}
+
+	public void setSccRelatorioQuestionamentoResultadoService(
+			SccRelatorioQuestionamentoResultadoService sccRelatorioQuestionamentoResultadoService) {
+		this.sccRelatorioQuestionamentoResultadoService = sccRelatorioQuestionamentoResultadoService;
+	}
+	
+	public SccPosRelatorioDisputaDetalheService getSccPosRelatorioDisputaDetalheService() {
+		return sccPosRelatorioDisputaDetalheService;
+	}
+
+	public void setSccPosRelatorioDisputaDetalheService(
+			SccPosRelatorioDisputaDetalheService sccPosRelatorioDisputaDetalheService) {
+		this.sccPosRelatorioDisputaDetalheService = sccPosRelatorioDisputaDetalheService;
+	}
+
+	public SccRelDemonstrativoDesempenhoPenalidadeService getSccRelDemonstrativoDesempenhoPenalidadeService() {
+		return sccRelDemonstrativoDesempenhoPenalidadeService;
+	}
+
+	public void setSccRelDemonstrativoDesempenhoPenalidadeService(
+			SccRelDemonstrativoDesempenhoPenalidadeService sccRelDemonstrativoDesempenhoPenalidadeService) {
+		this.sccRelDemonstrativoDesempenhoPenalidadeService = sccRelDemonstrativoDesempenhoPenalidadeService;
+	}
+
+	public void setSccQuestionamentoService(SccQuestionamentoService sccQuestionamentoService) {
+		this.sccQuestionamentoService = sccQuestionamentoService;
+	}
+	
+	public void setSccDisputaService(SccDisputaService sccDisputaService){
+		this.sccDisputaService = sccDisputaService;
+	}
+
+	public void setSccDisputaPrePagoService(SccDisputaPrePagoService sccDisputaPrePagoService) {
+		this.sccDisputaPrePagoService = sccDisputaPrePagoService;
+	}
+
+	public void setSccContestacaoPrePagoService(SccContestacaoPrePagoService sccContestacaoPrePagoService) {
+		this.sccContestacaoPrePagoService = sccContestacaoPrePagoService;
+	}
+
+	public SccContestacaoPrePagoService getSccContestacaoPrePagoService() {
+		return sccContestacaoPrePagoService;
+	}
+
+	public void setSccAssociacaoRelatorioGrupoService(
+			SccAssociacaoRelatorioGrupoService sccAssociacaoRelatorioGrupoService) {
+		this.sccAssociacaoRelatorioGrupoService = sccAssociacaoRelatorioGrupoService;
+	}
+
+	public SccChamadasRefaturamentoService getSccChamadasRefaturamentoService() {
+		return sccChamadasRefaturamentoService;
+	}
+
+	public void setSccChamadasRefaturamentoService(
+			SccChamadasRefaturamentoService sccChamadasRefaturamentoService) {
+		this.sccChamadasRefaturamentoService = sccChamadasRefaturamentoService;
+	}
+
+	public CadastroCriticaPrebillingService getCadastroCriticaPrebillingService() {
+		return cadastroCriticaPrebillingService;
+	}
+
+	public void setCadastroCriticaPrebillingService(
+			CadastroCriticaPrebillingService cadastroCriticaPrebillingService) {
+		this.cadastroCriticaPrebillingService = cadastroCriticaPrebillingService;
+	}
+
+	public CadastroDadosBancariosService getCadastroDadosBancariosService() {
+		return cadastroDadosBancariosService;
+	}
+
+	public void setCadastroDadosBancariosService(
+			CadastroDadosBancariosService cadastroDadosBancariosService) {
+		this.cadastroDadosBancariosService = cadastroDadosBancariosService;
+	}
+
+	public void setSccPreFechamentoService(
+			SccPreFechamentoService sccPreFechamentoService) {
+		this.sccPreFechamentoService = sccPreFechamentoService;
+	}
+
+	public void setSccResultadoIndicadorService(
+			SccResultadoIndicadorService sccResultadoIndicadorService) {
+		this.sccResultadoIndicadorService = sccResultadoIndicadorService;
+	}
+
+	public void setSccTarifasCobrarService(
+			SccTarifasCobrarService sccTarifasCobrarService) {
+		this.sccTarifasCobrarService = sccTarifasCobrarService;
+	}
+	
+	
+	
+	
+	public SccPrePagoCreditosService getSccPrePagoCreditosService() {
+		return sccPrePagoCreditosService;
+	}
+
+	public void setSccPrePagoCreditosService(
+			SccPrePagoCreditosService sccPrePagoCreditosService) {
+		this.sccPrePagoCreditosService = sccPrePagoCreditosService;
+	}
+
+	public void setSccComposicaoGrupoEmailService(
+			SccComposicaoGrupoEmailService sccComposicaoGrupoEmailService) {
+		this.sccComposicaoGrupoEmailService = sccComposicaoGrupoEmailService;
+	}
+
+	public SccComposicaoGrupoEmailService getSccComposicaoGrupoEmailService() {
+		return sccComposicaoGrupoEmailService;
+	}
+	
 	
 	
 }
+        
+   	

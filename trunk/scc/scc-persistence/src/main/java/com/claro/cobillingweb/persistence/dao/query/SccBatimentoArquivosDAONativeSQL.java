@@ -17,7 +17,7 @@ public class SccBatimentoArquivosDAONativeSQL {
 											" ARQ.QT_DURACAO_TARIFADA as duracaoTarifadaClaro, "+
 											" ARQ.QT_REGISTROS as quantidadeClaro, "+
 											" ARQ.VL_LIQUIDO_ARQUIVO as valorLiquidoClaro, "+
-											" ARQ.CD_ERRO_PROTOCOLO as erroProtocoloClaro, "+
+											" CAST(ARQ.CD_ERRO_PROTOCOLO AS VARCHAR(2)) as erroProtocoloClaro, "+
 											" SEP.DS_ERRO_PROTOCOLO as descErroProtocoloClaro, "+
 											" SBA.NO_ARQUIVO as nomeArquivoLD, "+
 											" NVL(SBA.QT_MINUTOS_TARIFADOS,0) as duracaoTarifadaLD, "+

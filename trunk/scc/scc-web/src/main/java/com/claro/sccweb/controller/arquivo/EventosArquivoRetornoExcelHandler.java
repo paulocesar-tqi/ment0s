@@ -20,6 +20,8 @@ import com.claro.sccweb.excel.ExcelPrinter;
 public class EventosArquivoRetornoExcelHandler extends BasicExcelHandler{
 
 	 
+	@SuppressWarnings("unchecked")
+	@Override
 	protected void buildExcelDocument(Map<String, Object> model,HSSFWorkbook workbook, HttpServletRequest request,HttpServletResponse response) throws Exception {
 		List<RelEventosArquivoViewDecorator> decoratorList = (List<RelEventosArquivoViewDecorator>)getFromSession(BaseFormController.DISPLAY_TAG_SPACE_1, request);
 		if (decoratorList == null)

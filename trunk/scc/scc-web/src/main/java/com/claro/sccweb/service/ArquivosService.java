@@ -12,7 +12,9 @@ import com.claro.cobillingweb.persistence.entity.SccTipoArquivo;
 import com.claro.cobillingweb.persistence.entity.external.ControlConnectFile;
 import com.claro.cobillingweb.persistence.entity.external.ViewArquivoPrePago;
 import com.claro.cobillingweb.persistence.filtro.SCCArquivoCobillingFiltro;
+import com.claro.cobillingweb.persistence.filtro.SccFiltroControleArquivo;
 import com.claro.cobillingweb.persistence.view.RelEventosArquivoView;
+import com.claro.sccweb.form.RelatorioContabilTransicaoForm;
 import com.claro.sccweb.service.to.PesquisaArquivosConnectTO;
 
 /**
@@ -24,7 +26,7 @@ public interface ArquivosService {
 	public static final String TIPO_OPERADORA_CLARO = "OP";
 	public static final String TIPO_OPERADORA_HOLDING = "HO";
 
-	public List<ControlConnectFile> pesquisaArquivosConnect(PesquisaArquivosConnectTO to) throws ServiceException,DAOException;
+	public List<ControlConnectFile> pesquisaArquivosConnect(SccFiltroControleArquivo filtro) throws ServiceException,DAOException;
 	
 	public List<SccArquivoCobilling> pesquisaArquivos(SCCArquivoCobillingFiltro to) throws ServiceException,DAOException;
 	
@@ -71,7 +73,11 @@ public interface ArquivosService {
 	public List<SccArquivoCobilling> pesquisaRelatoriosTransicao(Long tiposArquivo, Date dataInicial, Date dataFinal) throws DAOException;
 
 	public List<SccCdrCobilling> geraResumoCDRs(String cdEOTClaro , String cdEOTLD,Date dataInicial,Date dataFinal ) throws DAOException;
-	
-	public List<SccCdrCobilling> listaCDRsStatus(Long cdStatus, String cdEOTClaro , String cdEOTLD,Date dataInicial,Date dataFinal,int pagina, int quantidadeRegistros) throws DAOException;
 
+	public List<SccCdrCobilling> listaCDRsStatus(Long cdStatus, String cdEOTClaro , String cdEOTLD,Date dataInicial,Date dataFinal,int pagina, int quantidadeRegistros) throws DAOException;
+	
+	SccArquivoCobilling pesquisaRelatorioTransicaoByArquivo(String nomeArquivo) throws DAOException;
+
+	boolean fileExists(RelatorioContabilTransicaoForm form)
+			throws ServiceException;
 }

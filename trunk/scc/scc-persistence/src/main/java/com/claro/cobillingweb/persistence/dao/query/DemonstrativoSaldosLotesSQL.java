@@ -21,10 +21,35 @@ public class DemonstrativoSaldosLotesSQL {
     "    AND SU.CD_MOTIVO_REJEICAO = MR.CD_MOTIVO_REJEICAO(+) ";
 	
 	public static final String FILTRO_ARQUIVO = "    AND ARQ.CD_TIPO_ARQUIVO= :cdTipoArquivo ";
-	public static final String FILTRO_PRODUTO = " AND CP.CD_PRODUTO_COBILLING = :cdProdutoCobilling ";
+	
+	public static final String FILTRO_PRODUTO = " AND ((CP.CD_PRODUTO_COBILLING = :cdProdutoCobilling) AND (CP.CD_COMPONENTE_PRODUTO NOT IN (3,5,7,10,13,21,24))) ";
+	
+	public static final String FILTRO_PRODUTO_1 = " AND ((CP.CD_PRODUTO_COBILLING = :cdProdutoCobilling) OR (CP.CD_COMPONENTE_PRODUTO IN (3,5,7,10,13,21,24))) ";
+	
 	public static final String FILTRO_LD = "    AND ARQ.CD_EOT_LD = :cdEOTLD ";
 	public static final String FILTRO_CLARO = "    AND ARQ.CD_EOT_CLARO = :cdEOTClaro ";
 	
 	public static final String PROJECTIOS = " GROUP BY ME.CD_MOTIVO_EVENTO,ME.DS_MOTIVO_EVENTO,SU.CD_MOTIVO_REJEICAO,MR.DS_MOTIVO_REJEICAO "+
     " order by ME.CD_MOTIVO_EVENTO ";
+	
+	
+	
+	
+	public static final String SQL_TOTAL = "SELECT "+
+	" 'X' cdMotivoEvento, 'TOTAL DE CHAMADAS ACEITAS' dsMotivoEvento, "+
+	" 'X' cdMotivoRejeicao, 'TOTAL DE CHAMADAS ACEITAS' dsMotivoRejeicao, "+			
+	"  NVL(SUM(SU.QT_CDRS), 0) QTCDRS, "+ 
+	"  NVL(SUM(SU.QT_DURACAO_TARIFADA), 0) QTMINUTOS, "+   
+	"  NVL(SUM(SU.VL_BRUTO_CHAMADA), 0) VLBRUTO "+   
+	"FROM SCC_ARQUIVO_COBILLING  ARQ, "+  
+	"     SCC_ARQUIVO_SUMARIZADO SU,  "+
+	"     SCC_COMPOSICAO_PRODUTO CP  "+
+	"WHERE ARQ.SQ_ARQUIVO_ORIGEM = 0 "+ 
+	"AND SU.SQ_ARQUIVO = ARQ.SQ_ARQUIVO  "+
+	"AND SU.CD_COMPONENTE_PRODUTO = CP.CD_COMPONENTE_PRODUTO "+ 
+	"    AND ARQ.DT_PROC_EXTERNA BETWEEN :dataInicial AND :dataFinal " ;
+	
+	
+	
+	
 }

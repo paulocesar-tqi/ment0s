@@ -17,7 +17,7 @@ public class ControleRemessaCDRPreValidator implements Validator {
 	public void validate(Object arg, Errors errors) {		
 		ControleRemessaCDRPreForm form = (ControleRemessaCDRPreForm)arg;
 		ValidatorUtil.verificaCampoObrigatorio("dataInicial", form.getDataInicial(), errors);
-		ValidatorUtil.verificaCampoObrigatorio("dataInicial", form.getDataInicial(), errors);
+		ValidatorUtil.verificaCampoObrigatorio("dataFinal", form.getDataFinal(), errors);
 		ValidatorUtil.verificaPeriodo("dataInicial", form.getDataInicial(), form.getDataFinal(), errors);		
 	}
 

@@ -75,8 +75,8 @@ function pesquisar()
 
 function excel()
 {
-	$('#pesquisar_button').attr('disabled', 'disabled');
-	$('#excel_button').attr('disabled', 'disabled');
+	//$('#pesquisar_button').attr('disabled', 'disabled');
+	//$('#excel_button').attr('disabled', 'disabled');
 	$('#operacao').val("excel");	
 	$('#form1').submit();
 }
@@ -105,14 +105,19 @@ function excel()
 
 <tr>
     <td width="15%">Operadora Claro:</td>    
-    <td ><form:select id="comboOperadora" path="cdEOTClaro"  items="${operadorasClaro}" itemLabel="dsOperadora" itemValue="cdEot" /></td>    
+    <td ><form:select id="comboOperadora" path="cdEOTClaro"  items="${operadorasClaro}" itemLabel="dsOperadoraForCombos" itemValue="cdEot" /></td>    
 </tr>
 
 <tr>
     <td width="15%">Operadora LD:</td>    
-    <td id="cdEOTLD"><form:select path="cdEOTLD" id ="cdEOTLD" items="${operadorasExternas}" itemLabel="dsOperadora" itemValue="cdEot" /></td>    
+    <td id="cdEOTLD"><form:select path="cdEOTLD" id ="cdEOTLD" items="${operadorasExternas}" itemLabel="dsOperadoraForCombos" itemValue="cdEot" /></td>    
 </tr>
 
+
+<tr>
+    <td width="15%">Período:</td>   
+    <td ><form:select path="tipoPeriodo" items="${tiposPeriodo}" itemLabel="label" itemValue="key" /></td>
+</tr>
 
 <tr>
     <td width="10%">Data Inicial:</td>
@@ -137,29 +142,29 @@ function excel()
 			</table>
 			<br />
 
-			<!-- 
+			 
 			<table width="90%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
 					<td>
-						<display:table style="width:90%" name="sessionScope._DISPLAY_TAG_SPACE_1" decorator="com.claro.sccweb.decorator.RelCDRPrePagoViewDecorator" pagesize="50" id="repasses" requestURI="/scc/user/arquivo/controle/cdr/tab1.scc" class="ui-state-default">
+						<display:table style="width:90%" name="sessionScope._DISPLAY_TAG_SPACE_1" decorator="com.claro.sccweb.decorator.RelCDRPrePagoViewDecorator" pagesize="50" id="repasses" requestURI="/scc/user/arquivo/controle/cdr/execute.scc" class="ui-state-default">
 							<display:column property="operadoraLD" title="Operadora LD" />
 							<display:column property="operadoraClaro" title="Operadora Claro" />
 							<display:column property="uf" title="UF" />
 							<display:column property="dataChamada" title="Data da Chamada" />
 							<display:column property="dataCarga" title="Data da Apuração" />
-							<display:column property="dataFechamento" title="Data do fechamento" />
+							<display:column property="dataFechamento" title="Data do Fechamento" />
 							<display:column property="cnAssinante" title="CN do Assinante" />
 							<display:column property="origemChamada" title="Origem da Chamada" />
-							<display:column property="operadoraOrigem" title="Operadora de Origem" />
+							<display:column property="operadoraOrigem" title="Operadora Origem da Chamada" />
 							<display:column property="codigoDefeito" title="Código de Defeito" />
 							<display:column property="grupoHorario" title="Grupo Horário" />
 							<display:column property="tipoChamada" title="Tipo de Chamada" />
-							<display:column property="statusRegistro" title="Status" />
+							<display:column property="statusRegistro" title="Status do Registro" />
 						</display:table>
 					</td>
 				</tr>
 			</table>
- 			-->
+ 			
 
 			<c:if test="${filtro.mostrarSomatorio}">
 				<h3>Totais</h3>

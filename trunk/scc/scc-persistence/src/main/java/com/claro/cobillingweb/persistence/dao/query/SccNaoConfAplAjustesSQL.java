@@ -2,7 +2,7 @@ package com.claro.cobillingweb.persistence.dao.query;
 
 public class SccNaoConfAplAjustesSQL {
 	
-	public static final String SQL = "Select ARQ.CD_EOT_LD, ARQ.CD_EOT_CLARO, OP.SG_UF UF, RS.DT_EVENTO DATAAJUSTE,  "+
+	public static final String SQL = "Select ARQ.CD_EOT_LD, ARQ.CD_EOT_CLARO, CAST(OP.SG_UF AS VARCHAR2(2)) AS UF, RS.DT_EVENTO DATAAJUSTE,  "+
 									        "SUM(RS.VL_AJUSTE) VALORAJUSTE  "+
 									 "FROM SCC_ARQUIVO_COBILLING ARQ, SCC_OPERADORA OP, SCC_RETORNO_SUMARIZADO RS "+
 									 "WHERE ARQ.SQ_ARQUIVO_ORIGEM = 0 "+

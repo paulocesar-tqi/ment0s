@@ -9,15 +9,133 @@ package com.claro.cobillingweb.persistence.dao.query;
  */
 public class SccFaturasSQL {
 
+	public static final String SQL_SINTETICO = 
+			"SELECT FATURA.cd_eot_claro                      AS EOT_CLARO, "+ 
+		    "   CAST(FATURA.cd_csp AS VARCHAR2(2))           AS CSP, "+
+		    "   OP.cd_eot                                    AS OPERADORA_LD, "+ 
+		    "   CAST(FATURA.sg_uf AS VARCHAR2(2))            AS UF, "+ 
+		    "   FATURA.cd_ciclo "+ 
+		    "   || '/' "+
+		    "   || FATURA.mm_ciclo "+ 
+		    "   || '/'  "+
+		    "   || FATURA.aa_ciclo                           AS CICLO_MES_ANO, "+
+		    "   FATURA.dt_emissao_nf                         AS DATA_EMISSAO, "+
+		    "   FATURA.dt_vencimento_orig_fatura             AS VENCIMENTO_ORIGINAL, "+ 
+		    "   FATURA.dt_vencimento_fatura                  AS DATA_VENCIMENTO, "+
+		    "   Sum(NVL(FATURA.vl_original_fatura,0))        AS VALOR_ORIGINAL, "+ 
+		    "   Sum(FATURA.vl_fatura)                        AS VALOR,  "+
+		    "   Sum(NVL(FATURA.vl_icms,0))                   AS VL_ICMS, "+ 
+		    "   DECODE(FATURA.cd_status_fatura,'O', 'Open', "+
+		    "   DECODE(FATURA.cd_status_fatura,'C', 'Closed')) AS STATUS, "+ 
+		    "   Decode (FATURA.fg_expurgo, 'Y', 'Expurgo',  "+
+		    "                              Decode(FATURA.fg_desmembramento, 'Y', "+ 
+		    "                              'Desmembramento', "+ 
+		    "   Decode(FATURA.fg_fraude, 'Y', 'Fraude', "+
+		    "   Decode(FATURA.fg_acordo_pagamento, 'Y', "+ 
+		    "   'Acordo Pagamento',  "+
+		    "     ''))))                                     AS SITUACAO_EVENTO, "+ 
+		    "   Trunc(sysdate) - FATURA.dt_vencimento_fatura AS AGING, "+
+		    "   Sum(NVL(FATURA.vl_total_ajustes,0))                 AS AJUSTE, "+ 
+		    "   FATURA.cd_serie_nf                           AS SERIE, "+
+		    "   FATURA.cd_sub_serie_nf                       AS SUB_SERIE, "+
+		    "   Sum(NVL(FATURA.vl_total_creditos,0))                AS TOTAL_CREDITOS, "+
+		    "   Sum(NVL(FATURA.vl_total_ajustes,0))                 AS TOTAL_AJUSTES, "+
+		    "   Sum(NVL(FATURA.vl_oferta_ld,0))                     AS VL_OFERTA_LD, "+
+		    "   Sum(NVL(FATURA.vl_pagamento_desconto_ld,0))         AS VL_DESCONTO_LD, "+
+		    "   Sum(NVL(FATURA.vl_credito_ld,0))                    AS VL_CREDITO_LD, "+
+		    "   Sum(NVL(FATURA.vl_total_pago,0))                    AS VL_PAGO, "+
+		    "   Sum(NVL(FATURA.qt_total_eventos,0))                 AS QTDE_EVENTOS, "+
+		    "   Sum(NVL(FATURA.vl_total_juros,0))                   AS JUROS, "+
+		    "   Sum(NVL(FATURA.vl_total_multas,0))                  AS MULTAS "+
+			"FROM   scc_fatura_ld FATURA, "+
+		    "   scc_operadora OP "+
+		    "WHERE  FATURA.cd_csp = OP.cd_csp "+
+		    "   AND OP.cd_tipo_servico = 'C' ";
+		    //"   AND FATURA.dt_emissao_nf >= '01/01/2012' "+
+		    //"   AND FATURA.dt_emissao_nf <= '01/01/2013' "+
+		    //"   AND FATURA.cd_status_fatura IN ( 'C', 'O' ) "+
+		public static final String GROUP_BY_SINTETICO =
+			"GROUP  BY FATURA.cd_eot_claro, "+
+		    "      FATURA.cd_csp, "+ 
+		    "      OP.cd_eot, "+
+		    "      FATURA.sg_uf, "+
+		    "      FATURA.cd_ciclo "+ 
+		    "      || '/' "+
+		    "      || FATURA.mm_ciclo "+ 
+		    "      || '/'  "+
+		    "      || FATURA.aa_ciclo,  "+
+		    "      FATURA.dt_emissao_nf,  "+
+		    "      FATURA.dt_vencimento_orig_fatura, "+ 
+		    "      FATURA.dt_vencimento_fatura, "+ 
+		    "      FATURA.cd_status_fatura, "+
+		    "      Decode (FATURA.fg_expurgo, 'Y', 'Expurgo', "+
+		    "                                 Decode(FATURA.fg_desmembramento, 'Y', "+ 
+		    "                                 'Desmembramento', "+ 
+		    "      Decode(FATURA.fg_fraude, 'Y', 'Fraude', "+
+		    "      Decode(FATURA.fg_acordo_pagamento, 'Y', "+ 
+		    "      'Acordo Pagamento', "+ 
+		    "        '')))), "+
+		    "      Trunc(sysdate) - FATURA.dt_vencimento_fatura, "+ 
+		    "      FATURA.cd_serie_nf, "+
+		    "      FATURA.cd_sub_serie_nf ";
+
+
+			
+	public static final String SQL_FATURA = 
+	"SELECT FATURA.cd_eot_claro                          AS EOT_CLARO, "+ 
+    "       CAST(FATURA.cd_csp AS VARCHAR2(2))           AS CSP, "+
+	"       OP.cd_eot                                    AS OPERADORA_LD, "+ 
+	"       CAST(FATURA.sg_uf AS VARCHAR2(2))            AS UF, "+ 
+	"       FATURA.cd_ciclo "+ 
+	"       || '/' "+
+	"       || FATURA.mm_ciclo "+ 
+	"       || '/' "+
+	"       || FATURA.aa_ciclo                           AS CICLO_MES_ANO, "+
+	"       FATURA.nu_fatura                             AS NUMERO_FATURA, "+
+	"       FATURA.dt_emissao_nf                         AS DATA_EMISSAO, "+
+	"       FATURA.dt_vencimento_orig_fatura             AS VENCIMENTO_ORIGINAL, "+ 
+	"       FATURA.dt_vencimento_fatura                  AS DATA_VENCIMENTO, "+
+	"       NVL(FATURA.vl_original_fatura,0)                    AS VALOR_ORIGINAL, "+ 
+	"       NVL(FATURA.vl_fatura,0)                             AS VALOR, "+
+	"       NVL(FATURA.vl_icms,0)                               AS VL_ICMS, "+ 
+	"       DECODE(FATURA.cd_status_fatura, 'O','Open', "+
+	"       DECODE(FATURA.cd_status_fatura,'C', 'Closed'))AS STATUS, "+ 
+	"       Decode (FATURA.fg_expurgo, 'Y', 'Expurgo', "+
+	"       Decode(FATURA.fg_desmembramento, 'Y', 'Desmembramento', Decode(FATURA.fg_fraude, 'Y', 'Fraude', "+ 
+	"       Decode(FATURA.fg_acordo_pagamento, 'Y', 'Acordo Pagamento', '')))) AS SITUACAO_EVENTO, "+ 
+	"       Trunc(sysdate) - FATURA.dt_vencimento_fatura AS AGING, "+
+	"       NVL(FATURA.vl_total_ajustes,0)                      AS AJUSTE, "+
+	"       FATURA.nu_nf                                 AS NUMERO_NOTA_FISCAL, "+ 
+	"       FATURA.cd_serie_nf                           AS SERIE, "+
+	"       FATURA.cd_sub_serie_nf                       AS SUB_SERIE, "+
+	"       NVL(FATURA.vl_total_creditos,0)                     AS TOTAL_CREDITOS, "+
+	"       NVL(FATURA.vl_total_ajustes,0)                      AS TOTAL_AJUSTES, "+
+	"       NVL(FATURA.vl_oferta_ld,0)                          AS VL_OFERTA_LD, "+
+	"       NVL(FATURA.vl_pagamento_desconto_ld,0)              AS VL_DESCONTO_LD, "+
+	"       NVL(FATURA.vl_credito_ld,0)                         AS VL_CREDITO_LD, "+ 
+	"       NVL(FATURA.vl_total_pago,0)                         AS VL_PAGO, "+
+	"       NVL(FATURA.qt_total_eventos,0)                      AS QTDE_EVENTOS, "+ 
+	"       NVL(FATURA.vl_total_juros,0)                        AS JUROS, "+
+	"       NVL(FATURA.vl_total_multas,0)                       AS MULTAS "+ 
+	"FROM   scc_fatura_ld FATURA, scc_operadora OP "+ 
+	"WHERE  FATURA.cd_csp = OP.cd_csp "+
+	"       AND OP.cd_tipo_servico = 'C' ";
+	//"       AND FATURA.nu_fatura = '0000' "+
+	//"       AND FATURA.dt_emissao_nf >= '01/01/2012' "+
+	//"       AND FATURA.dt_emissao_nf <= '01/01/2013' "+
+	//"       AND FATURA.cd_status_fatura IN ( 'C', 'O' )"; 
+	
 	
 	public static final String SQL =" SELECT "+
 									" 	FATURA.CD_EOT_CLARO AS EOT_CLARO, "+
-									" 	FATURA.CD_CSP AS CSP, "+
+									" 	CAST(FATURA.CD_CSP AS VARCHAR2(2)) AS CSP, "+
 									" 	OP.CD_EOT AS OPERADORA_LD, "+
-									" 	FATURA.SG_UF AS UF, "+
-									" 	FATURA.CD_CICLO, "+
-									"   FATURA.MM_CICLO, "+
-									"	FATURA.AA_CICLO, "+
+									" 	CAST(FATURA.SG_UF AS VARCHAR2(2)) AS UF, "+
+								    "   FATURA.cd_ciclo "+ 
+								    "   || '/' "+
+								    "   || FATURA.mm_ciclo "+ 
+								    "   || '/'  "+
+								    "   || FATURA.aa_ciclo                           AS CICLO_MES_ANO, "+
 									" 	FATURA.NU_FATURA AS NUMERO_FATURA, "+
 									" 	FATURA.DT_EMISSAO_NF AS DATA_EMISSAO, "+
 									" 	FATURA.DT_VENCIMENTO_FATURA AS DATA_VENCIMENTO, "+
@@ -63,8 +181,8 @@ public class SccFaturasSQL {
 	/* Relatorio de Juros e Multas*/
 	
 	public static final String SQL_JUROS_MULTAS = "SELECT "+
-												  "			FATURA.CD_CSP AS OPERADORA_LD, "+
-												  "			FATURA.SG_UF AS SG_UF, "+
+												  "			CAST(FATURA.CD_CSP AS VARCHAR2(2)) AS OPERADORA_LD, "+
+												  "			CAST(FATURA.SG_UF AS VARCHAR2(2)) AS SG_UF, "+
 												  "			FATURA.CD_EOT_CLARO AS OPERADORA_CLARO, "+
 												  "			FATURA.NU_FATURA AS FATURA_DESTINO, "+
 												  "			FATURA.DT_EMISSAO_NF AS DATA_EMISSAO, "+
@@ -103,6 +221,8 @@ public class SccFaturasSQL {
 	
 	
 	public static final String PROJECTIONS = " GROUP BY  FATURA.CD_CSP,  FATURA.CD_EOT_CLARO ";
+	
+	public static final String SQL_CICLO = "SELECT DISTINCT CD_CICLO, MM_CICLO, AA_CICLO FROM SCC_FATURA_LD";
 
 										
 	

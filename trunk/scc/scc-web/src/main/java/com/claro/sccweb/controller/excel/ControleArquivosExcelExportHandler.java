@@ -1,159 +1,57 @@
 package com.claro.sccweb.controller.excel;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
-import com.claro.cobillingweb.persistence.entity.external.ControlConnectFile;
-import com.claro.sccweb.controller.BaseExcelFormHandler;
+import com.claro.sccweb.controller.BasicExcelHandler;
+import com.claro.sccweb.controller.ControllerExecutionException;
+import com.claro.sccweb.excel.ExcelColumnDefinition;
+import com.claro.sccweb.excel.ExcelPrinter;
+import com.claro.sccweb.form.ControleArquivoForm;
 
 /**
  * Handler para conversão da pesquisa de arquivos do Connect em Excel.
  *
  */
-public class ControleArquivosExcelExportHandler extends BaseExcelFormHandler {
+public class ControleArquivosExcelExportHandler extends BasicExcelHandler {
 
-	
-	
-	private final String [] _columnTitle = {
-            "Id",                   
-            "Nome do Arquivo",      
-            "Código de Saída",      
-            "Info de Saída",        
-            "Início do Processo",   
-            "Final do Processo"     
-    };
-	
-	private final  int [] _columnSize = {
-             7,      
-             40,     
-             7,      
-             40,     
-             14,     
-             14      
-     };
-	 
-	private final String [] _styleName = {
-             ExcelGeneratorConstants.DEFAULT,        
-             ExcelGeneratorConstants.DEFAULT,        
-             ExcelGeneratorConstants.DEFAULT,        
-             ExcelGeneratorConstants.DEFAULT,        
-             ExcelGeneratorConstants.SIMPLE_DATE,    
-             ExcelGeneratorConstants.SIMPLE_DATE     
-     };
-	
-	 
-	private final String _title = "Relatório de Controle de Arquivos";
-	
-	 
-	protected void buildExcelDocument(Map<String, Object> model,HSSFWorkbook workbook, HttpServletRequest request,HttpServletResponse response) throws Exception {
-		HSSFSheet sheet;		
-		HSSFCellStyle style;
-		String currStyle = null;
-		HSSFCell cell;
+	@Override
+	protected void buildExcelDocument(Map<String, Object> model, HSSFWorkbook workbook, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 		
-		List<ControlConnectFile> items = getSessionDatamanager(request).getSearchResultList().getResult();		
-		if (items == null)
-			return;
+		ControleArquivoForm form = (ControleArquivoForm) model.get("filtro");
 		
-		int cursor = 5;
-		boolean isEven = (cursor%2==0);
-		
-		setStyleMap(StyleDefinition.getDefinitions(workbook));
-		setColumnTitle(_columnTitle);
-		setColumnSize(_columnSize);
-		setStyleName(_styleName);
-		setTitle(_title);
-		
-		sheet = workbook.createSheet("Resultados");
-		writeTitle(sheet);
-		
-		
-		HSSFRow row = sheet.createRow((short) cursor);
-		
-		
-        
-		/*Criação das colulas.*/
-		for (short cont=0; cont < getColumnTitle().length; cont++)
-			{
-			style = null;
-            cell = row.createCell(cont);
-            currStyle = getStyleName()[cont];
-            
-         
-            if (style==null) {
-                style = (HSSFCellStyle) getStyleMap()
-                    .get(ExcelGeneratorConstants.DEFAULT);
-            }
-            cell.setCellStyle(style);
-			}
-		/*Final da criação das colunas.*/
-		
-		/*Publicação de valores.*/
-		for (int i=0;i<items.size();i++){
-			ControlConnectFile item = items.get(i);
-		short column = 0;
-		
-		  if (currStyle!=null) {
-              if (!isEven) {
-              	currStyle = ExcelGeneratorConstants.ODD+currStyle;
-              }
-              style = (HSSFCellStyle) getStyleMap().get(currStyle);
-          }
-		
-		cell = row.getCell(column);
-        cell.setCellValue(item.getPk().getPROC_NUMB());
-        column++;
-        
-        cell = row.getCell(column);         
-        if (item.getDEST_FILE() == null) {
-        	cell.setCellValue("-");
-        }else
-        	{
-        	cell.setCellValue(item.getDEST_FILE());
-        	}
-        	
-        
-        column++;
-        
-        cell = row.getCell(column);
-        
-        cell.setCellValue(item.getEXIT_CODE());
-        column++;
-        
-        cell = row.getCell(column);
-        
-        if (item.getEXIT_DESC() == null) {
-        	cell.setCellValue("-");
-        }else
-        	{
-        	cell.setCellValue(item.getEXIT_DESC());
-        	}
-        
-        column++;
-        
-        if (item.getPk().getSTRT_DATE()!=null) {
-            cell = row.getCell(column);
-            cell.setCellValue(item.getPk().getSTRT_DATE());
-        }
-        column++;
-        
-        if (item.getSTOP_DATE()!=null) {
-            cell = row.getCell(column);
-            cell.setCellValue(item.getSTOP_DATE());
-        }
-        
-        cursor++;
-		/*Final da publicação de valores.*/
+		if(form != null && form.getListControlConnectFiles() == null){
+			throw new ControllerExecutionException("Navegação inválida. Tabela é nula!.");
+			
 		}
+		
+		List<ExcelColumnDefinition> columnDefinitions = new ArrayList<ExcelColumnDefinition>();
+		columnDefinitions.add(new ExcelColumnDefinition("getPk.getPROC_NUMB", "ID", style, 20));
+		columnDefinitions.add(new ExcelColumnDefinition("getORIG_FILE", "Nome do Arquivo", style, 50));
+		columnDefinitions.add(new ExcelColumnDefinition("getEXIT_CODE", "Código de Saída", style, 15));
+		columnDefinitions.add(new ExcelColumnDefinition("getPk.getSTRT_DATE", "Data de Inicio", dateStyle, 15));
+		columnDefinitions.add(new ExcelColumnDefinition("getSTOP_DATE", "Data Fim", dateStyle, 15));
+		columnDefinitions.add(new ExcelColumnDefinition("getEXIT_DESC", "Info", style, 50));
+		ExcelPrinter printer = new ExcelPrinter(columnDefinitions,workbook);
+		printer.addSheet("Controle de Arquivos");
+		List<String> linhasCabecalho = new ArrayList<String>();
+		linhasCabecalho.add("Claro - Controle de Arquivos.");
+		linhasCabecalho.add("Data Geração "+dateFormat.format(new Date()));
+		printer.setHeaderLines(linhasCabecalho);
+		printer.generateHeader();
+		printer.addBlankLines(1);
+		printer.generateColumnsTitle();
+		printer.addData(form.getListControlConnectFiles());
+		printer.writeData();
+		
 		
 	}
 

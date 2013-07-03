@@ -1,7 +1,10 @@
 package com.claro.sccweb.controller.relatorio.pre;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -34,6 +37,9 @@ import com.claro.sccweb.service.ServiceException;
 public class SccPreRelatorioEventosController extends
 			BaseOperationController<SccPreRelatorioEventosForm> {
 		
+		
+		private static final String FWD_VIEW_EXCEL ="relatorio_eventos_excel";
+		
 		@Autowired
 		private SccPreRelatorioEventosService sccPreRelatorioEventosService;
 		
@@ -45,17 +51,37 @@ public class SccPreRelatorioEventosController extends
 			List<SccPreRelatorioEventosView> rows = gerarPreRelatorioEventos(formRelatorioEventos);
 			
 			List<SccPreRelatorioEventosViewDecorator> decoratorList = new ArrayList<SccPreRelatorioEventosViewDecorator>(rows.size());
+			Map<String,Object> totais = new HashMap<String, Object>();
+			Double totalQuantidade = 0.0;
+			Double totalDuracaoReal = 0.0;
+			Double totalDuracaoTarifada = 0.0;
+			Double totalValorBruto = 0.0;
 			
 			for (int i = 0; i < rows.size(); i++) {
-				
 				SccPreRelatorioEventosViewDecorator decorator = new SccPreRelatorioEventosViewDecorator(rows.get(i), i);
 				decoratorList.add(decorator);
+				totalQuantidade += rows.get(i).getQuantidadeCdrs() != null ? rows.get(i).getQuantidadeCdrs() : 0;
+				totalDuracaoReal += rows.get(i).getDuracaoReal() != null ? rows.get(i).getDuracaoReal() : 0;
+				totalDuracaoTarifada += rows.get(i).getDuracaoTarifada() != null ? rows.get(i).getDuracaoTarifada() : 0;
+				totalValorBruto += rows.get(i).getValorBruto() != null ? rows.get(i).getValorBruto() : 0;
 			}
+			totais.put("totalQuantidade",  formataInteiro(totalQuantidade));
+			totais.put("totalDuracaoReal", formataValorMonetario(totalDuracaoReal));
+			totais.put("totalDuracaoTarifada", formataValorMonetario(totalDuracaoTarifada));
+			totais.put("totalValorBruto", formataValorMonetario(totalValorBruto));
+
 			storeInSession(getClass(), DISPLAY_TAG_SPACE_1, decoratorList, request);
+			storeInSession(getClass(), DISPLAY_TAG_SPACE_2, totais, request);
 			ModelAndView mav = new ModelAndView(getViewName());
 			return mav;
 
 		}
+		
+		public ModelAndView excel(HttpServletRequest request,HttpServletResponse response, BaseForm _form,BindingResult bindingResult, Model model) throws Exception {
+			ModelAndView mav = new ModelAndView(FWD_VIEW_EXCEL);
+			return mav;
+		}
+		
 		
 		private List<SccPreRelatorioEventosView> gerarPreRelatorioEventos(SccPreRelatorioEventosForm form) throws DAOException, ServiceException {
 			return sccPreRelatorioEventosService.gerarPreRelatorioEventos(form.getDtInicioEvento(), form.getDtFimEvento(), form.getCdEOTLD(), form.getCdEOTClaro(), form.getTpStatus());

@@ -43,6 +43,8 @@ public class SccArquivoSumarizado {
 	private String dsOperadoraClaro;
 	private String dsOperadoraLd;
 	private String cdSubStatusCdr;
+	private Double metrica;
+	private String mesAno;
 
 	
 	
@@ -254,9 +256,18 @@ public class SccArquivoSumarizado {
 	public void setCdSubStatusCdr(String cdSubStatusCdr) {
 		this.cdSubStatusCdr = cdSubStatusCdr;
 	}
-	
-	
-	
+	public Double getMetrica() {
+		return metrica;
+	}
+	public void setMetrica(Double metrica) {
+		this.metrica = metrica;
+	}
+	public String getMesAno() {
+		return mesAno;
+	}
+	public void setMesAno(String mesAno) {
+		this.mesAno = mesAno;
+	}
 	
 	
 }

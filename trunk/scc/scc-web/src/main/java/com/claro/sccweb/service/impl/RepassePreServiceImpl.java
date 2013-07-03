@@ -1,9 +1,13 @@
 package com.claro.sccweb.service.impl;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.claro.cobillingweb.persistence.dao.BasicDAO;
@@ -31,6 +35,8 @@ import com.claro.cobillingweb.persistence.view.ConsolidadoProdutoPreView;
 import com.claro.cobillingweb.persistence.view.RelApuracaoFechamentoPrePagoView;
 import com.claro.cobillingweb.persistence.view.RelSinteticoFechamentoPrePagoView;
 import com.claro.cobillingweb.persistence.view.RelSinteticoServicoPrePagoView;
+import com.claro.cobillingweb.persistence.view.RelatorioApuracaoFechamentoPrePagoView;
+import com.claro.cobillingweb.persistence.view.RelatorioApuracaoPreSumarizado;
 import com.claro.sccweb.decorator.DemonstrativoRepassePreDecorator;
 import com.claro.sccweb.decorator.DemonstrativoRepassePreItemDecorator;
 import com.claro.sccweb.decorator.SccPreFechamentoAssinaturaDecorator;
@@ -72,7 +78,7 @@ public class RepassePreServiceImpl extends AbstractService implements RepassePre
 			List<SccOperadora> operadorasClaro = null;
 			if (argument.getCdEODClaro().equals(BasicDAO.GET_ALL_STRING))
 				{
-				operadorasClaro = getOperadoraDAO().pequisaOperadorasClaro();
+				operadorasClaro = getOperadoraDAO().pequisaOperadorasClaroComM();
 				}				
 			else
 				{
@@ -99,12 +105,14 @@ public class RepassePreServiceImpl extends AbstractService implements RepassePre
 				nmParametro.append(operadorasClaro.get(i).getCdEot());
 				nmParametro.append(argument.getCdCriterioCusto());
 				nmParametro.append(leftZeroFill(argument.getCdProdutoPrepago(),4));
+				Long seq = getParamProcessoDAO().getProximoValorSequence();
+				nmParametro.append(leftZeroFill(seq.toString(), 10));
 				pk.setNmParametro(nmParametro.toString());
 				SccParamProcesso toTest = getParamProcessoDAO().getByPk(pk, SccParamProcesso.class);
 				if (toTest == null)
 					{
 					SccParamProcesso paramProcesso = new SccParamProcesso();
-					paramProcesso.setCdTipoParametro(VALOR_TO_LOAD_PRE);
+					paramProcesso.setCdTipoParametro(VALOR_ALFA_PRE);
 					paramProcesso.setTxValorParametro(VALOR_TO_LOAD_PRE);
 					paramProcesso.setDtCriacao(now);
 					paramProcesso.setCdUsuarioManut(argument.getUserName());
@@ -137,14 +145,14 @@ public class RepassePreServiceImpl extends AbstractService implements RepassePre
 		List<SolicitacaoRepassePreComposite> resultados = new ArrayList<SolicitacaoRepassePreComposite>();
 		List<SccParamProcesso> paramProcessoList = null;
 		if (status.equals(VALOR_TO_LOAD_PRE))
-			paramProcessoList = getParamProcessoDAO().pesquisaRepassesAgendados(CD_PROCESSO_PREPAGO);
+			paramProcessoList = getParamProcessoDAO().pesquisaRepassesAgendadosPre(CD_PROCESSO_PREPAGO);
 		else if (status.equals(VALOR_LOADING_PRE))
 			{
-			paramProcessoList = getParamProcessoDAO().pesquisaRepassesProcessando(CD_PROCESSO_PREPAGO,max);
+			paramProcessoList = getParamProcessoDAO().pesquisaRepassesProcessandoPre(CD_PROCESSO_PREPAGO,max);
 			}			
 		else if (status.equals(VALOR_LOADED_PRE))
 			{
-			paramProcessoList = getParamProcessoDAO().pesquisaRepassesProcessados(CD_PROCESSO_PREPAGO,max);
+			paramProcessoList = getParamProcessoDAO().pesquisaRepassesProcessadosPre(CD_PROCESSO_PREPAGO,max);
 			}		
 		
 		if (paramProcessoList != null)
@@ -158,7 +166,7 @@ public class RepassePreServiceImpl extends AbstractService implements RepassePre
 				SolicitacaoRepassePreComposite composite = new SolicitacaoRepassePreComposite();
 				SccOperadora operadoraClaro = getOperadoraDAO().getByPk(nmParametro.substring(11,14),SccOperadora.class);
 				SccOperadora operadoraLD = getOperadoraDAO().getByPk(nmParametro.substring(8,11),SccOperadora.class);
-				SccProdutoPrepago produtoPrepago = getProdutoPrepagoDAO().getByPk(String.valueOf(Long.parseLong(nmParametro.substring(16))), SccProdutoPrepago.class);
+				SccProdutoPrepago produtoPrepago = getProdutoPrepagoDAO().getByPk(String.valueOf(Long.parseLong(nmParametro.substring(16,20))), SccProdutoPrepago.class);
 				String criterio = nmParametro.substring(14,16);
 				composite.setCriterio(criterio);
 				composite.setPeriodo(nmParametro.substring(0,7));
@@ -326,6 +334,152 @@ public class RepassePreServiceImpl extends AbstractService implements RepassePre
 		} catch (Exception ex) { throw new ServiceException(ex.getMessage(), ex); }	
 	}
 	
+	public void calcularValorApurado(Map<String, DemonstrativoRepassePreItemDecorator> mapa, DemonstrativoRepassePreItemDecorator calculoRepassePrePago){
+		
+		DemonstrativoRepassePreItemDecorator entity = mapa.get(calculoRepassePrePago.getDescricao());
+		if(mapa.containsKey(calculoRepassePrePago.getDescricao())){
+			
+			
+			double quantidadeChamadas =  entity.getQuantidadeChamandas() == null ? 0 : entity.getQuantidadeChamandas();
+			double quantidadeMinutos = entity.getQuantidadeMinutos() == null ? 0 : entity.getQuantidadeMinutos();
+			double valorBruto =  entity.getValorBruto() == null ? 0 : entity.getValorBruto();
+			double icmsNaoRepassado = entity.getIcmsNaoRepassado() == null ? 0 : entity.getIcmsNaoRepassado();
+			double icmsRepassar =  entity.getIcmsRepassar() == null ? 0 : entity.getIcmsRepassar();
+			double pisCofins = entity.getPisCofins() == null ? 0 : entity.getPisCofins();
+			double iss = entity.getIss() == null ? 0 : entity.getIss();
+			double valorLiquido = entity.getValorLiquido() == null ? 0 : entity.getValorLiquido();
+			double valorRepassar = entity.getValorRepassar() == null ? 0 : entity.getValorRepassar();
+
+			entity.setQuantidadeChamandas(quantidadeChamadas + (calculoRepassePrePago.getQuantidadeChamandas() == null ? 0 : calculoRepassePrePago.getQuantidadeChamandas() ));
+			entity.setQuantidadeMinutos(quantidadeMinutos + (calculoRepassePrePago.getQuantidadeMinutos() == null ? 0 : calculoRepassePrePago.getQuantidadeMinutos()));
+			entity.setValorBruto(valorBruto + (calculoRepassePrePago.getValorBruto() == null ? 0 : calculoRepassePrePago.getValorBruto()));
+			entity.setIcmsNaoRepassado(icmsNaoRepassado + (calculoRepassePrePago.getIcmsNaoRepassado() == null ? 0 :calculoRepassePrePago.getIcmsNaoRepassado()));
+			entity.setIcmsRepassar(icmsRepassar + (calculoRepassePrePago.getIcmsRepassar() == null ? 0 : calculoRepassePrePago.getIcmsRepassar()));
+			entity.setIss(iss + (calculoRepassePrePago.getIss() == null ? 0 : calculoRepassePrePago.getIss()));
+			entity.setPisCofins(pisCofins + (calculoRepassePrePago.getPisCofins() == null ? 0 : calculoRepassePrePago.getPisCofins()));
+			entity.setValorLiquido(valorLiquido + (calculoRepassePrePago.getValorLiquido() == null ? 0 : calculoRepassePrePago.getValorLiquido()));
+			entity.setValorRepassar(valorRepassar + (calculoRepassePrePago.getValorRepassar()  == null ? 0 : calculoRepassePrePago.getValorRepassar()));
+			
+			mapa.put(entity.getDescricao(), entity);
+			
+		}else {
+			mapa.put(calculoRepassePrePago.getDescricao(), calculoRepassePrePago);
+		}
+
+		
+	}
+	
+	public void calcularTotalAcertos(Map<String, DemonstrativoRepassePreItemDecorator> mapa, DemonstrativoRepassePreItemDecorator calculoRepassePrePago){
+		
+		DemonstrativoRepassePreItemDecorator entity = mapa.get(calculoRepassePrePago.getDescricao());
+		if(mapa.containsKey(calculoRepassePrePago.getDescricao())){
+			
+			
+			double quantidadeChamadas =  entity.getQuantidadeChamandas() == null ? 0 : entity.getQuantidadeChamandas();
+			double quantidadeMinutos = entity.getQuantidadeMinutos() == null ? 0 : entity.getQuantidadeMinutos();
+			double valorBruto =  entity.getValorBruto() == null ? 0 : entity.getValorBruto();
+			double icmsNaoRepassado = entity.getIcmsNaoRepassado() == null ? 0 : entity.getIcmsNaoRepassado();
+			double icmsRepassar =  entity.getIcmsRepassar() == null ? 0 : entity.getIcmsRepassar();
+			double pisCofins = entity.getPisCofins() == null ? 0 : entity.getPisCofins();
+			double iss = entity.getIss() == null ? 0 : entity.getIss();
+			double valorLiquido = entity.getValorLiquido() == null ? 0 : entity.getValorLiquido();
+			double valorRepassar = entity.getValorRepassar() == null ? 0 : entity.getValorRepassar();
+
+			entity.setQuantidadeChamandas(quantidadeChamadas + (calculoRepassePrePago.getQuantidadeChamandas() == null ? 0 : calculoRepassePrePago.getQuantidadeChamandas() ));
+			entity.setQuantidadeMinutos(quantidadeMinutos + (calculoRepassePrePago.getQuantidadeMinutos() == null ? 0 : calculoRepassePrePago.getQuantidadeMinutos()));
+			entity.setValorBruto(valorBruto + (calculoRepassePrePago.getValorBruto() == null ? 0 : calculoRepassePrePago.getValorBruto()));
+			entity.setIcmsNaoRepassado(icmsNaoRepassado + (calculoRepassePrePago.getIcmsNaoRepassado() == null ? 0 :calculoRepassePrePago.getIcmsNaoRepassado()));
+			entity.setIcmsRepassar(icmsRepassar + (calculoRepassePrePago.getIcmsRepassar() == null ? 0 : calculoRepassePrePago.getIcmsRepassar()));
+			entity.setIss(iss + (calculoRepassePrePago.getIss() == null ? 0 : calculoRepassePrePago.getIss()));
+			entity.setPisCofins(pisCofins + (calculoRepassePrePago.getPisCofins() == null ? 0 : calculoRepassePrePago.getPisCofins()));
+			entity.setValorLiquido(valorLiquido + (calculoRepassePrePago.getValorLiquido() == null ? 0 : calculoRepassePrePago.getValorLiquido()));
+			entity.setValorRepassar(valorRepassar + (calculoRepassePrePago.getValorRepassar()  == null ? 0 : calculoRepassePrePago.getValorRepassar()));
+			
+			mapa.put(entity.getDescricao(), entity);
+			
+		}else {
+			mapa.put(calculoRepassePrePago.getDescricao(), calculoRepassePrePago);
+		}
+
+		
+	}
+	
+	public void calcularValores(Map<String, DemonstrativoRepassePreItemDecorator> mapa, DemonstrativoRepassePreItemDecorator calculoRepassePrePago){
+		
+		DemonstrativoRepassePreItemDecorator entity = mapa.get(calculoRepassePrePago.getDescricao());
+		if(mapa.containsKey(calculoRepassePrePago.getDescricao())){
+			
+			double quantidadeChamadas =  entity.getQuantidadeChamandas() == null ? 0 : entity.getQuantidadeChamandas();
+			double quantidadeMinutos = entity.getQuantidadeMinutos() == null ? 0 : entity.getQuantidadeMinutos();
+			double valorBruto =  entity.getValorBruto() == null ? 0 : entity.getValorBruto();
+			double icmsNaoRepassado = entity.getIcmsNaoRepassado() == null ? 0 : entity.getIcmsNaoRepassado();
+			double icmsRepassar =  entity.getIcmsRepassar() == null ? 0 : entity.getIcmsRepassar();
+			double pisCofins = entity.getPisCofins() == null ? 0 : entity.getPisCofins();
+			double iss = entity.getIss() == null ? 0 : entity.getIss();
+			double valorLiquido = entity.getValorLiquido() == null ? 0 : entity.getValorLiquido();
+			double valorRepassar = entity.getValorRepassar() == null ? 0 : entity.getValorRepassar();
+
+			entity.setQuantidadeChamandas(quantidadeChamadas + (calculoRepassePrePago.getQuantidadeChamandas() == null ? 0 : calculoRepassePrePago.getQuantidadeChamandas() ));
+			entity.setQuantidadeMinutos(quantidadeMinutos + (calculoRepassePrePago.getQuantidadeMinutos() == null ? 0 : calculoRepassePrePago.getQuantidadeMinutos()));
+			entity.setValorBruto(valorBruto + (calculoRepassePrePago.getValorBruto() == null ? 0 : calculoRepassePrePago.getValorBruto()));
+			entity.setIcmsNaoRepassado(icmsNaoRepassado + (calculoRepassePrePago.getIcmsNaoRepassado() == null ? 0 :calculoRepassePrePago.getIcmsNaoRepassado()));
+			entity.setIcmsRepassar(icmsRepassar + (calculoRepassePrePago.getIcmsRepassar() == null ? 0 : calculoRepassePrePago.getIcmsRepassar()));
+			entity.setIss(iss + (calculoRepassePrePago.getIss() == null ? 0 : calculoRepassePrePago.getIss()));
+			entity.setPisCofins(pisCofins + (calculoRepassePrePago.getPisCofins() == null ? 0 : calculoRepassePrePago.getPisCofins()));
+			entity.setValorLiquido(valorLiquido + (calculoRepassePrePago.getValorLiquido() == null ? 0 : calculoRepassePrePago.getValorLiquido()));
+			entity.setValorRepassar(valorRepassar + (calculoRepassePrePago.getValorRepassar()  == null ? 0 : calculoRepassePrePago.getValorRepassar()));
+			
+			mapa.put(entity.getDescricao(), entity);
+			
+		}else {
+			mapa.put(calculoRepassePrePago.getDescricao(), calculoRepassePrePago);
+		}
+		
+	}
+
+	
+	public Collection<DemonstrativoRepassePreItemDecorator> gerarLinhasDemonstrativoConsolidado(List<SccPreFechamento> listPreFechamento) throws ServiceException{
+		
+		List<DemonstrativoRepassePreItemDecorator> listRetorno = new ArrayList<DemonstrativoRepassePreItemDecorator>();
+		Map<String, DemonstrativoRepassePreItemDecorator> mapa = new LinkedHashMap<String, DemonstrativoRepassePreItemDecorator>();
+		
+		try {
+			for (SccPreFechamento preFechamento : listPreFechamento) {
+				CalculoRepassePrePago calculoRepassePrePago = new CalculoRepassePrePago(preFechamento);
+				calcularValores(mapa, calculoRepassePrePago.getTotalValorApurado());
+				calcularValores(mapa, calculoRepassePrePago.getValorChamadasApuradasMesAnterior());
+				calcularValores(mapa, calculoRepassePrePago.getValorChamadasApuradasOutrosMeses());
+				calcularValores(mapa, calculoRepassePrePago.getTotalDeducoes());
+				//calcularValores(mapa, calculoRepassePrePago.getUtilizacaoPlataforma());
+				calcularValores(mapa, calculoRepassePrePago.getUtilizacaoPlataformaSimplificado());
+				calcularValores(mapa, calculoRepassePrePago.getCreditosAutorizadosLD());
+				calcularValores(mapa, calculoRepassePrePago.getANATEL226());
+				calcularValores(mapa, calculoRepassePrePago.getTotalPenalidades());
+				calcularValores(mapa, calculoRepassePrePago.getPenalidadesMinutosContraClaro());
+				calcularValores(mapa, calculoRepassePrePago.getMultasAtrasoContraClaro());
+				calcularValores(mapa, calculoRepassePrePago.getMultasAtrasoContraLD());
+				calcularValores(mapa, calculoRepassePrePago.getTotalAcertos());
+				calcularValores(mapa, calculoRepassePrePago.getConciliacaoContraClaro());
+				calcularValores(mapa, calculoRepassePrePago.getConciliacaoContraLD());
+				calcularValores(mapa, calculoRepassePrePago.getCPMF());
+				
+				calcularValores(mapa, calculoRepassePrePago.getICMSDescontar());
+				calcularValores(mapa, calculoRepassePrePago.getICMSRepassar());
+				calcularValores(mapa, calculoRepassePrePago.getValorFinal());				
+				
+			}
+		} catch (Exception e) {
+			throw new ServiceException(e.getMessage(), e);
+		}
+		
+		listRetorno.addAll(mapa.values());
+		
+		return listRetorno;
+	}
+	
+	
+	
+	
 	public List<DemonstrativoRepassePreItemDecorator> geraLinhasDemonstrativo(SccPreFechamento preFechamento) throws ServiceException {
 		try {
 			info("Executando cálculos para demonstrativo pré-pago com ID "+preFechamento.getSqPreFechamento());
@@ -359,7 +513,7 @@ public class RepassePreServiceImpl extends AbstractService implements RepassePre
 			DemonstrativoRepassePreDecorator decorator = new DemonstrativoRepassePreDecorator();
 			if ((fechamentoHolding != null) && (fechamentoHolding.size() > 0)) {				
 				decorator.setHolding(true);
-				decorator.setItens(geraLinhasDemonstrativo(fechamentoHolding.get(0)));				
+				decorator.setItens((List<DemonstrativoRepassePreItemDecorator>) gerarLinhasDemonstrativoConsolidado(fechamentoHolding));
 			}
 			return decorator;
 		} catch (DAOException daoEx) { throw daoEx;
@@ -377,6 +531,18 @@ public class RepassePreServiceImpl extends AbstractService implements RepassePre
 			return decorator;
 		} catch (DAOException daoEx) { throw daoEx;
 		} catch (Exception e) { throw new ServiceException(e.getMessage(), e); }
+	}
+	
+	@Override
+	public DemonstrativoRepassePreDecorator carregarDemonstrativoConsolidado(DemonstrativoRepassePrePagoTO to) throws DAOException, ServiceException {
+		
+		List<SccPreFechamento> fechamentoHolding = getPreFechamentoDAO().pesquisaRepassesPreHolding(to.getCdEOTLD(), null, to.getCdProdutoPrepago(),  to.getDtInicial(), to.getDtFinal());
+
+		DemonstrativoRepassePreDecorator decorator = new DemonstrativoRepassePreDecorator();
+		decorator.setConsolidadoGeral(true);
+
+		decorator.setItens((List<DemonstrativoRepassePreItemDecorator>) gerarLinhasDemonstrativoConsolidado(fechamentoHolding));
+		return decorator;
 	}
 	
 	public List<SccPreFechamentoAssinaturaDecorator> carregaAssinaturas(DemonstrativoRepassePrePagoTO to) throws DAOException,ServiceException {
@@ -479,13 +645,235 @@ public class RepassePreServiceImpl extends AbstractService implements RepassePre
 		return getPreFechamentoDAO().geraRelatorioSinteticoServico(cdProduto,cdEOTLD, cdEOTClaro, cdStatusFechamento, dataInicial, dataFinal);
 	}
 	
-	public List<RelApuracaoFechamentoPrePagoView> geraRelatorioApuracao(String cdProduto, String cdEOTLD, String cdEOTClaro,String cdStatusFechamento, Date dataInicial, Date dataFinal) throws DAOException {
-		return getPreFechamentoDAO().geraRelatorioApuracao(cdProduto, cdEOTLD, cdEOTClaro, cdStatusFechamento, dataInicial, dataFinal);		
+	@Override
+	public List<RelatorioApuracaoFechamentoPrePagoView>  gerarRelatorioApuracao(String cdProduto, String cdEOTLD, String cdEOTClaro,String cdStatusFechamento, Date dataInicial, Date dataFinal) throws DAOException {
+		
+		List<RelApuracaoFechamentoPrePagoView> list = getPreFechamentoDAO().geraRelatorioApuracao(cdProduto, cdEOTLD, cdEOTClaro, cdStatusFechamento, dataInicial, dataFinal);
+		List<RelatorioApuracaoFechamentoPrePagoView> lista = calcularLista(list);
+		
+		return lista;
+		
+	}
+	@Override
+	public RelatorioApuracaoPreSumarizado gerarTotal(String cdProduto, String cdEOTLD, String cdEOTClaro,String cdStatusFechamento, Date dataInicial, Date dataFinal)throws DAOException {
+		
+		RelatorioApuracaoFechamentoPrePagoView total = null;
+		List<RelApuracaoFechamentoPrePagoView> list = getPreFechamentoDAO().geraRelatorioApuracao(cdProduto, cdEOTLD, cdEOTClaro, cdStatusFechamento, dataInicial, dataFinal);
+		List<RelatorioApuracaoFechamentoPrePagoView> listaApuracao = new ArrayList<RelatorioApuracaoFechamentoPrePagoView>();
+		for (RelApuracaoFechamentoPrePagoView relApuracaoFechamentoPrePagoView : list) {
+			RelatorioApuracaoFechamentoPrePagoView calculado = new RelatorioApuracaoFechamentoPrePagoView(relApuracaoFechamentoPrePagoView);
+			listaApuracao.add(calculado);
+			
+		}
+		total = sumarizar(listaApuracao);
+		
+		RelatorioApuracaoPreSumarizado totalRelatorio = new RelatorioApuracaoPreSumarizado(total);
+		totalRelatorio.setDsOperadora("Total");
+		totalRelatorio.setOperadoraClaro("Total");
+		totalRelatorio.setDescricao("Total");
+		return totalRelatorio;
+		
+	}
+	
+	public RelatorioApuracaoFechamentoPrePagoView somarSubTotais(List<RelatorioApuracaoFechamentoPrePagoView> list){
+		RelatorioApuracaoFechamentoPrePagoView retorno = new RelatorioApuracaoFechamentoPrePagoView();
+		double valorApuradoLiquido = 0;
+		for (RelatorioApuracaoFechamentoPrePagoView entity : list) {
+			if(entity.getCdEotHolding().equals("00")){
+				valorApuradoLiquido += entity.getValorApuradoLiquido();
+			}
+			
+		}
+		retorno.setValorApuradoLiquido(valorApuradoLiquido);
+		retorno.setDsOperadora("Total");
+		retorno.setDsOperadoraClaro("Total");
+		return retorno;
+	}
+	
+	
+	private String gerarDescricaoSemUf(String value){
+	
+		String descricao = "";
+		if(StringUtils.isNotEmpty(value)){
+			if(value.contains("-")){
+				descricao = value.substring(0, value.indexOf("-"));
+			}else{
+				descricao = value;
+			}
+		}
+		
+		return descricao;
+		
 	}
 	
 
+	private List<RelatorioApuracaoFechamentoPrePagoView> calcularLista(List<RelApuracaoFechamentoPrePagoView> listBruta){
+		
+		List<RelatorioApuracaoFechamentoPrePagoView> bruto = new ArrayList<RelatorioApuracaoFechamentoPrePagoView>();
+		
+		// Executa os calculos
+		List<RelatorioApuracaoFechamentoPrePagoView> listaRelatorioCalculoTodos = new ArrayList<RelatorioApuracaoFechamentoPrePagoView>();
+		
+		for (RelApuracaoFechamentoPrePagoView relBruto : listBruta) {
+			RelatorioApuracaoFechamentoPrePagoView entidade = new RelatorioApuracaoFechamentoPrePagoView(relBruto);
+			
+			listaRelatorioCalculoTodos.add(entidade);
+		}
+	
+		// Executa a agrupação
+		List<List<RelatorioApuracaoFechamentoPrePagoView>> listaAgrupadaTodos = this.agrupar(listaRelatorioCalculoTodos);
+		
+		//
+		RelatorioApuracaoFechamentoPrePagoView relatorioApuracaoFechamentoPrePagoViewSumarizado = null;
+		for(List<RelatorioApuracaoFechamentoPrePagoView> listaRelatorioAgrupada : listaAgrupadaTodos){
+			relatorioApuracaoFechamentoPrePagoViewSumarizado = new RelatorioApuracaoFechamentoPrePagoView();
+			
+			for(RelatorioApuracaoFechamentoPrePagoView relatorioApuracaoFechamentoPrePagoView : listaRelatorioAgrupada){
+					
+				bruto.add(relatorioApuracaoFechamentoPrePagoView);
+			}
+			
+			relatorioApuracaoFechamentoPrePagoViewSumarizado = this.sumarizar(listaRelatorioAgrupada);
+			
+			bruto.add(relatorioApuracaoFechamentoPrePagoViewSumarizado);			
+		}
+		
+		return bruto;
+	}
+	
+	//TODO inicio
+	private List<List<RelatorioApuracaoFechamentoPrePagoView>> agrupar(List<RelatorioApuracaoFechamentoPrePagoView> listaRelatorioTodos){
+		List<List<RelatorioApuracaoFechamentoPrePagoView>> listaAgrupadaTodos = new ArrayList<List<RelatorioApuracaoFechamentoPrePagoView>>();
+				
+		RelatorioApuracaoFechamentoPrePagoView realtorioAgrupador = null;
+		
+		List<RelatorioApuracaoFechamentoPrePagoView> listaAgrupada, listaRelatorioCopy = null;
+		
+		while(!listaRelatorioTodos.isEmpty()){
+			listaRelatorioCopy = new ArrayList<RelatorioApuracaoFechamentoPrePagoView>();
+			
+			listaAgrupada = new ArrayList<RelatorioApuracaoFechamentoPrePagoView>();
+			
+			listaRelatorioCopy.addAll(listaRelatorioTodos); 
+			
+			realtorioAgrupador = listaRelatorioTodos.get(0);
+		
+			for(RelatorioApuracaoFechamentoPrePagoView relatorio : listaRelatorioCopy){
+				if(realtorioAgrupador.equals(relatorio)){
+					listaAgrupada.add(relatorio);				
+					
+					listaRelatorioTodos.remove(relatorio);
+				} else {
+					break;
+				}
+			}
+			
+			listaAgrupadaTodos.add(listaAgrupada);
+		}
+		
+		return listaAgrupadaTodos;
+	}
+	
+
+	@SuppressWarnings("unused")
+	private RelatorioApuracaoFechamentoPrePagoView sumarizar(List<RelatorioApuracaoFechamentoPrePagoView> listaRelatorioAgrupada){
+		RelatorioApuracaoFechamentoPrePagoView sumarizado = new RelatorioApuracaoFechamentoPrePagoView();
+		
+		double valorApuradoLiquido = 0;
+		double pisCofins = 0;
+		double valorIcmsRepassar = 0;
+		double icmsRepassar = 0;
+		double icmsNaoRepassado = 0;
+		double valorRepassarSumarizado = 0;
+		double servPrestLiquido = 0;
+		double pisCofinsServPrest = 0;
+		double iss = 0;
+		double vlrBrutoServPrest = 0;
+		double creditoAutorizados = 0;
+		double creditos226 = 0;
+		double penalidadesMinutPerdidos = 0;
+		double totalMultasJuros = 0;
+		double totalAcertosConciliacao = 0 ;
+		double cpmfDescontar = 0;
+		double icmsDescontar = 0;
+		double icmsaRepassar = 0;
+		double vlrFinalRepassar = 0;
+		double vlrNotaFiscal = 0;
+		double destaqueIcms = 0;
+		String dsOperadoraClaro = "";
+		String dsOperadoraHolding = "";
+		String dsOperadora = "";
+		
+		
+		for(RelatorioApuracaoFechamentoPrePagoView relatorioApuracaoFechamentoPrePagoView : listaRelatorioAgrupada){
+			valorApuradoLiquido +=     relatorioApuracaoFechamentoPrePagoView.getValorApuradoLiquido().doubleValue();
+			pisCofins +=               relatorioApuracaoFechamentoPrePagoView.getPisCofins().doubleValue();
+			icmsRepassar +=            relatorioApuracaoFechamentoPrePagoView.getIcmsRepassar().doubleValue();
+			icmsNaoRepassado +=        relatorioApuracaoFechamentoPrePagoView.getValorIcmsNaoRepassado().doubleValue();
+			valorRepassarSumarizado += relatorioApuracaoFechamentoPrePagoView.getValorRepassar().doubleValue();
+			servPrestLiquido +=        relatorioApuracaoFechamentoPrePagoView.getServicoPrestadoLiquido().doubleValue();
+			pisCofinsServPrest +=      relatorioApuracaoFechamentoPrePagoView.getPisCofinsServicePrestado().doubleValue();
+			iss  +=					   relatorioApuracaoFechamentoPrePagoView.getIss().doubleValue();
+			vlrBrutoServPrest +=       relatorioApuracaoFechamentoPrePagoView.getValorBrutoServico().doubleValue();
+			creditoAutorizados +=      relatorioApuracaoFechamentoPrePagoView.getCreditosAutorizados().doubleValue();
+			creditos226 +=  		   relatorioApuracaoFechamentoPrePagoView.getCreditos226().doubleValue();
+			penalidadesMinutPerdidos += relatorioApuracaoFechamentoPrePagoView.getPenalidadesMinutosPerdidos().doubleValue();
+			totalMultasJuros +=        relatorioApuracaoFechamentoPrePagoView.getTotalMultasJuros().doubleValue();
+			totalAcertosConciliacao += relatorioApuracaoFechamentoPrePagoView.getTotalAcertosConciliacoes().doubleValue();
+			cpmfDescontar +=           relatorioApuracaoFechamentoPrePagoView.getCpmfDescontar().doubleValue();
+			icmsDescontar +=           relatorioApuracaoFechamentoPrePagoView.getIcmsDescontar().doubleValue();
+			icmsaRepassar +=           relatorioApuracaoFechamentoPrePagoView.getIcmsRepassar().doubleValue();
+			vlrFinalRepassar +=        relatorioApuracaoFechamentoPrePagoView.getValorFinalRepassar().doubleValue();
+			vlrNotaFiscal +=           relatorioApuracaoFechamentoPrePagoView.getValorNotaFiscal().doubleValue();
+			destaqueIcms +=            relatorioApuracaoFechamentoPrePagoView.getDestaqueIcms().doubleValue();
+			valorIcmsRepassar +=       relatorioApuracaoFechamentoPrePagoView.getValorIcmsRepassar();
+			dsOperadora   = gerarDescricaoSemUf(relatorioApuracaoFechamentoPrePagoView.getDsOperadoraHolding());
+			dsOperadoraClaro = gerarDescricaoSemUf(relatorioApuracaoFechamentoPrePagoView.getDsOperadoraHolding());
+			dsOperadoraHolding = gerarDescricaoSemUf(relatorioApuracaoFechamentoPrePagoView.getDsOperadoraHolding());
+		}
+		
+		
+		sumarizado.setValorApuradoLiquido(valorApuradoLiquido);
+		sumarizado.setPisCofins(pisCofins);
+		sumarizado.setValorIcmsRepassar(valorIcmsRepassar);
+		sumarizado.setIcmsRepassar(icmsRepassar);
+		sumarizado.setValorIcmsNaoRepassado(icmsNaoRepassado);
+		sumarizado.setValorRepassar(valorRepassarSumarizado);
+		sumarizado.setServicoPrestadoLiquido(servPrestLiquido);
+		sumarizado.setPisCofinsServicePrestado(pisCofinsServPrest);
+		sumarizado.setIss(iss);
+		sumarizado.setValorBrutoServico(vlrBrutoServPrest);
+		sumarizado.setCreditosAutorizados(creditoAutorizados);
+		sumarizado.setCreditos226(creditos226);
+		sumarizado.setPenalidadesMinutosPerdidos(penalidadesMinutPerdidos);
+		sumarizado.setTotalMultasJuros(totalMultasJuros);
+		sumarizado.setTotalAcertosConciliacoes(totalAcertosConciliacao);
+		sumarizado.setCpmfDescontar(cpmfDescontar);
+		sumarizado.setIcmsDescontar(icmsDescontar);
+		sumarizado.setIcmsRepassar(icmsaRepassar);
+		sumarizado.setValorFinalRepassar(vlrFinalRepassar);
+		sumarizado.setValorNotaFiscal(vlrNotaFiscal);
+		sumarizado.setDestaqueIcms(destaqueIcms);
+		sumarizado.setDsOperadoraClaro(dsOperadoraHolding);
+		sumarizado.setDsOperadora(dsOperadoraHolding);
+		sumarizado.setCdEotHolding("00");
+		
+		return sumarizado;
+	}
+	
+	//TODO fim
+	
 	@Override
 	public List<ConsolidadoProdutoPreView> gerarRelatorioConsolidadoProdutoPre(String cdEOTLD, String cdEOTClaro, String cdProduto, Date dataInicial, Date dataFinal) throws DAOException {
 		return getRepasseDAO().gerarRelatorioConsolidadoProdutoPre(cdEOTClaro, cdEOTClaro, cdProduto, dataInicial, dataFinal);
+	}
+
+	@Override
+	public List<RelApuracaoFechamentoPrePagoView> geraRelatorioApuracao(
+			String cdProduto, String cdEOTLD, String cdEOTClaro,
+			String cdStatusFechamento, Date dataInicial, Date dataFinal)
+			throws DAOException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

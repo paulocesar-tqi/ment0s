@@ -24,20 +24,48 @@ public class SccArquivoCobillingDecorator extends RownumDecorator<SccArquivoCobi
 		return getRow().getSqArquivo().toString();
 	}
 	
+	public String getArqProtocolo(){
+		String value = "";
+		if (this.arquivoProtocolo != null) {
+			value = formataString(arquivoProtocolo.getNoArquivo());
+		}		
+		return value;
+	}
+	
 	public String getDataConnect() {
 		return formataDate(getRow().getDtConnect());
+	}
+	
+	public String getDataCarga() {
+		return formataDate(getRow().getDtCarga());
+	}
+	
+	public String getDataConnect2() {
+		return formataDateTimeSeg(getRow().getDtConnect());
 	}
 	
 	public String getDataReferencia() {
 		return formataDate(getRow().getDtProcExterna());
 	}
 	
+	public String getDataReferencia2() {
+		return formataDateTimeSeg(getRow().getDtProcExterna());
+	}
+		
 	public String getDataProcClaro() {
 		return formataDate(getRow().getDtProcClaro());
 	}
 	
+	public String getDataProcClaro2() {
+		return formataDateTimeSeg(getRow().getDtProcClaro());
+	}
+	
 	public String getDataProcPPC() {
 		return formataDate(getRow().getDtProcExterna());		
+	}
+	
+	public String getDataProcPPC2() {
+		return formataDateTimeSeg(getRow().getDtProcExterna());		
 	}
 	
 	public String getOperadoraClaro() {
@@ -52,10 +80,21 @@ public class SccArquivoCobillingDecorator extends RownumDecorator<SccArquivoCobi
 		return formataString(getRow().getNoArquivo());
 	}
 	
+	public String getNomeArquivoRetorno() {
+		return formataString(getRow().getNoArquivoTrans());
+	}
+
+	public String getNomeProtocolo() {
+		 if (getRow().getArquivoOrigem() != null)
+		 	return formataString(getRow().getArquivoOrigem().getNoArquivo());
+		 else
+			 return formataString(null);
+	}
+	
 	public String getNomeArquivoLink() {
 		return "<a href='#' onClick='download("+getRownum()+")'> "+getRow().getNoArquivo()+" </a>";		
 	}
-	
+
 	public String getNoComposto() {
 		StringBuffer sb = new StringBuffer();
 		if (getRow().getTipoArquivo().getCdTipoBatimento().equals("RET") || getRow().getTipoArquivo().getCdTipoBatimento().equals("QRT") || getRow().getTipoArquivo().getCdTipoBatimento().equals("COB")) {
@@ -77,19 +116,27 @@ public class SccArquivoCobillingDecorator extends RownumDecorator<SccArquivoCobi
 		}
 		return sb.toString();
 	}
-	/*
-	public String getNoComposto() {
+	
+	public String getArquivoRemessa() {
 		StringBuffer sb = new StringBuffer();
-		sb.append(formataString(getRow().getNoArquivoIfc()));
-		sb.append("</br>");
-		if (this.arquivoProtocolo != null) {
-			sb.append(formataString(arquivoProtocolo.getNoArquivo()));
-			sb.append("</br>");
+		if (getRow().getTipoArquivo().getCdTipoBatimento().equals("RET") || getRow().getTipoArquivo().getCdTipoBatimento().equals("QRT") || getRow().getTipoArquivo().getCdTipoBatimento().equals("COB")) {
+			sb.append(formataString(getRow().getNoArquivo()));
+		} else if (getRow().getTipoArquivo().getCdTipoBatimento().equals("REM") || getRow().getTipoArquivo().getCdTipoBatimento().equals("FIS") || getRow().getTipoArquivo().getCdTipoBatimento().equals("QRM")) {
+			sb.append(formataString(getRow().getNoArquivoIfc()));
 		}
-		sb.append(formataString(getRow().getNoArquivo()));		
 		return sb.toString();
 	}
-	*/
+	
+	public String getTipoAquivo(){
+		String value = "";
+		if(getRow().getTipoArquivo() != null && getRow().getTipoArquivo().getDsTipoArquivo() != null){
+			value = getRow().getTipoArquivo().getDsTipoArquivo();
+		}
+		if(getRow().getTipoArquivo() != null && getRow().getTipoArquivo().getDsTipoArquivo() == null){
+			value = "( "+ getRow().getTipoArquivo().getCdTipoArquivo().toString() + " )";
+		}
+		return value;
+	}
 	public String getMinutosTarifados() {
 		return formataInteger(getRow().getQtDuracaoTarifada());
 	}
@@ -118,6 +165,14 @@ public class SccArquivoCobillingDecorator extends RownumDecorator<SccArquivoCobi
 		return getRow().getCdStatusArquivo().getDsStatusArquivo();
 	}
 	
+	public String getDummy(){
+		String value = "";
+		if(getArqProtocolo().endsWith(".P") && (!getNomeArquivo().startsWith("TCOR."))){
+			value = "Dummy";
+		}
+		return value;
+	}
+			
 	public String getDataInicioTrafego() {
 		return formataDate(getRow().getDtInicioTrafego());
 	}
@@ -146,6 +201,25 @@ public class SccArquivoCobillingDecorator extends RownumDecorator<SccArquivoCobi
 		return "<a href='#' onClick='visualizarNOK("+getRownum()+")'> Motivo </a>";
 	}
 	
+	public String getErroProtocolo() {
+		return formataString(getRow().getCdErroProtocolo());
+	}
+	
+	public String getDescErroProtocolo() {
+		return formataString(getRow().getCdErroProtocolo());
+	}
+	
+	public String getDescErroProtocolo2() {
+		if (getRow().getCdErroProtocolo() == null){ 
+			return "";	
+		}else
+		if(getRow().getCdErroProtocolo().equalsIgnoreCase("OK")){
+			return "ARQUIVO OK";
+		} else {
+			return "ARQUIVO NÃO OK";
+		}
+	}
+	
 	public String getStatusProtocolo() {
 		if ((getRow().getCdErroProtocolo() == null) || (getRow().getCdErroProtocolo().equalsIgnoreCase("OK"))) {
 			return "ARQUIVO OK";
@@ -153,6 +227,18 @@ public class SccArquivoCobillingDecorator extends RownumDecorator<SccArquivoCobi
 			return "ARQUIVO NÃO OK";
 		}
 	}
+	
+	public String getStatusProtocolo2() {
+		if (getRow().getCdErroProtocolo() == null){ 
+			return "";	
+		}else
+		if(getRow().getCdErroProtocolo().equalsIgnoreCase("OK")){
+			return "ARQUIVO OK";
+		} else {
+			return "ARQUIVO NÃO OK";
+		}
+	}
+	
 	
 	protected boolean isDeleteEnabled() {
 		return false;

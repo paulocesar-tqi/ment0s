@@ -11,4 +11,6 @@ public interface SccRetornoRepasseDAO extends BasicDAO<List<Object[]>>{
 	
 	public List<SccRetornoRepasseView> pesquisaRetornoRepasse(String cdEOTClaro, String cdEOTLD, Long cdProdutoCobilling, Date dtInicialRepasse, Date  dtFinalRepasse) throws DAOException;
 	
+	public List<SccRetornoRepasseView> pesquisaRetornoRepasseAss(String cdEOTClaro, String cdEOTLD, Long cdProdutoCobilling, Date dtInicialRepasse, Date  dtFinalRepasse) throws DAOException;
+	
 }

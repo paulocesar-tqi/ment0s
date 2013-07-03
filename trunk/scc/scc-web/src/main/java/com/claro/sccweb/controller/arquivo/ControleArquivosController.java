@@ -9,9 +9,11 @@ import javax.validation.Valid;
 
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -20,7 +22,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.claro.cobillingweb.persistence.dao.BasicDAO;
+import com.claro.cobillingweb.persistence.dao.DAOException;
 import com.claro.cobillingweb.persistence.entity.external.ControlConnectFile;
+import com.claro.sccweb.controller.BaseOperationController;
 import com.claro.sccweb.controller.BaseFormController;
 import com.claro.sccweb.controller.util.BasicIntegerItem;
 import com.claro.sccweb.controller.util.BasicStringItem;
@@ -28,6 +32,10 @@ import com.claro.sccweb.controller.util.SearchResultList;
 import com.claro.sccweb.controller.validator.ControleArquivosValidator;
 import com.claro.sccweb.form.SearchResultForm;
 import com.claro.sccweb.service.to.PesquisaArquivosConnectTO;
+import com.claro.sccweb.form.BaseForm;
+import com.claro.sccweb.form.ControleArquivoForm;
+import com.claro.sccweb.service.ArquivosService;
+import com.claro.sccweb.service.ServiceException;
 
 
 /**
@@ -41,27 +49,16 @@ import com.claro.sccweb.service.to.PesquisaArquivosConnectTO;
  */
 @Controller
 @RequestMapping("/user/controle/arquivos")
-public class ControleArquivosController extends BaseFormController{
+public class ControleArquivosController extends BaseOperationController<ControleArquivoForm>{
 	
-	@InitBinder
-	public void initBinder(WebDataBinder binder)
-	{		
-		super.initBinder(binder);		
-		binder.setValidator(new ControleArquivosValidator());		
-	}
+	private static final String FWD_VIEW_CONTROLE_ARQUIVOS = "controle_arquivos_pesquisa";
+	private static final String FWD_EXCEL_CONTROLE_ARQUIVOS = "controle_arquivos_excel";
 	
-	/**
-	 * Popula os combos para filtros de pesquisa.
-	 * @return View para usuário informar os dados de pesquisa.
-	 */
-	@RequestMapping(value="/new" , method = RequestMethod.GET)
-	public ModelAndView novaPesquisa() throws Exception
-	{		
-		ModelAndView mav = new ModelAndView();				
-		mav.setViewName("controle_arquivos_pesquisa");		
-		mav.addObject("filtro", new PesquisaArquivosConnectTO());
-		return mav;
-	}
+	private final ControleArquivosValidator validator = new ControleArquivosValidator();
+	
+	@Autowired
+	private ArquivosService arquivosService;
+	
 	
 	@ModelAttribute("tiposArquivo")
 	public List<BasicStringItem> populaListaTiposArquivo() throws Exception {		
@@ -73,7 +70,8 @@ public class ControleArquivosController extends BaseFormController{
 		comboList.add(new BasicStringItem("TCOP%", "Arquivos de Parcelamento/Multas & Juros"));
 		comboList.add(new BasicStringItem("TCOE%", "Arquivos de Remessa"));
 		comboList.add(new BasicStringItem("TCOR%", "Arquivos de Retorno"));
-		comboList.add(new BasicStringItem("TCOS%", "Arquivos de Saldo de Lotes Arquivos Fiscais"));		
+		comboList.add(new BasicStringItem("TCOS%", "Arquivos de Saldo de Lotes"));
+		comboList.add(new BasicStringItem("TCOF%", "Arquivos Fiscais"));
 		return comboList;
 	}
 	
@@ -92,55 +90,44 @@ public class ControleArquivosController extends BaseFormController{
 	 * @param form Filtro de pesquisa populado pelo usuário.
 	 * @return View com a tabela de resultados.
 	 */
-	@RequestMapping(value="/execute" , method = RequestMethod.POST)
-	public ModelAndView mostraResultados(@Valid @ModelAttribute("filtro") PesquisaArquivosConnectTO form,BindingResult bindingResult,Model model)
+/*	
+	@RequestMapping(value="/listar" , method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView mostraResultados(HttpServletRequest request, HttpServletResponse response, ControleArquivoForm form)
 	throws Exception {	
-		ModelAndView mav = new ModelAndView();
-		
-		if (bindingResult.hasErrors()) {
-			mav.setViewName("controle_arquivos_pesquisa");	
-			return mav;
-		}
-		List<ControlConnectFile> resultadoPesquisa = getServiceManager().getArquivosService().pesquisaArquivosConnect(form);
-		
-		SearchResultList searchResultList = new SearchResultList();
-		searchResultList.setResult(resultadoPesquisa);
-		searchResultList.setResultClassType(ControlConnectFile.class);		
-		mav.addObject("operacao", new SearchResultForm());
-		getSessionDataManager().setSearchResultList(searchResultList);
-				
-		mav.setViewName("controle_arquivos_resultados");			
+
+		form.setListControlConnectFiles(gerarListConnectFile(form));
+		ModelAndView mav = new ModelAndView(FWD_VIEW_CONTROLE_ARQUIVOS, "filtro", form);
 		return mav;		
 	}
+*/	
+	private List<ControlConnectFile> gerarListConnectFile(ControleArquivoForm form) throws ServiceException, DAOException{
+		
+		return this.arquivosService.pesquisaArquivosConnect(form.getFiltro());
+	}
+
 	
-	/**
-	 * Após os resultados serem apresentados na tela o usuário pode selecionar alguma operação sobre eles.
-	 * @param form 
-	 * @param bindingResult
-	 * @param model
-	 * @return
-	 * @throws Exception
-	 */
-	@RequestMapping(value="/report" , method = RequestMethod.POST)
-	public ModelAndView processaResultados(@ModelAttribute("operacao") SearchResultForm form,BindingResult bindingResult,Model model)
-	throws Exception
-	{
-		ModelAndView mav = new ModelAndView();
-		if (form.getOperation().equals(SearchResultForm.COMMAND_BACK))
-			{
-			return novaPesquisa();
-			}
-		else if (form.getOperation().equals(SearchResultForm.COMMAND_RESET))
-			{
-			return novaPesquisa();
-			}
-		else if (form.getOperation().equals(SearchResultForm.COMMAND_EXCEL))
-			{
-			mav.setViewName("controle_arquivos_excel");			
-			}
-		return mav;
+	public ModelAndView pesquisar(HttpServletRequest request,HttpServletResponse response,@ModelAttribute(FORM_NAME) BaseForm _form,BindingResult bindingResult, Model model) throws Exception{
+		
+		ControleArquivoForm form = (ControleArquivoForm)_form;
+		form.setListControlConnectFiles(gerarListConnectFile(form));
+		ModelAndView mav = new ModelAndView(FWD_VIEW_CONTROLE_ARQUIVOS, "filtro", form);
+		return mav;		
+
+		
 	}
 	
+	
+
+	public ModelAndView excel(HttpServletRequest request,HttpServletResponse response,@Valid @ModelAttribute(FORM_NAME) BaseForm _form,BindingResult bindingResult, Model model) throws Exception{
+		ControleArquivoForm form = (ControleArquivoForm)_form;
+		form.setListControlConnectFiles(gerarListConnectFile(form));
+		return new ModelAndView(FWD_EXCEL_CONTROLE_ARQUIVOS);
+	}
+
+
+	
+	
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/json" , method= RequestMethod.GET )
 	public void getSearchResultList(HttpServletRequest request, HttpServletResponse response) throws Exception {		
 		List<ControlConnectFile> result = getSessionDataManager().getSearchResultList().getResult();
@@ -162,6 +149,29 @@ public class ControleArquivosController extends BaseFormController{
 		 jsonResponse.put("aaData", data);
 		 response.setContentType("application/json");
 	     response.getWriter().print(jsonResponse.toString());		
+	}
+
+
+	public void setArquivosService(ArquivosService arquivosService) {
+		this.arquivosService = arquivosService;
+	}
+
+	@Override
+	protected String getViewName() {
+		
+		return FWD_VIEW_CONTROLE_ARQUIVOS;
+	}
+
+	@Override
+	protected ControleArquivoForm getForm() {
+
+		return new ControleArquivoForm();
+	}
+
+	@Override
+	protected Validator getValidator() {
+		
+		return this.validator;
 	}
 	
 }

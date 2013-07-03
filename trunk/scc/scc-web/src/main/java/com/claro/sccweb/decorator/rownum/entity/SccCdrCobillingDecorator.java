@@ -1,6 +1,9 @@
 package com.claro.sccweb.decorator.rownum.entity;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+
+import org.apache.commons.lang.StringUtils;
 
 import com.claro.cobillingweb.persistence.entity.SccArquivoCobilling;
 import com.claro.cobillingweb.persistence.entity.SccCdrCobilling;
@@ -38,12 +41,17 @@ public class SccCdrCobillingDecorator extends RownumDecorator<SccCdrCobilling>{
 		return "";
 	}
 	
-	public String getMotivo()
-	{
-		if(getRow().getCdMotivoRejeicao() != null)
-			return formataString(getRow().getCdMotivoRejeicao().getDsMotivoRejeicao());
-		else
-			return " ";
+	public String getMotivo() {
+		
+		String value = " ";
+		if(getRow().getCdMotivoRejeicao() != null && StringUtils.isEmpty(getRow().getCdMotivoRejeicao().getDsMotivoRejeicao()) && StringUtils.isNotEmpty(getRow().getCdMotivoRejeicao().getCdMotivoRejeicao())){
+			value = formataString(getRow().getCdMotivoRejeicao().getCdMotivoRejeicao());
+		
+		}else if(getRow().getCdMotivoRejeicao() != null && StringUtils.isNotEmpty(getRow().getCdMotivoRejeicao().getDsMotivoRejeicao())){
+			value =  getRow().getCdMotivoRejeicao().getDsMotivoRejeicao();
+		}
+		return value;
+		
 	}
 	
 	public String getCdMotivo()	{
@@ -105,18 +113,28 @@ public class SccCdrCobillingDecorator extends RownumDecorator<SccCdrCobilling>{
 		return formataDate(getRow().getId().getDtChamada());
 	}
 	
-	public String getHoraChamada()
+	public String getHoraChamada() throws ParseException
 	{
 		String horaInicio = getRow().getId().getHrInicioChamada();
-		if (horaInicio.length() == 5)
-			horaInicio = "0"+horaInicio;	
-		try {
+		if (horaInicio.length() == 1){
+			horaInicio = "00000"+horaInicio;
+		}else
+		if (horaInicio.length() == 2){
+			horaInicio = "0000"+horaInicio;
+		}else
+		if (horaInicio.length() == 3){
+			horaInicio = "000"+horaInicio;
+		}else
+		if (horaInicio.length() == 4){
+			horaInicio = "00"+horaInicio;
+		}else
+			if (horaInicio.length() == 5){
+				horaInicio = "0"+horaInicio;
+		}
+		
 		return horaOutput.format(horaInput.parse(horaInicio));
-		} catch (Exception e)
-			{
-			return "ERROR!";
-			}
 	}
+	
 	
 	public String getDuracao()
 	{

@@ -169,12 +169,12 @@
 
 				<tr>
 					<td width="50%"><spring:message code="relatorio.parcelamento.acordo.label.operadorald" /></td>
-					<td id="cdEOTLD"><form:select path="operadoraLd" id="cdEOTLD" items="${operadorasExternas}" itemLabel="dsOperadora" itemValue="cdCsp" /></td>
+					<td id="cdEOTLD"><form:select path="operadoraLd" id="cdEOTLD" items="${operadorasExternas}" itemLabel="dsOperadoraForCombos" itemValue="cdCsp" /></td>
 				</tr>
 				
 				<tr>
 					<td width="50%"><spring:message code="relatorio.parcelamento.acordo.label.operadora.claro" /></td>
-					<td id="comboOperadoraClaro"><form:select path="operadoraClaro" id="cdEOTClaro" items="${operadorasClaro}" itemLabel="dsOperadora" itemValue="cdEot" /></td>
+					<td id="comboOperadoraClaro"><form:select path="operadoraClaro" id="cdEOTClaro" items="${operadorasClaro}" itemLabel="dsOperadoraForCombos" itemValue="cdEot" /></td>
 				</tr>
 
 				<tr>

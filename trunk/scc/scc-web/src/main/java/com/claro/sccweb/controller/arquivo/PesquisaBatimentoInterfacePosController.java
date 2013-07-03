@@ -96,7 +96,7 @@ public class PesquisaBatimentoInterfacePosController extends BaseOperationContro
 		comboList.add(new BasicStringItem("scc.PA-FOLLOWUP%.output", "Arquivo de Acompanhamento de PA"));
 		comboList.add(new BasicStringItem("scc.INVCHGDT%.output", "Arquivo de Alteração de Data de Vencimento"));
 		comboList.add(new BasicStringItem("TCOU.%.IN", "Extração de Informações CM - Input"));
-		comboList.add(new BasicStringItem("scc.CMDATA%.extract", "Extração de Informações CM - Output"));	
+		comboList.add(new BasicStringItem("scc.CMDATA%", "Extração de Informações CM - Output"));	
 		return comboList;
 	}
 	

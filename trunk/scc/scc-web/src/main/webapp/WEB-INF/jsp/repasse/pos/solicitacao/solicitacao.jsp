@@ -90,7 +90,7 @@ function selecionaProduto()
 <table width="100%" border="0" cellspacing="0" cellpadding="0" >
 <tr>
     <td><spring:message code="repasse_pos_solicitacao.ld"/>:</td>
-    <td ><form:select path="cdEOT" id="cdEOT" items="${operadorasExternas}" itemLabel="dsOperadora" itemValue="cdEot" /></td>
+    <td ><form:select path="cdEOT" id="cdEOT" items="${operadorasExternas}" itemLabel="dsOperadoraForCombos" itemValue="cdEot" /></td>
 
 	<td><spring:message code="repasse_pos_solicitacao.produto"/>:</td>
     <td ><form:select path="cdProdutoCobilling" id="cdProdutoCobilling" items="${produtos}" itemLabel="noProdutoCobilling" itemValue="cdProdutoCobilling" /></td>

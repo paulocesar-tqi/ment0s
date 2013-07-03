@@ -13,6 +13,7 @@ import com.claro.cobillingweb.persistence.dao.DAOException;
 import com.claro.cobillingweb.persistence.dao.impl.HibernateBasicDAOImpl;
 import com.claro.cobillingweb.persistence.dao.internal.SccBatimentoArquivosDAO;
 import com.claro.cobillingweb.persistence.dao.query.SccBatimentoArquivosDAONativeSQL;
+import com.claro.cobillingweb.persistence.utils.DateUtils;
 import com.claro.cobillingweb.persistence.view.SccBatimentoArquivosView;
 import com.claro.cobillingweb.persistence.view.mapper.NativeSQLViewMapper;
 
@@ -40,11 +41,11 @@ public class SccBatimentoArquivosDAOImpl extends HibernateBasicDAOImpl<SccBatime
 			Session session = getSessionFactory().getCurrentSession();
 			NativeSQLViewMapper<SccBatimentoArquivosView> mapper = new NativeSQLViewMapper<SccBatimentoArquivosView>(session, SccBatimentoArquivosDAONativeSQL.SQL, SccBatimentoArquivosView.class);
 			if(dtInicioBatimento != null) {
-				mapper.addArgument("dtInicioBatimento", dtInicioBatimento, SccBatimentoArquivosDAONativeSQL.FILTRO_DT_INICIO_BATIMENTO);
+				mapper.addArgument("dtInicioBatimento", DateUtils.lowDateTime(dtInicioBatimento), SccBatimentoArquivosDAONativeSQL.FILTRO_DT_INICIO_BATIMENTO);
 			}
 			
 			if(dtFimBatimento != null) {
-				mapper.addArgument("dtFimBatimento", dtFimBatimento, SccBatimentoArquivosDAONativeSQL.FILTRO_DT_FIM_BATIMENTO);
+				mapper.addArgument("dtFimBatimento", DateUtils.highDateTime2(dtFimBatimento), SccBatimentoArquivosDAONativeSQL.FILTRO_DT_FIM_BATIMENTO);
 			}
 			
 			if(cdEOTClaro != null && !cdEOTClaro.equals(BasicDAO.GET_ALL_STRING)){

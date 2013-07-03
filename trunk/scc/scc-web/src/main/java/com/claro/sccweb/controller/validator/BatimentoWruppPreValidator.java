@@ -17,8 +17,8 @@ public class BatimentoWruppPreValidator implements Validator {
 	public void validate(Object arg, Errors errors) {
 		BatimentoWruppPreForm form = (BatimentoWruppPreForm)arg;
 		
-		ValidatorUtil.verificaCampoObrigatorio("ano", form.getAnoRelatorio(), errors);
-		ValidatorUtil.verificaCampoObrigatorio("mes", form.getMesRelatorio(), errors);
+		ValidatorUtil.verificaCampoObrigatorio("anoRelatorio", form.getAnoRelatorio(), errors);
+		ValidatorUtil.verificaCampoObrigatorio("mesRelatorio", form.getMesRelatorio(), errors);
 		ValidatorUtil.verificaCampoObrigatorio("cdEOTLD", form.getCdEOTLD(), errors);
 		ValidatorUtil.verificaCampoObrigatorio("cdEOTClaro", form.getCdEOTClaro(), errors);
 		

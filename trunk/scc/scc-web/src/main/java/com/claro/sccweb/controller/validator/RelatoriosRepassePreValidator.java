@@ -17,13 +17,15 @@ public class RelatoriosRepassePreValidator implements Validator {
 	 
 	public void validate(Object arg, Errors errors) {
 		RelatoriosRepassePreForm form = (RelatoriosRepassePreForm)arg;
-		if (form.getOperacao().equals(RelatoriosRepassePreController.OPERACAO_PESQUISAR))
-			{
-			if (form.getAnoRelatorio() == null)
-				errors.rejectValue("anoRelatorio", "campoObrigatorio", "Campo Obrigatório");
-			if ((form.getCdProdutoPrepago() == null) || (form.getCdProdutoPrepago().equals(BasicDAO.NULL_STRING)))
-				errors.rejectValue("cdProdutoPrepago", "campoObrigatorio", "Campo Obrigatório");
-			}
+		if (form.getOperacao() != null) {
+			if (form.getOperacao().equals(RelatoriosRepassePreController.OPERACAO_PESQUISAR))
+				{
+				if (form.getAnoRelatorio() == null)
+					errors.rejectValue("anoRelatorio", "campoObrigatorio", "Campo Obrigatório");
+				if ((form.getCdProdutoPrepago() == null) || (form.getCdProdutoPrepago().equals(BasicDAO.NULL_STRING)))
+					errors.rejectValue("cdProdutoPrepago", "campoObrigatorio", "Campo Obrigatório");
+				}
+		}
 		
 		
 	}

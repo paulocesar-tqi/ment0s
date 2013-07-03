@@ -8,8 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,15 +17,12 @@ import org.springframework.web.servlet.ModelAndView;
 import com.claro.cobillingweb.persistence.dao.BasicDAO;
 import com.claro.cobillingweb.persistence.dao.DAOException;
 import com.claro.cobillingweb.persistence.entity.SccOperadora;
-import com.claro.cobillingweb.persistence.filtro.SccFiltro;
-import com.claro.cobillingweb.persistence.utils.DateUtils;
+import com.claro.cobillingweb.persistence.filtro.SccFiltroFaturas;
 import com.claro.cobillingweb.persistence.view.SccFaturaView;
 import com.claro.sccweb.controller.BaseOperationController;
 import com.claro.sccweb.controller.util.BasicIntegerItem;
 import com.claro.sccweb.controller.util.BasicStringItem;
 import com.claro.sccweb.controller.validator.SccFaturasValidator;
-import com.claro.sccweb.decorator.view.SccFaturasViewDecorator;
-import com.claro.sccweb.form.BaseForm;
 import com.claro.sccweb.form.SccFaturasForm;
 import com.claro.sccweb.service.SccFaturasService;
 import com.claro.sccweb.service.ServiceException;
@@ -36,47 +31,35 @@ import com.claro.sccweb.service.ServiceException;
 @RequestMapping(value="/user/relatorio/faturas/controle")
 public class SccFaturasController extends BaseOperationController<SccFaturasForm> {
 	
+	public static final String FWD_VIEW_FATURAS = "relatorio_controle_faturas";
+	public static final String FWD_EXCEL_FATURAS ="relatorio_controle_faturas_excel";
+	
 	@Autowired
 	private SccFaturasService sccFaturasService;
 	
 	private final SccFaturasValidator validator = new SccFaturasValidator(); 
 	
 	
-	public ModelAndView pesquisar(HttpServletRequest request, HttpServletResponse response, BaseForm _form, BindingResult bindingResult, Model model) throws Exception {
+	@RequestMapping(value="listar", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView pesquisar(HttpServletRequest request, HttpServletResponse response, SccFaturasForm form) throws Exception {
 		
-		SccFaturasForm form = (SccFaturasForm)_form;
-		SccFiltro filtro = getFiltro(form);
+		ModelAndView mav = null;
+		form.setListFaturas(gerarRelatorioControleFaturas(form.getFiltro()));
 		
-		List<SccFaturaView> rows = gerarRelatorioControleFaturas(filtro);
-		
-		List<SccFaturasViewDecorator> decoratorList = new ArrayList<SccFaturasViewDecorator>(rows.size());
-		
-		for (int i = 0; i < rows.size(); i++) {
+		if(form.getOperacao().equals("excel")){
+			if(form.getListFaturas() != null && form.getListFaturas().size() > 0){
+				mav = new ModelAndView(FWD_EXCEL_FATURAS,"filtro", form);
+			}
+		}else{
 			
-			SccFaturasViewDecorator decorator = new SccFaturasViewDecorator(rows.get(i), i);
-			decoratorList.add(decorator);
+			mav = new ModelAndView(FWD_VIEW_FATURAS,"filtro", form);
+			
 		}
-		storeInSession(getClass(), DISPLAY_TAG_SPACE_1, decoratorList, request);
-		ModelAndView mav = new ModelAndView(getViewName());
 		return mav;
 		
 	}
 	
-	private SccFiltro getFiltro(SccFaturasForm form){
-		
-		SccFiltro filtro = new SccFiltro();
-		filtro.setOperadoraClaro(form.getEntity().getEotClaro());
-		filtro.setCsp(form.getEntity().getCsp());
-		filtro.setDataInicialPeriodo(DateUtils.lowDateTime(form.getDataInicialPeriodo()));
-		filtro.setDataFinalPeriodo(DateUtils.highDateTime(form.getDataFinalPeriodo()));
-		filtro.setStatusFatura(form.getStatus());
-		filtro.setTipoData(form.getTipoData().intValue());
-		filtro.setNumeroFatura(form.getNumeroFatura());
-		return filtro;
-		
-	}
-	
-	private List<SccFaturaView> gerarRelatorioControleFaturas(SccFiltro filtro) throws DAOException, ServiceException {
+	private List<SccFaturaView> gerarRelatorioControleFaturas(SccFiltroFaturas filtro) throws DAOException, ServiceException {
 		
 		return sccFaturasService.gerarRelatorioFaturas(filtro);
 	}
@@ -150,6 +133,15 @@ public class SccFaturasController extends BaseOperationController<SccFaturasForm
         comboList.add(new BasicIntegerItem(1L, "Data de Emissão NF"));
         comboList.add(new BasicIntegerItem( 2L, "Data de Processamento"));
         comboList.add(new BasicIntegerItem(3L, "Data de Vencimento"));
+		return comboList;
+	}
+	
+	@ModelAttribute("statusFatura")
+	public List<BasicStringItem> popularStatusFatura() throws Exception {
+		List<BasicStringItem> comboList = new ArrayList<BasicStringItem>();
+		comboList.add(new BasicStringItem(BasicDAO.GET_ALL_STRING, "Todos"));
+		comboList.add(new BasicStringItem("O", "Open"));
+		comboList.add(new BasicStringItem("C", "Close"));
 		return comboList;
 	}
 

@@ -98,12 +98,12 @@
 			<table width="100%" border="0" cellspacing="0" cellpadding="0" id="filtroPesquisaTable">
 				<tr>
 					<td width="15%"><spring:message code="relatorio.naoconforme.ajustes.label.operadorald" /></td>
-					<td id="cdEOTLD"><form:select path="cdEOTLD" id="cdEOTLD" items="${operadorasExternas}" itemLabel="dsOperadora" itemValue="cdEot" /></td>
+					<td id="cdEOTLD"><form:select path="cdEOTLD" id="cdEOTLD" items="${operadorasExternas}" itemLabel="dsOperadoraForCombos" itemValue="cdEot" /></td>
 				</tr>
 
 				<tr>
 					<td width="15%"><spring:message code="relatorio.naoconforme.ajustes.label.operadoraclaro" /></td>
-					<td id="comboOperadoraClaro"><form:select path="cdEOTClaro" id="cdEOTClaro" items="${operadorasClaro}" itemLabel="dsOperadora" itemValue="cdEot" /></td>
+					<td id="comboOperadoraClaro"><form:select path="cdEOTClaro" id="cdEOTClaro" items="${operadorasClaro}" itemLabel="dsOperadoraForCombos" itemValue="cdEot" /></td>
 				</tr>
 
 				
@@ -135,11 +135,12 @@
 				<tr>
 					<td>
 						<display:table style="width:90%" name="sessionScope._DISPLAY_TAG_SPACE_1" pagesize="20" id="repasses" requestURI="/scc/user/relatorio/naoconf/ajustes/tab1.scc" class="ui-state-default">
-							<display:column property="operadoraLd" title="Dt Connect"/>
-							<display:column property="operadoraClaro" title="Dt Referencia"/>
-							<display:column property="uf" title="Remessa"/>
-							<display:column property="dataAjuste" title="DNS Protocolo"/>
-							<display:column property="valorAjuste" title="Duração Tarifada"/>
+
+							<display:column property="operadoraClaro" title="Operadora Claro"/>
+							<display:column property="operadoraLd" title="Operadora Ld"/>							
+							<display:column property="uf" title="UF"/>
+							<display:column property="dataAjuste" title="Data do Ajuste"/>
+							<display:column property="valorAjuste" title="Valor Ajustado"/>
 						</display:table>
 					</td>
 				</tr>

@@ -8,8 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,13 +17,10 @@ import org.springframework.web.servlet.ModelAndView;
 import com.claro.cobillingweb.persistence.dao.BasicDAO;
 import com.claro.cobillingweb.persistence.dao.DAOException;
 import com.claro.cobillingweb.persistence.entity.SccOperadora;
-import com.claro.cobillingweb.persistence.filtro.SccFiltro;
-import com.claro.cobillingweb.persistence.utils.DateUtils;
+import com.claro.cobillingweb.persistence.filtro.SccFiltroAgingFaturas;
 import com.claro.cobillingweb.persistence.view.SccAgingFaturasView;
 import com.claro.sccweb.controller.BaseOperationController;
 import com.claro.sccweb.controller.validator.SccAgingFaturasValidator;
-import com.claro.sccweb.decorator.view.SccAgingFaturasViewDecorator;
-import com.claro.sccweb.form.BaseForm;
 import com.claro.sccweb.form.SccAgingFaturasForm;
 import com.claro.sccweb.service.SccFaturasService;
 import com.claro.sccweb.service.ServiceException;
@@ -34,44 +29,36 @@ import com.claro.sccweb.service.ServiceException;
 @RequestMapping(value="/user/relatorio/faturas/aging")
 public class SccAgingFaturasController extends BaseOperationController<SccAgingFaturasForm> {
 	
+	public static final String FWD_EXCEL_AGING_FATURAS = "relatorio_aging_faturas_excel";
+	public static final String FWD_VIEW_AGING_FATURAS  =  "relatorio_aging_faturas";
+	
 	@Autowired
 	private SccFaturasService sccFaturasService;
 	
 	private final SccAgingFaturasValidator validator = new SccAgingFaturasValidator();
 	
 	
-	public ModelAndView pesquisar(HttpServletRequest request, HttpServletResponse response, BaseForm _form, BindingResult bindingResult, Model model) throws Exception {
+	@RequestMapping(value="listar", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView pesquisar(HttpServletRequest request, HttpServletResponse response, SccAgingFaturasForm form) throws Exception {
 		
-		SccAgingFaturasForm form = (SccAgingFaturasForm)_form;
-		SccFiltro filtro = getFiltro(form);
+		ModelAndView mav = null;
 		
-		List<SccAgingFaturasView> rows = gerarRelatorioAgingFaturas(filtro);
+		form.setListAgingFaturas(gerarRelatorioAgingFaturas(form.getFiltro()));
 		
-		List<SccAgingFaturasViewDecorator> decoratorList = new ArrayList<SccAgingFaturasViewDecorator>(rows.size());
-		
-		for (int i = 0; i < rows.size(); i++) {
+		if(form.getOperacao().equals("excel")){
+			if(form.getListAgingFaturas() != null && form.getListAgingFaturas().size() > 0){
+				mav = new ModelAndView(FWD_EXCEL_AGING_FATURAS,"filtro", form);
+			}
+		}else{
 			
-			SccAgingFaturasViewDecorator decorator = new SccAgingFaturasViewDecorator(rows.get(i), i);
-			decoratorList.add(decorator);
+			mav = new ModelAndView(FWD_VIEW_AGING_FATURAS,"filtro", form);
+			
 		}
-		storeInSession(getClass(), DISPLAY_TAG_SPACE_1, decoratorList, request);
-		ModelAndView mav = new ModelAndView(getViewName());
 		return mav;
 		
 	}
 	
-	private SccFiltro getFiltro(SccAgingFaturasForm form){
-		
-		SccFiltro filtro = new SccFiltro();
-		filtro.setOperadoraClaro(form.getOperadoraClaro());
-		filtro.setCdCsp(form.getOperadoraLd());
-		filtro.setDataInicialPeriodo(DateUtils.lowDateTime(form.getDataInicialPeriodo()));
-		filtro.setDataFinalPeriodo(DateUtils.highDateTime(form.getDataFinalPeriodo()));
-		return filtro;
-		
-	}
-	
-	private List<SccAgingFaturasView> gerarRelatorioAgingFaturas(SccFiltro filtro) throws DAOException, ServiceException {
+	private List<SccAgingFaturasView> gerarRelatorioAgingFaturas(SccFiltroAgingFaturas filtro) throws DAOException, ServiceException {
 		
 		return getServiceManager().getSccFaturasService().gerarRelatorioAgingFaturas(filtro);
 		
@@ -121,19 +108,6 @@ public class SccAgingFaturasController extends BaseOperationController<SccAgingF
 		return comboList;
 	}
 	
-	@RequestMapping(value="/tab1" , method = RequestMethod.GET)
-	public ModelAndView tab1(HttpServletRequest request, HttpServletResponse response) throws Exception {
-			ModelAndView mav = new ModelAndView(getViewName());
-			Object form = getMyFormFromCache(getClass());
-			if (form != null)
-				mav.addObject(FORM_NAME, form);
-			else
-				mav.addObject(FORM_NAME, getForm());
-	    	return mav;  
-	}
-
-	
-
 	public void setSccFaturasService(SccFaturasService sccFaturasService) {
 		this.sccFaturasService = sccFaturasService;
 	}

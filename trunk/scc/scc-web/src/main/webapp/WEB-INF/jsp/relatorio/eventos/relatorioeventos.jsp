@@ -98,12 +98,12 @@
 			<table width="100%" border="0" cellspacing="0" cellpadding="0" id="filtroPesquisaTable">
 				<tr>
 					<td width="15%"><spring:message code="relatorio.eventos.label.operadorald" /></td>
-					<td id="cdEOTLD"><form:select path="cdEOTLD" id="cdEOTLD" items="${operadorasExternas}" itemLabel="dsOperadora" itemValue="cdEot" /></td>
+					<td id="cdEOTLD"><form:select path="cdEOTLD" id="cdEOTLD" items="${operadorasExternas}" itemLabel="dsOperadoraForCombos" itemValue="cdEot" /></td>
 				</tr>
 
 				<tr>
 					<td width="15%"><spring:message code="relatorio.eventos.label.operadoraclaro" /></td>
-					<td id="comboOperadoraClaro"><form:select path="cdEOTClaro" id="cdEOTClaro" items="${operadorasClaro}" itemLabel="dsOperadora" itemValue="cdEot" /></td>
+					<td id="comboOperadoraClaro"><form:select path="cdEOTClaro" id="cdEOTClaro" items="${operadorasClaro}" itemLabel="dsOperadoraForCombos" itemValue="cdEot" /></td>
 				</tr>
 
 				<tr>
@@ -149,6 +149,20 @@
 							<display:column property="duracaoReal" title="Duração Real" />
 							<display:column property="duracaoTarifada" title="Duração Tarifada" />
 							<display:column property="valorBruto" title="Valor Bruto" />
+							<display:footer>
+							    <tr>
+							      <th align="left">Total:</th>
+							      <th></th>
+							      <th></th>
+							      <th></th>
+							      <th></th>
+							      <th></th>
+							      <th align="left">${sessionScope._DISPLAY_TAG_SPACE_2.totalQuantidade}</th>
+							      <th align="left">${sessionScope._DISPLAY_TAG_SPACE_2.totalDuracaoReal}</th>
+							      <th align="left">${sessionScope._DISPLAY_TAG_SPACE_2.totalDuracaoTarifada}</th>
+							      <th align="left">${sessionScope._DISPLAY_TAG_SPACE_2.totalValorBruto}</th>
+							    <tr>
+							</display:footer>						
 						</display:table>
 					</td>
 				</tr>

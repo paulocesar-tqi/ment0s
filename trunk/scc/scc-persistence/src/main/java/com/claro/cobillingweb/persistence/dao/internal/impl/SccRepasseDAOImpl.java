@@ -7,6 +7,7 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -24,6 +25,7 @@ import com.claro.cobillingweb.persistence.dao.query.RelPrestacaoServicoSQL;
 import com.claro.cobillingweb.persistence.dao.query.SccRepasseDAONativeSQL;
 import com.claro.cobillingweb.persistence.entity.SccOperadora;
 import com.claro.cobillingweb.persistence.entity.SccRepasse;
+import com.claro.cobillingweb.persistence.utils.DateUtils;
 import com.claro.cobillingweb.persistence.view.ConsolidadoProdutoPreView;
 import com.claro.cobillingweb.persistence.view.RelContabilView;
 import com.claro.cobillingweb.persistence.view.RelPrestacaoServicoView;
@@ -43,6 +45,62 @@ public class SccRepasseDAOImpl extends HibernateBasicDAOImpl<SccRepasse> impleme
 	}
 
 	 
+	public List<SccRepasse> carregaRepassePosPago2(String cdEOT,String cdEOTLD, Long cdProduto, Date dtInicial, Date dtFinal,String cdStatusRepasse,boolean holding)
+			throws DAOException {
+		
+		
+		return null;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<SccRepasse> carregarRepasseConsolidadoPosPago(String cdEOT,String cdEOTLD, Long cdProduto, Date dtInicial, Date dtFinal,String cdStatusRepasse,boolean holding) throws DAOException{
+		
+		List<SccRepasse> list = null;
+		try {
+			Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(SccRepasse.class);
+			ProjectionList projectionList = Projections.projectionList();
+			criteria.add(Restrictions.eq("produto.cdProdutoCobilling", cdProduto));
+			
+			criteria.add(Restrictions.or(Restrictions.ne("cdStatusRepasse", "N"), Restrictions.isNull("cdStatusRepasse")));
+			
+			if ((cdStatusRepasse != null) && (cdStatusRepasse.equals(BasicDAO.GET_ALL_STRING)))
+				{
+				criteria.add(Restrictions.eq("cdStatusRepasse", cdStatusRepasse));				
+				}
+			
+			if(!cdEOTLD.equals(BasicDAO.GET_ALL_STRING)){
+				criteria.add(Restrictions.eq("cdEotLd", cdEOTLD));
+			}
+			
+			criteria.add(Restrictions.between("dtInicialRepasse", DateUtils.lowDateTime(dtInicial), DateUtils.highDateTime2(dtFinal)));
+			
+			projectionList.add(Projections.groupProperty("cdItemRepasse").as("cdItemRepasse"));
+			projectionList.add(Projections.groupProperty("sccTipoContrato").as("sccTipoContrato"));
+			projectionList.add(Projections.groupProperty("cdStatusRepasse").as("cdStatusRepasse"));
+			projectionList.add(Projections.sum("qtCdrs").as("qtCdrs"));
+			projectionList.add(Projections.sum("qtDuracaoTarifada").as("qtDuracaoTarifada"));
+			projectionList.add(Projections.sum("vlLiquidoRepasse").as("vlLiquidoRepasse"));	
+			projectionList.add(Projections.sum("vlLiquidoItemRepasse").as("vlLiquidoItemRepasse"));
+			projectionList.add(Projections.sum("vlPis").as("vlPis"));
+			projectionList.add(Projections.sum("vlCofins").as("vlCofins"));
+			projectionList.add(Projections.sum("vlIcms").as("vlIcms"));
+			projectionList.add(Projections.sum("vlIss").as("vlIss"));			
+			projectionList.add(Projections.sum("vlBrutoItemRepasse").as("vlBrutoItemRepasse"));
+			projectionList.add(Projections.sum("vlBrutoRepasse").as("vlBrutoRepasse"));		
+			
+			criteria.setProjection(projectionList);
+			criteria.addOrder(Order.asc("cdItemRepasse"));
+			ResultTransformer resultTransformer = Transformers.aliasToBean(SccRepasse.class);
+			criteria.setResultTransformer(resultTransformer);			
+			list = (List<SccRepasse>) criteria.list();
+		} catch (Exception e)
+		{
+		throw new DAOException(e.getMessage(), "SccRepasseDAO.carregarRepasseConsolidadoPosPago");
+		}
+		return list;
+		
+	}
 	@SuppressWarnings("unchecked")
 	public List<SccRepasse> carregaRepassePosPago(String cdEOT,String cdEOTLD, Long cdProduto, Date dtInicial, Date dtFinal,String cdStatusRepasse,boolean holding)
 			throws DAOException {
@@ -50,6 +108,8 @@ public class SccRepasseDAOImpl extends HibernateBasicDAOImpl<SccRepasse> impleme
 			Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(SccRepasse.class);
 			ProjectionList projectionList = Projections.projectionList();
 			criteria.add(Restrictions.eq("produto.cdProdutoCobilling", cdProduto));
+			
+			criteria.add(Restrictions.or(Restrictions.ne("cdStatusRepasse", "N"), Restrictions.isNull("cdStatusRepasse")));
 			
 			if ((cdStatusRepasse != null) && (cdStatusRepasse.equals(BasicDAO.GET_ALL_STRING)))
 				{
@@ -74,7 +134,8 @@ public class SccRepasseDAOImpl extends HibernateBasicDAOImpl<SccRepasse> impleme
 					criteria.add(Restrictions.eq("cdEotClaro", cdEOT));
 				}
 									
-			criteria.add(Restrictions.between("dtInicialRepasse", dtInicial, dtFinal));
+			criteria.add(Restrictions.between("dtInicialRepasse", DateUtils.lowDateTime(dtInicial), DateUtils.highDateTime2(dtFinal)));
+			
 			projectionList.add(Projections.groupProperty("cdItemRepasse").as("cdItemRepasse"));
 			projectionList.add(Projections.groupProperty("nuRepasse").as("nuRepasse"));
 			projectionList.add(Projections.groupProperty("sccTipoContrato").as("sccTipoContrato"));
@@ -91,6 +152,7 @@ public class SccRepasseDAOImpl extends HibernateBasicDAOImpl<SccRepasse> impleme
 			projectionList.add(Projections.sum("vlBrutoRepasse").as("vlBrutoRepasse"));		
 			
 			criteria.setProjection(projectionList);
+			criteria.addOrder(Order.asc("cdItemRepasse"));
 			ResultTransformer resultTransformer = Transformers.aliasToBean(SccRepasse.class);
 			criteria.setResultTransformer(resultTransformer);			
 			return criteria.list();
@@ -339,6 +401,8 @@ public class SccRepasseDAOImpl extends HibernateBasicDAOImpl<SccRepasse> impleme
 			mapper.addResultMap("telemar", Double.class);
 			mapper.addResultMap("ipCorp", Double.class);
 			mapper.addResultMap("nexus", Double.class);
+			mapper.addResultMap("telecom65", Double.class);
+			mapper.addResultMap("cambridge", Double.class);			
 			mapper.setProjections(RelPrestacaoServicoSQL.PROJECTIONS);	
 			listRelPrestServico =  mapper.execute();
 			
@@ -386,6 +450,8 @@ public class SccRepasseDAOImpl extends HibernateBasicDAOImpl<SccRepasse> impleme
 			mapper.addResultMap("telemar", Double.class);
 			mapper.addResultMap("ipCorp", Double.class);
 			mapper.addResultMap("nexus", Double.class);
+			mapper.addResultMap("telecom65", Double.class);
+			mapper.addResultMap("cambridge", Double.class);			
 			mapper.setProjections(RelPrestacaoServicoSQL.PROJECTIONS);	
 			listRelPrestServico =  mapper.execute();
 			

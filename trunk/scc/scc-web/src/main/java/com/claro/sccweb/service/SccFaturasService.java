@@ -7,6 +7,8 @@ import java.util.List;
 
 import com.claro.cobillingweb.persistence.dao.DAOException;
 import com.claro.cobillingweb.persistence.filtro.SccFiltro;
+import com.claro.cobillingweb.persistence.filtro.SccFiltroAgingFaturas;
+import com.claro.cobillingweb.persistence.filtro.SccFiltroFaturas;
 import com.claro.cobillingweb.persistence.view.SccAgingFaturasView;
 import com.claro.cobillingweb.persistence.view.SccFaturaView;
 
@@ -16,10 +18,12 @@ import com.claro.cobillingweb.persistence.view.SccFaturaView;
  */
 public interface SccFaturasService {
 	
-	List<SccFaturaView> gerarRelatorioFaturas(SccFiltro filtro)throws ServiceException, DAOException;
+	List<SccFaturaView> gerarRelatorioFaturas(SccFiltroFaturas filtro)throws ServiceException, DAOException;
 	
 	List<SccFaturaView> gerarRelatorioJurosMultas(SccFiltro filtro)	throws ServiceException, DAOException;
 	
-	List<SccAgingFaturasView> gerarRelatorioAgingFaturas(SccFiltro filtro) throws ServiceException, DAOException;
+	List<SccFaturaView> gerarComboCiclo() throws ServiceException, DAOException;
+	
+	List<SccAgingFaturasView> gerarRelatorioAgingFaturas(SccFiltroAgingFaturas filtro) throws ServiceException, DAOException;
 
 }

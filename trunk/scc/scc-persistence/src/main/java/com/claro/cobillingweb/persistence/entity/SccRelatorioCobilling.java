@@ -4,7 +4,7 @@
 package com.claro.cobillingweb.persistence.entity;
 
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,13 +12,13 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  * @author 93046251
@@ -28,10 +28,134 @@ import javax.persistence.TemporalType;
 @Entity
 @SequenceGenerator(name="SCC_RELATORIO_COBILLING_SQ01" , sequenceName="SCC_RELATORIO_COBILLING_SQ01")
 @Table(name="SCC_RELATORIO_COBILLING")
-public class SccRelatorioCobilling {
+public class SccRelatorioCobilling extends FwjBaseEntidade {
 	
 	
-	private Long codigo;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4530729919014642913L;
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SCC_RELATORIO_COBILLING_SQ01")
+	@Column(name="SQ_RELATORIO")
+	private Long sqRelatorio;
+
+	@Column(name="CD_USUARIO_MANUT")
+	private String cdUsuarioManut;
+
+    @Temporal( TemporalType.DATE)
+	@Column(name="DT_ATUALIZACAO")
+	private Date dtAtualizacao;
+
+    @Temporal( TemporalType.DATE)
+	@Column(name="DT_CRIACAO")
+	private Date dtCriacao;
+
+    @Temporal( TemporalType.DATE)
+	@Column(name="DT_FIM_VIGENCIA")
+	private Date dtFimVigencia;
+
+    @Temporal( TemporalType.DATE)
+	@Column(name="DT_INICIO_VIGENCIA")
+	private Date dtInicioVigencia;
+
+	@Column(name="NO_RELATORIO")
+	private String noRelatorio;
+
+	//bi-directional many-to-one association to SccAssociacaoRelatorioGrupo
+	@JsonIgnore
+	@OneToMany(mappedBy="sccRelatorioCobilling", fetch=FetchType.LAZY)
+	private Set<SccAssociacaoRelatorioGrupo> sccAssociacaoRelatorioGrupos;
+
+	//bi-directional many-to-one association to SccRelatorioSumarizado
+	@JsonIgnore
+	@OneToMany(mappedBy="sccRelatorioCobilling", fetch=FetchType.LAZY)
+	private Set<SccRelatorioSumarizado> sccRelatorioSumarizados;
+
+	public Long getSqRelatorio() {
+		return sqRelatorio;
+	}
+
+	public void setSqRelatorio(Long sqRelatorio) {
+		this.sqRelatorio = sqRelatorio;
+	}
+
+	public String getCdUsuarioManut() {
+		return cdUsuarioManut;
+	}
+
+	public void setCdUsuarioManut(String cdUsuarioManut) {
+		this.cdUsuarioManut = cdUsuarioManut;
+	}
+
+	public Date getDtAtualizacao() {
+		return dtAtualizacao;
+	}
+
+	public void setDtAtualizacao(Date dtAtualizacao) {
+		this.dtAtualizacao = dtAtualizacao;
+	}
+
+	public Date getDtCriacao() {
+		return dtCriacao;
+	}
+
+	public void setDtCriacao(Date dtCriacao) {
+		this.dtCriacao = dtCriacao;
+	}
+
+	public Date getDtFimVigencia() {
+		return dtFimVigencia;
+	}
+
+	public void setDtFimVigencia(Date dtFimVigencia) {
+		this.dtFimVigencia = dtFimVigencia;
+	}
+
+	public Date getDtInicioVigencia() {
+		return dtInicioVigencia;
+	}
+
+	public void setDtInicioVigencia(Date dtInicioVigencia) {
+		this.dtInicioVigencia = dtInicioVigencia;
+	}
+
+	public String getNoRelatorio() {
+		return noRelatorio;
+	}
+
+	public void setNoRelatorio(String noRelatorio) {
+		this.noRelatorio = noRelatorio;
+	}
+
+	public Set<SccAssociacaoRelatorioGrupo> getSccAssociacaoRelatorioGrupos() {
+		return sccAssociacaoRelatorioGrupos;
+	}
+
+	public void setSccAssociacaoRelatorioGrupos(
+			Set<SccAssociacaoRelatorioGrupo> sccAssociacaoRelatorioGrupos) {
+		this.sccAssociacaoRelatorioGrupos = sccAssociacaoRelatorioGrupos;
+	}
+
+	public Set<SccRelatorioSumarizado> getSccRelatorioSumarizados() {
+		return sccRelatorioSumarizados;
+	}
+
+	public void setSccRelatorioSumarizados(
+			Set<SccRelatorioSumarizado> sccRelatorioSumarizados) {
+		this.sccRelatorioSumarizados = sccRelatorioSumarizados;
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+/*	private Long codigo;
 	
 	private String descricao;
 	
@@ -47,7 +171,9 @@ public class SccRelatorioCobilling {
 	
 	private List<SccGrupoCobilling> lstGrupos;
 
-	
+*/	
+
+/*
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SCC_RELATORIO_COBILLING_SQ01")
 	@Column(name="SQ_RELATORIO")
@@ -129,5 +255,5 @@ public class SccRelatorioCobilling {
 		this.lstGrupos = lstGrupos;
 	}
 	
-
+*/
 }

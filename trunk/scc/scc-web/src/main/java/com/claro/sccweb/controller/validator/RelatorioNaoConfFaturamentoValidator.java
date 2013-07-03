@@ -18,9 +18,11 @@ public class RelatorioNaoConfFaturamentoValidator implements Validator {
 		
 		RelatorioNaoConfFaturamentoForm form = (RelatorioNaoConfFaturamentoForm) obj;
 		if(form.getOperacao() != null  && form.getOperacao().equalsIgnoreCase("pesquisar")){
-			ValidatorUtil.verificaCampoObrigatorio("cdCiclo", form.getEntity().getCdCiclo(), errors);
-			ValidatorUtil.verificaCampoObrigatorio("mmCiclo", form.getEntity().getMmCiclo(), errors);
-			ValidatorUtil.verificaCampoObrigatorio("aaCiclo", form.getEntity().getAaCiclo(), errors);	
+			if(form.getCdCiclo() != null || form.getMmCiclo() > 0 || form.getAaCiclo() != null ){
+				ValidatorUtil.verificaCampoObrigatorio("cdCiclo", form.getCdCiclo(), errors);
+				ValidatorUtil.verificaCampoObrigatorio("mmCiclo", form.getMmCiclo(), errors);
+				ValidatorUtil.verificaCampoObrigatorio("aaCiclo", form.getAaCiclo(), errors);	
+			}
 		}
 	}
 

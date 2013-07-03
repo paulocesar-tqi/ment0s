@@ -29,11 +29,11 @@ public class RelatorioContabilExcelHandler extends BasicExcelHandler {
 		if (form == null)
 			throw new ControllerExecutionException("Navegação inválida. Form é nulo!.");
 		List<ExcelColumnDefinition> columnDefinitions = new ArrayList<ExcelColumnDefinition>();
-		columnDefinitions.add(new ExcelColumnDefinition("getRow.cdEOTLD", "Longa Distância", style, 30));
-		columnDefinitions.add(new ExcelColumnDefinition("getRow.cdEOTClaro", "Empresa Claro", style, 30));
-		columnDefinitions.add(new ExcelColumnDefinition("getRow.dataFechamento", "Mês/Ano", style, 30));
-		columnDefinitions.add(new ExcelColumnDefinition("getRow.descricao", "Descrição", style, 30));
-		columnDefinitions.add(new ExcelColumnDefinition("getRow.cdContabil", "Código Contábil", style, 30));
+		columnDefinitions.add(new ExcelColumnDefinition("getCdEOTLD", "Longa Distância", style, 30));
+		columnDefinitions.add(new ExcelColumnDefinition("getCdEOTClaro", "Empresa Claro", style, 30));
+		columnDefinitions.add(new ExcelColumnDefinition("getDataFechamento", "Mês/Ano", style, 30));
+		columnDefinitions.add(new ExcelColumnDefinition("getDescricao", "Descrição", style, 30));
+		columnDefinitions.add(new ExcelColumnDefinition("getCdContabil", "Código Contábil", style, 30));
 		columnDefinitions.add(new ExcelColumnDefinition("getQtCdrs.", "Qtde.", style, 30));
 		columnDefinitions.add(new ExcelColumnDefinition("getVlLiquido", "Valor Líquido", style, 30));
 		columnDefinitions.add(new ExcelColumnDefinition("getVlBruto", "Valor Bruto", style, 30));

@@ -3,13 +3,29 @@
  */
 package com.claro.cobillingweb.persistence.view;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * @author 93046251
  *
  */
 public class RelAlarmeOperacionalView {
+	
+	protected static NumberFormat decimalFormat = new DecimalFormat("#.##");
+	protected static NumberFormat integerFormat = new DecimalFormat("#.##");
+	static {
+    	Locale locale = new Locale("pt","BR");
+    	decimalFormat = NumberFormat.getInstance(locale);
+    	decimalFormat.setMinimumFractionDigits(2);
+    	decimalFormat.setMaximumFractionDigits(2);
+    	integerFormat = NumberFormat.getInstance(locale);
+    	integerFormat.setMinimumFractionDigits(0);
+    	integerFormat.setMaximumFractionDigits(0);
+    }
+	
 	private String numA;
 	private Long qtdeChamadas; 
 	private Long qtdeMinutosTarifados; 
@@ -42,6 +58,15 @@ public class RelAlarmeOperacionalView {
 	public void setValorTotalChamadas(Double valorTotalChamadas) {
 		this.valorTotalChamadas = valorTotalChamadas;
 	}
+		
+	public String getValorTotalChamadasStr(){
+		String value = "";
+		if(this.valorTotalChamadas != null){
+			value = decimalFormat.format(this.getValorTotalChamadas());
+		}
+		return value;
+	}
+		
 	public String getNroFatura() {
 		return nroFatura;
 	}

@@ -48,7 +48,6 @@ public class ViewArquivoPrePagoDAOImpl extends HibernateBasicDAOImpl<ViewArquivo
 				" PCA.DH_PROCESSO, "+
 				" APP.SQ_ARQUIVO_CONTROLE_PRE, "+         			    
 				" PCA.QT_REGISTROS_ARQUIVO,  "+
-				" PCA.QT_REGISTROS_ARQUIVO,  "+
 				" PCA.QT_REGISTROS_PROCESSADOS "+
 				" FROM SCC_ARQUIVO_PRE_PAGO APP, PRE_CONTROLE_ARQUIVO PCA       "+ 
 				" WHERE APP.SQ_ARQUIVO_CONTROLE_PRE = PCA.SQ_CONTROLE_ARQUIVO "  +
@@ -69,6 +68,11 @@ public class ViewArquivoPrePagoDAOImpl extends HibernateBasicDAOImpl<ViewArquivo
 				item.setNO_SISTEMA_RESP((String)row[5]);
 				item.setNO_PROCESSO_RESP((String)row[6]);
 				item.setIN_STATUS_PROCESSO((String)row[7]);
+				item.setDH_PROCESSO((Date)row[8]);
+				item.setSQ_ARQUIVO_CONTROLE_PRE(((BigDecimal)row[9]).longValue());
+				item.setQT_REGISTROS_ARQUIVO(((BigDecimal)row[10]).intValue());
+				item.setQT_REGISTROS_PROCESSADOS(((BigDecimal)row[11]).intValue());
+				
 				resultados.add(item);
 			}
 			return resultados;

@@ -12,8 +12,10 @@ import com.claro.cobillingweb.persistence.dao.DAOException;
 import com.claro.cobillingweb.persistence.dao.impl.HibernateBasicDAOImpl;
 import com.claro.cobillingweb.persistence.dao.internal.SccAcoesCobrancaDAO;
 import com.claro.cobillingweb.persistence.dao.query.SccAcoesCobrancaSQL;
+import com.claro.cobillingweb.persistence.filtro.SccFiltroAcoesCobranca;
 import com.claro.cobillingweb.persistence.dao.query.SccFaturasSQL;
 import com.claro.cobillingweb.persistence.filtro.SccFiltro;
+import com.claro.cobillingweb.persistence.utils.DateUtils;
 import com.claro.cobillingweb.persistence.view.SccAcoesCobrancaView;
 import com.claro.cobillingweb.persistence.view.mapper.NativeSQLViewMapper;
 
@@ -29,7 +31,7 @@ public class SccAcoesCobrancaDAOImpl extends HibernateBasicDAOImpl<SccAcoesCobra
 
 	@Override
 	public List<SccAcoesCobrancaView> gerarRelatorioControleAcoesCobranca(
-			SccFiltro filtro) throws DAOException {
+			SccFiltroAcoesCobranca filtro) throws DAOException {
 		
 		List<SccAcoesCobrancaView> list = null;
 		
@@ -42,8 +44,8 @@ public class SccAcoesCobrancaDAOImpl extends HibernateBasicDAOImpl<SccAcoesCobra
 				mapper.addArgument("cdCsp", filtro.getCdCsp(), SccAcoesCobrancaSQL.FILTRO_CSP);
 			}
 			
-			mapper.addArgument("dtInicio", filtro.getDataInicialPeriodo(), SccFaturasSQL.FILTRO_DT_CARGA);
-			mapper.addArgument("dtFim", filtro.getDataFinalPeriodo(), SccFaturasSQL.FILTRO_DT_FIM_CARGA);
+			mapper.addArgument("dtInicio", DateUtils.lowDateTime(filtro.getDataInicialPeriodo()), SccAcoesCobrancaSQL.FILTRO_DT_INICIO);
+			mapper.addArgument("dtFim", DateUtils.highDateTime2(filtro.getDataFinalPeriodo()), SccAcoesCobrancaSQL.FILTRO_DT_FINAL);
 			
 			mapper.addResultMap("ban", Long.class);
 			mapper.addResultMap("terminal", String.class);

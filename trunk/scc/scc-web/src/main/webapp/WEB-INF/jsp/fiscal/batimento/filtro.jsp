@@ -50,7 +50,7 @@
 			<table width="100%" border="0" cellspacing="0" cellpadding="0" id="filtroPesquisaTable">
 				<tr>
 					<td width="15%"><spring:message code="relatorio.batimento.fiscal.label.operadorald" /></td>
-					<td id="cdCSP"><form:select path="cdCSP" id="cdCSP" items="${operadorasExternas}" itemLabel="dsOperadora" itemValue="cdCsp" /></td>
+					<td id="cdCSP"><form:select path="cdCSP" id="cdCSP" items="${operadorasExternas}" itemLabel="dsOperadoraForCombos" itemValue="cdCsp" /></td>
 				</tr>
 				<tr>
 					<td width="10%"><spring:message code="relatorio.batimento.fiscal.label.codigociclo"/>:</td>

@@ -1,5 +1,6 @@
 package com.claro.sccweb.form;
 
+import com.claro.cobillingweb.persistence.view.RelatorioApuracaoFechamentoPrePagoView;
 import com.claro.sccweb.controller.repasse.pre.RelatoriosRepassePreController;
 
 public class RelatoriosRepassePreForm extends BaseForm {
@@ -12,7 +13,7 @@ public class RelatoriosRepassePreForm extends BaseForm {
 	private Long mesRelatorio;
 	private String cdProdutoPrepago;
 	private String operacao = RelatoriosRepassePreController.OPERACAO_PESQUISAR;
-	
+	private RelatorioApuracaoFechamentoPrePagoView total;
 	
 	public String getCdEOTClaro() {
 		return cdEOTClaro;
@@ -62,7 +63,13 @@ public class RelatoriosRepassePreForm extends BaseForm {
 	public void setCdProdutoPrepago(String cdProdutoPrepago) {
 		this.cdProdutoPrepago = cdProdutoPrepago;
 	}
-	 
+	
+	public RelatorioApuracaoFechamentoPrePagoView getTotal() {
+		return total;
+	}
+	public void setTotal(RelatorioApuracaoFechamentoPrePagoView total) {
+		this.total = total;
+	}
 	public String toString() {
 		return "RelatoriosRepassePreForm [cdEOTClaro=" + cdEOTClaro
 				+ ", cdEOTLD=" + cdEOTLD + ", cdStatusFechamento="

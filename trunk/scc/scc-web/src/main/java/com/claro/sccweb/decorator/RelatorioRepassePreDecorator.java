@@ -2,6 +2,7 @@ package com.claro.sccweb.decorator;
 
 import java.text.SimpleDateFormat;
 
+import org.apache.commons.lang.StringUtils;
 import org.displaytag.decorator.TableDecorator;
 
 import com.claro.sccweb.service.composite.SolicitacaoRepassePreComposite;
@@ -29,9 +30,13 @@ public class RelatorioRepassePreDecorator extends TableDecorator {
 		return getRow().getOperadoraLD().getDsOperadora();
 	}
 	
-	public String getOperadoraClaro()
-	{
-		return getRow().getOperadoraClaro().getDsOperadora();
+	public String getOperadoraClaro(){
+		String value = "";
+		if(getRow() != null && getRow().getOperadoraClaro() != null && getRow().getOperadoraClaro().getDsOperadora() != null){
+			value = getRow().getOperadoraClaro().getDsOperadora();
+		}
+		
+		return value;
 	}
 	
 	public String getCriterio()
@@ -39,11 +44,16 @@ public class RelatorioRepassePreDecorator extends TableDecorator {
 		return getRow().getCriterio();
 	}
 	
-	public String getProduto()
-	{
-		return getRow().getProdutoPrepago().getNoProdutoPrepago();
+	public String getProduto(){
+		
+		String value = "";
+		if(getRow() != null && getRow().getProdutoPrepago() != null && StringUtils.isNotEmpty(getRow().getProdutoPrepago().getNoProdutoPrepago())){
+			value = getRow().getProdutoPrepago().getNoProdutoPrepago();
+		}
+			
+		return value;
 	}
-	
+
 	public String getDtCriacao()
 	{
 		return dateFormat.format(getRow().getDtCriacao());
@@ -71,5 +81,24 @@ public class RelatorioRepassePreDecorator extends TableDecorator {
 	{
 		return (SolicitacaoRepassePreComposite)getCurrentRowObject();
 	}
+	
+	public String getEmpresaLD(){
+		String value = "";
+		if(getRow() != null && getRow().getOperadoraLD() != null && StringUtils.isNotEmpty(getRow().getOperadoraLD().getCdEot())){
+			value = getRow().getOperadoraLD().getDsOperadora();
+		}
+		return value;
+	}
+	
+	public String getEmpresaClaro(){
+		String value = "";
+		if(getRow() != null && getRow().getOperadoraClaro() != null && StringUtils.isNotEmpty(getRow().getOperadoraClaro().getCdEot())){
+			value = getRow().getOperadoraClaro().getDsOperadora();
+		}
+		
+		return value;
+	}
+	
+	
 	
 }

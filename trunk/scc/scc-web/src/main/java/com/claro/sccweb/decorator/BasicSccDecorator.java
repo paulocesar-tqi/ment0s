@@ -13,7 +13,9 @@ public class BasicSccDecorator extends TableDecorator {
 	protected SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 	protected SimpleDateFormat datePeriodoFormat = new SimpleDateFormat("MM/yyyy");
 	protected SimpleDateFormat dateTimeFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+	protected SimpleDateFormat dateTimeSegFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
 	protected static NumberFormat decimalFormat = new DecimalFormat("#.##");
+	protected static NumberFormat decimalFormat2 = new DecimalFormat("#.##");
 	protected static NumberFormat decimalFormat34 = new DecimalFormat("###.####");
 	
 	static {
@@ -21,6 +23,9 @@ public class BasicSccDecorator extends TableDecorator {
     	decimalFormat = NumberFormat.getInstance(locale);
     	decimalFormat.setMinimumFractionDigits(2);
     	decimalFormat.setMaximumFractionDigits(2);
+    	decimalFormat2 = NumberFormat.getInstance(locale);
+    	decimalFormat2.setMinimumFractionDigits(0);
+    	decimalFormat2.setMaximumFractionDigits(0);
     }
 	
 	protected static NumberFormat sccCurrencyFormat = new DecimalFormat("#.##");
@@ -49,6 +54,13 @@ public class BasicSccDecorator extends TableDecorator {
 		return decimalFormat.format(trunc(valor,2));
 	}
 	
+	protected String formataDouble2(Double valor) {
+		if (valor == null) {
+			return " ";
+		}
+		return decimalFormat2.format(trunc(valor,2));
+	}
+	
 	protected String formataDouble34(Double valor) {
 		if (valor == null) {
 			return " ";
@@ -68,6 +80,13 @@ public class BasicSccDecorator extends TableDecorator {
 			return " ";
 		}
 		return decimalFormat.format(valor);
+	}
+	
+	protected String formataLong2(Long valor) {
+		if (valor == null) {
+			return " ";
+		}
+		return decimalFormat2.format(valor);
 	}
 	
 	protected String formataInteger(Integer valor) {
@@ -106,6 +125,14 @@ public class BasicSccDecorator extends TableDecorator {
 		}
 		return dateTimeFormat.format(valor);
 	}
+	
+	protected String formataDateTimeSeg(Date valor) {
+		if (valor == null) {
+			return " ";
+		}
+		return dateTimeSegFormat.format(valor);
+	}
+	
 	
 	protected String formataString(String value) {
 		if (value == null) {

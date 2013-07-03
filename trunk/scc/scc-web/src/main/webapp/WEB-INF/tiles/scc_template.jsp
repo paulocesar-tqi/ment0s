@@ -25,37 +25,55 @@ function noBack()
 </SCRIPT>
 
 </head>
-<body style="margin:0" onload="noBack();" onpageshow="if (event.persisted) noBack();" onunload="">
-<table border="0" width="100%">
-<tr>
-<td>
-<img  src="/scc/images/header.gif" width="100%" height="5%"/>
-</td>
-</tr>
-<tr>
-<td class="td_menu">
-<tiles:insertAttribute name="menu" />
-</td>
-</tr>
-<tr>
-<c:if test="${sessionScope['scopedTarget.sessionDataManager'].posPago}"> 
-<td align="right" size="20"><a href="/scc/inicio/modulo/switch.scc" class="Link">Módulo Pré-Pago</a></td>
-</c:if>
-
-<c:if test="${sessionScope['scopedTarget.sessionDataManager'].prePago}"> 
-<td align="right" size="20"><a href="/scc/inicio/modulo/switch.scc" class="Link">Módulo Pós-Pago</a></td>
-</c:if>
-
-
-
-</td>
-</tr>
-<tr>
-<td>
-<tiles:insertAttribute name="body" />
-</td>
-</tr>
-
-</table>
-</body>
+<html>
+<div id="idTemplate">
+	<body style="margin:0" onload="noBack();" onpageshow="if (event.persisted) noBack();" onunload="">
+		<table border="0" width="100%">
+			<tr>
+				<td>
+					<img  src="/scc/images/header.gif" width="100%" height="5%"/>
+				</td>
+			</tr>
+			
+			<tr>
+			</tr>
+			
+			<tr>
+				<c:if test="${sessionScope['scopedTarget.sessionDataManager'].posPago}"> 
+					<td align="center" size="70"><b><font face="Verdana" color="#990000"><a>Módulo Pós-Pago</a></font></b></td>
+				</c:if>
+			
+				<c:if test="${sessionScope['scopedTarget.sessionDataManager'].prePago}"> 
+					<td align="center" size="70"><b><font face="Verdana" color="#990000"><a>Módulo Pré-Pago</a></font></b></td>
+				</c:if>
+			</tr>
+			
+			<tr>
+				<td align="right" ><font face="Verdana" color="#000"><a style=font-size:10px>Versão: 8.0.2</a></font></td>
+			</tr>
+			
+			<tr>
+				<td class="td_menu">
+					<tiles:insertAttribute name="menu" />
+				</td>
+			</tr>
+			<tr>
+				<c:if test="${sessionScope['scopedTarget.sessionDataManager'].posPago}"> 
+					<td align="right" size="20"><a href="/scc/inicio/modulo/switch.scc" class="Link"><b><font face="Verdana" color="#990000">>> Acessar Módulo Pré-Pago</font></b></a></td>
+				</c:if>
+			
+				<c:if test="${sessionScope['scopedTarget.sessionDataManager'].prePago}"> 
+					<td align="right" size="20"><a href="/scc/inicio/modulo/switch.scc" class="Link"><b><font face="Verdana" color="#990000">>> Acessar Módulo Pós-Pago</font></b></a></td>
+				</c:if>
+			</tr>
+			<div id="idBody">
+				<tr>
+					<td>
+						<tiles:insertAttribute name="body" />
+					</td>
+				</tr>
+			</div>
+		</table>
+	</body>
+</div>
 </html>

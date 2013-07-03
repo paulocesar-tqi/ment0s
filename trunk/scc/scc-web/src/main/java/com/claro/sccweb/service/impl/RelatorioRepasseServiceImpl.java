@@ -293,12 +293,20 @@ public class RelatorioRepasseServiceImpl extends AbstractService implements Rela
 			for (int i=0;i<acordados.size();i++) {				
 				SccParamProcessoPK pk = new SccParamProcessoPK();
 				StringBuffer nmProcesso = new StringBuffer();
+				nmProcesso.append(leftZeroFill(argument.getCdProdutoCobilling().toString(), 9));
+				nmProcesso.append("_");
+				Long seq = getParamProcessoDAO().getProximoValorSequence();
+				nmProcesso.append(leftZeroFill(seq.toString(), 20));
+ 
+				
+/*				
 				nmProcesso.append(leftZeroFill(argument.getCdEOT(), 6));
 				nmProcesso.append(argument.getMesRelatorio().toString());
 				nmProcesso.append(argument.getAnoRelatorio().toString());
 				nmProcesso.append(leftZeroFill(argument.getCdPeriodicidadeRepasse().toString(), 2));
 				nmProcesso.append(leftZeroFill(acordados.get(i).getOperadoraClaro().getCdEot(), 6));
 				nmProcesso.append(leftZeroFill(argument.getCdProdutoCobilling().toString(), 6));				
+*/				
 				pk.setNmParametro(nmProcesso.toString());
 				pk.setCdProcesso(RelatorioRepasseService.CD_PROCESSO_REPASSE);
 				SccParamProcesso paramTest = getParamProcessoDAO().getByPk(pk, SccParamProcesso.class);
@@ -386,7 +394,7 @@ public class RelatorioRepasseServiceImpl extends AbstractService implements Rela
 		
 	}
 
-	 
+/*	 
 	public List<DemonstrativoRepassePosDecorator> carregaDemonstrativoRepasse(String cdEOTClaro, String cdEOTLD, Long cdProdutoCobilling,Date dtInicial, Date dtFinal, boolean holding) 
 			throws DAOException,ServiceException {
 		Map<Long, DemonstrativoRepassePosDecorator> tempMap = new HashMap<Long, DemonstrativoRepassePosDecorator>();		
@@ -409,35 +417,242 @@ public class RelatorioRepasseServiceImpl extends AbstractService implements Rela
 			throw new ServiceException(e.getMessage(), e);
 			}
 	}
+*/
 	
+	private SccRepasse gerarEntidade(DemonstrativoRepassePosDecorator entity, SccRepasse repasse){
+
+		SccRepasse entidade = new SccRepasse();
+		if(repasse != null){
+			
+			entidade.setCdItemRepasse(repasse.getCdItemRepasse());
+			entidade.setNuRepasse(repasse.getNuRepasse());
+			
+			if(repasse.getQtCdrs() != null){
+				entidade.setQtCdrs(calcularTotalCdr(entity.getRepasse().getQtCdrs(), repasse.getQtCdrs()));
+			}
+			
+			if(repasse.getQtDuracaoTarifada() != null){
+				entidade.setQtDuracaoTarifada(calcularValores(entity.getRepasse().getQtDuracaoTarifada(), repasse.getQtDuracaoTarifada()));
+			}
+			
+			if(repasse.getVlLiquidoItemRepasse() != null){
+				entidade.setVlLiquidoItemRepasse(calcularValores(entity.getRepasse().getVlLiquidoItemRepasse(), repasse.getVlLiquidoItemRepasse()));
+			}
+			
+			if(repasse.getVlLiquidoRepasse() !=null){
+				entidade.setVlLiquidoRepasse(calcularValores(entity.getRepasse().getVlLiquidoRepasse(), repasse.getVlLiquidoRepasse()));
+			}
+			
+			if(repasse.getVlPis() != null){
+				entidade.setVlPis(calcularValores(entity.getRepasse().getVlPis(), repasse.getVlPis()));
+			}
+			
+			if(repasse.getVlCofins() != null){
+				entidade.setVlCofins(calcularValores(entity.getRepasse().getVlCofins(), repasse.getVlCofins()));
+			}
+			
+			if(repasse.getVlIcms() != null){
+				entidade.setVlIcms(calcularValores(entity.getRepasse().getVlIcms(), repasse.getVlIcms()));
+			}
+			
+			if(repasse.getVlIss() != null){
+				entidade.setVlIss(calcularValores(entity.getRepasse().getVlIss(), repasse.getVlIss()));
+			}
+			
+			if(repasse.getVlBrutoItemRepasse() != null){
+				entidade.setVlBrutoItemRepasse(calcularValores(entity.getRepasse().getVlBrutoItemRepasse(), repasse.getVlBrutoItemRepasse()));
+			}
+			
+			if(repasse.getVlBrutoRepasse() != null){
+				entidade.setVlBrutoRepasse(calcularValores(entity.getRepasse().getVlBrutoRepasse(), repasse.getVlBrutoRepasse()));
+			}
+			
+		}
+		
+		return entidade;
+		
+	}
+	
+	
+	private Long calcularTotalCdr(Long valor, Long valor2){
+		
+		Long total = valor + valor2;
+		return total;
+		
+	}
+	
+	private Double calcularValores(Double valor , Double valor2){
+		
+		Double total = 0.0;
+		total = zeroIfNull(valor) + zeroIfNull(valor2);
+		return total;
+	}
+	// Monta o Relatorio Demonstrativo Consolidado Pos Pago
+	@Override
+	public List<DemonstrativoRepassePosDecorator> carregarDemonstrativoRepasseConsolidado(String cdEOTClaro, String cdEOTLD, Long cdProdutoCobilling,Date dtInicial, Date dtFinal, boolean holding)throws DAOException,ServiceException{
+		
+		Map<Long, DemonstrativoRepassePosDecorator> tempMap = new HashMap<Long, DemonstrativoRepassePosDecorator>();		
+		try {			
+			List<SccRepasse> repasses = getRepasseDAO().carregarRepasseConsolidadoPosPago(cdEOTClaro, cdEOTLD, cdProdutoCobilling, dtInicial, dtFinal,null,holding);
+			if (repasses != null){
+				for (int i=0;i<repasses.size();i++){
+					if(tempMap.containsKey(repasses.get(i).getCdItemRepasse())){
+						DemonstrativoRepassePosDecorator entity = tempMap.get(repasses.get(i).getCdItemRepasse());
+						entity.setRepasse(gerarEntidade(entity, repasses.get(i)));
+						
+						tempMap.remove(repasses.get(i).getCdItemRepasse());
+						tempMap.put(repasses.get(i).getCdItemRepasse(), entity);
+						
+						
+					}else{
+						tempMap.put(repasses.get(i).getCdItemRepasse(), new DemonstrativoRepassePosDecorator(repasses.get(i)));
+					}
+					
+				}
+			}
+			return converteMap2Demonstrativo(tempMap);	
+		} catch (DAOException daoException)
+			{
+			throw daoException;
+			}
+		catch (Exception e)
+			{
+			throw new ServiceException(e.getMessage(), e);
+			}
+		
+	}
+	
+	public List<DemonstrativoRepassePosDecorator> carregaDemonstrativoRepasse(String cdEOTClaro, String cdEOTLD, Long cdProdutoCobilling,Date dtInicial, Date dtFinal, boolean holding) 
+			throws DAOException,ServiceException {
+		Map<Long, DemonstrativoRepassePosDecorator> tempMap = new HashMap<Long, DemonstrativoRepassePosDecorator>();		
+		try {			
+			List<SccRepasse> repasses = getRepasseDAO().carregaRepassePosPago(cdEOTClaro, cdEOTLD, cdProdutoCobilling, dtInicial, dtFinal,null,holding);
+			if (repasses != null){
+				for (int i=0;i<repasses.size();i++){
+					if(tempMap.containsKey(repasses.get(i).getCdItemRepasse())){
+						DemonstrativoRepassePosDecorator entity = tempMap.get(repasses.get(i).getCdItemRepasse());
+						entity.setRepasse(gerarEntidade(entity, repasses.get(i)));
+						
+						tempMap.remove(repasses.get(i).getCdItemRepasse());
+						tempMap.put(repasses.get(i).getCdItemRepasse(), entity);
+						
+						
+					}else{
+						tempMap.put(repasses.get(i).getCdItemRepasse(), new DemonstrativoRepassePosDecorator(repasses.get(i)));
+					}
+					
+				}
+			}
+			return converteMap2Demonstrativo(tempMap);	
+		} catch (DAOException daoException)
+			{
+			throw daoException;
+			}
+		catch (Exception e)
+			{
+			throw new ServiceException(e.getMessage(), e);
+			}
+	}	
+	
+	
+	
+/*	@Override
+	public List<DemonstrativoRepassePosDecorator> carregaDemonstrativoRepasse(String cdEOTClaro, String cdEOTLD, Long cdProdutoCobilling,Date dtInicial, Date dtFinal, boolean holding) 
+			throws DAOException,ServiceException {
+		
+		long totalCdr = 0;
+		double totalMinutos = 0;
+		double totalLiquido = 0;
+		double totalPis = 0;
+		double totalCofins = 0;
+		double totalIcms = 0;
+		double totalIss = 0;
+		double totalBruto = 0;
+		
+		List<String> cdEotsClaro = carregarSomentePKsOperadoras(getOperadoraDAO().pesquisaHoldingClaroByCdEotHolding(cdEOTClaro));
+		
+		for (String value : cdEotsClaro) {
+			
+			List<SccRepasse> repasses = getRepasseDAO().carregaRepassePosPago(value, cdEOTLD, cdProdutoCobilling, dtInicial, dtFinal,null,false);
+			converteMap2Demonstrativo(criarMap(repasses));
+			
+		}
+		
+		List<DemonstrativoRepassePosDecorator> lstRetorno = null;
+		
+		List<SccRepasse> repasses = getRepasseDAO().carregaRepassePosPago(cdEOTClaro, cdEOTLD, cdProdutoCobilling, dtInicial, dtFinal,null,holding);
+		
+		Map<Long, DemonstrativoRepassePosDecorator> tempMap = (Map<Long, DemonstrativoRepassePosDecorator>) repasses.iterator().next();
+		
+		lstRetorno = converteMap2Demonstrativo(tempMap);
+		
+		return lstRetorno;
+		
+	}
+	
+*/	
+	
+/*	List<DemonstrativoRepassePosDecorator> calcularHolding(List<DemonstrativoRepassePosDecorator>list){
+		
+		List<DemonstrativoRepassePosDecorator> lstTotal = new ArrayList<DemonstrativoRepassePosDecorator>();
+		
+		Map<String, DemonstrativoRepassePosDecorator> map = new HashMap<String, DemonstrativoRepassePosDecorator>();  
+		
+		for (int i=0;i<list.size();i++)	{
+			map.put(list.get(i).getDescricao(), list.get(i));
+		}
+		
+		for (int i=0;i<DemonstrativoPosPagoConstantes.TITULOS_DEMONSTRATIVO_REPASSE_POS.length;i++){
+			
+			
+			
+		}
+		
+	}
+*/	
+
 	/**
 	 * O demonstrativo de repasse pós-pago deve ser exibido em uma ordem específica e com alguns somatórios.
 	 * Esse formatação é feita por esse método auxiliar.
 	 * @param map
 	 * @return
 	 */
-	private List<DemonstrativoRepassePosDecorator> converteMap2Demonstrativo(Map<Long, DemonstrativoRepassePosDecorator> map)
-	{
-		List<DemonstrativoRepassePosDecorator> list = new ArrayList<DemonstrativoRepassePosDecorator>();
-		DemonstrativoRepassePosDecorator decorator;		
+	private List<DemonstrativoRepassePosDecorator> converteMap2Demonstrativo(Map<Long, DemonstrativoRepassePosDecorator> map){
 		
-		for (int i=0;i<DemonstrativoPosPagoConstantes.CONFIGURACAO_DEMONSTRATIVO_REPASSE_POS.length;i++)
-			{
-			if (DemonstrativoPosPagoConstantes.CONFIGURACAO_DEMONSTRATIVO_REPASSE_POS[i] == DemonstrativoPosPagoConstantes.TITULO)
-				{
-				decorator = new DemonstrativoRepassePosDecorator(DemonstrativoPosPagoConstantes.TITULOS_DEMONSTRATIVO_REPASSE_POS[i]);	
-				}			
-			else if (map.containsKey(DemonstrativoPosPagoConstantes.CONFIGURACAO_DEMONSTRATIVO_REPASSE_POS[i]))
-				{
+		List<DemonstrativoRepassePosDecorator> list = new ArrayList<DemonstrativoRepassePosDecorator>();
+		DemonstrativoRepassePosDecorator decorator;	
+		
+		for (int i=0;i<DemonstrativoPosPagoConstantes.CONFIGURACAO_DEMONSTRATIVO_REPASSE_POS.length;i++){
+			
+			if (DemonstrativoPosPagoConstantes.CONFIGURACAO_DEMONSTRATIVO_REPASSE_POS[i] == DemonstrativoPosPagoConstantes.TITULO){
+				
+				decorator = new DemonstrativoRepassePosDecorator(DemonstrativoPosPagoConstantes.TITULOS_DEMONSTRATIVO_REPASSE_POS[i]);
+			}else if(DemonstrativoPosPagoConstantes.CONFIGURACAO_DEMONSTRATIVO_REPASSE_POS[i] == DemonstrativoPosPagoConstantes.TOTAL_DOS_ACERTOS){
+				
+				decorator = new DemonstrativoRepassePosDecorator(DemonstrativoPosPagoConstantes.TITULOS_DEMONSTRATIVO_REPASSE_POS[i]);
+				decorator.setBruto(gerarTotalAcertos(map));
+			}else if(DemonstrativoPosPagoConstantes.CONFIGURACAO_DEMONSTRATIVO_REPASSE_POS[i] == DemonstrativoPosPagoConstantes.TOTAL_DAS_PENALIDADES){
+				
+				decorator = new DemonstrativoRepassePosDecorator(DemonstrativoPosPagoConstantes.TITULOS_DEMONSTRATIVO_REPASSE_POS[i]);
+				decorator.setBruto(calcularPenalidades(map));
+				
+			}else if(DemonstrativoPosPagoConstantes.CONFIGURACAO_DEMONSTRATIVO_REPASSE_POS[i] == DemonstrativoPosPagoConstantes.PENALIDADE_REJEICOES_DEVIDAS_CONTRA_LD){
+				
+				if(map.get(DemonstrativoPosPagoConstantes.CONFIGURACAO_DEMONSTRATIVO_REPASSE_POS[i]) != null){
+					decorator = map.get(DemonstrativoPosPagoConstantes.CONFIGURACAO_DEMONSTRATIVO_REPASSE_POS[i]);
+					decorator.setBruto(decorator.getRepasse().getVlBrutoRepasse());
+				}else{
+					decorator = new DemonstrativoRepassePosDecorator();
+				}
+			}else if (map.containsKey(DemonstrativoPosPagoConstantes.CONFIGURACAO_DEMONSTRATIVO_REPASSE_POS[i])){
+				
 				decorator = map.get(DemonstrativoPosPagoConstantes.CONFIGURACAO_DEMONSTRATIVO_REPASSE_POS[i]);
-				}				
-			else
-				{
+			}else{
 				decorator = new DemonstrativoRepassePosDecorator();
-				}				
+			}				
 			decorator.setDescricao(DemonstrativoPosPagoConstantes.TITULOS_DEMONSTRATIVO_REPASSE_POS[i]);		
 			list.add(decorator);
-			}		
+		}		
 		
 		DemonstrativoRepassePosDecorator baseCalculo = geraBaseCalculoRepasse(map);
 		if (baseCalculo != null)
@@ -452,6 +667,11 @@ public class RelatorioRepasseServiceImpl extends AbstractService implements Rela
 	}
 
 
+	private Double gerarTotalAcertos(Map<Long, DemonstrativoRepassePosDecorator> map){
+		
+		return calcularTotalAcertos(map);
+		
+	}
 	/**
 	 * Soma itens de repasse para calcular a base de cálculo do repasse.
 	 * @param map Map com os itens de repasse indexados por código do item de repasse.
@@ -545,6 +765,7 @@ public class RelatorioRepasseServiceImpl extends AbstractService implements Rela
 		return somaValores(map, DemonstrativoPosPagoConstantes.ACERTO_CONCILIACAO_CONTRA_CLARO,DemonstrativoPosPagoConstantes.ACERTO_CONCILIACAO_CONTRA_OPERADORA_LD);		
 	}
 	
+	
 	/**
 	 * Soma os valores brutos dos itens de repasse relativos a penalidades.
 	 * @param map Map com os itens de repasse indexados por código do item de repasse.
@@ -552,15 +773,16 @@ public class RelatorioRepasseServiceImpl extends AbstractService implements Rela
 	 */
 	private Double calcularPenalidades(Map<Long, DemonstrativoRepassePosDecorator> map)
 	{		
-		return somaValores(map, DemonstrativoPosPagoConstantes.PENALIDADE_REJEICOES_INDEVIDAS_CONTRA_CLARO,DemonstrativoPosPagoConstantes.PENALIDADE_REJEICOES_DEVIDAS_CONTRA_LD,
+		return somaValoresParaPenalidades(map, DemonstrativoPosPagoConstantes.TITULO, DemonstrativoPosPagoConstantes.PENALIDADE_REJEICOES_INDEVIDAS_CONTRA_CLARO,DemonstrativoPosPagoConstantes.PENALIDADE_REJEICOES_DEVIDAS_CONTRA_LD,
 				DemonstrativoPosPagoConstantes.PENALIDADE_CHAMADA_PERDIDA_CONTRA_CLARO,DemonstrativoPosPagoConstantes.PENALIDADE_SLA_CONTRA_CLARO,
 				DemonstrativoPosPagoConstantes.MULTAS_JUROS_ATRASO_REPASSE_CONTRA_CLARO,DemonstrativoPosPagoConstantes.MULTAS_JUROS_ATRASO_PAGAMENTO_CONTRA_LD);		
 	}
 	
 	
+	
 	private Double calcularPenalidadesRepasse(Map<Long, SccRepasse> map)
 	{
-		return somaValoresRepasse(map, DemonstrativoPosPagoConstantes.PENALIDADE_REJEICOES_INDEVIDAS_CONTRA_CLARO,DemonstrativoPosPagoConstantes.PENALIDADE_REJEICOES_DEVIDAS_CONTRA_LD,
+		return somaValoresRepasse(map, DemonstrativoPosPagoConstantes.TITULO, DemonstrativoPosPagoConstantes.PENALIDADE_REJEICOES_INDEVIDAS_CONTRA_CLARO,DemonstrativoPosPagoConstantes.PENALIDADE_REJEICOES_DEVIDAS_CONTRA_LD,
 				DemonstrativoPosPagoConstantes.PENALIDADE_CHAMADA_PERDIDA_CONTRA_CLARO,DemonstrativoPosPagoConstantes.PENALIDADE_SLA_CONTRA_CLARO,
 				DemonstrativoPosPagoConstantes.MULTAS_JUROS_ATRASO_REPASSE_CONTRA_CLARO,DemonstrativoPosPagoConstantes.MULTAS_JUROS_ATRASO_PAGAMENTO_CONTRA_LD);		
 	}
@@ -575,13 +797,26 @@ public class RelatorioRepasseServiceImpl extends AbstractService implements Rela
 	{
 		Double valorFinal = 0.0;
 		for (Long codigo : codigos) {
-			if ((map.containsKey(codigo)) && (map.get(codigo).getRepasse() != null))
+			if ((map.containsKey(codigo)) && (map.get(codigo) != null) && (map.get(codigo).getRepasse() != null))
 				{
 				valorFinal = zeroIfNull(valorFinal)+zeroIfNull(map.get(codigo).getRepasse().getVlBrutoItemRepasse());
 				}							
 		}
 		return valorFinal;
 	}
+	
+	
+	private Double somaValoresParaPenalidades(Map<Long, DemonstrativoRepassePosDecorator> map,Long...codigos){
+		
+		Double valorFinal = 0.0;
+		for(Long codigo : codigos){
+			if((map.containsKey(codigo)) && (map.get(codigo) != null) && (map.get(codigo).getRepasse() != null)){
+				valorFinal = zeroIfNull(valorFinal)+zeroIfNull(map.get(codigo).getRepasse().getVlBrutoRepasse());
+			}
+		}
+		return valorFinal;
+	}
+	
 	
 	private Double somaValoresRepasse(Map<Long, SccRepasse> map,Long...codigos)
 	{
@@ -597,7 +832,7 @@ public class RelatorioRepasseServiceImpl extends AbstractService implements Rela
 	
 	private Double calcularTotalAcertosRepasse(Map<Long, SccRepasse> map)
 	{
-		return somaValoresRepasse(map, DemonstrativoPosPagoConstantes.ACERTO_CONCILIACAO_CONTRA_CLARO,DemonstrativoPosPagoConstantes.ACERTO_CONCILIACAO_CONTRA_OPERADORA_LD);		
+		return somaValoresRepasse(map, DemonstrativoPosPagoConstantes.TITULO, DemonstrativoPosPagoConstantes.ACERTO_CONCILIACAO_CONTRA_CLARO,DemonstrativoPosPagoConstantes.ACERTO_CONCILIACAO_CONTRA_OPERADORA_LD);		
 	}
 	
 	
@@ -826,16 +1061,16 @@ public class RelatorioRepasseServiceImpl extends AbstractService implements Rela
 	public List<SccRetornoRepasseView> pesquisaRetornoRepasse(ConsultaRepassePosTO to) throws DAOException,ServiceException {
 
 		List<SccRetornoRepasseView> listRetornoRepasse = null;
-		if(to != null){
-			
-			listRetornoRepasse = getRetornoRepasseDAO().pesquisaRetornoRepasse(to.getCdEOTClaro(), 
-					to.getCdEOTLD(), to.getCdProdutoCobilling(), 
-					to.getDtInicialRepasse(), to.getDtFinalRepasse());
-			
-		}
-		
+		if(to != null){			
+			if(to.getCdProdutoCobilling() == 2 || to.getCdProdutoCobilling() == 21 ){
+				listRetornoRepasse = getRetornoRepasseDAO().pesquisaRetornoRepasseAss(to.getCdEOTClaro(), 
+						to.getCdEOTLD(), to.getCdProdutoCobilling(), to.getDtInicialRepasse(), to.getDtFinalRepasse());
+			}else{
+				listRetornoRepasse = getRetornoRepasseDAO().pesquisaRetornoRepasse(to.getCdEOTClaro(), 
+						to.getCdEOTLD(), to.getCdProdutoCobilling(), to.getDtInicialRepasse(), to.getDtFinalRepasse());
+			}			
+		}		
 		return listRetornoRepasse;
-
 	}
 
 	@Override

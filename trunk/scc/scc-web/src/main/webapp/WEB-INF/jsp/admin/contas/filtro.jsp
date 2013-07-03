@@ -16,6 +16,7 @@ $(document).ready(function(){
 	$('#cancelar_button').click(cancelar);
 	$('#pesquisar_button').click(pesquisar);	
 	$('#salvar_button').click(salvar);
+	$('#excel_button').click(excel)
 	$('#tabs').tabs();
 });
 
@@ -69,6 +70,11 @@ function cancelar() {
 	$('#form1').submit();
 }
 
+function excel() {
+	$('#operacao').val("excel");
+	$('#form1').submit();
+}
+
 function num(dom){
     dom.value=dom.value.replace(/\D/g,""); 
 }
@@ -95,7 +101,7 @@ function num(dom){
     <input id="novo_button" type="button" value=<spring:message code="crud.botao.novo"/> />
     <input id="pesquisar_button" type="button" value="Pesquisar" />
     <c:if test="${!empty sessionScope._DISPLAY_TAG_SPACE_1}">
-    <input id="novo_button" type="button" value="Excel" />
+    <input id="excel_button" type="button" value="Excel" />
     </c:if>
     </td>
 </tr>

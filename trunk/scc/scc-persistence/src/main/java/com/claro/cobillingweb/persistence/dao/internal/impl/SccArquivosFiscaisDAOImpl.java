@@ -46,7 +46,7 @@ public class SccArquivosFiscaisDAOImpl extends HibernateBasicDAOImpl<SccArquivos
 				mapper.addArgument("cdCSP", cdCSP, SccArquivosFiscaisDAONativeSQL.FILTRO_CD_CSP);
 			}
 			if(cdCiclo != null && !cdCiclo.equals("")){
-				mapper.addArgument("codigoCiclo", cdCiclo , SccArquivosFiscaisDAONativeSQL.FILTRO_CD_CICLO);
+				mapper.addArgument("cdCiclo", cdCiclo , SccArquivosFiscaisDAONativeSQL.FILTRO_CD_CICLO);
 			}
 			if(mesCiclo != null && !mesCiclo.equals("")){
 				mapper.addArgument("mesCiclo", mesCiclo, SccArquivosFiscaisDAONativeSQL.FILTRO_MES_CICLO);
@@ -56,7 +56,7 @@ public class SccArquivosFiscaisDAOImpl extends HibernateBasicDAOImpl<SccArquivos
 			
 			mapper.addResultMap("cdCSP", String.class);
 			mapper.addResultMap("sgUF", String.class);
-			mapper.addResultMap("anoCiclo", Integer.class);
+			mapper.addResultMap("anoCiclo", String.class);
 			mapper.addResultMap("mesCiclo", Integer.class);
 			mapper.addResultMap("codigoCiclo", Integer.class);
 			mapper.addResultMap("noArquivo", String.class);

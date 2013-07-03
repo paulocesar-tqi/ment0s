@@ -28,13 +28,15 @@ public class DemonstrativoAssinaturaPreExcelExportHandler extends BasicExcelHand
 	ExcelStyle style = new DefaultStyle();
 	ExcelStyle currencyStyle = new CurrencyStyle();
 	ExcelStyle integerStyle = new IntegerStyle();
-
-	protected void buildExcelDocument(Map<String, Object> model, HSSFWorkbook workbook, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	
+	protected void buildExcelDocument(Map<String, Object> model,HSSFWorkbook workbook, 
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
 
 		@SuppressWarnings("unchecked")
 		List<SccPreFechamentoAssinaturaDecorator> decoratorList = (List<SccPreFechamentoAssinaturaDecorator>) getFromSession(DemonstrativoRepassePrePagoController.DEMONSTRATIVO_ASSINATURAS, request);
-
-		if (decoratorList == null) {
+		
+		if (decoratorList == null){
 			throw new ControllerExecutionException("Navegação inválida. Tabela é nula!.");
 		}
 
@@ -67,8 +69,7 @@ public class DemonstrativoAssinaturaPreExcelExportHandler extends BasicExcelHand
 		ExcelPrinter printer = new ExcelPrinter(columnDefinitions, workbook);
 		printer.addSheet("Demonstrativo de Assinaturas");
 		List<String> linhasCabecalho = new ArrayList<String>();
-		// SccPreFechamentoAssinaturaDecorator demonstrativoAssinatura =
-		// (SccPreFechamentoAssinaturaDecorator) decoratorList;
+		//SccPreFechamentoAssinaturaDecorator demonstrativoAssinatura = (SccPreFechamentoAssinaturaDecorator) decoratorList;
 		linhasCabecalho.add("DEMONSTRATIVO DE ASSINATURAS PRÉ PAGO");
 		// linhasCabecalho.add("PRESTADORA LD: "+demonstrativoAssinatura.getOperadoraLD().getDsOperadora()+"("+demonstrativoAssinatura.getOperadoraLD().getCdEot()+")");
 		// linhasCabecalho.add("FILIAL CLARO: "+demonstrativoAssinatura.getOperadoraClaroDs()+"("+demonstrativoAssinatura.getOperadoraClaro().getCdEot()+")");

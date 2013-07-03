@@ -6,6 +6,8 @@ public class RelatorioNaoConfBatimentoEstornoDebitoForm extends BaseForm {
 	
 	BatimentoEstornoDebitoView entity;
 	
+	private String cdEOTClaro;
+	
 	private Long mesReferencia;
 	
 	private Long anoReferencia;
@@ -35,5 +37,15 @@ public class RelatorioNaoConfBatimentoEstornoDebitoForm extends BaseForm {
 	public void setEntity(BatimentoEstornoDebitoView entity) {
 		this.entity = entity;
 	}
+
+	public String getCdEOTClaro() {
+		return cdEOTClaro;
+	}
+
+	public void setCdEOTClaro(String cdEOTClaro) {
+		this.cdEOTClaro = cdEOTClaro;
+	}
+	
+	
 	
 }

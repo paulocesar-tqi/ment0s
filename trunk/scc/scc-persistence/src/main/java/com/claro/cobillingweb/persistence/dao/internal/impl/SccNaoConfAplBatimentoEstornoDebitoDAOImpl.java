@@ -51,11 +51,11 @@ public class SccNaoConfAplBatimentoEstornoDebitoDAOImpl extends
 			}
 			
 			if(filtro.getMmCiclo() != null && !filtro.getMmCiclo().equals(BasicDAO.GET_ALL)){
-				mapper.addArgument("mmReferencia", filtro.getOperadoraClaro(), SccNaoConfAplBatimentoEstornoDebitoSQL.FILTRO_MM_REFERENCIA);
+				mapper.addArgument("mmReferencia", filtro.getMmCiclo(), SccNaoConfAplBatimentoEstornoDebitoSQL.FILTRO_MM_REFERENCIA);
 			}
 
 			
-			mapper.addArgument("operadoraLD", String.class);
+			mapper.addResultMap("operadoraLD", String.class);
 			mapper.addResultMap("operadoraClaro", String.class);
 			mapper.addResultMap("uf", String.class);
 			mapper.addResultMap("ciclo", Integer.class);

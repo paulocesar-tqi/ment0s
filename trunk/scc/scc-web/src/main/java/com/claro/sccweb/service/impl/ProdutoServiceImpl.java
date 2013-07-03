@@ -2,6 +2,7 @@ package com.claro.sccweb.service.impl;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.claro.cobillingweb.persistence.dao.DAOException;
@@ -13,12 +14,16 @@ import com.claro.cobillingweb.persistence.entity.SccComposicaoProduto;
 import com.claro.cobillingweb.persistence.entity.SccItemCobilling;
 import com.claro.cobillingweb.persistence.entity.SccProdutoCobilling;
 import com.claro.cobillingweb.persistence.entity.SccServicoAdicional;
+import com.claro.cobillingweb.persistence.service.ServiceException;
 import com.claro.sccweb.service.AbstractService;
 import com.claro.sccweb.service.ProdutoService;
 
 public class ProdutoServiceImpl extends AbstractService implements ProdutoService {
 
+	@Autowired
 	private SccProdutoCobillingDAO produtoCobillingDAO;
+	
+	@Autowired
 	private SccComposicaoProdutoDAO composicaoProdutoDAO;
 	private SccItemCobillingDAO itemCobillingDAO;
 	private SccServicoAdicionalDAO servicoAdicionalDAO;
@@ -48,23 +53,32 @@ public class ProdutoServiceImpl extends AbstractService implements ProdutoServic
 
 	 
 	@Transactional
-	public void create(SccComposicaoProduto entity) throws DAOException {
+	@Override
+	public void create(SccComposicaoProduto entity) throws DAOException, ServiceException {
 		getComposicaoProdutoDAO().create(entity);
 		
 	}
 
 	 
 	@Transactional
-	public void update(SccComposicaoProduto entity) throws DAOException {
+	@Override
+	public void update(SccComposicaoProduto entity) throws DAOException, ServiceException {
 		getComposicaoProdutoDAO().update(entity);
 		
 	}
 
 	 
 	@Transactional
-	public void delete(SccComposicaoProduto entity) throws DAOException {
+	@Override
+	public void delete(SccComposicaoProduto entity) throws DAOException, ServiceException {
 		getComposicaoProdutoDAO().delete(entity);
 		
+	}
+	
+	@Transactional
+	@Override
+	public void deleteEntity(Long cdComponente) throws DAOException, ServiceException{
+		this.composicaoProdutoDAO.deleteEntity(cdComponente);
 	}
 
 	public SccComposicaoProdutoDAO getComposicaoProdutoDAO() {
@@ -112,6 +126,16 @@ public class ProdutoServiceImpl extends AbstractService implements ProdutoServic
 	public void delete(SccProdutoCobilling entity) throws DAOException {
 		getProdutoCobillingDAO().delete(entity);
 		
+	}
+	
+	@Override
+	public SccComposicaoProduto carregarEntidade(Long cdComponente) throws DAOException{
+		return this.composicaoProdutoDAO.carregarEntidade(cdComponente);
+	}
+	
+	@Override
+	public SccComposicaoProduto findById(Long id)throws DAOException, ServiceException {
+		return this.composicaoProdutoDAO.findById(id);
 	}
 
 	 

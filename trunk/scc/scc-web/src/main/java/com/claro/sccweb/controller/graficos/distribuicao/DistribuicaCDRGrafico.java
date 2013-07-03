@@ -18,10 +18,14 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.view.AbstractView;
 
 import com.claro.sccweb.controller.BaseFormController;
-import com.eteks.java2d.PJABufferedImage;
+//import com.eteks.java2d.PJABufferedImage;
+import com.claro.sccweb.form.DistribuicaoCDRForm;
+import com.claro.sccweb.form.SccDisputaForm;
 
 
 /**
@@ -29,6 +33,8 @@ import com.eteks.java2d.PJABufferedImage;
  * sds.systechnet@gmail.com .
  * 
  */
+//@Controller
+//@RequestMapping(value="/user/cdr/distribuicao/grafico")
 public class DistribuicaCDRGrafico extends AbstractView {
 
 	 	private final static int DEFAULT_WIDTH = 550;
@@ -45,8 +51,11 @@ public class DistribuicaCDRGrafico extends AbstractView {
 	        nf.setMaximumFractionDigits(2);
 	    }
 	
-	 
-	protected void renderMergedOutputModel(Map<String, Object> model,HttpServletRequest request, HttpServletResponse response) throws Exception {
+	//@RequestMapping("/graficoBarras.png")	 
+	public void renderMergedOutputModel(Map<String, Object> model,HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		//DistribuicaoCDRForm form = (DistribuicaoCDRForm) model.get("filtro");
+		//List<ItemGraficoDistribuicao> tabela = (List<ItemGraficoDistribuicao>) form.getLstItemGrafico();
 		 List<ItemGraficoDistribuicao> tabela = (List<ItemGraficoDistribuicao>)request.getSession().getAttribute(BaseFormController.DISPLAY_TAG_SPACE_2);		
 		 ServletOutputStream out = response.getOutputStream();
 		 BufferedImage bImg = createChart(tabela, DEFAULT_WIDTH, DEFAULT_HEIGHT);
@@ -84,7 +93,7 @@ public class DistribuicaCDRGrafico extends AbstractView {
                     System.setProperty ("java.awt.fonts", "./fonts");
                     //System.setProperty ("java.awt.graphicsenv", "com.eteks.java2d.PJAGraphicsEnvironment");
                     
-                	bImg = new PJABufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+                	//bImg = new PJABufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
             	}
             }
             Font font1 = new Font("", Font.PLAIN, 10);
@@ -174,9 +183,9 @@ public class DistribuicaCDRGrafico extends AbstractView {
                             height-20);
                     drawBar(g2d, xpos+(barWidth/2)+25, height-14, 1, 8);
                     g2d.setFont(font2);
-                    g2d.drawString(nf.format(item.getValorEncaminhado()), xpos-3, height-35);
-                    g2d.drawString(nf.format(item.getValorAlocado()), xpos+barWidth*2/3+5, height-35);
-                    g2d.drawString(nf.format(item.getValorFaturado()), xpos+barWidth*5/3-5,
+                    g2d.drawString(item.getValorEncaminhado().toString(), xpos-3, height-35);
+                    g2d.drawString(item.getValorAlocado().toString(), xpos+barWidth*2/3+5, height-35);
+                    g2d.drawString(item.getValorFaturado().toString(), xpos+barWidth*5/3-5,
                             height-35);
                     
                     color = getBlueColor(xpos, ypos, barWidth*2/3, barHeight);
@@ -214,8 +223,8 @@ public class DistribuicaCDRGrafico extends AbstractView {
                             height-20);
                     drawBar(g2d, xpos+(barWidth/2)+25, height-14, 1, 8);
                     g2d.setFont(font2);
-                    g2d.drawString(nf.format(item.getValorAlocado()), xpos+3, height-35);
-                    g2d.drawString(nf.format(item.getValorFaturado()), xpos+barWidth,
+                    g2d.drawString(item.getValorAlocado().toString(), xpos+3, height-35);
+                    g2d.drawString(item.getValorFaturado().toString(), xpos+barWidth,
                             height-35);
                     
                     color = getRedColor(xpos, ypos, barWidth, barHeight);
@@ -235,8 +244,8 @@ public class DistribuicaCDRGrafico extends AbstractView {
             }
         } else {
             
-            bImg = new PJABufferedImage(prefWidth, prefHeight, 
-                    BufferedImage.TYPE_BYTE_INDEXED);
+//            bImg = new PJABufferedImage(prefWidth, prefHeight, 
+//                    BufferedImage.TYPE_BYTE_INDEXED);
             g2d = bImg.createGraphics();
             
             g2d.setPaint(Color.WHITE);

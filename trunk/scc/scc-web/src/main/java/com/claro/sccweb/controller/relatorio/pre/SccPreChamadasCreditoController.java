@@ -38,6 +38,8 @@ import com.claro.sccweb.service.ServiceException;
 @RequestMapping(value="/user/relatorio/chamadas/credito")
 public class SccPreChamadasCreditoController extends
 			BaseOperationController<SccPreChamadasCreditoForm> {
+	
+		private static final String FWD_VIEW_EXCEL ="relatorio_chamadas_credito_excel";
 		
 		@Autowired
 		private SccPreChamadasCreditoService sccPreChamadasCreditoService;
@@ -61,6 +63,12 @@ public class SccPreChamadasCreditoController extends
 			return mav;
 
 		}
+		
+		public ModelAndView excel(HttpServletRequest request,HttpServletResponse response, BaseForm _form,BindingResult bindingResult, Model model) throws Exception {
+			ModelAndView mav = new ModelAndView(FWD_VIEW_EXCEL);
+			return mav;
+		}
+
 		
 		private List<SccPreChamadasCreditoView> gerarPreChamadasCredito(SccPreChamadasCreditoForm form) throws DAOException, ServiceException {
 			return sccPreChamadasCreditoService.gerarPreChamadasCredito(form.getDtInicioCredito(), form.getDtFimCredito(), form.getCdEOTLD(), form.getCdEOTClaro(), form.getTpStatusCredito());

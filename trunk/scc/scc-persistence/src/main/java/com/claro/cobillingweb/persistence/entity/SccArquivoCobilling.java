@@ -142,7 +142,7 @@ public class SccArquivoCobilling implements Serializable {
 	}
 
 
-    @Temporal( TemporalType.DATE)
+    //@Temporal( TemporalType.DATE)
 	@Column(name="DT_CONNECT")
 	public Date getDtConnect() {
 		return this.dtConnect;
@@ -197,7 +197,7 @@ public class SccArquivoCobilling implements Serializable {
 	}
 
 
-    @Temporal( TemporalType.DATE)
+   // @Temporal( TemporalType.DATE)
 	@Column(name="DT_PROC_CLARO")
 	public Date getDtProcClaro() {
 		return this.dtProcClaro;

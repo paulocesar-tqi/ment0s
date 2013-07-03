@@ -20,7 +20,7 @@ public class SccFaturaView implements Serializable {
 	private static final long serialVersionUID = -1378694094457260502L;
 	
 	private String eotClaro;
-	private Character csp;
+	private String csp;
 	private String operadoraLD;
 	private String uf;
 	private String cicloMesAno;
@@ -62,10 +62,10 @@ public class SccFaturaView implements Serializable {
 	public void setEotClaro(String eotClaro) {
 		this.eotClaro = eotClaro;
 	}
-	public Character getCsp() {
+	public String getCsp() {
 		return csp;
 	}
-	public void setCsp(Character csp) {
+	public void setCsp(String csp) {
 		this.csp = csp;
 	}
 	public String getOperadoraLD() {

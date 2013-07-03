@@ -15,12 +15,18 @@ $(document).ready(function(){
 	$('#cdEOTLD').change(selecionaLD);
 	$('#cdTipoContrato').change(selecionaTipoContrato);
 	$('#cdProdutoCobilling').change(selecionaProdutoPos);
-	$('#cdProdutoPrePago').change(selecionaProdutoPre);
+	//$('#cdProdutoPrePago').change(selecionaProdutoPre);
 	
 	$('#pesquisar_button').click(function(){
 		$('#operacao').val("pesquisar");
 		$('#form1').submit();
 	});
+
+	$('#atualizar_button').click(function(){
+		$('#operacao').val("atualizar_status");
+		$('#form1').submit();
+		
+	})
 	
 	$('cdProdutoPrePago').hide();
 		
@@ -110,6 +116,19 @@ else
 	}
 }
 
+$('body').delegate('.update_chk', 'click', function(){
+	
+});
+
+//$('body').delegate('.update_pgto_repasse', 'click', function(){
+	
+//	$('#atualizar_button').click(function(){
+//		$('#operacao').val("atualizar_status");
+//		$('#form1').submit();
+//	});
+
+	
+//});
 
 </script>
 
@@ -119,25 +138,25 @@ else
 </ul>
 <form:form modelAttribute="filtro" method="post" action="execute.scc" id="form1">
 <form:hidden path="operacao" id="operacao"/>
-<form:hidden path="linhaSelacionada" id="linhaSelacionada"/>
+
 <div id="tabs-1">
 <table width="100%" border="0" cellspacing="0" cellpadding="0" >
 <tr>
     <td width="10%"><spring:message code="pagamento_operadoraClaro"/>:</td>
-    <td ><form:select path="cdEOT" id="cdEOT" items="${operadorasClaro}" itemLabel="dsOperadora" itemValue="cdEot" />
+    <td ><form:select path="cdEOT" id="cdEOT" items="${operadorasClaro}" itemLabel="dsOperadoraForCombos" itemValue="cdEot" />
     <form:errors path="cdEOT" /></td>
 </tr>
 
 
 <tr>
     <td width="10%"><spring:message code="pagamento_operadoraLD"/>:</td>
-    <td ><form:select path="cdEOTLD" id="cdEOTLD" items="${operadorasExternas}" itemLabel="dsOperadora" itemValue="cdEot" />
+    <td ><form:select path="cdEOTLD" id="cdEOTLD" items="${operadorasExternas}" itemLabel="dsOperadoraForCombos" itemValue="cdEot" />
     <form:errors path="cdEOTLD" /></td>
 </tr>
 <tr>
 	<td width="10%"><spring:message code="pagamento_produto"/>:</td>
     <td ><form:select path="cdProdutoCobilling" id="cdProdutoCobilling" items="${produtos}" itemLabel="noProdutoCobilling" itemValue="cdProdutoCobilling" />
-    <td ><form:select path="cdProdutoPrePago" id="cdProdutoPrePago" items="${produtosPrePago}" itemLabel="noProdutoPrepago" itemValue="cdProdutoPrepago" />
+   
     <form:errors path="cdProdutoCobilling" /></td>
 </tr>
 
@@ -145,14 +164,14 @@ else
 <tr>
 	<td width="10%"><spring:message code="pagamento_tipoContrato"/>:</td>
     <td ><form:select path="cdTipoContrato" id="cdTipoContrato" items="${tiposContrato}" itemLabel="label" itemValue="key" />
-    <form:errors path="cdProdutoCobilling" /></td>
+
 </tr>
 
 
 <tr>    
     <td width="10%"><spring:message code="pagamento_periodo"/>:</td>
     <td ><form:select path="cdPeriodicidade" id="cdPeriodicidade" items="${periodos}" itemLabel="noPeriodicidadeRepasse" itemValue="cdPeriodicidadeRepasse" />
-    <form:errors path="cdPeriodicidade" /></td>
+    
 </tr>
 <tr>    
     <td width="10%"><spring:message code="pagamento_mes"/>:</td>
@@ -176,16 +195,47 @@ else
 </table>
 
 <table>
-<display:table  name="sessionScope._DISPLAY_TAG_SPACE_1"  pagesize="10"  style="width:90%" id="repasses" requestURI="/scc/user/pagamento/relatorio/tab1.scc" class="ui-state-default">
-<display:column property="operadoraClaro" title="Operadora Claro" />
-<display:column property="operadoraLD" title="Operadora LD" />
-<display:column property="nuRepasse" title="Repasse" />
-<display:column property="vlrRepasse" title="Valor do Repasse" />
-<display:column property="sqArquivoRemessaSap" title="Arq. Remessa SAP" />
-<display:column property="sqArquivoRetornoSap" title="Arq. Retorno SAP" />
-<display:column property="dtPagamentoSap" title="Dt. Pagamento SAP" />
-<display:column property="vlPagamentoSap" title="Vlr. Pagamento SAP" />
+<display:table  
+	name="requestScope.filtro.listPagamentoSAPDecorator"
+	id="repasses"  
+	pagesize="10"  
+	style="width:90%"
+	requestURI="/scc/user/pagamento/relatorio/tab1.scc" 
+	class="ui-state-default"
+>
+	<display:column property="operadoraClaro" title="Operadora Claro" />
+	<display:column property="operadoraLD" title="Operadora LD" />
+	<display:column property="nuRepasse" title="Repasse" />
+	<display:column property="uf" title="UF" />
+	<display:column property="vlrRepasse" title="Valor do Repasse" />
+	<display:column property="dtRepasse" title="Dt Pagamento" />
+	<display:column property="sqArquivoRemessaSap" title="Arq. Remessa SAP" />
+	<display:column property="sqArquivoRetornoSap" title="Arq. Retorno SAP" />
+	<display:column property="dtPagamentoSap" title="Dt. Pagamento SAP" />
+	<display:column property="vlPagamentoSap" title="Vlr. Pagamento SAP" />
+	<display:column>
+		<input type="hidden" value="${repasses.nuRepasse}" />
+	</display:column>
+	
+	<display:column title="lancar">				
+		<input type="hidden" name="nuRepasse" value="${repasses.nuRepasse }"  />
+	
+		<input type="checkbox" name="lancadosSelecionados" value="${repasses.nuRepasse }" <c:if test="${repasses.lancadoChecked}"> checked="checked" </c:if> />
+	</display:column>
+
 </display:table>
+<br>
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr>
+				    <td colspan="3" class="TdFormularioUp">&nbsp;</td>    
+				    <td colspan="1" align="right" class="TdFormularioUp" nowrap="nowrap">
+					    <input id="atualizar_button" type="button" class="update_pgto_repasse" value=<spring:message code="crud.botao.atualizar"/> />
+
+
+			    	</td>
+				</tr>
+			</table>
+
 </table>
 
 </div>

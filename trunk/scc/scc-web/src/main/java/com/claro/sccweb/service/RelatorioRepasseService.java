@@ -195,5 +195,10 @@ public interface RelatorioRepasseService {
 	 */
 	public List<PenalidadeRejeicaoView> pesquisaPenalidadeRejeicao(ConsultaRepassePosTO to) throws DAOException,ServiceException;
 
+	List<DemonstrativoRepassePosDecorator> carregarDemonstrativoRepasseConsolidado(
+			String cdEOTClaro, String cdEOTLD, Long cdProdutoCobilling,
+			Date dtInicial, Date dtFinal, boolean holding) throws DAOException,
+			ServiceException;
+
 
 }

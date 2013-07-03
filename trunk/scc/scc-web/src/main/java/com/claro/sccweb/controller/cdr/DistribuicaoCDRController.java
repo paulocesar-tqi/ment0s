@@ -9,11 +9,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.codehaus.jettison.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -21,16 +23,20 @@ import org.springframework.web.servlet.ModelAndView;
 import com.claro.cobillingweb.persistence.dao.BasicDAO;
 import com.claro.cobillingweb.persistence.entity.SccArquivoSumarizado;
 import com.claro.cobillingweb.persistence.entity.SccOperadora;
+import com.claro.cobillingweb.persistence.entity.SccPeriodicidadeRepasse;
+import com.claro.cobillingweb.persistence.entity.SccProdutoCobilling;
 import com.claro.sccweb.controller.BaseOperationController;
 import com.claro.sccweb.controller.graficos.distribuicao.ItemGraficoDistribuicao;
+import com.claro.sccweb.controller.util.BasicIntegerItem;
 import com.claro.sccweb.controller.util.BasicStringItem;
 import com.claro.sccweb.controller.validator.DistribuicaoCDRValidator;
 import com.claro.sccweb.decorator.rownum.entity.SccArquivoSumarizadoDecorator;
 import com.claro.sccweb.form.BaseForm;
 import com.claro.sccweb.form.DistribuicaoCDRForm;
+import com.claro.sccweb.form.SolicitacaoRepassePosPagoForm;
 
-@Controller
-@RequestMapping(value="/user/cdr/distribuicao")
+//@Controller
+//@RequestMapping(value="/user/cdr/distribuicao")
 public class DistribuicaoCDRController extends BaseOperationController<DistribuicaoCDRForm>{
 
 	private final DistribuicaoCDRValidator validator = new DistribuicaoCDRValidator();
@@ -216,5 +222,43 @@ public class DistribuicaoCDRController extends BaseOperationController<Distribui
 		return super.populaOperadorasExternas(false);
 	}
 	*/
+	
+	
+	/**
+	 * Carrega uma lista vazia de produtos de cobilling. 
+	 * Essa lista só será populada após seleção da Operadora LD.
+	 * @return
+	 * @throws Exception
+	 */
+	@ModelAttribute("produtos")
+	public List<SccProdutoCobilling> populaProdutosCobilling() throws Exception {
+		List<SccProdutoCobilling> produtos = getServiceManager().getContratoService().pesquisaProdutosOperadoraLD(BasicDAO.GET_ALL.toString());
+		SccProdutoCobilling nullValue = new SccProdutoCobilling();
+		nullValue.setNoProdutoCobilling("Todos");
+		nullValue.setCdProdutoCobilling(BasicDAO.GET_ALL);
+		produtos.add(0,nullValue);
+		return produtos;
+	}
+	
+	/**
+	 * Popula os produtos que a LD possui acordados com a Claro.
+	 * @param cdEOT
+	 * @param request
+	 * @param response
+	 * @param form
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/json/lista_produtos/{cdEOT}" , method=RequestMethod.GET)
+	public void pesquisaProdutosLD(@PathVariable("cdEOT") String cdEOT,HttpServletRequest request, HttpServletResponse response,@ModelAttribute("form") SolicitacaoRepassePosPagoForm form) throws Exception {		
+		List<SccProdutoCobilling> produtos = getServiceManager().getContratoService().pesquisaProdutosOperadoraLD(cdEOT);		
+		JSONObject jsonResponse = new JSONObject();				
+		jsonResponse.put(BasicDAO.GET_ALL.toString(),"Todos");		
+		for (int i=0;i<produtos.size();i++) {			
+			jsonResponse.put(produtos.get(i).getCdProdutoCobilling().toString(), produtos.get(i).getNoProdutoCobilling());			
+		}
+		response.setContentType("application/json");
+		response.getWriter().print(jsonResponse.toString());
+	}
+
 	
 }

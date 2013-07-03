@@ -9,6 +9,7 @@ import org.springframework.web.servlet.view.document.AbstractExcelView;
 
 import com.claro.scc.spring.ApplicationContextProvider;
 import com.claro.sccweb.excel.style.CurrencyStyle;
+import com.claro.sccweb.excel.style.DateStyle;
 import com.claro.sccweb.excel.style.DefaultStyle;
 import com.claro.sccweb.excel.style.ExcelStyle;
 import com.claro.sccweb.excel.style.IntegerStyle;
@@ -23,6 +24,7 @@ public abstract class BasicExcelHandler extends AbstractExcelView  {
 	protected ExcelStyle style = new DefaultStyle();
 	protected ExcelStyle currencyStyle = new CurrencyStyle();
 	protected ExcelStyle integerStyle = new IntegerStyle();
+	protected ExcelStyle dateStyle = new DateStyle();
 	
 	protected Logger logger = Logger.getLogger(BaseFormController.class);
 	

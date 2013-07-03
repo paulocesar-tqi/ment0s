@@ -14,7 +14,7 @@ public class SccEncaminhadoMobileView {
 	private Date dtRelatorio;
 	private String noArquivoReferencia;
 	private Integer qtChamadas;
-	private Integer qtMinutoTarifados;
+	private Double qtMinutoTarifados;
 	private Double vlLiquido;
 	private Integer nuItem;
 	private Integer sqRelatorioSumarizado;
@@ -38,10 +38,10 @@ public class SccEncaminhadoMobileView {
 	public void setQtChamadas(Integer qtChamadas) {
 		this.qtChamadas = qtChamadas;
 	}
-	public Integer getQtMinutoTarifados() {
+	public Double getQtMinutoTarifados() {
 		return qtMinutoTarifados;
 	}
-	public void setQtMinutoTarifados(Integer qtMinutoTarifados) {
+	public void setQtMinutoTarifados(Double qtMinutoTarifados) {
 		this.qtMinutoTarifados = qtMinutoTarifados;
 	}
 	public Double getVlLiquido() {

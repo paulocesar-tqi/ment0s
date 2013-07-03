@@ -2,6 +2,7 @@ package com.claro.sccweb.decorator.view;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.claro.cobillingweb.persistence.constants.CobillingConstants;
 import com.claro.cobillingweb.persistence.entity.SccArquivoSumarizado;
 import com.claro.sccweb.decorator.rownum.RownumDecorator;
 import com.claro.sccweb.vo.PerdaFaturamentoVO;
@@ -60,7 +61,7 @@ public class SccFinanceiroPerdaFaturamentoDecorator extends RownumDecorator<Perd
 	public String getQtdCdr(){
 		String value = "";
 		if(getRow().getQtdCdr() != null){
-			value = formataLong(getRow().getQtdCdr());
+			value = formataLong2(getRow().getQtdCdr());
 		}
 		return value;
 	}
@@ -73,15 +74,13 @@ public class SccFinanceiroPerdaFaturamentoDecorator extends RownumDecorator<Perd
 		return value;
 	}
 	
-	public String getFileType(){
-		String value = "";
-		if(StringUtils.isNotEmpty(getRow().getFileType())){
-			value = getRow().getFileType();
-		}
+    public String getFileType() {
+    	String value = "";
+        String tSTATUS[] = CobillingConstants.buscaStatusFinancial(""+getRow().getCdStatusCdr());
+        String tSUBSTATUS[] = CobillingConstants.buscaConfigCdrSubStatus(""+getRow().getCdSubStatusCdr());
+        value = (tSUBSTATUS==null?(tSTATUS==null?" ":tSTATUS[1]):tSUBSTATUS[1]);
 		return value;
-	}
-	
-	
+    }
 	
 
 	@Override

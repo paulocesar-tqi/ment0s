@@ -22,10 +22,12 @@ public class SccBatimentoInterfaceDAONativeSQL {
 									 		" SCC_ARQUIVO_COBILLING SCC,"+
 											" BL8_FTP_SCC_FILE MOBILE"+
 									" WHERE "+
-											" MOBILE.FILE_NAME       = SCC.NO_ARQUIVO_IFC(+) "+
-											" AND MOBILE.MKT_EOT           = SCC.CD_EOT_CLARO(+)";										
+											" MOBILE.MKT_EOT           = SCC.CD_EOT_CLARO(+)";										
 										
 	
+	public static final String FILTRO_SEM_SUBSTR = "AND MOBILE.FILE_NAME       = SCC.NO_ARQUIVO_IFC(+) ";
+	
+	public static final String FILTRO_COM_SUBSTR = "AND SUBSTR(MOBILE.FILE_NAME,1,33)    = SCC.NO_ARQUIVO_IFC(+) ";
 	
 	public static final String FILTRO_DT_INICIO = "AND TRUNC(MOBILE.FILE_CREATE_DATE) >= :dtInicio ";
 	

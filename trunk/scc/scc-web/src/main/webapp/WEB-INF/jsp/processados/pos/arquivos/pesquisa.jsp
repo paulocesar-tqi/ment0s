@@ -86,13 +86,13 @@ function mostraOperadoraClaro()
 
 <tr>
     <td width="10%"><spring:message code="recepcao_transmissao.operadoraClaro"/>:</td>    
-    <td id="comboOperadoraClaro"><form:select path="operadoraClaro" id ="comboOperadora" items="${operadorasClaro}" itemLabel="dsOperadora" itemValue="cdEot" /></td>
+    <td id="comboOperadoraClaro"><form:select path="operadoraClaro" id ="comboOperadora" items="${operadorasClaro}" itemLabel="dsOperadoraForCombos" itemValue="cdEot" /></td>
     
 </tr>
 
 <tr>
     <td width="10%"><spring:message code="recepcao_transmissao.operadoraExterna"/>:</td>
-    <td ><form:select path="operadoraExterna" items="${operadorasExternas}" itemLabel="dsOperadora" itemValue="cdEot" /></td>
+    <td ><form:select path="operadoraExterna" items="${operadorasExternas}" itemLabel="dsOperadoraForCombos" itemValue="cdEot" /></td>
 </tr>
 </br>
 <tr>

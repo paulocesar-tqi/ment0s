@@ -18,4 +18,33 @@ public class SccAtividadeContabilDecorator extends RownumDecorator<SccAtividadeC
 		return formataDate(getRow().getDtExpiracao());
 	}
 	
+	
+	public String getDsAtividadeContabil() {
+		return (getRow().getDsAtividadeContabil());		 
+	}
+	
+	public String getDominioContabil() {
+		return (getRow().getDominioContabil().getDsDominioContabil());		 
+	}
+	
+	public String getContaCredito() {
+		return (getRow().getContaCredito().getDsConta());		 
+	}
+	
+	public String getContaDebito() {
+		return (getRow().getContaDebito().getDsConta());		 
+	}
+	
+	public String getOperadoraLD() {
+		return (getRow().getOperadoraLD().getDsOperadora());		 
+	}
+	
+	public String getOperadoraLDEOT() {
+		return (getRow().getOperadoraLD().getCdEot());		 
+	}
+
+	public String getTxHistoricoAtividade() {
+		return (getRow().getTxHistoricoAtividade());		 
+	}
+	
 }

@@ -63,12 +63,12 @@ function excel()
 <table width="100%" border="0" cellspacing="0" cellpadding="0" >
 <tr>
     <td width="15%">Operadora Claro:</td>    
-    <td ><form:select id="operadoraClaro" path="operadoraClaro"  items="${operadorasClaro}" itemLabel="dsOperadora" itemValue="cdEot" /></td>    
+    <td ><form:select id="operadoraClaro" path="operadoraClaro"  items="${operadorasClaro}" itemLabel="dsOperadoraForCombos" itemValue="cdEot" /></td>    
 </tr>
 
 <tr>
     <td width="15%">Operadora Externa:</td>    
-    <td><form:select path="operadoraExterna" id="operadoraExterna" items="${operadorasExternas}" itemLabel="dsOperadora" itemValue="cdEot" /></td>    
+    <td><form:select path="operadoraExterna" id="operadoraExterna" items="${operadorasExternas}" itemLabel="dsOperadoraForCombos" itemValue="cdEot" /></td>    
 </tr>
 
 <tr>

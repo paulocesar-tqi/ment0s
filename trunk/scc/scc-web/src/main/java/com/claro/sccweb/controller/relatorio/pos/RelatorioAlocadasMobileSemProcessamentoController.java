@@ -1,6 +1,5 @@
 package com.claro.sccweb.controller.relatorio.pos;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -8,8 +7,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,8 +16,6 @@ import com.claro.cobillingweb.persistence.dao.DAOException;
 import com.claro.cobillingweb.persistence.view.SccAlocadasMobileSemProcessamentoView;
 import com.claro.sccweb.controller.BaseOperationController;
 import com.claro.sccweb.controller.validator.RelatorioAlocadasMobileSemProcessamentoValidator;
-import com.claro.sccweb.decorator.rownum.entity.SccAlocadasMobileSemProcessamentoViewDecorator;
-import com.claro.sccweb.form.BaseForm;
 import com.claro.sccweb.form.RelatorioAlocadasMobileSemProcessamentoForm;
 import com.claro.sccweb.service.SccAlocadasMobileSemProcessamentoService;
 import com.claro.sccweb.service.ServiceException;
@@ -33,24 +28,30 @@ public class RelatorioAlocadasMobileSemProcessamentoController extends
 	@Autowired
 	private SccAlocadasMobileSemProcessamentoService sccAlocadasMobileSemProcessamentoService;
 	
+	public static final String FWD_EXCEL_ALOCADAS_MOBILE_SEM_PROCESSAMENTO = "relatorio_alocadas_mobile_sem_processamento_filtro_excel";
+	private static final String FWD_VIEW_ALOCADAS_MOBILE_SEM_PROCESSAMENTO ="relatorio_alocadas_mobile_sem_processamento_filtro";
+	private static final String OPERACAO_EXCEL =	"excel";
+	
 	private final RelatorioAlocadasMobileSemProcessamentoValidator validator = new RelatorioAlocadasMobileSemProcessamentoValidator();
 	
-	public ModelAndView pesquisar(HttpServletRequest request, HttpServletResponse response, BaseForm form, BindingResult bindingResult, Model model) throws Exception {
+	@RequestMapping(value="listar", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView pesquisarByFiltro(HttpServletRequest request, HttpServletResponse response, RelatorioAlocadasMobileSemProcessamentoForm form) throws Exception {
 		
-		RelatorioAlocadasMobileSemProcessamentoForm formAlocadasMobileSemProcessamento = (RelatorioAlocadasMobileSemProcessamentoForm)form;
-		List<SccAlocadasMobileSemProcessamentoView> rows = gerarRelatorioAlocadasMobileSemProcessamento(formAlocadasMobileSemProcessamento);
+		ModelAndView mav = null;
 		
-		List<SccAlocadasMobileSemProcessamentoViewDecorator> decoratorList = new ArrayList<SccAlocadasMobileSemProcessamentoViewDecorator>(rows.size());
+		form.setLstSccAlocadasMobileSemProcessamento(gerarRelatorioAlocadasMobileSemProcessamento(form));
 		
-		for (int i = 0; i < rows.size(); i++) {
+		if(form.getOperacao().equals(OPERACAO_EXCEL)){
+			if(form.getLstSccAlocadasMobileSemProcessamento() != null && form.getLstSccAlocadasMobileSemProcessamento().size() > 0){
+				mav = new ModelAndView(FWD_EXCEL_ALOCADAS_MOBILE_SEM_PROCESSAMENTO, "filtro", form);
+			}
 			
-			SccAlocadasMobileSemProcessamentoViewDecorator decorator = new SccAlocadasMobileSemProcessamentoViewDecorator(rows.get(i), i);
-			decoratorList.add(decorator);
+		}else{
+			mav = new ModelAndView(FWD_VIEW_ALOCADAS_MOBILE_SEM_PROCESSAMENTO, "filtro", form);
 		}
-		storeInSession(getClass(), DISPLAY_TAG_SPACE_1, decoratorList, request);
-		ModelAndView mav = new ModelAndView(getViewName());
+		
 		return mav;
-
+		
 	}
 	
 	private List<SccAlocadasMobileSemProcessamentoView> gerarRelatorioAlocadasMobileSemProcessamento(RelatorioAlocadasMobileSemProcessamentoForm form) throws DAOException, ServiceException {

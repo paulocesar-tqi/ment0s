@@ -129,6 +129,20 @@ public class CalculoRepassePrePago {
 		return item;
 	}
 	
+	public DemonstrativoRepassePreItemDecorator getUtilizacaoPlataformaSimplificado(){
+		DemonstrativoRepassePreItemDecorator item = new DemonstrativoRepassePreItemDecorator();
+		item.setDescricao(" 2.1 SERVIÇO PRESTADO (UTILIZAÇÃO DA PLATAFORMA)");		
+		item.setQuantidadeChamandas(zeroIfNull(preFechamento.getQtCdrs())+zeroIfNull(preFechamento.getQtCdrsOm()));
+		item.setQuantidadeMinutos(zeroIfNull(preFechamento.getQtDuracaoTarifada())+(zeroIfNull(preFechamento.getQtDuracaoTarifadaOm())));
+		item.setValorBruto(zeroIfNull(preFechamento.getVlServPrestBruto()));
+		item.setPisCofins(zeroIfNull(preFechamento.getVlServPrestCofins())+zeroIfNull(preFechamento.getVlServPrestPis()));
+		item.setIss(zeroIfNull(preFechamento.getVlServPrestIss()));
+		item.setValorLiquido(zeroIfNull(item.getValorBruto())-zeroIfNull((item.getPisCofins()+item.getIss())));
+		item.setValorRepassar(preFechamento.getVlServPrestBruto());
+		return item;
+
+	}
+	
 	public DemonstrativoRepassePreItemDecorator getUtilizacaoPlataforma()
 	{
 		DemonstrativoRepassePreItemDecorator item = new DemonstrativoRepassePreItemDecorator();
@@ -255,7 +269,7 @@ public class CalculoRepassePrePago {
 	{
 		DemonstrativoRepassePreItemDecorator item = new DemonstrativoRepassePreItemDecorator();
 		item.setDescricao("8-VALOR FINAL A REPASSAR");
-			item.setValorRepassar(valorFinal-valorTotalDescontos+valorPenalidades+valorTotalAcertos+valorICMSRepassar-valorICMSDescontar);
+			item.setValorRepassar(valorFinal-valorTotalDescontos+valorPenalidades+valorTotalAcertos+valorICMSRepassar);// retirado para bater com aplicação antiga -valorICMSDescontar);
 		return item;
 	}
 	

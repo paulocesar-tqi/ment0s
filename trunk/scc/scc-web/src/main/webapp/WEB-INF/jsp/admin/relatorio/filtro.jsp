@@ -112,7 +112,7 @@ function num(dom){
     <td colspan="1" align="right" class="TdFormularioUp" nowrap="nowrap">
     <input id="novo_button" type="button" value=<spring:message code="crud.botao.novo"/> />    
     <c:if test="${!empty sessionScope._DISPLAY_TAG_SPACE_1}">
-    <input id="novo_button" type="button" value="Excel" />
+    <!-- <input id="novo_button" type="button" value="Excel" />-->
     </c:if>
     </td>
 </tr>
@@ -122,7 +122,7 @@ function num(dom){
 <table  width="100%" border="0" cellspacing="0" cellpadding="0" >
  <tr><td>                            
 <display:table style="width:90%"  name="sessionScope._DISPLAY_TAG_SPACE_1"   pagesize="20"  id="repasses" requestURI="/scc/user/admin/relatorio/tab1.scc" class="ui-state-default">
-<display:column property="row.descricao" title="Relatorio" />
+<display:column property="row.noRelatorio" title="Relatorio" />
 <display:column property="editar" title="Editar" />
 <display:column property="remover" title="Remover" />
 </display:table>
@@ -134,12 +134,14 @@ function num(dom){
 
 <div id="tabs-2" style="height: 500px;">
 <form:hidden path="entity.dtCriacao" id="dtCriacao"/>
+<form:hidden path="entity.dtInicioVigencia" id="dtInicioVigencia"/>
+<form:hidden path="entity.sqRelatorio" id="sqRelatorio"/>
 <table width="100%" border="0" cellspacing="0" cellpadding="0" >
 
 
 <tr>
 <td width="15%"><spring:message code="admin.label.relatorio"/></td>
-<td><form:input path="entity.descricao" id="descricao" size="101" maxlength="100"/><form:errors path="entity.descricao"/></td>
+<td><form:input path="entity.noRelatorio" id="descricao" size="101" maxlength="100"/><form:errors path="entity.noRelatorio"/></td>
 </tr>
 
 </table>

@@ -35,6 +35,8 @@ import com.claro.sccweb.service.ServiceException;
 public class SccNaoConfAplFaturamentoController extends
 		BaseOperationController<RelatorioNaoConfFaturamentoForm> {
 	
+	private static final String FWD_VIEW_EXCEL ="relatorio_nao_conformidade_faturamento_excel";
+	
 	@Autowired
 	private SccNaoConfAplFaturamentoService sccNaoConfAplFaturamentoService;
 	
@@ -59,15 +61,21 @@ public class SccNaoConfAplFaturamentoController extends
 		return mav;
 		
 	}
+	
+	public ModelAndView excel(HttpServletRequest request,HttpServletResponse response, BaseForm _form,BindingResult bindingResult, Model model) throws Exception {
+		ModelAndView mav = new ModelAndView(FWD_VIEW_EXCEL);
+		return mav;
+	}
+	
 
 	
 	private SccFiltro getFiltro(RelatorioNaoConfFaturamentoForm form) {
 		
 		SccFiltro filtro = new SccFiltro();
-		filtro.setCdCsp(form.getEntity().getCdCsp());
-		filtro.setCdCiclo(form.getEntity().getCdCiclo());
-		filtro.setMmCiclo(form.getEntity().getMmCiclo());
-		filtro.setAaCiclo(form.getEntity().getAaCiclo());
+		filtro.setCdCsp(form.getCdCsp());
+		filtro.setCdCiclo(form.getCdCiclo());
+		filtro.setMmCiclo(form.getMmCiclo());
+		filtro.setAaCiclo(form.getAaCiclo());
 		
 		return filtro;
 	}
@@ -101,7 +109,7 @@ public class SccNaoConfAplFaturamentoController extends
 	public List<SccOperadora> populaOperadorasExternas() throws Exception {
 		List<SccOperadora> comboList = new ArrayList<SccOperadora>();
 		SccOperadora allValues = new SccOperadora();
-		allValues.setCdEot(BasicDAO.GET_ALL_STRING);
+		allValues.setCdCsp(BasicDAO.GET_ALL_STRING);
 		allValues.setDsOperadora("Todas");
 		comboList.add(0,allValues);
 		comboList.addAll(getServiceManager().getPesquisaDominiosService().pesquisaOperadorasExternas());
@@ -110,8 +118,12 @@ public class SccNaoConfAplFaturamentoController extends
 	
 	@ModelAttribute("meses")
 	public List<BasicIntegerItem> populaMeses() {
-		return _populaComboMeses();
+		List<BasicIntegerItem> combo = new ArrayList<BasicIntegerItem>();
+		combo.add(new BasicIntegerItem(0l, ""));
+		combo.addAll(_populaComboMeses());
+		return combo;
 	}
+	
 
 	@RequestMapping(value="/tab1" , method = RequestMethod.GET)
 	public ModelAndView tab1(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -133,5 +145,9 @@ public class SccNaoConfAplFaturamentoController extends
 			SccNaoConfAplFaturamentoService sccNaoConfAplFaturamentoService) {
 		this.sccNaoConfAplFaturamentoService = sccNaoConfAplFaturamentoService;
 	}
+
+
+	
+	
 
 }

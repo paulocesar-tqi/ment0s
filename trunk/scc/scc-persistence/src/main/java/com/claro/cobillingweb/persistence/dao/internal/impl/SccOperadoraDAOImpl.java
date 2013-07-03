@@ -36,6 +36,7 @@ public class SccOperadoraDAOImpl extends HibernateBasicDAOImpl<SccOperadora> imp
 			Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(SccOperadora.class);
 			criteria.add(Restrictions.eq("cdTipoServico", "M"));		
 			criteria.add(Restrictions.eqProperty("cdEot", "cdOperadoraHolding"));
+			criteria.add(Restrictions.not(Restrictions.in("cdEot", new String[] {"410"})));
 			criteria.addOrder(Order.asc("dsOperadora"));
 			return criteria.list();
 		} catch (Exception e) {
@@ -54,6 +55,7 @@ public class SccOperadoraDAOImpl extends HibernateBasicDAOImpl<SccOperadora> imp
 			}
 			criteria.add(Restrictions.eq("cdTipoServico", "M"));		
 			criteria.add(Restrictions.eqProperty("cdEot", "cdOperadoraHolding"));
+			criteria.add(Restrictions.not(Restrictions.in("cdEot", new String[] {"410"})));
 			criteria.addOrder(Order.asc("dsOperadora"));
 			list = (List<SccOperadora>) criteria.list();
 		} catch (Exception e) {
@@ -68,6 +70,7 @@ public class SccOperadoraDAOImpl extends HibernateBasicDAOImpl<SccOperadora> imp
 		try {
 			Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(SccOperadora.class);
 			//criteria.add(Restrictions.eq("cdTipoServico", "M"));
+			criteria.add(Restrictions.not(Restrictions.in("cdEot", new String[] {"410"})));
 			criteria.addOrder(Order.asc("dsOperadora"));
 			return criteria.list();
 		} catch (Exception e) {
@@ -81,6 +84,7 @@ public class SccOperadoraDAOImpl extends HibernateBasicDAOImpl<SccOperadora> imp
 		try {
 			Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(SccOperadora.class);
 			criteria.add(Restrictions.eq("cdTipoServico", "M"));
+			criteria.add(Restrictions.not(Restrictions.in("cdEot", new String[] {"410"})));
 			criteria.addOrder(Order.asc("dsOperadora"));
 			return criteria.list();
 		} catch (Exception e) {
@@ -95,6 +99,8 @@ public class SccOperadoraDAOImpl extends HibernateBasicDAOImpl<SccOperadora> imp
 			if(StringUtils.isNotEmpty(cdEOT) && !cdEOT.equals("*")){
 				criteria.add(Restrictions.eq("cdOperadoraHolding", cdEOT));
 			}
+			criteria.add(Restrictions.eq("cdTipoServico", "M"));
+			criteria.add(Restrictions.not(Restrictions.in("cdEot", new String[] {"410"})));
 			criteria.addOrder(Order.asc("dsOperadora"));
 			return criteria.list();
 		} catch (Exception e) {

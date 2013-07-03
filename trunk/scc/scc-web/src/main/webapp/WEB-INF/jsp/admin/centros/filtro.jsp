@@ -95,7 +95,7 @@ function num(dom) {
     <input id="novo_button" type="button" value=<spring:message code="crud.botao.novo"/> />
     <input id="pesquisar_button" type="button" value="Pesquisar" />
     <c:if test="${!empty sessionScope._DISPLAY_TAG_SPACE_1}">
-    <input id="novo_button" type="button" value="Excel" />
+    <!--<input id="novo_button" type="button" value="Excel" />-->
     </c:if>
     </td>
 </tr>
@@ -130,7 +130,7 @@ function num(dom) {
 
 <tr>
 <td width="15%">Regional:</td>
-<td><form:select path="entity.id.cdEotClaro" items="${operadorasClaro}" itemValue="cdEot" itemLabel="dsOperadora"/></td>
+<td><form:select path="entity.id.cdEotClaro" items="${operadorasClaro}" itemValue="cdEot" itemLabel="dsOperadoraForCombos"/></td>
 </tr>
 
 

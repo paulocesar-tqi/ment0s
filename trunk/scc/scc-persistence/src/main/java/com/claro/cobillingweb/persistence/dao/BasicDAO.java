@@ -42,4 +42,11 @@ public interface BasicDAO<E> {
 	
 	public List<E> getAll() throws DAOException;
 	
+	public void saveOrUpdate(E entity) throws DAOException;
+	
+	void merge(E entity) throws DAOException;
+	
+	Serializable save(E entity) throws DAOException;
+	
+	
 }

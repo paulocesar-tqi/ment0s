@@ -28,4 +28,15 @@ public interface SccArquivoSumarizadoDAO extends BasicDAO<SccArquivoSumarizado> 
 	
 	Collection<SccArquivoSumarizado> gerarRelatorioPerdaFaturamento(SccFiltroRelPerdaFaturamento filtro) throws DAOException;
 	
+	List<SccArquivoSumarizado> findSumarizadoPeriodo(String cdEOTClaro,String cdEOTLD, Date dataInicial, Date dataFinal, Long produto, boolean holding) throws DAOException;
+	
+	List<SccArquivoSumarizado> findSumarizadoByPeriodoAgrupado(String cdEOTClaro,String cdEOTLD, Date dataInicial, Date dataFinal, Long produto, boolean holding) throws DAOException;
+
+	DemonstrativoSaldosLotesView gerarTotalSaldoLote(String cdEOTClaro,
+			String cdEOTLD, Long cdProdutoCobilling, Long cdTipoArquivo,
+			Date dataInicial, Date dataFinal) throws DAOException;
+
+	List<SccArquivoSumarizado> geraEvolucaoCDRs(String grpCdr, String cdEOTClaro,
+			String cdEOTLD, Date dataInicial, Date dataFinal,
+			Long cdProdutoCobilling, boolean holding) throws DAOException;
 }

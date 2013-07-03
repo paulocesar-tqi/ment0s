@@ -57,9 +57,45 @@ public class RelApuracaoFechamentoPrePagoView {
 	private Double valor42;
 	private Double valor43;
 	private Double valor44;
+	private String dsOperadoraHolding;
 	private String dsOperadora;
-	private String criterioCusto;
+	
 	private String ufClaro;
+	private String cdEotHolding;
+	private String dsOperadoraLd;
+	private Double vlrLiquidoChamada;
+	private Double vlrBrutoChamada;
+	private Double qtDuracaoRealOm;
+	private Double qtdDuracaoTarifadaOm;
+	
+	private Double vlrIcmOm;
+	private Double vrlPisOm;
+	private Double vlrCofinsOm;
+	private Double vrlServPrestBruto;
+	private Double vlrServPrestPis;
+	private Double vlrServPrestCofins;
+	private Double vlrServPrestIss;
+	private Double vlrCreditoAut;
+	private Long qtdCrs;
+	private Double qtdDuracaoTarifada;
+	private Double qtdDuracaoTarifada226;
+	private Double vlrCredito226;
+	private Double vlrPenalMinPerd;
+	private Double vlrMultasClaro;
+	private Double vlrMultasLd;
+	private Double vlrAcertosClaro;
+	private Double vlrAcertosLd;
+	private Double vlrIcmsAnt;
+	private Double vlrCpmf;
+	private String flRepassaCpmf;
+	private String flRepassaIcms;
+	private Double vlrLiquido226;
+	private Double vlrPisCofins226;
+	private Double vlrIcms226;
+	
+	private String criterioCusto;
+	private String sqUfClaro;
+	
 
 	public String getCdEOTLD() {
 		return cdEOTLD;
@@ -336,6 +372,198 @@ public class RelApuracaoFechamentoPrePagoView {
 	}
 	public void setUfClaro(String ufClaro) {
 		this.ufClaro = ufClaro;
+	}
+	public String getCdEotHolding() {
+		return cdEotHolding;
+	}
+	public void setCdEotHolding(String cdEotHolding) {
+		this.cdEotHolding = cdEotHolding;
+	}
+	public String getDsOperadoraLd() {
+		return dsOperadoraLd;
+	}
+	public void setDsOperadoraLd(String dsOperadoraLd) {
+		this.dsOperadoraLd = dsOperadoraLd;
+	}
+	public Double getVlrLiquidoChamada() {
+		return vlrLiquidoChamada;
+	}
+	public void setVlrLiquidoChamada(Double vlrLiquidoChamada) {
+		this.vlrLiquidoChamada = vlrLiquidoChamada;
+	}
+	public Double getVlrBrutoChamada() {
+		return vlrBrutoChamada;
+	}
+	public void setVlrBrutoChamada(Double vlrBrutoChamada) {
+		this.vlrBrutoChamada = vlrBrutoChamada;
+	}
+	public Double getQtDuracaoRealOm() {
+		return qtDuracaoRealOm;
+	}
+	public void setQtDuracaoRealOm(Double qtDuracaoRealOm) {
+		this.qtDuracaoRealOm = qtDuracaoRealOm;
+	}
+	public Double getVlrIcmOm() {
+		return vlrIcmOm;
+	}
+	public void setVlrIcmOm(Double vlrIcmOm) {
+		this.vlrIcmOm = vlrIcmOm;
+	}
+	public Double getVrlPisOm() {
+		return vrlPisOm;
+	}
+	public void setVrlPisOm(Double vrlPisOm) {
+		this.vrlPisOm = vrlPisOm;
+	}
+	public Double getVlrCofinsOm() {
+		return vlrCofinsOm;
+	}
+	public void setVlrCofinsOm(Double vlrCofinsOm) {
+		this.vlrCofinsOm = vlrCofinsOm;
+	}
+	public Double getVrlServPrestBruto() {
+		return vrlServPrestBruto;
+	}
+	public void setVrlServPrestBruto(Double vrlServPrestBruto) {
+		this.vrlServPrestBruto = vrlServPrestBruto;
+	}
+	public Double getVlrServPrestPis() {
+		return vlrServPrestPis;
+	}
+	public void setVlrServPrestPis(Double vlrServPrestPis) {
+		this.vlrServPrestPis = vlrServPrestPis;
+	}
+	public Double getVlrServPrestCofins() {
+		return vlrServPrestCofins;
+	}
+	public void setVlrServPrestCofins(Double vlrServPrestCofins) {
+		this.vlrServPrestCofins = vlrServPrestCofins;
+	}
+	public Double getVlrServPrestIss() {
+		return vlrServPrestIss;
+	}
+	public void setVlrServPrestIss(Double vlrServPrestIss) {
+		this.vlrServPrestIss = vlrServPrestIss;
+	}
+	public Double getVlrCreditoAut() {
+		return vlrCreditoAut;
+	}
+	public void setVlrCreditoAut(Double vlrCreditoAut) {
+		this.vlrCreditoAut = vlrCreditoAut;
+	}
+	public Long getQtdCrs() {
+		return qtdCrs;
+	}
+	public void setQtdCrs(Long qtdCrs) {
+		this.qtdCrs = qtdCrs;
+	}
+	public Double getQtdDuracaoTarifada() {
+		return qtdDuracaoTarifada;
+	}
+	public void setQtdDuracaoTarifada(Double qtdDuracaoTarifada) {
+		this.qtdDuracaoTarifada = qtdDuracaoTarifada;
+	}
+	public Double getVlrCredito226() {
+		return vlrCredito226;
+	}
+	public void setVlrCredito226(Double vlrCredito226) {
+		this.vlrCredito226 = vlrCredito226;
+	}
+	public Double getVlrPenalMinPerd() {
+		return vlrPenalMinPerd;
+	}
+	public void setVlrPenalMinPerd(Double vlrPenalMinPerd) {
+		this.vlrPenalMinPerd = vlrPenalMinPerd;
+	}
+	public Double getVlrMultasClaro() {
+		return vlrMultasClaro;
+	}
+	public void setVlrMultasClaro(Double vlrMultasClaro) {
+		this.vlrMultasClaro = vlrMultasClaro;
+	}
+	public Double getVlrMultasLd() {
+		return vlrMultasLd;
+	}
+	public void setVlrMultasLd(Double vlrMultasLd) {
+		this.vlrMultasLd = vlrMultasLd;
+	}
+	public Double getVlrAcertosClaro() {
+		return vlrAcertosClaro;
+	}
+	public void setVlrAcertosClaro(Double vlrAcertosClaro) {
+		this.vlrAcertosClaro = vlrAcertosClaro;
+	}
+	public Double getVlrAcertosLd() {
+		return vlrAcertosLd;
+	}
+	public void setVlrAcertosLd(Double vlrAcertosLd) {
+		this.vlrAcertosLd = vlrAcertosLd;
+	}
+	public Double getVlrIcmsAnt() {
+		return vlrIcmsAnt;
+	}
+	public void setVlrIcmsAnt(Double vlrIcmsAnt) {
+		this.vlrIcmsAnt = vlrIcmsAnt;
+	}
+	public Double getVlrCpmf() {
+		return vlrCpmf;
+	}
+	public void setVlrCpmf(Double vlrCpmf) {
+		this.vlrCpmf = vlrCpmf;
+	}
+	public String getFlRepassaCpmf() {
+		return flRepassaCpmf;
+	}
+	public void setFlRepassaCpmf(String flRepassaCpmf) {
+		this.flRepassaCpmf = flRepassaCpmf;
+	}
+	public String getFlRepassaIcms() {
+		return flRepassaIcms;
+	}
+	public void setFlRepassaIcms(String flRepassaIcms) {
+		this.flRepassaIcms = flRepassaIcms;
+	}
+	public Double getVlrLiquido226() {
+		return vlrLiquido226;
+	}
+	public void setVlrLiquido226(Double vlrLiquido226) {
+		this.vlrLiquido226 = vlrLiquido226;
+	}
+	public Double getVlrPisCofins226() {
+		return vlrPisCofins226;
+	}
+	public void setVlrPisCofins226(Double vlrPisCofins226) {
+		this.vlrPisCofins226 = vlrPisCofins226;
+	}
+	public Double getVlrIcms226() {
+		return vlrIcms226;
+	}
+	public void setVlrIcms226(Double vlrIcms226) {
+		this.vlrIcms226 = vlrIcms226;
+	}
+	public String getDsOperadoraHolding() {
+		return dsOperadoraHolding;
+	}
+	public void setDsOperadoraHolding(String dsOperadoraHolding) {
+		this.dsOperadoraHolding = dsOperadoraHolding;
+	}
+	public String getSqUfClaro() {
+		return sqUfClaro;
+	}
+	public void setSqUfClaro(String sqUfClaro) {
+		this.sqUfClaro = sqUfClaro;
+	}
+	public Double getQtdDuracaoTarifadaOm() {
+		return qtdDuracaoTarifadaOm;
+	}
+	public void setQtdDuracaoTarifadaOm(Double qtdDuracaoTarifadaOm) {
+		this.qtdDuracaoTarifadaOm = qtdDuracaoTarifadaOm;
+	}
+	public Double getQtdDuracaoTarifada226() {
+		return qtdDuracaoTarifada226;
+	}
+	public void setQtdDuracaoTarifada226(Double qtdDuracaoTarifada226) {
+		this.qtdDuracaoTarifada226 = qtdDuracaoTarifada226;
 	}
 	
 	

@@ -52,12 +52,12 @@ function num(dom){
 <table width="100%" border="0" cellspacing="0" cellpadding="0" >
 <tr>
 <td width="15%">Operacora Externa:</td> 
-<td><form:select path="cdEOTLD" itemValue="cdEot" itemLabel="dsOperadora" items="${operadorasExternas}"/></td>
+<td><form:select path="cdEOTLD" itemValue="cdEot" itemLabel="dsOperadoraForCombos" items="${operadorasExternas}"/></td>
 </tr>
 
 <tr>
 <td width="15%">Operadora Claro:</td>
-<td> <form:select path="cdEOTClaro" itemValue="cdEot" itemLabel="dsOperadora" items="${operadorasClaro}"/></td>
+<td> <form:select path="cdEOTClaro" itemValue="cdEot" itemLabel="dsOperadoraForCombos" items="${operadorasClaro}"/></td>
 </tr>
 
 <tr>

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 
 import com.claro.sccweb.controller.util.SearchResultList;
 import com.claro.sccweb.form.SccPaginatedList;
@@ -27,9 +28,9 @@ public class SessionDataManager {
 	 
 	private String currentController;
 	
-	private String userDisplayName = "SYSMAP BH";
+	private String userDisplayName; // = "SYSMAP BH";
 	
-	private String userPrincipal = "SYSMAP";
+	private String userPrincipal; // = "SYSMAP";
 	
 	private String mail;
 	
@@ -61,11 +62,17 @@ public class SessionDataManager {
 	public String getUserDisplayName() {
 		if (this.userDisplayName == null)
 		{
-		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		if (principal instanceof LDAPUserDetails){
-			setUserDisplayName(((LDAPUserDetails)principal).getUserDisplayName());
-			setUserPrincipal(((LDAPUserDetails) principal).getUsername());
-		}
+			
+			Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			if (principal instanceof LDAPUserDetails){
+				setUserDisplayName(((LDAPUserDetails)principal).getUserDisplayName());
+				setUserPrincipal(((LDAPUserDetails) principal).getUsername());
+			}
+			else if (principal instanceof User)
+			{
+				setUserDisplayName(((User)principal).getUsername());
+				setUserPrincipal(((User)principal).getUsername());
+			}
 		}
 		return userDisplayName;
 	}
@@ -108,11 +115,22 @@ public class SessionDataManager {
 	}
 
 	public String getUserPrincipal() {
-		if (userPrincipal == null)
-			{
+		if (userPrincipal == null) 
+		{
 			Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			setUserPrincipal(((LDAPUserDetails) principal).getUsername());
-			}			
+			if (principal instanceof LDAPUserDetails){
+				setUserPrincipal(((LDAPUserDetails) principal).getUsername());
+			}
+			else if (principal instanceof User)
+			{
+				setUserPrincipal(((User)principal).getUsername());
+			}
+		}
+//		if (userPrincipal == null)
+//			{
+//			Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//			setUserPrincipal(((LDAPUserDetails) principal).getUsername());
+//			}			
 		return userPrincipal;
 	}
 

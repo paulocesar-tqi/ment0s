@@ -35,6 +35,9 @@ import com.claro.sccweb.service.ServiceException;
 public class SccNaoConfAplAjustesController extends
 BaseOperationController<RelatorioNaoConfAjustesForm> {
 	
+	
+	public static final String FWD_VIEW_EXCEL ="relatorio_nao_conformidade_ajustes_excel";
+	
 	@Autowired
 	private SccNaoConfAplAjustesService sccNaoConfAplAjustesService;
 	
@@ -58,6 +61,12 @@ BaseOperationController<RelatorioNaoConfAjustesForm> {
 		
 	}
 	
+	
+	public ModelAndView excel(HttpServletRequest request,HttpServletResponse response, BaseForm _form,BindingResult bindingResult, Model model) throws Exception {
+		ModelAndView mav = new ModelAndView(FWD_VIEW_EXCEL);
+		return mav;
+	}
+
 	private SccFiltro getFiltro(RelatorioNaoConfAjustesForm form){
 		
 		SccFiltro filtro = new SccFiltro();

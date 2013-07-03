@@ -201,6 +201,11 @@
 			<artifactId>pja</artifactId>
 			<version>2.5</version>
 		</dependency>
+		<dependency>
+			<groupId>org.jfree</groupId>
+			<artifactId>jfreechart</artifactId>
+			<version>1.0.14</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -217,9 +222,18 @@
 				<artifactId>maven-surefire</artifactId>
 				<version>2.7.1</version>
 			</plugin>
+			<plugin>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<version>2.8</version>
+				<configuration>
+					<downloadSources>true</downloadSources>
+					<downloadJavadocs>true</downloadJavadocs>
+					<wtpversion>2.0</wtpversion>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
-	<!--  
+	
 	<repositories>
         <repository>
             <id>ibiblio</id>
@@ -266,6 +280,6 @@
         
       </repositories>
       
-         -->
+         
 	
 </project>

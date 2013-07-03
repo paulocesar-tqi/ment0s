@@ -3,8 +3,9 @@
  */
 package com.claro.cobillingweb.persistence.dao.internal.impl;
 
-import java.sql.Date;
+
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -15,8 +16,9 @@ import com.claro.cobillingweb.persistence.dao.DAOException;
 import com.claro.cobillingweb.persistence.dao.impl.HibernateBasicDAOImpl;
 import com.claro.cobillingweb.persistence.dao.internal.SccAcordoParcelamentoDAO;
 import com.claro.cobillingweb.persistence.dao.query.SccAcordoParcelamentoSQL;
-import com.claro.cobillingweb.persistence.dao.query.SccFaturasSQL;
 import com.claro.cobillingweb.persistence.filtro.SccFiltro;
+import com.claro.cobillingweb.persistence.filtro.SccFiltroParcelamento;
+import com.claro.cobillingweb.persistence.utils.DateUtils;
 import com.claro.cobillingweb.persistence.view.SccAcordoParcelamentoView;
 import com.claro.cobillingweb.persistence.view.mapper.NativeSQLViewMapper;
 
@@ -37,7 +39,7 @@ public class SccAcordoParcelamentoDAOImpl extends HibernateBasicDAOImpl<SccAcord
 
 	@Override
 	public Collection<SccAcordoParcelamentoView> findByFilterSintetico(
-			SccFiltro filtro) throws DAOException {
+			SccFiltroParcelamento filtro) throws DAOException {
 		
 		
 		List<SccAcordoParcelamentoView> list = null;
@@ -45,14 +47,14 @@ public class SccAcordoParcelamentoDAOImpl extends HibernateBasicDAOImpl<SccAcord
 		try {
 			Session session = getSessionFactory().getCurrentSession();
 			NativeSQLViewMapper<SccAcordoParcelamentoView> mapper = new NativeSQLViewMapper<SccAcordoParcelamentoView>(session, SccAcordoParcelamentoSQL.SQL_SINTETICO, SccAcordoParcelamentoView.class); 
-			mapper.addArgument("dtInicial", filtro.getDataInicialPeriodo());
-			mapper.addArgument("dtFinal", filtro.getDataFinalPeriodo());
+			mapper.addArgument("dtInicial", DateUtils.lowDateTime(filtro.getDataInicialPeriodo()));
+			mapper.addArgument("dtFinal", DateUtils.highDateTime2( filtro.getDataFinalPeriodo()));
 			if(StringUtils.isNotEmpty(filtro.getOperadoraClaro()) && !filtro.getOperadoraClaro().equals(BasicDAO.GET_ALL_STRING)){
-				mapper.addArgument("cdEOTClaro", filtro.getOperadoraClaro(), SccFaturasSQL.FILTRO_EOTCLARO);
+				mapper.addArgument("cdEOTClaro", filtro.getOperadoraClaro(), SccAcordoParcelamentoSQL.FILTRO_EOTCLARO);
 			}
 			
 			if(StringUtils.isNotEmpty(filtro.getCdCsp()) && !filtro.getCdCsp().equals(BasicDAO.GET_ALL_STRING)){
-				mapper.addArgument("cdCsp", filtro.getCdCsp(), SccFaturasSQL.FILTRO_CSP);
+				mapper.addArgument("cdCsp", filtro.getCdCsp(), SccAcordoParcelamentoSQL.FILTRO_CSP);
 			}
 			
 			if(StringUtils.isNotEmpty(filtro.getStatus()) && !filtro.getStatus().equals(BasicDAO.GET_ALL_STRING)){
@@ -65,7 +67,7 @@ public class SccAcordoParcelamentoDAOImpl extends HibernateBasicDAOImpl<SccAcord
 			mapper.addResultMap("operadoraClaro", String.class);
 			mapper.addResultMap("dataAcordo", Date.class);
 			mapper.addResultMap("status", String.class);
-			mapper.addResultMap("qtdParcelas", Double.class);
+			mapper.addResultMap("qtdParcelas", Long.class);
 			mapper.addResultMap("vlParcelaOperadora", Double.class);
 			mapper.addResultMap("valorAcordado", Double.class);
 			
@@ -82,7 +84,7 @@ public class SccAcordoParcelamentoDAOImpl extends HibernateBasicDAOImpl<SccAcord
 
 
 	@Override
-	public Collection<SccAcordoParcelamentoView> findByFilterAnalitico(SccFiltro filtro) throws DAOException {
+	public Collection<SccAcordoParcelamentoView> findByFilterAnalitico(SccFiltroParcelamento filtro) throws DAOException {
 		
 		
 		List<SccAcordoParcelamentoView> list = null;
@@ -119,9 +121,9 @@ public class SccAcordoParcelamentoDAOImpl extends HibernateBasicDAOImpl<SccAcord
 			mapper.addResultMap("codAcordo", Double.class);
 			mapper.addResultMap("dataAcordo", Date.class);
 			mapper.addResultMap("valorAcordado", Double.class);
-			mapper.addResultMap("NuAcordoParcelamento", Double.class);
+			mapper.addResultMap("NuAcordoParcelamento", Long.class);
 			mapper.addResultMap("nuFatura", String.class);
-			mapper.addResultMap("numConta", Double.class);
+			mapper.addResultMap("numConta", Long.class);
 			mapper.addResultMap("vlParcelaOperadora", Double.class);			
 			mapper.addResultMap("status", String.class);
 			//mapper.addResultMap("qtdParcelas", Double.class);			

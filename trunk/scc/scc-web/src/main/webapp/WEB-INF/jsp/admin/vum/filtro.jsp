@@ -57,7 +57,7 @@ function download(valor) {
 	<table width="100%" border="0" cellspacing="0" cellpadding="0" >
 		<tr>
 			<td width="15%"><spring:message code="solicitacao_vum.ld"/>:</td>
-			<td><form:select path="cdEOTLD" id="cdEOTLD" items="${operadorasExternas}" itemLabel="dsOperadora" itemValue="cdEot" /></td>
+			<td><form:select path="cdEOTLD" id="cdEOTLD" items="${operadorasExternas}" itemLabel="dsOperadoraForCombos" itemValue="cdEot" /></td>
 		</tr>
 		<tr>
 			<td width="15%"><spring:message code="solicitacao_vum.plataforma"/>:</td>

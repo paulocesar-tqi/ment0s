@@ -16,6 +16,7 @@ import com.claro.cobillingweb.persistence.entity.SccMotivoRejeicao;
 import com.claro.cobillingweb.persistence.entity.SccPenalidadePorRejeicao;
 import com.claro.cobillingweb.persistence.entity.SccPenalidadePorRejeicaoPK;
 import com.claro.cobillingweb.persistence.entity.SccPreDominio;
+import com.claro.cobillingweb.persistence.service.ServiceException;
 
 /**
  * Serviço para unir cadastro básicos pertinentes à administração do sistema.
@@ -25,11 +26,11 @@ public interface AdminService {
 
 	public List<SccFaixaPenalidade> pesquisarPenalidadePorTipo(String tipo) throws DAOException;
 	
-	public void delete(SccFaixaPenalidade entity) throws DAOException;
+	public void delete(SccFaixaPenalidade entity) throws DAOException, ServiceException;
 	
-	public void update(SccFaixaPenalidade entity) throws DAOException;
+	public void update(SccFaixaPenalidade entity) throws DAOException, ServiceException;
 	
-	public void create(SccFaixaPenalidade entity) throws DAOException;
+	public void create(SccFaixaPenalidade entity) throws DAOException, ServiceException;
 	
 	public List<SccAssinanteCritica> pesquisaCritica(String cdCritica) throws DAOException;
 	
@@ -108,5 +109,9 @@ public interface AdminService {
 	public void update(SccPenalidadePorRejeicao entity) throws DAOException;
 	
 	public void create(SccPenalidadePorRejeicao entity) throws DAOException;
+
+	SccFaixaPenalidade findById(Long id) throws DAOException, ServiceException;
+	
+	void deleteEntity(Long cdFaixaPenalidade) throws DAOException;
 
 }

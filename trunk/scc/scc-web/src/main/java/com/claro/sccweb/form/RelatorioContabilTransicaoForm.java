@@ -1,6 +1,10 @@
 package com.claro.sccweb.form;
 
 import java.util.Date;
+import java.util.List;
+
+import com.claro.cobillingweb.persistence.entity.SccArquivoCobilling;
+import com.claro.cobillingweb.persistence.filtro.SccFiltroContabilTransicao;
 
 public class RelatorioContabilTransicaoForm extends BaseForm {
 
@@ -9,6 +13,14 @@ public class RelatorioContabilTransicaoForm extends BaseForm {
 	private Date dataFinal;
 	private String nomeArquivo;
 	private String erro;
+	
+	private String diretorio;
+	
+	private SccArquivoCobilling entity;
+	
+	private SccFiltroContabilTransicao filtro = new SccFiltroContabilTransicao();
+	
+	private List<SccArquivoCobilling> listArquivoCobilling;
 	
 	public Long getCdTipoArquivo() {
 		return cdTipoArquivo;
@@ -40,6 +52,33 @@ public class RelatorioContabilTransicaoForm extends BaseForm {
 	public void setErro(String erro) {
 		this.erro = erro;
 	}
+	public SccFiltroContabilTransicao getFiltro() {
+		return filtro;
+	}
+	public void setFiltro(SccFiltroContabilTransicao filtro) {
+		this.filtro = filtro;
+	}
+	
+	public SccArquivoCobilling getEntity() {
+		return entity;
+	}
+	public void setEntity(SccArquivoCobilling entity) {
+		this.entity = entity;
+	}
+	public List<SccArquivoCobilling> getListArquivoCobilling() {
+		return listArquivoCobilling;
+	}
+	public void setListArquivoCobilling(List<SccArquivoCobilling> listArquivoCobilling) {
+		this.listArquivoCobilling = listArquivoCobilling;
+	}
+	public String getDiretorio() {
+		return diretorio;
+	}
+	public void setDiretorio(String diretorio) {
+		this.diretorio = diretorio;
+	}
+	
+	
 	
 	
 	

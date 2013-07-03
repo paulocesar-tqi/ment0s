@@ -26,7 +26,7 @@ public class SccCreditoDAOImpl extends HibernateBasicDAOImpl<SccCredito> impleme
 	}
 
 	 
-	public List<RelCreditosPrePagoView> carregaRelatorioCreditos(String cdEOTLD, String cdEOTClaro, String tipoCredito,String statusCredito, Date dtInicio,Date dtFinal,int tamanhoPagina,int pagina)
+	public List<RelCreditosPrePagoView> carregaRelatorioCreditos(String cdEOTLD, String cdEOTClaro, String tipoCredito,String statusCredito, Date dtInicio,Date dtFinal)
 			throws DAOException {
 		
 		try {
@@ -82,8 +82,8 @@ public class SccCreditoDAOImpl extends HibernateBasicDAOImpl<SccCredito> impleme
 			viewMapper.addResultMap("quantidade", Double.class);
 			viewMapper.addResultMap("minutosQueimados", Double.class);
 			viewMapper.addResultMap("minutosAjustados", Double.class);
-			viewMapper.setPageNumber(pagina);
-			viewMapper.setRowsPerPage(tamanhoPagina);			
+			//viewMapper.setPageNumber(pagina);
+			//viewMapper.setRowsPerPage(tamanhoPagina);			
 			return viewMapper.execute();
 		} catch (Exception e)
 			{

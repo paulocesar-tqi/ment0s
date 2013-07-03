@@ -7,6 +7,7 @@ import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
+import org.hibernate.Session;
 import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -18,6 +19,8 @@ import com.claro.cobillingweb.persistence.dao.impl.HibernateBasicDAOImpl;
 import com.claro.cobillingweb.persistence.dao.internal.SccCdrCobillingDAO;
 import com.claro.cobillingweb.persistence.entity.SccCdrCobilling;
 import com.claro.cobillingweb.persistence.filtro.SccCdrCobillingFiltro;
+import com.claro.cobillingweb.persistence.view.SccCdrCobillingView;
+import com.claro.cobillingweb.persistence.view.mapper.NativeSQLViewMapper;
 
 public class SccCdrCobillingDAOImpl extends HibernateBasicDAOImpl<SccCdrCobilling> implements SccCdrCobillingDAO {
 
@@ -97,13 +100,48 @@ public class SccCdrCobillingDAOImpl extends HibernateBasicDAOImpl<SccCdrCobillin
 			throw new DAOException(e.getMessage(), e);
 			}		
 	}
+	
+	private String gerarSql(){
+		StringBuilder sql = new StringBuilder();
+		sql.append("select cdr.cd_motivo_rejeicao, rm.ds_motivo_rejeicao, count(cdr.nu_Cdr) as qtde ");
+		sql.append("from SCC_CDR_COBILLING cdr ");
+		sql.append("left join Scc_Motivo_Rejeicao rm ");
+		sql.append("on cdr.cd_motivo_rejeicao = rm.cd_motivo_rejeicao ");
+		sql.append("where cdr.sq_arquivo_remessa = :seqArquivo ");
+		sql.append("and cdr.cd_motivo_rejeicao is not null  ");
+		sql.append("group by cdr.cd_motivo_rejeicao, rm.ds_motivo_rejeicao");
+		return sql.toString();
+	}
 
+	@Override
+	public List<SccCdrCobillingView> gerarResumoCDRsComErroArquivo(Long seqArquivo) throws DAOException{
+		
+		List<SccCdrCobillingView> list = null;
+		try {
+			Session session = getSessionFactory().getCurrentSession();
+			NativeSQLViewMapper<SccCdrCobillingView> mapper = new NativeSQLViewMapper<SccCdrCobillingView>(session, gerarSql(), SccCdrCobillingView.class);
+			mapper.addArgument("seqArquivo", seqArquivo);
+			mapper.addResultMap("cdMotivoRejeicao", String.class);
+			mapper.addResultMap("dsMotivoRejeicao", String.class);
+			mapper.addResultMap("nuCdr", Long.class);
+			
+			list = (List<SccCdrCobillingView>) mapper.execute();
+
+			
+		} catch (Exception e){
+			throw new DAOException(e.getMessage(), e);
+		}		
+		
+		return list;
+	}
 	 
 	@SuppressWarnings("unchecked")
 	public List<SccCdrCobilling> geraResumoCDRsComErroArquivo(Long seqArquivo) throws DAOException {
 		try {
 			Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(SccCdrCobilling.class);
 			ProjectionList projectionList = Projections.projectionList();
+			
+			criteria.createAlias("cdMotivoRejeicao", "cdMotivoRejeicao", Criteria.LEFT_JOIN);
 			criteria.add(Restrictions.eq("sqArquivoRemessa", seqArquivo));
 			criteria.add(Restrictions.isNotNull("cdMotivoRejeicao"));
 			projectionList.add(Projections.groupProperty("cdMotivoRejeicao").as("cdMotivoRejeicao"));

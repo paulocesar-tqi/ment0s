@@ -33,13 +33,17 @@ public class SccNaoConfAplFaturamentoDAOImpl extends HibernateBasicDAOImpl<Fatur
 		try {
 			Session session = getSessionFactory().getCurrentSession();
 			NativeSQLViewMapper<FaturamentoView> mapper = new NativeSQLViewMapper<FaturamentoView>(session, SccNãoConfAplFaturamentoSQL.SQL, FaturamentoView.class);
-			mapper.addArgument("cdCiclo", filtro.getDataInicialPeriodo(), SccNãoConfAplFaturamentoSQL.FILTRO_CD_CICLO);
-			mapper.addArgument("mmCiclo", filtro.getDataFinalPeriodo(), SccNãoConfAplFaturamentoSQL.FILTRO_MM_CICLO);
-			mapper.addArgument("aaCiclo", filtro.getDataFinalPeriodo(), SccNãoConfAplFaturamentoSQL.FITLRO_AA_CICLO);
-
-			if(filtro.getCdCsp() != null && !filtro.getCdCiclo().equals(BasicDAO.GET_ALL_STRING)){
+			if(filtro.getCdCiclo() != null && filtro.getMmCiclo() > 0 && filtro.getAaCiclo() != null ){
+				mapper.addArgument("cdCiclo", filtro.getCdCiclo(), SccNãoConfAplFaturamentoSQL.FILTRO_CD_CICLO);
+				mapper.addArgument("mmCiclo", filtro.getMmCiclo(), SccNãoConfAplFaturamentoSQL.FILTRO_MM_CICLO);
+				mapper.addArgument("aaCiclo", filtro.getAaCiclo(), SccNãoConfAplFaturamentoSQL.FITLRO_AA_CICLO);
+			}
+			
+			
+			if(filtro.getCdCsp() != null && !filtro.getCdCsp().equals(BasicDAO.GET_ALL_STRING)){
 				mapper.addArgument("cdCSP", filtro.getCdCsp(), SccNãoConfAplFaturamentoSQL.FILTRO_CSP);
 			}
+			
 			
 			mapper.addResultMap("operadoraClaro", String.class);
 			mapper.addResultMap("cdCsp", String.class);

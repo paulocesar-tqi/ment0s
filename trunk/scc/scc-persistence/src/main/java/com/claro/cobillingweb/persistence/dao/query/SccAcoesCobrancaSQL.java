@@ -33,7 +33,7 @@ public class SccAcoesCobrancaSQL {
 	
 	public static final String FILTRO_DT_FINAL  = " AND FC.DT_CARTA_COBRANCA <= :dtFim ";
 	
-	public static final String FILTRO_CSP = "AND FATURA.CD_CSP = :cdCsp ";
+	public static final String FILTRO_CSP = "AND FC.CD_CSP = :cdCsp ";
 			
 
 }

@@ -299,6 +299,72 @@ public class ExcelPrinter {
 	}
 	
 	/**
+	 * Escreve os dados 'bufferizados' na tabela a partir de uma coluna e linha.
+	 * @throws Exception
+	 */
+	public void writeDataAtColumn(Integer column, Integer line) throws Exception
+	{
+		if (data == null)
+			return;
+		if(line != null)
+			currentRow = line;
+		int relativePosition = 0;
+		int mod = getEvenOddGroupQuantity();
+		for (int i=0;i<data.size();i++)
+			{
+			if (i%mod == 0)
+				relativePosition++;
+			boolean isEven = (relativePosition%2==0);	
+			Class clazz = data.get(i).getClass();			
+			for (int d=0;d<columnsDefinition.size();d++)
+				{
+				clazz = data.get(i).getClass();
+				Object theObject = null;
+				ExcelColumnDefinition columnDefinition = columnsDefinition.get(d);
+				String[] methodTree = columnDefinition.getProperty().split("\\.");
+				if (methodTree.length > 1)
+					{
+					for (int j=0;j<methodTree.length-1;j++)
+					{
+					Method method = clazz.getDeclaredMethod(methodTree[j], null);
+					if (theObject == null)
+						theObject = method.invoke(data.get(i), null);
+					else
+						theObject = method.invoke(theObject, null);
+					}	
+					}
+				else
+					{
+					theObject = data.get(i);
+					}
+				clazz = theObject.getClass();
+				Method method = clazz.getDeclaredMethod(methodTree[methodTree.length-1], null);
+				Object methodReturn = method.invoke(theObject, null);				
+				HSSFRow row = sheetList.get(currentSheet).createRow((short) currentRow);
+				HSSFCell cell = row.createCell((short)(d + column));
+				HSSFCellStyle style = null;														
+				if (!isEven)					
+					style = sheetOddStyles[d];					
+				else					
+					style = sheetStyles[d];
+					
+				cell.setCellStyle(style);
+				if (methodReturn == null)
+					cell.setCellValue("");
+				else if (methodReturn instanceof String)
+					cell.setCellValue((String)methodReturn);
+				else if (methodReturn instanceof Date)
+					cell.setCellValue((Date)methodReturn);
+				else
+					cell.setCellValue(methodReturn.toString());
+				
+				}			
+
+			currentRow++;
+			}
+	}
+	
+	/**
 	 * Escreve os dados 'bufferizados' na formatação de somatório (linhas brancas e última linha escura).
 	 * @throws Exception
 	 */
@@ -379,6 +445,36 @@ public class ExcelPrinter {
 	
 
 	/**
+	 * Escreve o cabeçalho na planilha ativa a partir da coluna e linha informada.
+	 */
+	public void generateHeaderAtColumn(Integer column, Integer line)
+	{
+		if(line != null)
+			currentRow = line;
+		if (headerLines != null)
+			{			
+			HSSFCellStyle style = workbook.createCellStyle();
+			HSSFFont font = workbook.createFont();
+			font.setColor(subtitleStyle.getFontColor());
+			font.setFontName(subtitleStyle.getFontName());
+			font.setFontHeightInPoints(subtitleStyle.getFontHeight());
+			font.setBoldweight(subtitleStyle.getBoldweight());
+			style.setFont(font);
+			style.setAlignment(subtitleStyle.getAlignment());
+			style.setWrapText(subtitleStyle.getWrapText());
+			for (int i=0;i<headerLines.size();i++)
+				{
+				HSSFRow row = sheetList.get(currentSheet).createRow((short) currentRow);
+				HSSFCell cell = row.createCell((short)column.intValue());
+				cell.setCellStyle(style);
+				cell.setCellValue(headerLines.get(i));
+				currentRow++;
+				}
+			}		
+	}
+	
+
+	/**
 	 * Gera os títulos das colunas na planilha ativa.
 	 */
 	public void generateColumnsTitle()
@@ -403,6 +499,34 @@ public class ExcelPrinter {
 		currentRow++;
 	}
 	
+	/**
+	 * Gera os títulos das colunas na planilha ativa a partir da colunaxlinha informada.
+	 */
+	public void generateColumnsTitleAtColumn(Integer column, Integer line)
+	{
+		if(line != null)
+			currentRow = line;
+		
+		HSSFRow row = sheetList.get(currentSheet).createRow((short) currentRow);
+		HSSFCellStyle style = workbook.createCellStyle();
+		HSSFFont font = workbook.createFont();
+		font.setColor(subtitleStyle.getFontColor());
+		font.setFontName(subtitleStyle.getFontName());
+		font.setFontHeightInPoints(subtitleStyle.getFontHeight());
+		font.setBoldweight(subtitleStyle.getBoldweight());
+		style.setFont(font);
+		style.setAlignment(subtitleStyle.getAlignment());
+		style.setWrapText(subtitleStyle.getWrapText());
+		for (int i=0;i<columnsDefinition.size();i++)
+			{			
+			HSSFCell cell = row.createCell((short)(i+column));
+			cell.setCellStyle(style);
+			cell.setCellValue(columnsDefinition.get(i).getTitle());
+			sheetList.get(currentSheet).setColumnWidth((short)(i+column), (short)(columnsDefinition.get(i).getWidth()*256));			
+			}
+		currentRow++;
+	}
+		
 	/**
 	 * Adiciona uma definição de coluna.
 	 * @param columnDefinition
@@ -506,6 +630,28 @@ public class ExcelPrinter {
 
 	public void setEvenOddGroupQuantity(int evenOddGroupQuantity) {
 		this.evenOddGroupQuantity = evenOddGroupQuantity;
+	}
+	
+	public void adjustAlignForAllColumns() {
+		HSSFSheet sheet = sheetList.get(currentSheet);
+		
+		int lastCol = getLastCol(sheet);
+		for(int i=0; i< lastCol;++i)
+			sheet.autoSizeColumn((short) i);
+			
+	}
+	
+	public HSSFSheet getCurrentSheet() {
+		return sheetList.get(currentSheet);
+	}
+
+	private int getLastCol(HSSFSheet sheet) {
+		int maxCol = 0;
+		for(int i=0; i< sheet.getLastRowNum(); ++i) {
+			HSSFRow row = sheet.getRow(i);
+			maxCol = row.getLastCellNum() > maxCol ? row.getLastCellNum() : maxCol;
+		}
+		return maxCol;
 	}
 	
 }

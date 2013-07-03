@@ -88,11 +88,11 @@
 							<display:column property="numA" title="Número de A"/>
 							<display:column property="qtdeChamadas" title="Qtde Chamadas"/>
 							<display:column property="qtdeMinutosTarifados" title="Qtde Minutos Tarifados"/>
-							<display:column property="valorTotalChamadas" title="Valor Liquido Total das Chamadas" />
+							<display:column property="valorTotalChamadas" title="Valor Liquido Total das Chamadas" format="{0, number, #,##0.00}"/>
 							<display:column property="nroFatura" title="Número da Fatura" />
 							<display:column property="nroNf" title="Número da Nota Fiscal" />
 							<display:column property="nomeOperadoraLD" title="Operadora LD" />
-							<display:column property="dataReferencia" title="Data de Referência"  />
+							<display:column property="dataReferencia" title="Data de Referência" format="{0,date,dd/MM/yyyy}" />
 						</display:table>
 					</td>
 				</tr>

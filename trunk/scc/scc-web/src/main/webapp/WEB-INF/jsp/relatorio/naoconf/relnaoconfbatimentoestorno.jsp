@@ -101,12 +101,12 @@
 			<table width="100%" border="0" cellspacing="0" cellpadding="0" id="filtroPesquisaTable">
 				<tr>
 					<td width="15%"><spring:message code="relatorio.naoconforme.batimento.label.operadorald" /></td>
-					<td id="cdEOTLD"><form:select path="entity.operadoraLD" id="cdEOTLD" items="${operadorasExternas}" itemLabel="dsOperadora" itemValue="cdEot" /></td>
+					<td id="cdEOTLD"><form:select path="entity.operadoraLD" id="cdEOTLD" items="${operadorasExternas}" itemLabel="dsOperadoraForCombos" itemValue="cdEot" /></td>
 				</tr>
 				
 				<tr>
 					<td width="15%"><spring:message code="relatorio.naoconforme.batimento.label.operadoraclaro" /></td>
-					<td id="comboOperadoraClaro"><form:select path="cdEOTClaro" id="cdEOTClaro" items="${operadorasClaro}" itemLabel="dsOperadora" itemValue="cdEot" /></td>
+					<td id="comboOperadoraClaro"><form:select path="cdEOTClaro" id="cdEOTClaro" items="${operadorasClaro}" itemLabel="dsOperadoraForCombos" itemValue="cdEot" /></td>
 				</tr>
 				
 				<tr>
@@ -139,7 +139,7 @@
 				<tr>
 					<td>
 						<display:table style="width:90%" name="sessionScope._DISPLAY_TAG_SPACE_1" pagesize="20" id="repasses" requestURI="/scc/user/relatorio/naoconf/batimento/estorno/tab1.scc" class="ui-state-default">
-							<display:column property="operadoraLd" title="Operadora Ld"/>
+							<display:column property="operadoraLD" title="Operadora Ld"/>
 							<display:column property="operadoraClaro" title="Operadora Claro"/>
 							<display:column property="uf" title="Uf"/>
 							<display:column property="ciclo" title="Ciclo"/>

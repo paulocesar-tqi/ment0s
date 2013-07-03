@@ -3,7 +3,7 @@ package com.claro.cobillingweb.persistence.dao.query;
 public class SccAcordoParcelamentoSQL {
 	
 	public static final String SQL = "SELECT "+
-									"	T4.CD_CSP as OPERADORA_LD, "+
+									"	CAST(T4.CD_CSP AS VARCHAR2(2)) as OPERADORA_LD, "+
 									"	T4.CD_EOT_CLARO as OPERADORA_CLARO, "+
 									"	T1.NU_ACORDO_PARCELAMENTO as COD_ACORDO, "+
 									"	T1.DT_CARGA as DATA_ACORDO, "+
@@ -44,7 +44,7 @@ public class SccAcordoParcelamentoSQL {
 	public static final String PROJECTIONS = " GROUP BY	T4.CD_CSP, 	T4.CD_EOT_CLARO, T3.NU_CONTA, T1.NU_ACORDO_PARCELAMENTO, "+
 											 "	T1.DT_CARGA, T2.CD_STATUS_ACORDO_PARC, 	T2.VL_TOTAL_ACORDADO, 	T1.NU_FATURA ";		
 	
-	public static final String SQL_SINTETICO = " SELECT  T4.CD_CSP as OPERADORA_LD,  			"+        
+	public static final String SQL_SINTETICO = " SELECT  CAST(T4.CD_CSP AS VARCHAR2(2)) as OPERADORA_LD,  			"+        
 											   "	     T4.CD_EOT_CLARO as OPERADORA_CLARO,     "+
 											   "         TRUNC(T1.DT_CARGA) as DATA_ACORDO,      "+
 											   "		 DECODE(T2.CD_STATUS_ACORDO_PARC, 'N', 'Novo', 'H', 'Honrado', 'C', 'Fechado', 'A', 'Cancelado', 'B', 'Quebrado', 'E', 'Expirado', 'X', 'Outros',T2.CD_STATUS_ACORDO_PARC ) STATUS, "+
@@ -66,7 +66,7 @@ public class SccAcordoParcelamentoSQL {
 	
 	public static final String PROJECTIONS_SINTETICO = " GROUP BY  T4.CD_CSP, T4.CD_EOT_CLARO, TRUNC(T1.DT_CARGA), T2.CD_STATUS_ACORDO_PARC ";
 	
-	public static final String SQL_ACOMPANHAMENTO = " SELECT FATURA.CD_CSP as OPERADORA_LD,"+     
+	public static final String SQL_ACOMPANHAMENTO = " SELECT CAST(FATURA.CD_CSP AS VARCHAR2(2)) as OPERADORA_LD,"+     
 													" 		 FATURA.CD_EOT_CLARO as OPERADORA_CLARO,"+
 													"		 PARCELA.NU_ACORDO_PARCELAMENTO as COD_ACORDO, "+			
 													" 		 ACORDO.NU_ACORDO_PARCELAMENTO as NUMERO_ACORDO,"+      
@@ -100,7 +100,7 @@ public class SccAcordoParcelamentoSQL {
 	
 	public static final String FILTRO_NUMERO_CONTA_ACOMPANHAMENTO ="AND	ACORDO.NU_CONTA =  :numeroConta";
 	
-	public static final String SQL_ACOMPANHAMENTO_SINTETICO =   " SELECT  	FATURA.CD_CSP as OPERADORA_LD,  "+     
+	public static final String SQL_ACOMPANHAMENTO_SINTETICO =   " SELECT  	CAST(FATURA.CD_CSP AS VARCHAR2(2)) as OPERADORA_LD,  "+     
 																"			FATURA.CD_EOT_CLARO as OPERADORA_CLARO,        "+
 																"			DECODE(PARCELA.CD_STATUS_PARCELA, 'N', 'Novo', 'B', 'Faturado', 'C', 'Fechado', 'A', 'Cancelado', 'R', 'Quebrado', 'P', 'Pago', PARCELA.CD_STATUS_PARCELA ) as STATUS, "+
 																"			COUNT(PARCELA.NU_PARCELA) as QTD_PARCELA,    "+

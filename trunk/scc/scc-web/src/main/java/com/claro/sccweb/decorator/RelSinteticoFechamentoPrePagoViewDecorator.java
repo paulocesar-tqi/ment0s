@@ -3,12 +3,21 @@ package com.claro.sccweb.decorator;
 import org.apache.commons.lang.StringUtils;
 
 import com.claro.cobillingweb.persistence.view.RelSinteticoFechamentoPrePagoView;
+import com.claro.sccweb.decorator.rownum.RownumDecorator;
 
-public class RelSinteticoFechamentoPrePagoViewDecorator extends BasicSccDecorator {
+public class RelSinteticoFechamentoPrePagoViewDecorator extends RownumDecorator<RelSinteticoFechamentoPrePagoView> {
 
+	public RelSinteticoFechamentoPrePagoViewDecorator(RelSinteticoFechamentoPrePagoView entity, int rownum) {
+		super(entity, rownum);
+		
+	}
 	
-	private RelSinteticoFechamentoPrePagoView getRow(){
-		return (RelSinteticoFechamentoPrePagoView)getCurrentRowObject();
+	public String getOperadoraClaro(){
+		String value = "";
+		if(getRow().getOperadoraClaro() != null){
+			value = getRow().getOperadoraClaro();
+		}
+		return value;
 	}
 	
 	public String getMinutos() {
@@ -45,7 +54,8 @@ public class RelSinteticoFechamentoPrePagoViewDecorator extends BasicSccDecorato
 	}
 
 	public String getValorRepassar() {
-		return decimalFormat.format(zeroIfNull(getRow().getValorRepassar()));
+		return decimalFormat.format(zeroIfNull(getRow().getValorBruto())
+				- zeroIfNull(getRow().getIcmsNaoRepassado()));
 	}
 
 	public String getIcmsNaoRepassado() {
@@ -74,14 +84,6 @@ public class RelSinteticoFechamentoPrePagoViewDecorator extends BasicSccDecorato
 
 	}
 
-	public String getOperadoraClaro() {
-		String value = "";
-		if(StringUtils.isNotEmpty(getRow().getOperadoraClaro())){
-			value = getRow().getOperadoraClaro();
-		}
-		return value;
-
-	}
 
 	public String getCdEOTLD() {
 		String value = "";
@@ -178,6 +180,11 @@ public class RelSinteticoFechamentoPrePagoViewDecorator extends BasicSccDecorato
 			value = formataDouble(getRow().getValorLiquido());
 		}
 		return value;
+	}
+	@Override
+	protected boolean isDeleteEnabled() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 	
 

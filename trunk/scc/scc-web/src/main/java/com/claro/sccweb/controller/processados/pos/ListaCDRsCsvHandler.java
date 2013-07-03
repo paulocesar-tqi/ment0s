@@ -15,7 +15,7 @@ import com.claro.sccweb.decorator.rownum.entity.SccCdrCobillingDecorator;
 
 public class ListaCDRsCsvHandler extends AbstractView {
 
-	private final String SEPARATOR = ",";
+	private final String SEPARATOR = ";";
 
 	@Override
 	protected void renderMergedOutputModel(Map<String,Object> model,

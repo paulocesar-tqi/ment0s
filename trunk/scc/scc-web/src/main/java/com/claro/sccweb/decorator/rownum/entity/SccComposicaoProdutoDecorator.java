@@ -14,19 +14,37 @@ public class SccComposicaoProdutoDecorator extends RownumDecorator<SccComposicao
 	}
 	
 	public String getMotivoRetarifacao() {
-		return getRow().getCdMotivoRetarifacao().toString();
+		String value = "";
+		if(getRow().getCdMotivoRetarifacao() != null){
+			value = getRow().getCdMotivoRetarifacao().toString();
+		}else{
+			value = "0";
+		}
+		return value;
 	}
 	
 	public String getCodigoProduto() {
-		return getRow().getSccProdutoCobilling().getCdProdutoCobilling().toString();
+		String value = "";
+		if(getRow().getSccProdutoCobilling().getCdProdutoCobilling() != null){
+			value = getRow().getSccProdutoCobilling().getCdProdutoCobilling().toString();
+		}
+		return value;
 	}
 	
 	public String getProduto() {
-		return getRow().getSccProdutoCobilling().getNoProdutoCobilling();
+		String value = "";
+		if(getRow().getSccProdutoCobilling().getNoProdutoCobilling() != null){
+			value = getRow().getSccProdutoCobilling().getNoProdutoCobilling();
+		}
+		return value;
 	}
 	
 	public String getItemCobilling() {
-		return getRow().getSccItemCobilling().getNoItemCobilling();
+		String value = "";
+		if(getRow().getSccItemCobilling().getNoItemCobilling() != null){
+			value = getRow().getSccItemCobilling().getNoItemCobilling();
+		}
+		return value;
 	}
 	
 	public String getTipoAtivacao() {

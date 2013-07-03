@@ -28,8 +28,8 @@ function pesquisar() {
 }
 
 function excel() {
-	$('#excel_button').attr('disabled', 'disabled');
-	$('#pesquisar_button').attr('disabled', 'disabled');
+	//$('#excel_button').attr('disabled', 'disabled');
+	//$('#pesquisar_button').attr('disabled', 'disabled');
 	$('#operacao').val("excel");	
 	$('#form1').submit();
 }
@@ -118,12 +118,12 @@ function mostraOperadoraClaro()
 
 <tr>
 <td width="15%">Operadora Claro:</td>
-<td><form:select path="cdEOTClaro" id="comboOperadora" items="${operadorasClaro}" itemLabel="dsOperadora" itemValue="cdEot" /></td>
+<td><form:select path="cdEOTClaro" id="comboOperadora" items="${operadorasClaro}" itemLabel="dsOperadoraForCombos" itemValue="cdEot" /></td>
 </tr>
 
 <tr>
 <td width="15%">Operadora Externa:</td>
-<td><form:select path="cdEOTLD" id="cdEOTLD" items="${operadorasExternas}" itemLabel="dsOperadora" itemValue="cdEot" /></td>
+<td><form:select path="cdEOTLD" id="cdEOTLD" items="${operadorasExternas}" itemLabel="dsOperadoraForCombos" itemValue="cdEot" /></td>
 </tr>
 
 <tr>

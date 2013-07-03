@@ -19,7 +19,7 @@ public class ValidatorUtil {
 	
 	public static void verificaPeriodo(String nome ,Date dtInicial,Date dtFinal,Errors errors)
 	{
-		if ((dtInicial == null) || (dtFinal == null))
+		if ((dtInicial == null) || (dtFinal == null) || (dtInicial.equals(dtFinal)))
 			{
 			/*Nada a fazer.*/
 			}

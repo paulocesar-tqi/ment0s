@@ -34,6 +34,8 @@ import com.claro.sccweb.service.ServiceException;
 public class RelatorioBatimentoFiscalController extends
 		BaseOperationController<RelatorioBatimentoFiscalForm> {
 	
+	public static final String FWD_VIEW_EXCEL ="relatorio_batimento_fiscal_filtro_excel";
+	
 	@Autowired
 	private SccBatimentoFiscalService sccBatimentoFiscalService;
 	
@@ -56,6 +58,12 @@ public class RelatorioBatimentoFiscalController extends
 		return mav;
 
 	}
+	
+	public ModelAndView excel(HttpServletRequest request,HttpServletResponse response, BaseForm _form,BindingResult bindingResult, Model model) throws Exception {
+		ModelAndView mav = new ModelAndView(FWD_VIEW_EXCEL);
+		return mav;
+	}
+	
 	
 	private List<SccBatimentoFiscalView> gerarRelatorioBatimentoFiscal(RelatorioBatimentoFiscalForm form) throws DAOException, ServiceException {
 		return sccBatimentoFiscalService.gerarRelatorioBatimentoFiscal(form.getMesCiclo(), form.getAnoCiclo(), form.getCdCiclo(), form.getCdCSP());

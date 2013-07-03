@@ -28,7 +28,7 @@ $(document).ready(function(){
 								centsSeparator: ',',
 								thousandsSeparator: '.',
 								limit: 9,
-								centsLimit: 2
+								centsLimit: 4
 							 });
 });
 	
@@ -114,7 +114,7 @@ function salvarLinha(linha)
 <div id="tabs-1">
 <table width="100%" border="0" cellspacing="0" cellpadding="0" >
 	<tr>
-		<td width="15%">Operadora LD:</td><td> <form:select path="cdOperadoraLD" items="${operadorasLDTodas}" itemValue="cdEot" itemLabel="dsOperadora"/> </td>
+		<td width="15%">Operadora LD:</td><td> <form:select path="cdOperadoraLD" items="${operadorasLDTodas}" itemValue="cdEot" itemLabel="dsOperadoraForCombos"/> </td>
 	</tr>
 	<tr>
 		<td width="15%">Tipo Rejeição:</td><td> <form:select path="cdMotivoRejeicao" items="${tiposRejeicaoTodos}" itemValue="cdMotivoRejeicao" itemLabel="dsMotivoRejeicaoLabel"/> </td>
@@ -164,7 +164,7 @@ function salvarLinha(linha)
 
 <tr>
 <td width="15%">Operadora LD:</td>
-<td ><form:select   path="entity.id.cdEotLd" items="${operadorasLD}" itemLabel="dsOperadora" itemValue="cdEot"/>
+<td ><form:select   path="entity.id.cdEotLd" items="${operadorasLD}" itemLabel="dsOperadoraForCombos" itemValue="cdEot"/>
 </td>
 </tr>
 

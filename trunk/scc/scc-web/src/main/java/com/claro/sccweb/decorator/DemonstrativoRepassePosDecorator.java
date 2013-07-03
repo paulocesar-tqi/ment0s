@@ -25,15 +25,16 @@ public class DemonstrativoRepassePosDecorator  extends BasicSccDecorator {
 	 */
 	private boolean valorBrutoRepasse;
 	
-	
-private static NumberFormat decimalFormat = new DecimalFormat("#.##");
-	
+	protected static NumberFormat decimalFormat = new DecimalFormat("#.##");
+	protected static NumberFormat integerFormat = new DecimalFormat("#.##");
 	static {
     	Locale locale = new Locale("pt","BR");
-
     	decimalFormat = NumberFormat.getInstance(locale);
     	decimalFormat.setMinimumFractionDigits(2);
     	decimalFormat.setMaximumFractionDigits(2);
+    	integerFormat = NumberFormat.getInstance(locale);
+    	integerFormat.setMinimumFractionDigits(0);
+    	integerFormat.setMaximumFractionDigits(0);
     }
 	
 	public DemonstrativoRepassePosDecorator()
@@ -62,9 +63,12 @@ private static NumberFormat decimalFormat = new DecimalFormat("#.##");
 	}
 	public String getChamadas() {
 		if ((repasse == null) || (repasse.getQtCdrs() == null))
-			return "0,0";
+			return " ";
 		else
-			return decimalFormat.format(repasse.getQtCdrs());		
+		if ((repasse.getQtCdrs().equals(0.0)) || (repasse.getQtCdrs() == 0))
+			return " ";
+		else
+			return integerFormat.format(repasse.getQtCdrs());		
 	}
 	
 	
@@ -77,19 +81,26 @@ private static NumberFormat decimalFormat = new DecimalFormat("#.##");
 	
 	public String getMinutos() {
 		if ((repasse == null) || (repasse.getQtDuracaoTarifada() == null))
-			return "0,0";
+			return " ";
 		else
-			return decimalFormat.format(repasse.getQtDuracaoTarifada());	
+		if (repasse.getQtDuracaoTarifada().equals(0.0))
+			return " ";
+		else
+		return decimalFormat.format(repasse.getQtDuracaoTarifada());	
 	}
 	
 	
 	
 	public String getLiquido() {
 		if ((repasse == null) || (repasse.getVlLiquidoItemRepasse() == null))
-			return "0";
-		else			
+			return " ";
+		else
+		if (repasse.getVlLiquidoItemRepasse().equals(0.0))
+			return " ";
+		else
 			return decimalFormat.format(repasse.getVlLiquidoItemRepasse());
 	}
+	
 	
 	public Double getLiquidoAsDouble()
 	{
@@ -99,16 +110,33 @@ private static NumberFormat decimalFormat = new DecimalFormat("#.##");
 	}
 	
 	
-	public Double getMinutosAsDouble()
-	{		
+	/*public Double getMinutosAsDouble()
+	{
 		if (repasse == null)
 			return 0.00;
 		return repasse.getVlLiquidoItemRepasse();
+	}*/
+	
+	
+	
+	public String getMinutosAsDouble()
+	{
+		String value = " ";
+		if ((repasse == null) || (repasse.getVlLiquidoItemRepasse()== null))
+			return value;
+		else
+		if (repasse.getVlLiquidoItemRepasse().equals(0.0))
+			return value;
+		else
+		return formataDouble(repasse.getVlLiquidoItemRepasse());
 	}
 	
 	public String getPis() {
 		if ((repasse == null) || (repasse.getVlPis() == null))
-			return "0,0";
+			return " ";
+		else
+		if (repasse.getVlPis().equals(0.0))
+			return " ";
 		else
 			return decimalFormat.format(repasse.getVlPis());
 	}
@@ -123,7 +151,10 @@ private static NumberFormat decimalFormat = new DecimalFormat("#.##");
 	
 	public String getCofins() {
 		if ((repasse == null) || (repasse.getVlCofins() == null))
-			return "0,0";
+			return " ";
+		else
+		if (repasse.getVlCofins().equals(0.0))
+			return " ";
 		else
 			return decimalFormat.format(repasse.getVlCofins());
 	}
@@ -137,7 +168,10 @@ private static NumberFormat decimalFormat = new DecimalFormat("#.##");
 	
 	public String getIcms() {
 		if ((repasse == null) || (repasse.getVlIcms() == null))
-			return "0,0";
+			return " ";
+		else
+		if (repasse.getVlIcms().equals(0.0))
+			return " ";
 		else
 			return decimalFormat.format(repasse.getVlIcms());
 	}
@@ -152,7 +186,10 @@ private static NumberFormat decimalFormat = new DecimalFormat("#.##");
 	
 	public String getIss() {
 		if ((repasse == null) || (repasse.getVlIss() == null))
-			return "0,0";
+			return " ";
+		else
+		if (repasse.getVlIss().equals(0.0))
+			return " ";
 		else
 			return decimalFormat.format(repasse.getVlIss());
 	}
@@ -165,13 +202,14 @@ private static NumberFormat decimalFormat = new DecimalFormat("#.##");
 	}
 	
 	
-	
-	
 	public String getBruto() {
 		if (bruto != null)
 			return decimalFormat.format(bruto);
 		if ((repasse == null) || (repasse.getVlBrutoItemRepasse() == null)) 
-			return "0,0";
+			return " ";
+		else
+		if ((repasse.getVlBrutoItemRepasse().equals(0.00)) || (repasse.getVlBrutoItemRepasse() == 0)) 
+			return " ";
 		else
 			return decimalFormat.format(repasse.getVlBrutoItemRepasse());
 	}
@@ -180,7 +218,8 @@ private static NumberFormat decimalFormat = new DecimalFormat("#.##");
 	{
 		if (bruto != null)
 			return bruto;
-		else if ((repasse == null) || (repasse.getVlBrutoItemRepasse() == null)) 
+		else 
+		if ((repasse == null) || (repasse.getVlBrutoItemRepasse() == null)) 
 			return 0.00;
 		else
 			return repasse.getVlBrutoItemRepasse();

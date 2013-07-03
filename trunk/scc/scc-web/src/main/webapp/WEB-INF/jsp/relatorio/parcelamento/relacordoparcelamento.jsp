@@ -17,6 +17,7 @@
 		$( "#dataFinal" ).datepicker();		
 		$('#pesquisar_button').click(pesquisar)
 		$('#excel_button').click(excel)
+		$('#excel_button2').click(excel2)
 		$("#tipoRelatorio").change(trocaTipoRelatorio); 
 		$('#tabs').tabs();
 	});
@@ -26,13 +27,16 @@
 		$("#tipoRelatorio").change(trocaTipoRelatorio);
 		$('#pesquisar_button').click(pesquisar);
 		$('#excel_button').click(excel);
+		$('#excel_button2').click(excel2);
 		$('#excel_button').attr('disabled', 'disabled');
+		$('#excel_button2').attr('disabled', 'disabled');
 		$('#tabs').tabs();
 	});
 
 	function pesquisar() {
 		$('#pesquisar_button').attr('disabled', 'disabled');
 		$('#excel_button').attr('disabled', 'disabled');
+		$('#excel_button2').attr('disabled', 'disabled');
 		$('#operacao').val("pesquisar");
 		$('#form1').submit();
 	}
@@ -42,6 +46,11 @@
 		$('#form1').submit();
 	}
 
+	function excel2() {
+		$('#operacao').val("excel2");
+		$('#form1').submit();
+	}
+	
 	function desaativarNumeroContaAcordo(){
 		$("#conta").attr("disabled",true); 
 		$("#acordo").attr("disabled",true); 
@@ -120,45 +129,45 @@
 			<table width="100%" border="0" cellspacing="0" cellpadding="0" id="filtroPesquisaTable">
 			
 				<tr>
-					<td width="50%"><spring:message code="relatorio.parcelamento.acordo.label.tipo.relatorio" /></td>
+					<td width="10%"><spring:message code="relatorio.parcelamento.acordo.label.tipo.relatorio" /></td>
 					<td><form:select path="tipoRelatorio" id="tipoRelatorio" items="${tipoRelatorio}" itemLabel="label" itemValue="key" /></td>
 				</tr>
 			
 
 				<tr>
-					<td width="50%"><spring:message code="relatorio.parcelamento.acordo.label.operadorald" /></td>
-					<td id="cdEOTLD"><form:select path="operadoraLd" id="cdEOTLD" items="${operadorasExternas}" itemLabel="dsOperadora" itemValue="cdCsp" /></td>
+					<td width="10%"><spring:message code="relatorio.parcelamento.acordo.label.operadorald" /></td>
+					<td id="cdEOTLD"><form:select path="operadoraLd" id="cdEOTLD" items="${operadorasExternas}" itemLabel="dsOperadoraForCombos" itemValue="cdCsp" /></td>
 				</tr>
 				
 				<tr>
-					<td width="50%"><spring:message code="relatorio.parcelamento.acordo.label.operadora.claro" /></td>
-					<td id="comboOperadoraClaro"><form:select path="operadoraClaro" id="cdEOTClaro" items="${operadorasClaro}" itemLabel="dsOperadora" itemValue="cdEot" /></td>
+					<td width="10%"><spring:message code="relatorio.parcelamento.acordo.label.operadora.claro" /></td>
+					<td id="comboOperadoraClaro"><form:select path="operadoraClaro" id="cdEOTClaro" items="${operadorasClaro}" itemLabel="dsOperadoraForCombos" itemValue="cdEot" /></td>
 				</tr>
 
 				<tr>
-    				<td width="50%"><spring:message code="relatorio.parcelamento.acordo.label.status"/></td>
+    				<td width="10%"><spring:message code="relatorio.parcelamento.acordo.label.status"/></td>
     				<td ><form:select path="status" items="${status}" itemLabel="label" itemValue="key" /></td>
 				</tr>
 				
 				<tr>
-					<td width="50%"><spring:message code="relatorio.parcelamento.acordo.label.numero.conta"/></td>
+					<td width="10%"><spring:message code="relatorio.parcelamento.acordo.label.numero.conta"/></td>
 					<td id="numeroconta"><form:input path="numeroConta" id="conta" disabled="true"/>
 				</tr>			
 				
 				<tr>
-					<td width="50%"><spring:message code="relatorio.parcelamento.acordo.label.numero.acordo"/></td>
+					<td width="10%"><spring:message code="relatorio.parcelamento.acordo.label.numero.acordo"/></td>
 					<td id="numeroAcordo"><form:input path="numeroAcordo" id="acordo" disabled="true"/>
 				</tr>			
 				
 				
 				<tr>
-    				<td width="50%"><spring:message code="relatorio.parcelamento.acordo.label.datainicial"/></td>
+    				<td width="10%"><spring:message code="relatorio.parcelamento.acordo.label.datainicial"/></td>
     				<td><form:input id="dataInicial" path="dataInicialPeriodo" />
     				<form:errors path="dataInicialPeriodo" /></td>
 				</tr>
 
 				<tr>
-    				<td width="50%"><spring:message code="relatorio.parcelamento.acordo.label.datafinal"/></td>
+    				<td width="10%"><spring:message code="relatorio.parcelamento.acordo.label.datafinal"/></td>
     				<td>
     					<form:input id="dataFinal" path="dataFinalPeriodo" />
     					<form:errors path="dataFinalPeriodo" />
@@ -170,51 +179,54 @@
 					<td colspan="3" class="TdFormularioUp">&nbsp;</td>
 					<td colspan="1" align="right" class="TdFormularioUp" nowrap="nowrap">
 						<input id="pesquisar_button" type="button" value=<spring:message code="comum.botao.pesquisar"/> />
-						<input id="excel_button" type="button" value=<spring:message code="comum.botao.excel"/> />
+						<c:if test="${!empty sessionScope._DISPLAY_TAG_SPACE_1}">
+							<input id="excel_button" type="button" value=<spring:message code="comum.botao.excel"/> />
+						</c:if>
+						<c:if test="${!empty sessionScope._DISPLAY_TAG_SPACE_2}">
+							<input id="excel_button2" type="button" value=<spring:message code="comum.botao.excel"/> />
+						</c:if>
 					</td>
 				</tr>
 			</table>
 			<br />
-			<c:choose>
-				<c:when test="${form1.tipoRelatorio eq 'S'}">
-					<table width="100%" border="0" cellspacing="0" cellpadding="0">
-						<tr>
-							<td>
-								<display:table style="width:90%" name="sessionScope._DISPLAY_TAG_SPACE_1" pagesize="20" id="repasses" requestURI="/scc/user/relatorio/parcelamento/acordo/tab1.scc" class="ui-state-default">
-									<display:column property="operadoraLd" title="Operadora LD"/>
-									<display:column property="operadoraClaro" title="Operadora Claro"/>
-									<display:column property="dataAcordo" title="Data de Acordo"/>
-									<display:column property="status" title="Status"/>
-									<display:column property="qtdParcelas" title="Quantidade de Parcelas"/>
-									<display:column property="valorAcordado" title="Valor total do Acordo"/>
-									<display:column property="vlParcelaOperadora" title="Valor Operadora LD" style="text-align:right"/>
-								</display:table>
-							</td>
-						</tr>
-					</table>				
-				</c:when>
-				<c:otherwise>
-					<table width="100%" border="0" cellspacing="0" cellpadding="0">
-						<tr>
-							<td>
-								<display:table style="width:90%" name="sessionScope._DISPLAY_TAG_SPACE_1" pagesize="20" id="repasses" requestURI="/scc/user/relatorio/parcelamento/acordo/tab1.scc" class="ui-state-default">
-											<display:column property="operadoraLd" title="Operadora LD"/>
-											<display:column property="operadoraClaro" title="Operadora Claro"/>
-											<display:column property="dataAcordo" title="Data de Acordo"/>
-											<display:column property="numConta" title="Numero da Conta"/>
-											<display:column property="numAcordoParcelamento" title="Acordo"/>
-											<display:column property="status" title="Status"/>
-											<display:column property="numFatura" title="Numero da Fatura" style="text-align:right"/>
-											<display:column property="valorAcordado" title="Valor total Acordado"/>
-											<display:column property="qtdParcelas" title="Quantidade de Parcelas" style="text-align:right"/>
+			<c:if test="${!empty sessionScope._DISPLAY_TAG_SPACE_1}">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0">
+					<tr>
+						<td>
+							<display:table style="width:90%" name="sessionScope._DISPLAY_TAG_SPACE_1" pagesize="20" id="repasses" 
+										   requestURI="/scc/user/relatorio/parcelamento/acordo/execute.scc" class="ui-state-default">
+								<display:column property="operadoraLD" title="Operadora LD"/>
+								<display:column property="operadoraClaro" title="Operadora Claro"/>
+								<display:column property="dataAcordo" title="Data de Acordo"/>
+								<display:column property="status" title="Status"/>
+								<display:column property="qtdParcelas" title="Quantidade de Parcelas"/>
+								<display:column property="valorAcordado" title="Valor total do Acordo" />
+								<display:column property="vlParcelaOperadora" title="Valor Operadora LD"/>
+							</display:table>
+						</td>
+					</tr>
+				</table>				
+			</c:if>
+			<c:if test="${!empty sessionScope._DISPLAY_TAG_SPACE_2}">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0">
+					<tr>
+						<td>
+							<display:table style="width:90%" name="sessionScope._DISPLAY_TAG_SPACE_2" pagesize="20" id="repasses" requestURI="/scc/user/relatorio/parcelamento/acordo/tab1.scc" class="ui-state-default">
+								<display:column property="operadoraLD" title="Operadora LD"/>
+								<display:column property="operadoraClaro" title="Operadora Claro"/>
+								<display:column property="dataAcordo" title="Data de Acordo"/>
+								<display:column property="numConta" title="Número da Conta"/>
+								<display:column property="codAcordo" title="Acordo"/>
+								<display:column property="status" title="Status"/>
+								<display:column property="numFatura" title="Número da Fatura"/>
+								<display:column property="valorAcordado" title="Valor total Acordado"/>
+								<display:column property="numAcordoParcelamento" title="Quantidade de Parcelas"/>
 											
-								</display:table>
-							</td>
-						</tr>
-					</table>
-				
-				</c:otherwise>
-			</c:choose>
+							</display:table>
+						</td>
+					</tr>
+				</table>
+			</c:if>	
 		</div>
 	</form:form>
 </div>
@@ -222,5 +234,6 @@
 	$(document).ready(function(){
 		$('#pesquisar_button').removeAttr('disabled');
 		$('#excel_button').removeAttr('disabled');
+		$('#excel_button2').removeAttr('disabled');
 	});
 </script>

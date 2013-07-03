@@ -10,6 +10,7 @@ public class RelCDRPrePagoViewDecorator extends TableDecorator {
 
 	SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 	
+		
 	public String getDataChamada()
 	{
 		return dateFormat.format(getRow().getDataChamada());
@@ -20,10 +21,20 @@ public class RelCDRPrePagoViewDecorator extends TableDecorator {
 		return dateFormat.format(getRow().getDataCarga());
 	}
 	
-	public String getDataFechamento()
+	
+	public String getDataFechamento() {
+		String value = "";
+		if(getRow().getDataFechamento() != null){
+			value = dateFormat.format(getRow().getDataFechamento());
+		}
+		return value;
+	}
+	
+	
+	/*public String getDataFechamento()
 	{
 		return dateFormat.format(getRow().getDataFechamento());
-	}
+	}*/
 	
 	private RelCDRPrePagoView getRow()
 	{

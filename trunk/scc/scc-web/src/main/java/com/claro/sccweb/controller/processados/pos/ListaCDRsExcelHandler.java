@@ -25,7 +25,7 @@ public class ListaCDRsExcelHandler extends BasicExcelHandler {
 		if (decoratorList == null)
 			throw new ControllerExecutionException("Navegação inválida. Pesquisa de arquivos não encontrada no cache.");
 		List<ExcelColumnDefinition> columnDefinitions = new ArrayList<ExcelColumnDefinition>();
-		columnDefinitions.add(new ExcelColumnDefinition("getCdMotivo", "Cod. Motivo", style, 20));
+		columnDefinitions.add(new ExcelColumnDefinition("getCdMotivo", "Código Motivo", style, 20));
 		columnDefinitions.add(new ExcelColumnDefinition("getStatus", "Status", style, 30));
 		columnDefinitions.add(new ExcelColumnDefinition("getDataStatus", "Data Status", style, 20));
 		columnDefinitions.add(new ExcelColumnDefinition("getCSP", "CSP", style, 20));
@@ -36,8 +36,8 @@ public class ListaCDRsExcelHandler extends BasicExcelHandler {
 		columnDefinitions.add(new ExcelColumnDefinition("getDataChamada", "Data Chamada", style, 20));
 		columnDefinitions.add(new ExcelColumnDefinition("getHoraChamada", "Hora Chamada", style, 20));
 		columnDefinitions.add(new ExcelColumnDefinition("getDuracao", "Duração", style, 20));
-		columnDefinitions.add(new ExcelColumnDefinition("getValorLiquido", "Vl. Líquido", style, 20));
-		columnDefinitions.add(new ExcelColumnDefinition("getArquivoRetorno", "Arquivo Retorno", style, 80));
+		columnDefinitions.add(new ExcelColumnDefinition("getValorLiquido", "Valor Líquido", style, 20));
+		columnDefinitions.add(new ExcelColumnDefinition("getArquivoRetorno", "Arquivo Retorno", style, 45));
 		ExcelPrinter printer = new ExcelPrinter(columnDefinitions,workbook);
 		printer.addSheet("CDRs");
 		List<String> linhasCabecalho = new ArrayList<String>();

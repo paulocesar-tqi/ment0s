@@ -39,12 +39,12 @@ public class SccAlocadasMobileViewDecorator extends RownumDecorator<SccAlocadasM
 	private void formatarCampos(SccAlocadasMobileView entity){
 
 		this.setNoArquivoReferencia(entity.getNoArquivoReferencia());
-		this.setDtRelatorio(formataDate(entity.getDtRelatorio()));
+		this.setDtRelatorio(formataDateTimeSeg(entity.getDtRelatorio()));
 		this.setCdCiclo(formataInteger(entity.getCdCiclo()));
 		this.setQtChamadas(formataInteger(entity.getQtChamadas()));
-		this.setQtMinutoTarifados(formataInteger(entity.getQtMinutoTarifados()));
+		this.setQtMinutoTarifados(formataDouble(entity.getQtMinutoTarifados()));
 		this.setVlLiquido(formataDouble(entity.getVlLiquido()));
-		this.setDtChamada(formataDate(entity.getDtChamada()));
+		this.setDtChamada(formataDateTimeSeg(entity.getDtChamada()));
 		
 	}
 
