@@ -3,7 +3,6 @@ package com.claro.cobillingweb.persistence.dao.internal.impl;
 import java.util.List;
 
 import org.hibernate.Criteria;
-import org.hibernate.FetchMode;
 import org.hibernate.Query;
 import org.hibernate.criterion.Restrictions;
 
@@ -15,6 +14,7 @@ import com.claro.cobillingweb.persistence.entity.SccProdutoContratado;
 
 public class SccContratoCoblDAOImpl extends HibernateBasicDAOImpl<SccContratoCobl> implements SccContratoCoblDAO {
 	
+	@SuppressWarnings("unchecked")
 	public List<SccContratoCobl> getAll() throws DAOException {
 		try { 
 			Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(SccContratoCobl.class);
@@ -25,6 +25,7 @@ public class SccContratoCoblDAOImpl extends HibernateBasicDAOImpl<SccContratoCob
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<SccContratoCobl> pesquisaPorNome(String dsContrato) throws DAOException {
 		try {
 			Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(SccContratoCobl.class);
@@ -36,7 +37,34 @@ public class SccContratoCoblDAOImpl extends HibernateBasicDAOImpl<SccContratoCob
 		}		
 	}
 	
+	private String gerarHql(){
+		StringBuilder hql = new StringBuilder();
+		hql.append("select pct from SccProdutoContratado pct ");
+		hql.append("inner join fetch pct.sccContratoCobl as cbl ");
+		hql.append("inner join fetch pct.sccProdutoCobilling as pcb ");
+		hql.append("where cbl.cdContratoCobilling = :cdContratoCobilling ");
+		hql.append("and pcb.cdProdutoCobilling is not null");
+		return hql.toString();
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
 	public List<SccProdutoContratado> pesquisaProdutosContratados(Long cdContratoCobilling) throws DAOException {
+		
+		List<SccProdutoContratado> list = null;
+		try {
+			Query query = getSessionFactory().getCurrentSession().createQuery(gerarHql());
+			query.setLong("cdContratoCobilling", cdContratoCobilling);
+			list = (List<SccProdutoContratado>) query.list();
+			
+		} catch (Exception e) {
+			throw new DAOException(e.getMessage(), e);
+		}
+		return list;
+		
+	}
+	
+/*	public List<SccProdutoContratado> pesquisaProdutosContratados(Long cdContratoCobilling) throws DAOException {
 		try {
 			Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(SccProdutoContratado.class);
 			criteria.add(Restrictions.eq("sccContratoCobl.cdContratoCobilling", cdContratoCobilling));
@@ -49,7 +77,7 @@ public class SccContratoCoblDAOImpl extends HibernateBasicDAOImpl<SccContratoCob
 			throw new DAOException(e.getMessage(), e);
 		}		
 	}
-	
+*/	
 	public void delete(SccContratoCobl entity) throws DAOException {
 		try {
 			Query query = getSessionFactory().getCurrentSession().createQuery("DELETE SccContratoCobl where cdContratoCobilling = :id");			

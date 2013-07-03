@@ -38,7 +38,7 @@
 	<ul>
 		<li><a href="#tabs-1"><spring:message code="crud.titulo.pesquisar" /></a></li>
 	</ul>
-	<form:form modelAttribute="filtro" method="post" action="/scc/user/relatorio/alocadasMobile/execute.scc" id="form1">
+	<form:form modelAttribute="filtro" method="post" action="/scc/user/relatorio/alocadasMobile/listar.scc" id="form1">
 		<form:hidden path="operacao" id="operacao" />
 		<form:hidden path="itemSelecionado" id="itemSelecionado" />
 		
@@ -76,14 +76,14 @@
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
 					<td>
-						<display:table style="width:90%" name="sessionScope._DISPLAY_TAG_SPACE_1" pagesize="20" id="alocadasMobile" requestURI="/scc/user/relatorio/alocadasMobile/tab1.scc" class="ui-state-default">
+						<display:table style="width:90%" name="requestScope.filtro.lstAlocadasMobile" pagesize="20" id="alocadasMobile" requestURI="/scc/user/relatorio/alocadasMobile/listar.scc" class="ui-state-default">
 							<display:column property="noArquivoReferencia" title="Nome do Arquivo"/>
 							<display:column property="cdCiclo" title="Ciclo"/>
 							<display:column property="qtChamadas" title="Quantidade de Chamadas"/>
-							<display:column property="qtMinutoTarifados" title="Total de Minutos Tarifados"/>
-							<display:column property="vlLiquido" title="Valor Líquido Total das Chamadas"/>
-							<display:column property="dtRelatorio" title="Data de Emissão do Relatório"/>
-							<display:column property="dtChamada" title="Data da Chamada"/>							
+							<display:column property="qtMinutoTarifados" title="Total de Minutos Tarifados" style="width:15%; text-align:right" format="{0, number, #,##0.00}"/>
+							<display:column property="vlLiquido" title="Valor Líquido Total das Chamadas" style="width:15%; text-align:right" format="{0, number, #,##0.00}"/>
+							<display:column property="dtRelatorio" title="Data de Emissão do Relatório" format="{0,date,dd/MM/yyyy}"/>
+							<display:column property="dtChamada" title="Data da Chamada" format="{0,date,dd/MM/yyyy}" />							
 						</display:table>
 					</td>
 				</tr>

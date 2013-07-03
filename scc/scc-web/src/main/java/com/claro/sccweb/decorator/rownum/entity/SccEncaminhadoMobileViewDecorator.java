@@ -42,7 +42,7 @@ public class SccEncaminhadoMobileViewDecorator extends RownumDecorator<SccEncami
 		this.setDtRelatorio(formataDate(entity.getDtRelatorio()));
 		this.setNoArquivoReferencia(entity.getNoArquivoReferencia());
 		this.setQtChamadas(formataInteger(entity.getQtChamadas()));
-		this.setQtMinutoTarifados(formataInteger(entity.getQtMinutoTarifados()));
+		this.setQtMinutoTarifados(formataDouble(entity.getQtMinutoTarifados()));
 		this.setVlLiquido(formataDouble(entity.getVlLiquido()));
 		this.setNuItem(formataInteger(entity.getNuItem()));
 		this.setSqRelatorioSumarizado(formataInteger(entity.getSqRelatorioSumarizado()));

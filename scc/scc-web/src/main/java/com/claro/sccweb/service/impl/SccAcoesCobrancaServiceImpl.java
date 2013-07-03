@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.claro.cobillingweb.persistence.dao.DAOException;
 import com.claro.cobillingweb.persistence.dao.internal.SccAcoesCobrancaDAO;
-import com.claro.cobillingweb.persistence.filtro.SccFiltro;
+import com.claro.cobillingweb.persistence.filtro.SccFiltroAcoesCobranca;
 import com.claro.cobillingweb.persistence.view.SccAcoesCobrancaView;
 import com.claro.sccweb.service.AbstractService;
 import com.claro.sccweb.service.SccAcoesCobrancaService;
@@ -22,7 +22,7 @@ public class SccAcoesCobrancaServiceImpl extends AbstractService implements
 
 	@Override
 	public List<SccAcoesCobrancaView> gerarRelatorioControleAcoesCobranca(
-			SccFiltro filtro) throws ServiceException, DAOException {
+			SccFiltroAcoesCobranca filtro) throws ServiceException, DAOException {
 		
 		return this.sccAcoesCobrancaDAO.gerarRelatorioControleAcoesCobranca(filtro);
 	}

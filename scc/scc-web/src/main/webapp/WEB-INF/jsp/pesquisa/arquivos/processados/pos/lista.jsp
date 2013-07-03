@@ -21,8 +21,6 @@ function voltar()
 	$('#form1').submit();
 }
 
-
-
 function selecionar(linha)
 {
 	$('#itemSelecionado').val(linha);	
@@ -30,18 +28,17 @@ function selecionar(linha)
 	$('#form1').submit();
 }
 
-
-function excel()
+function excel(linha)
 {
+	$('#itemSelecionado').val(linha);	
 	$('#operacao').val("excelCDRs");
+
 	$('#form1').submit();
 }
 
 
+
 </script>
-
-
-
 
 
 <div id="tabs">

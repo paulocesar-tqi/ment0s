@@ -4,13 +4,15 @@ public class PesquisaCDRsPrePagoSQL {
 
 	public static final String SQL = "SELECT F.CD_EOT_LD, "+
         " F.CD_EOT_CLARO , "+
-			"  A.CD_EOT_ORIGEM AS CD_EOT_SG_UF, "+
+			"  CAST((SELECT SG_UF FROM SCC_OPERADORA "+  
+		    " WHERE CD_EOT = A.CD_EOT_ORIGEM ) AS VARCHAR2(2)) AS CD_EOT_SG_UF, "+
 			" A.DT_CHAMADA, "+
 			" A.DT_PROC_EXTERNA, "+
 			" A.DT_REPASSE, "+
+			" SUBSTR(A.NU_TELEFONE_DESTINO,1,2) AS AS_CN_ASSINANTE_B, "+
 			" SUBSTR(A.NU_TELEFONE_DESTINO,1,2) AS AS_CN_ASSINANTE_A, "+
-			" A.CD_EOT_ORIGEM,  "+
-			" A.CD_EOT_ORIGEM AS CD_EOT_DS_OPERADORA, "+
+			" (SELECT DS_OPERADORA FROM SCC_OPERADORA "+ 
+			" WHERE CD_EOT = A.CD_EOT_ORIGEM ) AS CD_EOT_DS_OPERADORA, "+
 			" D.DS_DOMINIO AS CD_DEFEITO, "+
 			" H.DS_DOMINIO AS CD_PERIODO_CHAMADA, "+
 			" G.DS_DOMINIO AS CD_TIPO_CHAMADA,  "+
@@ -33,7 +35,8 @@ public class PesquisaCDRsPrePagoSQL {
 			"  AND A.CD_TIPO_CHAMADA = G.CD_DOMINIO(+) "+ 
 			"  AND G.TP_DOMINIO = 'TPCHM'  "+
 			"  AND A.CD_PERIODO_CHAMADA = H.CD_DOMINIO(+) "+ 
-			"  AND H.TP_DOMINIO = 'PRCHM'   ";
+			"  AND H.TP_DOMINIO = 'PRCHM'   "+
+			"   AND ROWNUM <= 65500 ";
 	
 	public static final String FILTRO_DT_CHAMADA = " AND A.DT_CHAMADA BETWEEN :dtInicial AND :dtFinal";
 	public static final String FILTRO_DT_APURACAO = " AND A.DT_PROC_EXTERNA BETWEEN :dtInicial AND :dtFinal";

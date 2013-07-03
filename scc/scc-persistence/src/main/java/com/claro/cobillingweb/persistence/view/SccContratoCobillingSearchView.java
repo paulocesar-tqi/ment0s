@@ -10,6 +10,66 @@ import com.claro.cobillingweb.persistence.view.mapper.View;
  */
 public class SccContratoCobillingSearchView extends View {
 
+	public String getDtCriacao() {
+		return dtCriacao;
+	}
+	public void setDtCriacao(String dtCriacao) {
+		this.dtCriacao = dtCriacao;
+	}
+	public String getDtAtualizacao() {
+		return dtAtualizacao;
+	}
+	public void setDtAtualizacao(String dtAtualizacao) {
+		this.dtAtualizacao = dtAtualizacao;
+	}
+	public String getCdUsuarioManut() {
+		return cdUsuarioManut;
+	}
+	public void setCdUsuarioManut(String cdUsuarioManut) {
+		this.cdUsuarioManut = cdUsuarioManut;
+	}
+	public String getDsTipoContrato() {
+		return dsTipoContrato;
+	}
+	public void setDsTipoContrato(String dsTipoContrato) {
+		this.dsTipoContrato = dsTipoContrato;
+	}
+	public Double getPeCofins() {
+		return peCofins;
+	}
+	public void setPeCofins(Double peCofins) {
+		this.peCofins = peCofins;
+	}
+	public Double getPePis() {
+		return pePis;
+	}
+	public void setPePis(Double pePis) {
+		this.pePis = pePis;
+	}
+	public String getFlagRepasseIcms() {
+		return flagRepasseIcms;
+	}
+	public void setFlagRepasseIcms(String flagRepasseIcms) {
+		this.flagRepasseIcms = flagRepasseIcms;
+	}
+	public String getFlagRepasseCpmf() {
+		return flagRepasseCpmf;
+	}
+	public void setFlagRepasseCpmf(String flagRepasseCpmf) {
+		this.flagRepasseCpmf = flagRepasseCpmf;
+	}
+	public String getDsPeriodoRepasse() {
+		return dsPeriodoRepasse;
+	}
+	public void setDsPeriodoRepasse(String dsPeriodoRepasse) {
+		this.dsPeriodoRepasse = dsPeriodoRepasse;
+	}
+	public Long getPeRetencao() {
+		return peRetencao;
+	}
+	public void setPeRetencao(Long peRetencao) {
+		this.peRetencao = peRetencao;
+	}
 	private String dsOperadoraLD;
 	private String dsOperadoraClaro;
 	private String cdEOTLD;
@@ -24,6 +84,18 @@ public class SccContratoCobillingSearchView extends View {
 	private Double valorISS;
 	private Long qtRepasses;
 	private Double vlCriterioCustoLiquido;
+	
+	private Long peRetencao;
+	private String dsPeriodoRepasse;
+	private String dtCriacao;
+	private String dtAtualizacao;
+	private String cdUsuarioManut;
+	private String dsTipoContrato;
+	private Double peCofins;
+	private Double pePis;
+	private String flagRepasseIcms;
+	private String flagRepasseCpmf;
+	
 	
 	public String getDsOperadoraLD() {
 		return dsOperadoraLD;

@@ -7,6 +7,7 @@ import java.util.Collection;
 
 import com.claro.cobillingweb.persistence.dao.DAOException;
 import com.claro.cobillingweb.persistence.filtro.SccFiltro;
+import com.claro.cobillingweb.persistence.filtro.SccFiltroParcelamento;
 import com.claro.cobillingweb.persistence.view.SccAcordoParcelamentoView;
 
 /**
@@ -15,7 +16,7 @@ import com.claro.cobillingweb.persistence.view.SccAcordoParcelamentoView;
  */
 public interface SccAcordoParcelamentoService {
 	
-	Collection<SccAcordoParcelamentoView> findByFilter(SccFiltro filtro) throws ServiceException, DAOException; 
+	Collection<SccAcordoParcelamentoView> findByFilter(SccFiltroParcelamento filtro) throws ServiceException, DAOException; 
 	
 	Collection<SccAcordoParcelamentoView> findByFilterRelAcompanhamento(SccFiltro filtro) throws ServiceException, DAOException;
 

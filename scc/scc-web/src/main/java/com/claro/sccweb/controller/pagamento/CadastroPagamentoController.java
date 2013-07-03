@@ -144,6 +144,7 @@ public class CadastroPagamentoController extends BaseFormController {
 				for (int i=0;i<repassesPrePago.size();i++)
 				{
 					PesquisaPagamentosDecorator decorator = new PesquisaPagamentosDecorator(i, repassesPrePago.get(i));
+					tabela.add(decorator);
 				}
 			}
 		}

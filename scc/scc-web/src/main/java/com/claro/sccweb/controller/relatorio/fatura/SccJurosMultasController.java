@@ -34,6 +34,8 @@ import com.claro.sccweb.service.ServiceException;
 @RequestMapping(value="/user/relatorio/juros/multas")
 public class SccJurosMultasController extends BaseOperationController<SccFaturasForm> {
 	
+	private static final String FWD_VIEW_EXCEL ="relatorio_juros_multas_excel";
+	
 	@Autowired
 	private SccFaturasService sccFaturasService;
 	
@@ -60,6 +62,12 @@ public class SccJurosMultasController extends BaseOperationController<SccFaturas
 		
 	}
 	
+	public ModelAndView excel(HttpServletRequest request,HttpServletResponse response, BaseForm _form,BindingResult bindingResult, Model model) throws Exception {
+		ModelAndView mav = new ModelAndView(FWD_VIEW_EXCEL);
+		return mav;
+	}
+	
+	
 	private List<SccFaturaView> gerarRelatorioJurosMultas(SccFiltro filtro) throws DAOException, ServiceException {
 		
 		return sccFaturasService.gerarRelatorioJurosMultas(filtro);
@@ -68,10 +76,10 @@ public class SccJurosMultasController extends BaseOperationController<SccFaturas
 	private SccFiltro getFiltro(SccFaturasForm form){
 		
 		SccFiltro filtro = new SccFiltro();
-		filtro.setOperadoraClaro(form.getEntity().getEotClaro());
-		filtro.setCsp(form.getEntity().getCsp());
+		filtro.setOperadoraClaro(form.getCdEotClaro());
+		filtro.setCdCsp(form.getCsp());
 		filtro.setDataInicialPeriodo(DateUtils.lowDateTime(form.getDataInicialPeriodo()));
-		filtro.setDataFinalPeriodo(DateUtils.highDateTime(form.getDataFinalPeriodo()));
+		filtro.setDataFinalPeriodo(DateUtils.highDateTime2(form.getDataFinalPeriodo()));
 		return filtro;
 		
 	}

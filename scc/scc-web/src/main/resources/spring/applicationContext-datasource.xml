@@ -26,6 +26,8 @@
 		<property name="annotatedClasses">
 			<list>
 				<value>com.claro.cobillingweb.persistence.entity.external.ControlConnectFile</value>
+				<value>com.claro.cobillingweb.persistence.entity.SccAssociacaoRelatorioGrupo</value>
+				<value>com.claro.cobillingweb.persistence.entity.SccComposicaoGrupoEmail</value>
 				<value>com.claro.cobillingweb.persistence.entity.SccTipoArquivo</value>
 				<value>com.claro.cobillingweb.persistence.entity.SccStatusArquivo</value>	
 				<value>com.claro.cobillingweb.persistence.entity.SccOperadora</value>
@@ -79,6 +81,26 @@
 				<value>com.claro.cobillingweb.persistence.entity.SccEmailCobilling</value>
 				<value>com.claro.cobillingweb.persistence.entity.SccAssinaturaPrePago</value>
 				<value>com.claro.cobillingweb.persistence.entity.SccPenalidadePorRejeicao</value>
+				<value>com.claro.cobillingweb.persistence.entity.SccCdrQuestionamento</value>
+				
+				<value>com.claro.cobillingweb.persistence.entity.SccDisputa</value>
+				<value>com.claro.cobillingweb.persistence.entity.SccDisputaDetalhe</value>
+				<value>com.claro.cobillingweb.persistence.entity.SccDisputaPrePago</value>
+				<value>com.claro.cobillingweb.persistence.entity.SccDisputaDetalhePrePago</value>
+				<value>com.claro.cobillingweb.persistence.entity.SccContestacaoPrePago</value>
+				<value>com.claro.cobillingweb.persistence.entity.SccContestacaoDetalhePre</value>
+				
+
+				<value>com.claro.cobillingweb.persistence.entity.SccAgingIndicador</value>
+				<value>com.claro.cobillingweb.persistence.entity.SccResultadoIndicador</value>
+				<value>com.claro.cobillingweb.persistence.entity.SccIndicador</value>
+				
+				<value>com.claro.cobillingweb.persistence.entity.SccDistribuicaoRelatorio</value>
+				<value>com.claro.cobillingweb.persistence.entity.SccRelatorioSumarizado</value>
+				<value>com.claro.cobillingweb.persistence.entity.SccDadosBancario</value>
+				
+				<value>com.claro.cobillingweb.persistence.entity.SccResultadoIndicador</value>
+				
 			</list>
 		</property>
 	</bean>

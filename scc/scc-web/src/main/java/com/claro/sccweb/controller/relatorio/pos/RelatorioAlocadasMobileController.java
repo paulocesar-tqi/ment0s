@@ -1,6 +1,5 @@
 package com.claro.sccweb.controller.relatorio.pos;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -8,8 +7,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,8 +16,6 @@ import com.claro.cobillingweb.persistence.dao.DAOException;
 import com.claro.cobillingweb.persistence.view.SccAlocadasMobileView;
 import com.claro.sccweb.controller.BaseOperationController;
 import com.claro.sccweb.controller.validator.RelatorioAlocadasMobileValidator;
-import com.claro.sccweb.decorator.rownum.entity.SccAlocadasMobileViewDecorator;
-import com.claro.sccweb.form.BaseForm;
 import com.claro.sccweb.form.RelatorioAlocadasMobileForm;
 import com.claro.sccweb.service.SccAlocadasMobileService;
 import com.claro.sccweb.service.ServiceException;
@@ -33,26 +28,33 @@ public class RelatorioAlocadasMobileController extends
 	@Autowired
 	private SccAlocadasMobileService sccAlocadasMobileService;
 	
+	public static final String FWD_EXCEL_ALOCADAS_MOBILE = "relatorio_alocadas_mobile_filtro_excel";
+	private static final String FWD_VIEW_ALOCADAS_MOBILE = "relatorio_alocadas_mobile_filtro";
+	private static final String OPERACAO_EXCEL =	"excel";
+	
 	private final RelatorioAlocadasMobileValidator validator = new RelatorioAlocadasMobileValidator();
 	
-	public ModelAndView pesquisar(HttpServletRequest request, HttpServletResponse response, BaseForm form, BindingResult bindingResult, Model model) throws Exception {
-		
-		RelatorioAlocadasMobileForm formAlocadasMobile = (RelatorioAlocadasMobileForm)form;
-		List<SccAlocadasMobileView> rows = gerarRelatorioAlocadasMobile(formAlocadasMobile);
-		
-		List<SccAlocadasMobileViewDecorator> decoratorList = new ArrayList<SccAlocadasMobileViewDecorator>(rows.size());
-		
-		for (int i = 0; i < rows.size(); i++) {
-			
-			SccAlocadasMobileViewDecorator decorator = new SccAlocadasMobileViewDecorator(rows.get(i), i);
-			decoratorList.add(decorator);
-		}
-		storeInSession(getClass(), DISPLAY_TAG_SPACE_1, decoratorList, request);
-		ModelAndView mav = new ModelAndView(getViewName());
-		return mav;
-
-	}
 	
+	@RequestMapping(value="listar", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView pesquisarByFiltro(HttpServletRequest request, HttpServletResponse response, RelatorioAlocadasMobileForm form) throws Exception {
+		
+		ModelAndView mav = null;
+		
+		form.setLstAlocadasMobile(gerarRelatorioAlocadasMobile(form));
+		
+		if(form.getOperacao().equals(OPERACAO_EXCEL)){
+			if(form.getLstAlocadasMobile() != null && form.getLstAlocadasMobile().size() > 0){
+				mav = new ModelAndView(FWD_EXCEL_ALOCADAS_MOBILE, "filtro", form);
+			}
+			
+		}else{
+			mav = new ModelAndView(FWD_VIEW_ALOCADAS_MOBILE, "filtro", form);
+		}
+		
+		return mav;
+		
+	}
+
 	private List<SccAlocadasMobileView> gerarRelatorioAlocadasMobile(RelatorioAlocadasMobileForm form) throws DAOException, ServiceException {
 		return sccAlocadasMobileService.gerarRelatorioAlocadasMobile(form.getDtInicial(), form.getDtFinal(), form.getNoArquivoGerado());
 	}
@@ -91,8 +93,7 @@ public class RelatorioAlocadasMobileController extends
 		return sccAlocadasMobileService;
 	}
 
-	public void setSccAlocadasMobileService(
-			SccAlocadasMobileService sccAlocadasMobileService) {
+	public void setSccAlocadasMobileService(SccAlocadasMobileService sccAlocadasMobileService) {
 		this.sccAlocadasMobileService = sccAlocadasMobileService;
 	}
 }

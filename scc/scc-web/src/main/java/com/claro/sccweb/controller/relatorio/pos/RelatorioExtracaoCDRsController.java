@@ -30,6 +30,8 @@ import com.claro.sccweb.service.ServiceException;
 public class RelatorioExtracaoCDRsController extends
 		BaseOperationController<RelatorioExtracaoCDRsForm> {
 	
+	private static final String FWD_VIEW_EXCEL ="relatorio_extracaoCDRs_filtro_excel";
+	
 	@Autowired
 	private SccExtracaoCDRsService sccExtracaoCDRsService;
 	
@@ -52,6 +54,12 @@ public class RelatorioExtracaoCDRsController extends
 		return mav;
 
 	}
+	
+	public ModelAndView excel(HttpServletRequest request,HttpServletResponse response, BaseForm _form,BindingResult bindingResult, Model model) throws Exception {
+		ModelAndView mav = new ModelAndView(FWD_VIEW_EXCEL);
+		return mav;
+	}
+
 	
 	private List<SccExtracaoCDRsView> gerarRelatorioExtracaoCDRs(RelatorioExtracaoCDRsForm form) throws DAOException, ServiceException {
 		return sccExtracaoCDRsService.gerarRelatorioExtracaoCDRs(form.getDtInicial(), form.getDtFinal(), form.getNuMsisdnOrigem());

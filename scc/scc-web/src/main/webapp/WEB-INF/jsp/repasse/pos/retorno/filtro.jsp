@@ -131,12 +131,12 @@ function mostraOperadoraClaro()
 
 <tr>
 <td width="15%">Operadora Claro:</td>
-<td><form:select path="cdEOTClaro" id="comboOperadora" items="${operadorasClaro}" itemLabel="dsOperadora" itemValue="cdEot" /></td>
+<td><form:select path="cdEOTClaro" id="comboOperadora" items="${operadorasClaro}" itemLabel="dsOperadoraForCombos" itemValue="cdEot" /></td>
 </tr>
 
 <tr>
 <td width="15%">Operadora Externa:</td>
-<td><form:select path="cdEOTLD" id="cdEOTLD" items="${operadorasExternas}" itemLabel="dsOperadora" itemValue="cdEot" /></td>
+<td><form:select path="cdEOTLD" id="cdEOTLD" items="${operadorasExternas}" itemLabel="dsOperadoraForCombos" itemValue="cdEot" /></td>
 </tr>
 
 <tr>
@@ -179,8 +179,8 @@ function mostraOperadoraClaro()
 <display:column property="operadoraLD" title="Op. LD" />
 <display:column property="uf" title="UF" />
 <display:column property="status" title="Status" />
-<display:column property="mes" title="Mês Conta" />
-<display:column property="valor" title="Valor" />
+<display:column property="mes" title="Mês/Ano" />
+<display:column property="valor" title="Valor" format="{0, number, #,##0.00}"/>
 <display:column property="numRepasse" title="Demonstrativo de Repasse" />
 <display:column property="arquivo" title="Nome do arquivo" />
 </display:table>

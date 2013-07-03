@@ -29,8 +29,8 @@ public class ControleRemessaPorCicloSQL {
 	public static final String FILTRO_PRODUTO = "AND P.CD_PRODUTO_COBILLING = :cdProdutoCobilling";
 	
 	 
-	public static final String SQL_PERDA_FATURAMENTO =  "SELECT ARQ.CD_EOT_LD,"+
-														"		ARQ.CD_EOT_CLARO,"+
+	public static final String SQL_PERDA_FATURAMENTO =  "SELECT (select ds_operadora from scc_operadora where cd_eot = ARQ.CD_EOT_LD), "+
+														"(select ds_operadora from scc_operadora where cd_eot = ARQ.CD_EOT_CLARO), "+
 														"		TRUNC(ARQ.DT_PROC_EXTERNA), "+
 														"		SU.CD_STATUS_CDR, "+
 														"		SU.CD_SUB_STATUS_CDR,"+

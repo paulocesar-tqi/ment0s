@@ -96,13 +96,19 @@ function mostraOperadoraClaro()
 
 <tr>
     <td width="15%">Operadora Claro:</td>    
-    <td ><form:select id="comboOperadora" path="cdEOTClaro"  items="${operadorasClaro}" itemLabel="dsOperadora" itemValue="cdEot" /></td>    
+    <td ><form:select id="comboOperadora" path="cdEOTClaro"  items="${operadorasClaro}" itemLabel="dsOperadoraForCombos" itemValue="cdEot" /></td>    
 </tr>
 
 <tr>
     <td width="15%">Operadora LD:</td>    
-    <td id="cdEOTLD"><form:select path="cdEOTLD" id ="cdEOTLD" items="${operadorasExternas}" itemLabel="dsOperadora" itemValue="cdEot" /></td>    
+    <td id="cdEOTLD"><form:select path="cdEOTLD" id ="cdEOTLD" items="${operadorasExternas}" itemLabel="dsOperadoraForCombos" itemValue="cdEot" /></td>    
 </tr>
+
+<tr>
+    <td width="15%">Produto:</td>    
+    <td ><form:select id="comboProduto" path="cdProdutoCobilling"  items="${produtos}" itemLabel="noProdutoCobilling" itemValue="cdProdutoCobilling" /></td>    
+</tr>
+
 <tr>    
     <td width="10%">Mês Início:</td>
     <td ><form:select path="mesInicial" id="mesInicial" items="${meses}" itemLabel="label" itemValue="key" />
@@ -124,7 +130,27 @@ function mostraOperadoraClaro()
     <td ><form:input path="anoFinal" id="anoFinal" size="4" maxlength="4"/>
     <form:errors path="anoFinal" /></td>
 </tr>
-
+<tr>
+	<td width="10%">Selecione os Tipos de Arquivo:</td>
+	<td></td>
+</tr>
+<tr>
+	<td width="10%">&nbsp;</td>
+	<td>
+		<table width="60%">
+			<tr>
+				<c:forEach var="item" items="${gruposStatus}" varStatus="rowCounter">
+					<td><form:checkbox path="lstCdr" value="${item.statusConcretosString}" label="${item.descricao}" checked="true" /></td>
+					<c:choose>
+						<c:when test="${rowCounter.count % 2 == 0}">
+							</tr><tr>
+						</c:when>
+					</c:choose>
+				</c:forEach>
+			</tr>
+		</table>
+	</td>
+</tr>
 
 </table>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -144,6 +170,13 @@ function mostraOperadoraClaro()
 <td>
 <table width="100%">
 <tr><th colspan="3" align="center">${periodo.mesAno}</th></tr>
+<tr>
+	 
+	 <th align="left">Aceito</th>
+	 <th align="left">${periodo.aceitos}</th>
+ 	 <th align="left">100%</th>
+</tr>
+
 <c:forEach items="${periodo.cdrs}" var="grupo" varStatus="rowCounter">
 <c:choose>
           <c:when test="${rowCounter.count % 2 == 0}">
@@ -153,6 +186,7 @@ function mostraOperadoraClaro()
             <c:set var="rowStyle" scope="page" value="even"/>
           </c:otherwise>
         </c:choose>		
+
 <tr class="${rowStyle}">
 <td>${grupo.descricao}</td>
 <td>${grupo.quantidadeCDR}</td>
@@ -174,15 +208,15 @@ function mostraOperadoraClaro()
 			<img src="/scc/user/cdr/evolucao/grafico/rejeitado/qt.scc" width='90%' border='1'/>
 		</td>
 		<td>
-			<img src="/scc/user/cdr/evolucao/grafico/faturado/qt.scc" width='90%' border='1'/>
+			<img src="/scc/user/cdr/evolucao/grafico/encaminhado_reciclar/qt.scc" width='90%' border='1'/>
 		</td>
 	</tr>
 	<tr>
 		<td>
-			<img src="/scc/user/cdr/evolucao/grafico/aceitos/qt.scc" width='90%' border='1'/>
+			<img src="/scc/user/cdr/evolucao/grafico/faturado/qt.scc" width='90%' border='1'/>
 		</td>
 		<td>
-			<img src="/scc/user/cdr/evolucao/grafico/encaminhado_reciclar/qt.scc" width='90%' border='1'/>
+			<img src="/scc/user/cdr/evolucao/grafico/aceitos/qt.scc" width='90%' border='1'/>
 		</td>
 	</tr>
 </table>

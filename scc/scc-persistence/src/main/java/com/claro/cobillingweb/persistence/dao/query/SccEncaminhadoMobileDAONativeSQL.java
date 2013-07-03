@@ -26,7 +26,7 @@ public class SccEncaminhadoMobileDAONativeSQL {
 									   " AND  RS.DT_RELATORIO <= :dtFinal "+
 									   " AND  RS.SQ_RELATORIO = 3";									 
 									 	
-	public static final String FILTRO_NO_ARQUIVO_GERADO = " AND RS.NO_ARQUIVO_GERADO = :noArquivoGerado ";
+	public static final String FILTRO_NO_ARQUIVO_GERADO = " AND RI.DT_RELATORIO = :noArquivoGerado ";
 	
 	public static final String SQL_GROUP = " ORDER BY RI.DT_RELATORIO ";
 						

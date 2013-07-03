@@ -75,13 +75,23 @@ function excel()
 <br/>
 <table  width="100%" border="0" cellspacing="0" cellpadding="0" >
  <tr><td>                            
-<display:table style="width:90%"  name="sessionScope._DISPLAY_TAG_SPACE_1"   pagesize="20"  id="repasses" requestURI="/scc/user/arquivos/credito/tab1.scc" class="ui-state-default">
+<display:table style="width:90%"  name="sessionScope._DISPLAY_TAG_SPACE_1"   pagesize="20"  id="repasses" requestURI="/scc/user/arquivos/credito/execute.scc" class="ui-state-default">
 <display:column property="row.noArquivo" title="Nome do Arquivo" />
 <display:column property="row.sqArquivoCredito" title="Arquivo Crédito" />
 <display:column property="origem" title="Origem" />
 <display:column property="status" title="Status" />
 <display:column property="dataProcessamento" title="Data Processamento" />
 <display:column property="row.qtRegistros" title="Registros" />
+<display:footer>
+    <tr>
+      <th align="left">Total:</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th align="left">${sessionScope._DISPLAY_TAG_SPACE_2.totalRegistros}</th>
+    <tr>
+</display:footer>
 </display:table>
 </td></tr>
 </table>

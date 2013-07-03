@@ -45,13 +45,17 @@ public abstract class BaseFormController {
 	public static final String MODULO_POS_PAGO = "POS";
 	public static final String MODULO_PRE_PAGO = "PRE";
 	protected static NumberFormat decimalFormat = new DecimalFormat("#.##");
-	
+	protected static NumberFormat integerFormat = new DecimalFormat("#.##");
+
 	static {
     	Locale locale = new Locale("pt","BR");
     	decimalFormat = NumberFormat.getInstance(locale);
     	decimalFormat.setMinimumFractionDigits(2);
     	decimalFormat.setMaximumFractionDigits(2);
-    }
+    	integerFormat = NumberFormat.getInstance(locale);
+    	integerFormat.setMinimumFractionDigits(0);
+    	integerFormat.setMaximumFractionDigits(0);
+	}
 	
 	/**
 	 * Prefixo a ser usado durante o cache de forms na session do usuário.
@@ -96,10 +100,6 @@ public abstract class BaseFormController {
 	 */
 	protected SimpleDateFormat sccDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 	
-	/**
-	 * Formato monetário padrão.
-	 */
-	DecimalFormat sccCurrencyFormat = new DecimalFormat("#.##");
 	
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
@@ -192,10 +192,10 @@ public abstract class BaseFormController {
 		return sccDateFormat;
 	}
 	
-	public DecimalFormat getSccCurrencyFormat() {
-		return sccCurrencyFormat;
+	public NumberFormat getSccCurrencyFormat() {
+		return decimalFormat;
 	}
-	
+		
 	public String formataData(Date date){
 		if (date == null)
 			return "-";
@@ -207,7 +207,28 @@ public abstract class BaseFormController {
 		if (valor == null)
 			return "-";
 		else
-			return getSccCurrencyFormat().format(valor);
+			return getSccCurrencyFormat().format(trunc(valor, 2));
+	}
+	
+	public String formataInteiro(Integer valor){
+		if (valor == null)
+			return " ";
+		else
+			return integerFormat.format(valor);
+	}
+	
+	public String formataInteiro(Double valor){
+		if (valor == null)
+			return " ";
+		else
+			return integerFormat.format(valor);
+	}
+	
+	public String formataInteiro(Long valor){
+		if (valor == null)
+			return " ";
+		else
+			return integerFormat.format(valor);
 	}
 	
 	/**
@@ -284,6 +305,7 @@ public abstract class BaseFormController {
 		lista.add(new BasicStringItem("RS","RS"));
 		lista.add(new BasicStringItem("SC","SC"));
 		lista.add(new BasicStringItem("SE","SE"));
+		lista.add(new BasicStringItem("SP","SP"));
 		lista.add(new BasicStringItem("TO","TO"));
 		return lista;
 	}
@@ -470,4 +492,17 @@ public abstract class BaseFormController {
 		return comboList;
 	}
 	
+	protected double trunc(Double db, int casas) {
+		if (db == null) {
+			return trunc(0.0000,2);
+		}
+    	double fator = 1.0;
+    	do {
+    		fator = fator*10.0;
+    		casas--;
+    	}
+    	while(casas>0);
+    	return Math.round(db*fator)/fator;
+    }
+
 }

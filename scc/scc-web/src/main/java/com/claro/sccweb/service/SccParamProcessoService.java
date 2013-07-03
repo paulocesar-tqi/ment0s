@@ -20,6 +20,9 @@ public interface SccParamProcessoService {
 	List<SccParamProcesso> pesquisaProcessoParametros(String codProcesso, Date dtInicio, Date dtFim) throws DAOException, ServiceException;
 	
 	List<String> listarProcessos()throws DAOException, ServiceException;
+
+	List<SccParamProcesso> gerarRelatorios(String idProcesso,
+			String valorParametro) throws DAOException;
 	
 	
 	

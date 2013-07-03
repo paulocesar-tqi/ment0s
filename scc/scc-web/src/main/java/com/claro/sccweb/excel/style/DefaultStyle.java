@@ -40,7 +40,6 @@ public class DefaultStyle implements ExcelStyle {
 	public String getFormat() {		
 		return null;
 	}
-
 	
 	
 }

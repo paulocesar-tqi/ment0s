@@ -11,6 +11,7 @@ import javax.persistence.Table;
 @Table(name="SCC_PRE_ITEM_TARIFA_ACB")
 public class SccPreItemTarifaAcb {
 
+	@SuppressWarnings("unused")
 	private static final long serialVersionUID = 1L;
 	private SccPreItemTarifaAcbPK id;
 	private BigDecimal vlBruto;

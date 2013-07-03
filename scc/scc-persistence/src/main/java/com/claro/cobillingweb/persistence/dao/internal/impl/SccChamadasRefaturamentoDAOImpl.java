@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.hibernate.Session;
 
+import com.claro.cobillingweb.persistence.dao.BasicDAO;
 import com.claro.cobillingweb.persistence.dao.DAOException;
 import com.claro.cobillingweb.persistence.dao.impl.HibernateBasicDAOImpl;
 import com.claro.cobillingweb.persistence.dao.internal.SccChamadasRefaturamentoDAO;
@@ -36,28 +37,29 @@ public class SccChamadasRefaturamentoDAOImpl extends HibernateBasicDAOImpl<SccCh
 			Session session = getSessionFactory().getCurrentSession();
 			NativeSQLViewMapper<SccChamadasRefaturamentoView> mapper = new NativeSQLViewMapper<SccChamadasRefaturamentoView>(session, SccChamadasRefaturamentoDAONativeSQL.SQL_INICIO, SccChamadasRefaturamentoView.class);
 			
-			if(statusChamada != null && !statusChamada.equals("")){
-				if(statusChamada == "A Faturar/Faturado"){ //Chamadas A Faturar/Faturado
+			if(statusChamada.equals("Fat")){ //Chamadas A Faturar/Faturado
 					mapper.appendSQL(SccChamadasRefaturamentoDAONativeSQL.SQL_FAT);
-				}else{ //Chamadas Aceite/Rejeitado
+			}else{ //Chamadas Aceite/Rejeitado
 					mapper.appendSQL(SccChamadasRefaturamentoDAONativeSQL.SQL_REJ);
-				}
 			}
+			
 			
 			mapper.appendSQL(SccChamadasRefaturamentoDAONativeSQL.SQL_FIM);
 			
-			if(operadoraLD != null && !operadoraLD.equals("")){
+			if(operadoraLD != null && !operadoraLD.equals(BasicDAO.GET_ALL_STRING)){
 				mapper.addArgument("operadoraLD", operadoraLD, SccChamadasRefaturamentoDAONativeSQL.FILTRO_CD_EOT_LD);
 			}
-			if(operadoraClaro != null && !operadoraClaro.equals("")){
+			if(operadoraClaro != null && !operadoraClaro.equals(BasicDAO.GET_ALL_STRING)){
 				mapper.addArgument("operadoraClaro", operadoraClaro, SccChamadasRefaturamentoDAONativeSQL.FILTRO_CD_EOT_CLARO);
 			}
-			if(cdRefaturamento != null && !cdRefaturamento.equals("")){
+			if(cdRefaturamento != null && !cdRefaturamento.equals(BasicDAO.GET_ALL_STRING)){
 				mapper.addArgument("cdRefaturamento", cdRefaturamento, SccChamadasRefaturamentoDAONativeSQL.FILTRO_CD_REFATURAMENTO);
 			}
-			if(statusChamada != null && !statusChamada.equals("")){
-				mapper.addArgument("statusChamada", statusChamada, SccChamadasRefaturamentoDAONativeSQL.FILTRO_CD_STATUS_CDR);
+			
+			if(statusChamada.equals("Fat")){ //Chamadas A Faturar/Faturado
+				mapper.appendSQL(SccChamadasRefaturamentoDAONativeSQL.FILTRO_CD_STATUS_CDR);
 			}
+
 			mapper.addArgument("dtInicial", dtInicial);
 			mapper.addArgument("dtFinal", dtFinal);
 
@@ -74,7 +76,7 @@ public class SccChamadasRefaturamentoDAOImpl extends HibernateBasicDAOImpl<SccCh
 			mapper.appendSQL(SccChamadasRefaturamentoDAONativeSQL.SQL_GROUP);
 			
 			if(statusChamada != null && !statusChamada.equals("")){
-				if(statusChamada == "A Faturar/Faturado"){ //Chamadas A Faturar/Faturado
+				if(statusChamada.equals("Fat")){ //Chamadas A Faturar/Faturado
 					mapper.appendSQL(SccChamadasRefaturamentoDAONativeSQL.SQL_GROUP_FAT);
 				}else{ //Chamadas Aceite/Rejeitado
 					mapper.appendSQL(SccChamadasRefaturamentoDAONativeSQL.SQL_GROUP_REJ);

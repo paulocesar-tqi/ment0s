@@ -1,5 +1,6 @@
 package com.claro.cobillingweb.persistence.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -15,8 +16,13 @@ import javax.persistence.TemporalType;
 @Entity
 @SequenceGenerator(name="SCC_FAIXA_PENALIDADE_SQ01" , sequenceName="SCC_FAIXA_PENALIDADE_SQ01")
 @Table(name="SCC_FAIXA_PENALIDADE")
-public class SccFaixaPenalidade {
+public class SccFaixaPenalidade extends FwjBaseEntidade implements Serializable{
 
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 9020402178818334318L;
 	
 	private Long cdFaixaPenalidade;
 	private String dsFaixaPenalidade;

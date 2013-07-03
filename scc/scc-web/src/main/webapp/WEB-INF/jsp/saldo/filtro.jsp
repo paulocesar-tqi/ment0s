@@ -51,13 +51,13 @@ function gerar()
 
 <tr>
 <td width="15%">Operadora Claro:</td>
-<td> <form:select path="cdEOTClaro" items="${operadorasClaro}" itemLabel="dsOperadora" itemValue="cdEot"></form:select> </td>
+<td> <form:select path="cdEOTClaro" items="${operadorasClaro}" itemLabel="dsOperadoraForCombos" itemValue="cdEot"></form:select> </td>
 </tr>
 
 
 <tr>
 <td width="15%">Operadora LD:</td>
-<td> <form:select path="cdEOTLD" items="${operadorasExternas}" itemLabel="dsOperadora" itemValue="cdEot"></form:select> </td>
+<td> <form:select path="cdEOTLD" items="${operadorasExternas}" itemLabel="dsOperadoraForCombos" itemValue="cdEot"></form:select> </td>
 </tr>
 
 

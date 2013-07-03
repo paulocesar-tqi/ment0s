@@ -28,9 +28,9 @@ public class ControleRemessaCDRPreExcelHandler extends BasicExcelHandler {
 		columnDefinitions.add(new ExcelColumnDefinition("getOperadoraLD", "Operadora LD", style, 30));
 		columnDefinitions.add(new ExcelColumnDefinition("getOperadoraClaro", "Operadora Claro", style, 30));
 		columnDefinitions.add(new ExcelColumnDefinition("getUf", "UF", style, 10));
-		columnDefinitions.add(new ExcelColumnDefinition("getDataChamada", "Data da Chamada", style, 30));
-		columnDefinitions.add(new ExcelColumnDefinition("getDataCarga", "Data da Apuração", style, 30));
-		columnDefinitions.add(new ExcelColumnDefinition("getDataFechamento", "Data de Fechamento", style, 30));
+		columnDefinitions.add(new ExcelColumnDefinition("getDataChamada", "Data da Chamada", dateStyle, 12));
+		columnDefinitions.add(new ExcelColumnDefinition("getDataCarga", "Data da Apuração", dateStyle, 12));
+		columnDefinitions.add(new ExcelColumnDefinition("getDataFechamento", "Data de Fechamento", dateStyle, 12));
 		columnDefinitions.add(new ExcelColumnDefinition("getCnAssinante", "CN do Assinante", style, 30));
 		columnDefinitions.add(new ExcelColumnDefinition("getOrigemChamada", "Origem da Chamada", style, 30));
 		columnDefinitions.add(new ExcelColumnDefinition("getOperadoraOrigem", "Operadora de Origem", style, 30));

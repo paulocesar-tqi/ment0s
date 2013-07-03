@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.claro.cobillingweb.persistence.constants.CobillingConstants;
@@ -18,6 +19,7 @@ import com.claro.cobillingweb.persistence.dao.internal.SccRelatorioJurosMultaDAO
 import com.claro.cobillingweb.persistence.dao.internal.SccRepasseDAO;
 import com.claro.cobillingweb.persistence.dao.internal.SccRepasseServicoAdicionalDAO;
 import com.claro.cobillingweb.persistence.entity.SccArquivoCobilling;
+import com.claro.cobillingweb.persistence.entity.SccMemo;
 import com.claro.cobillingweb.persistence.entity.SccPagamentoRepasse;
 import com.claro.cobillingweb.persistence.entity.SccPagamentoRepassePK;
 import com.claro.cobillingweb.persistence.entity.SccParamProcesso;
@@ -26,15 +28,17 @@ import com.claro.cobillingweb.persistence.entity.SccPreFechamento;
 import com.claro.cobillingweb.persistence.entity.SccRepasse;
 import com.claro.cobillingweb.persistence.entity.SccRepasseServicoAdicional;
 import com.claro.cobillingweb.persistence.entity.SccStatusArquivo;
+import com.claro.cobillingweb.persistence.service.ServiceException;
 import com.claro.sccweb.service.AbstractService;
 import com.claro.sccweb.service.PagamentoRepasseService;
-import com.claro.sccweb.service.ServiceException;
+import com.claro.sccweb.service.SccPreFechamentoService;
 import com.claro.sccweb.service.composite.RepassePosPagoComposite;
 import com.claro.sccweb.service.composite.RepassePrePagoComposite;
 
 public class PagamentoRepasseServiceImpl extends AbstractService implements PagamentoRepasseService {
 
 	private SccRepasseDAO repasseDAO;
+	@Autowired
 	private SccPagamentoRepasseDAO pagamentoRepasseDAO;
 	private SccOperadoraDAO operadoraDAO;
 	private SccMemoDAO memoDAO;
@@ -43,6 +47,10 @@ public class PagamentoRepasseServiceImpl extends AbstractService implements Paga
 	private SccRelatorioJurosMultaDAO relatorioJurosMultaDAO;
 	private SccPreFechamentoDAO preFechamentoDAO;
 	private SccParamProcessoDAO paramProcessoDAO;
+	
+	@SuppressWarnings("unused")
+	@Autowired
+	private SccPreFechamentoService sccPreFechamentoService;
 	
 	public SccRepasseDAO getRepasseDAO() {
 		return repasseDAO;
@@ -75,6 +83,7 @@ public class PagamentoRepasseServiceImpl extends AbstractService implements Paga
 	public void setParamProcessoDAO(SccParamProcessoDAO paramProcessoDAO) {
 		this.paramProcessoDAO = paramProcessoDAO;
 	}
+	@SuppressWarnings("unused")
 	@Transactional
 	public void realizaPagamentoRepasse(RepassePosPagoComposite composite) throws DAOException, ServiceException {
 		Date now = new Date();		
@@ -165,7 +174,7 @@ public class PagamentoRepasseServiceImpl extends AbstractService implements Paga
 			pagamento.setDtAtualizacao(now);
 			getPagamentoRepasseDAO().create(pagamento);
 			info("Pagamento para repasse "+composite.getNuRepasse()+" realizado com sucesso.");
-			/*5. Registra em SCC_MEMO o pagamento e o usuário que o confirmou.*/
+			/*5. Registra em SCC_MEMO o pagamento e o usuï¿½rio que o confirmou.*/
 		} catch (Exception e)
 			{
 			if (e instanceof DAOException)
@@ -259,12 +268,55 @@ public class PagamentoRepasseServiceImpl extends AbstractService implements Paga
 		this.relatorioJurosMultaDAO = relatorioJurosMultaDAO;
 	}
 	
+	@Override
+	@Transactional
+	public void realizaPagamentoRepassePre(RepassePrePagoComposite composite, String usuario) throws DAOException, ServiceException {
+		
+		try {
+			SccPreFechamento fechamento = getPreFechamentoDAO().getByPk(composite.getSqPreFechamento(),SccPreFechamento.class);
+			fechamento.setCdStatusFechamento("C");
+			getPreFechamentoDAO().updateEntity(fechamento);
+			//this.sccPreFechamentoService.updateEntity(fechamento);
+			SccPagamentoRepassePK pagamentoRepassePK = new SccPagamentoRepassePK();
+			pagamentoRepassePK.setCdEotHolding(composite.getOperadoraClaro().getCdEot());
+			pagamentoRepassePK.setCdEotLd(composite.getOperadoraLD().getCdEot());
+			pagamentoRepassePK.setCdTipoContrato("P");
+			pagamentoRepassePK.setDtReferencia(composite.getPreFechamento().getDtInicialFechamento());
+			pagamentoRepassePK.setNuRepasse(composite.getPreFechamento().getSqPreFechamento());
+			SccPagamentoRepasse pagamentoRepasse = new SccPagamentoRepasse();
+			pagamentoRepasse.setId(pagamentoRepassePK);
+			pagamentoRepasse.setCdFormaPagamento("1");
+			pagamentoRepasse.setVlBrutoNf(composite.getPreFechamento().getVlFinalRepassar());
+			pagamentoRepasse.setVlRepasse(composite.getPreFechamento().getVlFinalRepassar());
+			Calendar cal = Calendar.getInstance();
+			if (cal.get(Calendar.DAY_OF_MONTH) >= 10) {
+				cal.add(Calendar.MONTH, 1);
+				}
+			cal.set(Calendar.DAY_OF_MONTH, 10);
+			pagamentoRepasse.setDtEmissaoNf(cal.getTime());
+			cal.set(Calendar.DAY_OF_MONTH, 20);
+			pagamentoRepasse.setDtPagamentoRepasse(cal.getTime());			
+			pagamentoRepasse.setCdUsuarioManut(getSessionDataManager().getUserPrincipal());			
+			pagamentoRepasse.setQtDiasAtraso(0L);
+			Date now = new Date();
+			pagamentoRepasse.setDtCriacao(now);
+			pagamentoRepasse.setDtAtualizacao(now);
+			getPagamentoRepasseDAO().create(pagamentoRepasse);
+			
+			gerarParamProcessoMab(fechamento, usuario);
+			
+		} catch (Exception e) {
+			throw new ServiceException("SccPreFechamentoService.updateEntity",e);
+		}
+	}
+	
+	
+	
 	
 	@Transactional	 
 	public void realizaPagamentoRepasse(RepassePrePagoComposite composite, String usuario) throws DAOException, ServiceException {
 		try {
-			SccPreFechamento fechamento = getPreFechamentoDAO().getByPk(composite.getSqPreFechamento(),
-					SccPreFechamento.class);
+			SccPreFechamento fechamento = getPreFechamentoDAO().getByPk(composite.getSqPreFechamento(),SccPreFechamento.class);
 			fechamento.setCdStatusFechamento("C");
 			getPreFechamentoDAO().update(fechamento);
 			SccPagamentoRepassePK pagamentoRepassePK = new SccPagamentoRepassePK();
@@ -281,12 +333,12 @@ public class PagamentoRepasseServiceImpl extends AbstractService implements Paga
 			Calendar cal = Calendar.getInstance();
 			if (cal.get(Calendar.DAY_OF_MONTH) >= 10) {
 				cal.add(Calendar.MONTH, 1);
-			}
+				}
 			cal.set(Calendar.DAY_OF_MONTH, 10);
 			pagamentoRepasse.setDtEmissaoNf(cal.getTime());
 			cal.set(Calendar.DAY_OF_MONTH, 20);
-			pagamentoRepasse.setDtPagamentoRepasse(cal.getTime());
-			pagamentoRepasse.setCdUsuarioManut(getSessionDataManager().getUserPrincipal());
+			pagamentoRepasse.setDtPagamentoRepasse(cal.getTime());			
+			pagamentoRepasse.setCdUsuarioManut(getSessionDataManager().getUserPrincipal());			
 			pagamentoRepasse.setQtDiasAtraso(0L);
 			Date now = new Date();
 			pagamentoRepasse.setDtCriacao(now);
@@ -297,16 +349,31 @@ public class PagamentoRepasseServiceImpl extends AbstractService implements Paga
 			
 		} catch (DAOException daoEx) {
 			throw daoEx;
-		} catch (Exception ex) {
+			}
+		catch (Exception ex)
+			{
 			throw new ServiceException(ex.getMessage(), ex);
-		}
+			}
 		
 	}
 	 
-	public void cancelaPagamentoRepasse(RepassePrePagoComposite repasse) throws DAOException, ServiceException {
+	/*public void cancelaPagamentoRepasse(RepassePrePagoComposite repasse) throws DAOException, ServiceException {
 		// TODO Auto-generated method stub
 		
+	}*/
+	
+	public void cancelaPagamentoRepasse(RepassePrePagoComposite composite) throws DAOException, ServiceException {
+		try {
+			SccPreFechamento fechamento = getPreFechamentoDAO().getByPk(composite.getSqPreFechamento(),SccPreFechamento.class);
+			fechamento.setCdStatusFechamento("N");
+			getPreFechamentoDAO().updateEntity(fechamento);
+		} catch (Exception e) {
+			throw new ServiceException("SccPreFechamentoService.updateEntity",e);
+		}
+		
 	}
+	
+	
 	public SccPreFechamentoDAO getPreFechamentoDAO() {
 		return preFechamentoDAO;
 	}
@@ -321,11 +388,19 @@ public class PagamentoRepasseServiceImpl extends AbstractService implements Paga
 	
 	 
 	@Transactional
-	public void confirmaDadosRepasse(SccPagamentoRepasse pagamentoRepasse) throws DAOException {
+	public void confirmaDadosRepasse(SccPagamentoRepasse pagamentoRepasse) throws DAOException, ServiceException  {
 		pagamentoRepasse.setDtAtualizacao(Calendar.getInstance().getTime());
 		pagamentoRepasse.setCdUsuarioManut(getSessionDataManager().getUserPrincipal());
+		
 		getPagamentoRepasseDAO().update(pagamentoRepasse);
 		
+	}
+	
+	@Transactional
+	@Override
+	public void insertMemo(SccMemo entity) throws DAOException{
+		
+		this.memoDAO.saveOrUpdate(entity);
 	}
 	
 	private void gerarParamProcessoMab(SccPreFechamento fechamento, String username) throws DAOException {
@@ -359,5 +434,20 @@ public class PagamentoRepasseServiceImpl extends AbstractService implements Paga
 			getParamProcessoDAO().create(paramProcesso);
 		}
 	}
+	
+	
+	@Transactional
+	@Override
+	public void updatePagamentoRepasse(Long nuRepasse, String status) throws DAOException, ServiceException{
+	
+		this.pagamentoRepasseDAO.updatePagamentoRepasse(nuRepasse, status);
+	}
+	
+	public void setSccPreFechamentoService(
+			SccPreFechamentoService sccPreFechamentoService) {
+		this.sccPreFechamentoService = sccPreFechamentoService;
+	}
+	
+	
 	
 }

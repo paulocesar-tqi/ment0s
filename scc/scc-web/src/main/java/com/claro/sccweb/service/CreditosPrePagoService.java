@@ -13,7 +13,7 @@ import com.claro.cobillingweb.persistence.view.RelDetalheCreditoPrePagoView;
  */
 public interface CreditosPrePagoService {
 
-	public List<RelCreditosPrePagoView> carregaRelatorioCreditos(String cdEOTLD, String cdEOTClaro, String tipoCredito,String statusCredito, Date dtInicio,Date dtFinal,int tamanhoPagina,int pagina) throws DAOException;
+	public List<RelCreditosPrePagoView> carregaRelatorioCreditos(String cdEOTLD, String cdEOTClaro, String tipoCredito,String statusCredito, Date dtInicio,Date dtFinal) throws DAOException;
 	
 	public List<RelDetalheCreditoPrePagoView> carregaDetalhesCredito(Long seqArquivoCredito, Long seqCredito) throws DAOException;
 	

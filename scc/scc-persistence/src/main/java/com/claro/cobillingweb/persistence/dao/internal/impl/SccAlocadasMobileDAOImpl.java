@@ -47,7 +47,7 @@ public class SccAlocadasMobileDAOImpl extends HibernateBasicDAOImpl<SccAlocadasM
 			mapper.addResultMap("dtRelatorio", Date.class);
 			mapper.addResultMap("cdCiclo", Integer.class);
 			mapper.addResultMap("qtChamadas", Integer.class);
-			mapper.addResultMap("qtMinutoTarifados", Integer.class);
+			mapper.addResultMap("qtMinutoTarifados", Double.class);
 			mapper.addResultMap("vlLiquido", Double.class);
 			mapper.addResultMap("dtChamada", Date.class);
 			

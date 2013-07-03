@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="/scc/css/jquery-ui-1.8.18.custom.css" type="text/css"/>
 <script>
 $(document).ready(function() {
-
+$.ajaxSetup({ cache: false }); 
 $('#tabs').tabs();
 	
 $('#novaButton').click(function(){

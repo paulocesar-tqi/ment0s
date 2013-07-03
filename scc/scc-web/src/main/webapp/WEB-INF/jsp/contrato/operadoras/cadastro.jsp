@@ -149,13 +149,13 @@ function cancelar()
 
 <tr>
 <td width="15%">Operadora Claro:</td>
-<td ><form:select path="entity.id.cdEotClaro" id="cdEotClaro" items="${operadorasClaro}" itemLabel="dsOperadora" itemValue="cdEot" />
+<td ><form:select path="entity.id.cdEotClaro" id="cdEotClaro" items="${operadorasClaro}" itemLabel="dsOperadoraForCombos" itemValue="cdEot" />
 </td>
 </tr>
 
 <tr>
 <td width="15%">Operadora Externa:</td>
-<td ><form:select path="entity.id.cdEotLd" id="cdEotLd" items="${operadorasExternas}" itemLabel="dsOperadora" itemValue="cdEot" />
+<td ><form:select path="entity.id.cdEotLd" id="cdEotLd" items="${operadorasExternas}" itemLabel="dsOperadoraForCombos" itemValue="cdEot" />
 </td>
 </tr>
 

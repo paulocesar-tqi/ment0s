@@ -108,7 +108,7 @@ function num(dom) {
 
 <tr>
 <td width="15%">Operadora LD:</td> 
-<td><form:select path="filtro.cdEotLd" itemValue="cdEot" itemLabel="dsOperadora" items="${operadorasExternas}"/></td>
+<td><form:select path="filtro.cdEotLd" itemValue="cdEot" itemLabel="dsOperadoraForCombos" items="${operadorasExternas}"/></td>
 </tr>
 
 <tr>
@@ -195,7 +195,7 @@ function num(dom) {
 
 <tr>
 <td width="15%">Operadora LD:</td>
-<td> <form:select path="entity.cdEotLd" id="cdEotLd" itemValue="cdEot" itemLabel="dsOperadora" items="${operadorasExternas}"/>
+<td> <form:select path="entity.cdEotLd" id="cdEotLd" itemValue="cdEot" itemLabel="dsOperadoraForCombos" items="${operadorasExternas}"/>
 </tr>
 
 <tr>

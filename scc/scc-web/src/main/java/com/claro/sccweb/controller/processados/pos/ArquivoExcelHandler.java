@@ -27,19 +27,20 @@ public class ArquivoExcelHandler extends BasicExcelHandler {
 		if (decoratorList == null)
 			throw new ControllerExecutionException("Navegação inválida. Pesquisa de arquivos não encontrada no cache.");
 		List<ExcelColumnDefinition> columnDefinitions = new ArrayList<ExcelColumnDefinition>();
-		columnDefinitions.add(new ExcelColumnDefinition("getSeqArquivo", "Seq. Arq.", style, 20));
-		columnDefinitions.add(new ExcelColumnDefinition("getNomeArquivo", "Arquivo", style, 80));
-		columnDefinitions.add(new ExcelColumnDefinition("getOperadoraClaro", "Op. Claro", style, 40));
-		columnDefinitions.add(new ExcelColumnDefinition("getOperadoraExterna", "Op. Externa", style, 40));
+		columnDefinitions.add(new ExcelColumnDefinition("getArquivoRemessa", "Arquivo de Remessa", style, 45));
+		columnDefinitions.add(new ExcelColumnDefinition("getArqProtocolo", "Protocolo", style, 45));
+		columnDefinitions.add(new ExcelColumnDefinition("getNomeArquivo", "Nome do Arquivo", style, 45));
+		columnDefinitions.add(new ExcelColumnDefinition("getOperadoraClaro", "Operadora Claro", style, 15));
+		columnDefinitions.add(new ExcelColumnDefinition("getOperadoraExterna", "Operadora Externa", style, 15));
 		columnDefinitions.add(new ExcelColumnDefinition("getDataProcClaro", "Data Proc. Claro", style, 20));
 		columnDefinitions.add(new ExcelColumnDefinition("getDataReferencia", "Data Referência", style, 20));
 		columnDefinitions.add(new ExcelColumnDefinition("getDataInicioTrafego", "Data Início", style, 20));
 		columnDefinitions.add(new ExcelColumnDefinition("getDataFinalTrafego", "Data Final", style, 20));
-		columnDefinitions.add(new ExcelColumnDefinition("getStatus", "Status", style, 30));
 		columnDefinitions.add(new ExcelColumnDefinition("getQtCDR", "Qtd. CDRs", style, 15));
 		ExcelPrinter printer = new ExcelPrinter(columnDefinitions,workbook);
 		printer.addSheet("Arquivos Processados");
 		List<String> linhasCabecalho = new ArrayList<String>();
+		linhasCabecalho.add("Claro - Relatório de Descrição de Arquivo");
 		linhasCabecalho.add("Data Geração "+dateFormat.format(new Date()));
 		printer.setHeaderLines(linhasCabecalho);
 		printer.generateHeader();

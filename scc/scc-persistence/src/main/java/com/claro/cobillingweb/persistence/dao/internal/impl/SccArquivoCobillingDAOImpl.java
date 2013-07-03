@@ -3,6 +3,7 @@ package com.claro.cobillingweb.persistence.dao.internal.impl;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -361,7 +362,23 @@ public class SccArquivoCobillingDAOImpl extends HibernateBasicDAOImpl<SccArquivo
 			throw new DAOException(e.getMessage(), e);
 		}
 	}
-
+	
+	public SccArquivoCobilling pesquisaRelatorioTransicaoByArquivo(String nomeArquivo) throws DAOException {
+		
+		SccArquivoCobilling entity = null;
+		
+		try {
+			Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(SccArquivoCobilling.class);
+			criteria.add(Restrictions.eq("noArquivo", nomeArquivo));
+			entity = (SccArquivoCobilling) criteria.list().get(0);
+		} catch (Exception e) {
+			throw new DAOException(e.getMessage(), e);
+		}
+		
+		return entity;
+		
+	}			
+			
 	@SuppressWarnings("unchecked")
 	public List<SccArquivoCobilling> pesquisaArquivosVum(String cdEOTLD, String plataforma, long tipoArquivo, Date dataInicial, Date dataFinal) throws DAOException {
 		try {
@@ -376,7 +393,7 @@ public class SccArquivoCobillingDAOImpl extends HibernateBasicDAOImpl<SccArquivo
 //			if (dataFinal != null)
 //				criteria.add(Restrictions.eq("dtFimTrafego", dataFinal));
 //						
-			String filtroNome = "SCC.VUM.%s%s.I%s.F%s.P%%";
+			String filtroNome = "SCC.VUM.%s.%s.I%s.F%s.P%%";
 			String strPlat = "___";
 			String strEot = "___";
 			String strDtInicio = "________";
@@ -408,6 +425,5 @@ public class SccArquivoCobillingDAOImpl extends HibernateBasicDAOImpl<SccArquivo
 			throw new DAOException(e.getMessage(), e);
 		}
 	}
-
 
 }

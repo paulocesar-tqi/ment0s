@@ -32,7 +32,7 @@ function voltar()
 
 <table  width="100%" border="0" cellspacing="0" cellpadding="0" >
  <tr><td align="center">                            
-<display:table style="width:100%"  name="sessionScope._DISPLAY_TAG_SPACE_2"   pagesize="20"  id="repasses" requestURI="/scc/user/pre/processados/pesquisa/tab1.scc" class="ui-state-default">
+<display:table style="width:100%"  name="requestScope.filtro.listArquivoPrePagoDecorators"   pagesize="20"  id="repasses" requestURI="/scc/user/pre/processados/pesquisa/tab1.scc" class="ui-state-default">
 <display:column property="row.NO_ARQUIVO" title="Nome do Arquivo" />
 <display:column property="row.NO_DIRETORIO_ARQUIVO" title="Diretório do Arquivo" />
 <display:column property="row.NO_MAQUINA_ARQUIVO" title="Máquina do Arquivo" />

@@ -3,9 +3,9 @@ package com.claro.cobillingweb.persistence.dao.query;
 public class GeraSomatorioCDRsSQL {
 
 	public final static String SQL = "SELECT COUNT(1) AS QUANTIDADE, "+ 
-                 "SUM(A.HR_DURACAO_REAL) AS DURACAO_REAL, "+
-                 "SUM(A.MI_DURACAO_TARIFADA) AS DURACAO_TARIFADA, "+
-                 "SUM(A.VL_BRUTO_CHAMADA) AS VL_BRUTO  "+
+                 "NVL(SUM(A.HR_DURACAO_REAL),0) AS DURACAO_REAL, "+
+                 "NVL(SUM(A.MI_DURACAO_TARIFADA),0) AS DURACAO_TARIFADA, "+
+                 "NVL(SUM(A.VL_BRUTO_CHAMADA),0) AS VL_BRUTO  "+
                  "FROM SCC_CDR_COBL A, SCC_ARQUIVO_COBILLING F "+ 
                  "WHERE A.SQ_ARQUIVO_REMESSA = F.SQ_ARQUIVO  "+
                  "AND F.CD_TIPO_ARQUIVO IN (200,205)" ;

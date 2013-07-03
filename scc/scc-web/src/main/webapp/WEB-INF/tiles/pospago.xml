@@ -10,24 +10,19 @@
 		<put-attribute name="body" value="/WEB-INF/jsp/empty.jsp" />
 	</definition>
 	
-	<definition name="controle.arquivos.pesquisa" extends="basicLayout">
-		<put-attribute name="body" value="/WEB-INF/jsp/arquivo/controle/pesquisa.jsp" />
-		<put-attribute name="tituloTela" value="Relatório de Controle de Arquivo" />
-	</definition>
-	
-	<definition name="controle.arquivos.resultados" extends="basicLayout">
-		<put-attribute name="body" value="/WEB-INF/jsp/arquivo/controle/resultados.jsp" />
+	<definition name="controle_arquivos_pesquisa" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/arquivo/controle/filtro.jsp" />
 		<put-attribute name="tituloTela" value="Relatório de Controle de Arquivo" />
 	</definition>
 	
 	<definition name="transmissao.recepcao.pesquisa" extends="basicLayout">
 		<put-attribute name="body" value="/WEB-INF/jsp/arquivo/recepcao_transmissao/filtro.jsp" />
-		<put-attribute name="tituloTela" value="Relatório de Controle de Arquivo" />
+		<put-attribute name="tituloTela" value="Relatório de Recepção e Transmissão" />
 	</definition>
 	
 	<definition name="transmissao.recepcao.resultados" extends="basicLayout">
 		<put-attribute name="body" value="/WEB-INF/jsp/arquivo/recepcao_transmissao/resultados.jsp" />
-		<put-attribute name="tituloTela" value="Relatório de Controle de Arquivo" />
+		<put-attribute name="tituloTela" value="Relatório de Recepção e Transmissão" />
 	</definition>
 	
 	<definition name="pesquisa.processados.pos.pesquisa" extends="basicLayout">
@@ -116,7 +111,7 @@
 	</definition>
 	
 	<definition name="produto_pos_item_cadastro" extends="basicLayout">
-		<put-attribute name="body" value="/WEB-INF/jsp/produto/item/cadastro.jsp" />
+		<put-attribute name="body" value="/WEB-INF/jsp/produto/item/composicaoProduto.jsp" />
 		<put-attribute name="tituloTela" value="Cadastro de Composição do Produto - Pós-Pago" />
 	</definition>
 	
@@ -310,10 +305,11 @@
 		<put-attribute name="tituloTela" value="SCC - Relatorio Perda e Faturamento" />
 	</definition>
 	
-		<definition name="relatorio_chamadas_refaturamento" extends="basicLayout">
+	<definition name="relatorio_chamadas_refaturamento" extends="basicLayout">
 		<put-attribute name="body" value="/WEB-INF/jsp/relatorio/refaturamento/relatorioChamadasRefaturamento.jsp" />
 		<put-attribute name="tituloTela" value="SCC - Relatório de Chamadas de Refaturamento " />
 	</definition>
+	
 	<definition name="pesquisa_arquivos_batimento_interface_pos" extends="basicLayout">
 		<put-attribute name="body" value="/WEB-INF/jsp/arquivo/batimento/interface/filtro.jsp" />
 		<put-attribute name="tituloTela" value="Pesquisa de Batimento das Interfaces MOBILE e SCC - Pós" />
@@ -358,5 +354,67 @@
 		<put-attribute name="body" value="/WEB-INF/jsp/repasse/pos/penalidade_rejeicao/filtro.jsp" />
 		<put-attribute name="tituloTela" value="Penalidade por Rejeição - Pós Pago" />
 	</definition>
+
+	<definition name="relatorio_questionamento" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/relatorio/questionamento/relatorioquestionamento.jsp" />
+		<put-attribute name="tituloTela" value="SCC - Relatório de Controle de Questionamento " />
+	</definition>
+	
+	<definition name="relatorio_questionamento_resultado" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/relatorio/questionamento/relatorioquestionamentoresultado.jsp" />
+		<put-attribute name="tituloTela" value="SCC - Relatório de Confirmação de Resultados " />
+	</definition>
+	
+	<definition name="relatorio_disputa_detalhe" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/disputa/pos/filtro.jsp" />
+		<put-attribute name="tituloTela" value="SCC - Relatório de Detalhes de Disputa " />
+	</definition>
+	
+	<definition name="relatorio_demonstrativo_desempenho_penalidade" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/relatorio/refaturamento/relDemonstrativoDesempenhoPenalidade.jsp" />
+		<put-attribute name="tituloTela" value="SCC - Relatório Demonstrativo de Desempenho e Penalidade (SLA) " />
+	</definition>
+
+	<definition name="relatorio_questionamento_financeiro" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/questionamento/questionamentoFinanceiro.jsp" />
+		<put-attribute name="tituloTela" value="SCC - Questionamento Financeiro " />
+	</definition>
+
+	<definition name="relatorio_questionamento_penalidade" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/questionamento/questionamentoPenalidade.jsp" />
+		<put-attribute name="tituloTela" value="SCC - Questionamento Penalidade " />
+	</definition>
+
+	<definition name="relatorio_questionamento_arquivo" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/questionamento/questionamentoArquivo.jsp" />
+		<put-attribute name="tituloTela" value="SCC - Analise Arquivo " />
+	</definition>
+
+	<definition name="relatorio_questionamento_analise_chamada" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/questionamento/questionamentoAnaliseChamada.jsp" />
+		<put-attribute name="tituloTela" value="SCC - Analise Chamada " />
+	</definition>
+	
+	<definition name="relatorio_disputa_pos_pago" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/relatorio/disputa/disputa.jsp" />
+		<put-attribute name="tituloTela" value="SCC - Disputa de Chamada Pós Pago " />
+	</definition>
+	
+	<definition name="relatorio_indicador_aging_pos" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/indicador/pos/aging.jsp" />
+		<put-attribute name="tituloTela" value="Relatorio de Indicadores Aging" />
+	</definition>
+	
+	<definition name="relatorio_indicador_pos" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/indicador/pos/indicador.jsp" />
+		<put-attribute name="tituloTela" value="Relatorio de Indicadores" />
+	</definition>
+	
+		
+	<definition name="relatorio_chamadas_refaturamento_filtro" extends="basicLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/relatorio/refaturamento/filtro.jsp" />
+		<put-attribute name="tituloTela" value="SCC - Relatorio de Chamadas de Refaturamento" />
+	</definition>
+
 	
 </tiles-definitions>

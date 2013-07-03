@@ -84,8 +84,19 @@ public class RelApuracaoFechamentoPrePagoViewDecorator extends RownumDecorator<R
 	
 	
 
+	public String getOperadoraHolding(){
+		
+		String value = "";
+		if(StringUtils.isNotEmpty(getRow().getCdEotHolding())){
+			value = getRow().getCdEotHolding();
+		}
+		return value;
+	}
 
 	public String getOperadoraClaro() {
+		if(StringUtils.isEmpty(getRow().getUfClaro())){
+			return getRow().getDsOperadora();
+		}
 		return getRow().getUfClaro()+" "+getRow().getDsOperadora();
 	}
 

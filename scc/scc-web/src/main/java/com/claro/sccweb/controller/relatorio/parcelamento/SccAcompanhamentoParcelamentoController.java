@@ -14,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.claro.cobillingweb.persistence.dao.BasicDAO;
@@ -35,6 +36,8 @@ import com.claro.sccweb.service.ServiceException;
 @RequestMapping(value="/user/relatorio/parcelamento/acompanhamento")
 public class SccAcompanhamentoParcelamentoController extends BaseOperationController<SccAcordoParcelamentoForm> {
 	
+	private static final String FWD_VIEW_EXCEL ="relatorio_acompanhamento_parcelamento_excel";
+	private static final String FWD_VIEW_EXCEL2 ="relatorio_acompanhamento_parcelamento_analitico_excel";
 	public static final String SINTETICO = "S";
 	public static final String ANALITICO = "A";
 	public static final String ACORDO = "P";
@@ -48,8 +51,8 @@ public class SccAcompanhamentoParcelamentoController extends BaseOperationContro
 		
 		SccAcordoParcelamentoForm form = (SccAcordoParcelamentoForm)_form;
 		SccFiltro filtro = getFiltro(form);
-		
-		List<SccAcordoParcelamentoView> rows = (List<SccAcordoParcelamentoView>) gerarRelatorioAcordoParcelamento(filtro);
+		cleanDisplayTag(request);
+		List<SccAcordoParcelamentoView> rows = (List<SccAcordoParcelamentoView>) gerarRelatorioParcelamentoAcompanhamento(filtro);
 		
 		List <SccAcordoParcelamentoViewDecorator> decoratorList = new ArrayList<SccAcordoParcelamentoViewDecorator>(rows.size());
 		
@@ -58,10 +61,42 @@ public class SccAcompanhamentoParcelamentoController extends BaseOperationContro
 			SccAcordoParcelamentoViewDecorator decorator = new SccAcordoParcelamentoViewDecorator(rows.get(i), i);
 			decoratorList.add(decorator);
 		}
-		storeInSession(getClass(), DISPLAY_TAG_SPACE_1, decoratorList, request);
-		ModelAndView mav = new ModelAndView(getViewName());
+		
+		if(filtro.getIsSintetico()){
+			
+			form.setListSintetico(decoratorList);
+			storeInSession(getClass(), DISPLAY_TAG_SPACE_1, decoratorList, request);
+		}else {
+			form.setListAnalitico(decoratorList);
+			storeInSession(getClass(), DISPLAY_TAG_SPACE_2, decoratorList, request);
+		}
+		
+		ModelAndView mav = new ModelAndView(getViewName(), "filtro", form);
 		return mav;
 		
+	}
+	
+	
+	@RequestMapping(value="/tab1" , method = RequestMethod.GET)
+	public ModelAndView tab1(HttpServletRequest request, HttpServletResponse response) throws Exception {
+			ModelAndView mav = new ModelAndView(getViewName());
+			Object form = getMyFormFromCache(getClass());
+			if (form != null)
+				mav.addObject(FORM_NAME, form);
+			else
+				mav.addObject(FORM_NAME, getForm());
+	    	return mav;  
+	}
+	
+	
+	public ModelAndView excel(HttpServletRequest request,HttpServletResponse response, BaseForm _form,BindingResult bindingResult, Model model) throws Exception {
+		ModelAndView mav = new ModelAndView(FWD_VIEW_EXCEL);
+		return mav;
+	}
+	
+	public ModelAndView excel2(HttpServletRequest request,HttpServletResponse response, BaseForm _form,BindingResult bindingResult, Model model) throws Exception {
+		ModelAndView mav = new ModelAndView(FWD_VIEW_EXCEL2);
+		return mav;
 	}
 	
 	private SccFiltro getFiltro(SccAcordoParcelamentoForm form){
@@ -79,7 +114,7 @@ public class SccAcompanhamentoParcelamentoController extends BaseOperationContro
 		
 	}
 	
-	private Collection<SccAcordoParcelamentoView> gerarRelatorioAcordoParcelamento(SccFiltro filtro) throws DAOException, ServiceException {
+	private Collection<SccAcordoParcelamentoView> gerarRelatorioParcelamentoAcompanhamento(SccFiltro filtro) throws DAOException, ServiceException {
 		
 		return this.sccAcordoParcelamentoService.findByFilterRelAcompanhamento(filtro);
 	}
@@ -134,7 +169,7 @@ public class SccAcompanhamentoParcelamentoController extends BaseOperationContro
 	public List<BasicStringItem> popularTipoRelatorio() throws Exception {
 		List<BasicStringItem> comboList = new ArrayList<BasicStringItem>();
 		comboList.add(new BasicStringItem("S", "Sintético"));
-		comboList.add(new BasicStringItem("A", "Analistico"));
+		comboList.add(new BasicStringItem("A", "Analitico"));
 		comboList.add(new BasicStringItem("F", "Por Fatura"));
 		return comboList;
 	}

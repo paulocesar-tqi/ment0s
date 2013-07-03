@@ -134,6 +134,7 @@
 <bean id="faixaPenalidadeDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccFaixaPenalidadeDAOImpl" parent="sccDAO"/>
 <bean id="assinanteCriticaDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccAssinanteCriticaDAOImpl" parent="sccDAO"/>
 <bean id="criticaPrebillingDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccCriticaPrebillingDAOImpl" parent="sccDAO"/>
+
 <bean id="mapaStatusDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccMapaStatusDAOImpl" parent="sccDAO"/>
 <bean id="estornoMobileDAO" class="com.claro.cobillingweb.persistence.dao.external.impl.EstornoMobileDAOImpl" parent="sccDAO"/>
 <bean id="aliquotaImpostoDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccAliquotaImpostoDAOImpl" parent="sccDAO"/>
@@ -155,5 +156,41 @@
 
 <bean id="penalidadePorRejeicaoDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccPenalidadePorRejeicaoDAOImpl" parent="sccDAO"/>
 
+<bean id="sccPreRelatorioCriticasDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccPreRelatorioCriticasDAOImpl" parent="sccDAO"/>
+
+<bean id="sccRelatorioQuestionamentoDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccRelatorioQuestionamentoDAOImpl" parent="sccDAO"/>
+
+<bean id="sccRelatorioQuestionamentoResultadoDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccRelatorioQuestionamentoResultadoDAOImpl" parent="sccDAO"/>
+
+<bean id="sccPosRelatorioDisputaDetalheDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccPosRelatorioDisputaDetalheDAOImpl" parent="sccDAO"/>
+
+<bean id="sccRelDemonstrativoDesempenhoPenalidadeDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccRelDemonstrativoDesempenhoPenalidadeDAOImpl" parent="sccDAO"/>
+
+<bean id="sccQuestionamentoDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccQuestionamentoDAOImpl" parent="sccDAO"/>
+
+<bean id="sccCdrQuestionamentoDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccCdrQuestionamentoDAOImpl" parent="sccDAO"/>
+
+<bean id="sccDisputaDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccDisputaDAOImpl" parent="sccDAO"/>
+
+<bean id="sccDisputaPrePagoDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccDisputaPrePagoDAOImpl" parent="sccDAO"/>
+
+<bean id="sccContestacaoPrePagoDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccContestacaoPrePagoDAOImpl" parent="sccDAO"/>
+
+<bean id="sccIndicadorDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccIndicadorDAOImpl" parent="sccDAO"/>
+
+<bean id="sccIndicadoresDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccIndicadoresDAOImpl" parent="sccDAO"/>
+
+<bean id="sccAssociacaoRelatorioGrupoDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccAssociacaoRelatorioGrupoDAOImpl" parent="sccDAO"/>
+
+<bean id="sccChamadasRefaturamentoDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccChamadasRefaturamentoDAOImpl" parent="sccDAO"/>
+
+<bean id="cadastroCriticaPrebillingDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.CadastroCriticaPrebillingDAOImpl" parent="sccDAO"/>
+
+<bean id="cadastroDadosBancariosDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.CadastroDadosBancariosDAOImpl" parent="sccDAO"/>
+
+<bean id="sccResultadoIndicadorDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccResultadoIndicadoresDAOImpl" parent="sccDAO"/>
+<bean id="sccPrePagoCreditosDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccPrePagoCreditosDAOImpl" parent="sccDAO"/>
+<bean id="sccTarifasCobrarDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccTarifasCobrarDAOImpl" parent="sccDAO"/>
+<bean id="sccComposicaoGrupoEmailDAO" class="com.claro.cobillingweb.persistence.dao.internal.impl.SccComposicaoGrupoEmailDAOImpl" parent="sccDAO"/>
 
 </beans>

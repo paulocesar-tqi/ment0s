@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -123,6 +124,10 @@ public class SccRelatorioChamadasRefaturamentoController extends
 				else
 					mav.addObject(FORM_NAME, getForm());
 		    	return mav;  
+		}
+		
+		public ModelAndView excel(HttpServletRequest request,HttpServletResponse response,@Valid @ModelAttribute(FORM_NAME) BaseForm _form,BindingResult bindingResult, Model model) throws Exception {
+			return new ModelAndView("scc_relatorio_chamadas_refaturamento_excel");
 		}
 
 		public SccRelatorioChamadasRefaturamentoService getSccRelatorioChamadasRefaturamentoService() {

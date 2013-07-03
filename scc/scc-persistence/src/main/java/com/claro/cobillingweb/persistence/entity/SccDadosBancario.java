@@ -11,7 +11,7 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name="SCC_DADOS_BANCARIOS")
-public class SccDadosBancario {
+public class SccDadosBancario extends FwjBaseEntidade{
 
 	private static final long serialVersionUID = 1L;
 	private SccDadosBancarioPK id;

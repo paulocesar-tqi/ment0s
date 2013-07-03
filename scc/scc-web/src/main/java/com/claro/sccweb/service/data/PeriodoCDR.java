@@ -12,6 +12,7 @@ public class PeriodoCDR implements Comparable<PeriodoCDR>{
 	private String mesAno;	
 	private List<GrupoCDR> cdrs;
 	private Long aceitos = 0L;
+	private Double percentual;
 	
 	public Long getTotalCDRs() {
 		return totalCDRs;
@@ -68,7 +69,13 @@ public class PeriodoCDR implements Comparable<PeriodoCDR>{
 	public void setAno(Long ano) {
 		this.ano = ano;
 	}
-	 
+	
+	public Double getPercentual() {
+		return percentual;
+	}
+	public void setPercentual(Double percentual) {
+		this.percentual = percentual;
+	}
 	public int compareTo(PeriodoCDR o) {
 		int x = getAno().compareTo(o.getAno());
 		if (x != 0)

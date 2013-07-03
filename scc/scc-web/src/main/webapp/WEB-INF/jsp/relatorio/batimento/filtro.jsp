@@ -98,12 +98,12 @@
 			<table width="100%" border="0" cellspacing="0" cellpadding="0" id="filtroPesquisaTable">
 				<tr>
 					<td width="15%"><spring:message code="relatorio.batimento.arquivos.label.operadorald" /></td>
-					<td id="cdEOTLD"><form:select path="cdEOTLD" id="cdEOTLD" items="${operadorasExternas}" itemLabel="dsOperadora" itemValue="cdEot" /></td>
+					<td id="cdEOTLD"><form:select path="cdEOTLD" id="cdEOTLD" items="${operadorasExternas}" itemLabel="dsOperadoraForCombos" itemValue="cdEot" /></td>
 				</tr>
 
 				<tr>
 					<td width="15%"><spring:message code="relatorio.batimento.arquivos.label.operadoraclaro" /></td>
-					<td id="comboOperadoraClaro"><form:select path="cdEOTClaro" id="cdEOTClaro" items="${operadorasClaro}" itemLabel="dsOperadora" itemValue="cdEot" /></td>
+					<td id="comboOperadoraClaro"><form:select path="cdEOTClaro" id="cdEOTClaro" items="${operadorasClaro}" itemLabel="dsOperadoraForCombos" itemValue="cdEot" /></td>
 				</tr>
 
 				<tr>
@@ -138,7 +138,7 @@
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
 					<td>
-						<display:table style="width:90%" name="sessionScope._DISPLAY_TAG_SPACE_1" pagesize="20" id="repasses" requestURI="/scc/user/relatorio/batimento/arquivos/tab1.scc" class="ui-state-default">
+						<display:table style="width:90%" name="sessionScope._DISPLAY_TAG_SPACE_1" pagesize="20" id="repasses" requestURI="/scc/user/relatorio/batimento/arquivos/execute.scc" class="ui-state-default">
 							<display:column property="dtConnectClaro" title="Dt Connect"/>
 							<display:column property="dtReferenciaClaro" title="Dt Referencia"/>
 							<display:column property="nomeArquivoClaro" title="Remessa"/>

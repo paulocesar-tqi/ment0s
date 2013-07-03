@@ -1,17 +1,22 @@
 package com.claro.sccweb.controller.pagamento;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.codehaus.jettison.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,13 +29,17 @@ import com.claro.cobillingweb.persistence.entity.SccPagamentoRepasse;
 import com.claro.cobillingweb.persistence.entity.SccPeriodicidadeRepasse;
 import com.claro.cobillingweb.persistence.entity.SccProdutoCobilling;
 import com.claro.cobillingweb.persistence.entity.SccProdutoPrepago;
+import com.claro.cobillingweb.persistence.entity.SccRepasse;
 import com.claro.sccweb.controller.BaseFormController;
+import com.claro.sccweb.controller.BaseOperationController;
 import com.claro.sccweb.controller.util.BasicIntegerItem;
 import com.claro.sccweb.controller.util.BasicStringItem;
+import com.claro.sccweb.controller.validator.CadastroPagamentoValidator;
 import com.claro.sccweb.decorator.PagamentoSAPDecorator;
-import com.claro.sccweb.decorator.PesquisaPagamentosDecorator;
+import com.claro.sccweb.form.BaseForm;
 import com.claro.sccweb.form.CadastroPagamentoForm;
 import com.claro.sccweb.form.RelatorioPagamentoForm;
+import com.claro.sccweb.service.PagamentoRepasseService;
 import com.claro.sccweb.service.composite.RepassePosPagoComposite;
 import com.claro.sccweb.service.composite.RepassePrePagoComposite;
 import com.claro.sccweb.service.to.ConsultaRepassePreTO;
@@ -41,6 +50,15 @@ public class RelatorioPagamentoController extends BaseFormController {
 
 	public static final String OPERACAO_PEQUISAR = "pesquisar";
 	public static final String OPERACAO_EXCEL = "excel";
+	public static final String OPERACAO_ALTERAR_STATUS = "status";
+	public static final String OPERACAO_UPDATE = "atualizar_status";
+
+	
+	private static final String FWD_REL_PAGAMENTO = "pagamento_relatorio_filtro";
+	
+	@Autowired
+	private PagamentoRepasseService pagamentoRepasseService;
+	
 
 	/**
 	 * Handler de entrada na funcionaldidade. 
@@ -70,23 +88,23 @@ public class RelatorioPagamentoController extends BaseFormController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value="/execute" , method = RequestMethod.POST)
+/*	@RequestMapping(value="/execute" , method = RequestMethod.POST)
 	public ModelAndView executa(HttpServletRequest request, HttpServletResponse response,@Valid @ModelAttribute("filtro")  RelatorioPagamentoForm form,BindingResult bindingResult,Model model) throws Exception
 	{
-		ModelAndView mav = new ModelAndView("cadastro_pagamento_filtro");
+		ModelAndView mav = null;
 		cacheMyForm(getClass(), form);
 		List<PagamentoSAPDecorator> tabela = new ArrayList<PagamentoSAPDecorator>();
 		if (form.getCdTipoContrato().equals(MODULO_POS_PAGO))
 		{
 			Date dtInicialPesquisa = getServiceManager().getPeriodicidadeService().calculaDataInicialPeriodo(form.getCdPeriodicidade(), form.getMesRepasse(), form.getAnoRepasse());
 			Date dtFinalPesquisa = getServiceManager().getPeriodicidadeService().calculaDataFinalPeriodo(form.getCdPeriodicidade(), form.getMesRepasse(), form.getAnoRepasse());
-			List<RepassePosPagoComposite> repassesPosPago = getServiceManager().getRepassePosService().pesquisaRepassesPosPago(form.getCdEOTLD(), form.getCdEOTClaro(), form.getCdProdutoCobilling(), "C", dtInicialPesquisa, dtFinalPesquisa);
+			List<RepassePosPagoComposite> repassesPosPago = getServiceManager().getRepassePosService().pesquisaRepassesPosPago(form.getCdEOTLD(), form.getCdEOT(), form.getCdProdutoCobilling(), "C", dtInicialPesquisa, dtFinalPesquisa);
 			if (repassesPosPago != null)
 			{
 				for (int i=0;i<repassesPosPago.size();i++)
 				{
-					SccPagamentoRepasse pagamentoRepasse = getServiceManager().getPagamentoRepasseService().getPagamentoByRepasse(repassesPosPago.get(i).getNuRepasse(), form.getCdEOTClaro(), form.getCdEOTLD());
-					PagamentoSAPDecorator decorator = new PagamentoSAPDecorator(pagamentoRepasse,repassesPosPago.get(i).getOperadoraClaro(),repassesPosPago.get(i).getOperadoraLD());
+					SccPagamentoRepasse pagamentoRepasse = getServiceManager().getPagamentoRepasseService().getPagamentoByRepasse(repassesPosPago.get(i).getNuRepasse(), form.getCdEOT(), form.getCdEOTLD());
+					PagamentoSAPDecorator decorator = new PagamentoSAPDecorator(pagamentoRepasse,repassesPosPago.get(i).getOperadoraClaro(),repassesPosPago.get(i).getOperadoraLD(), i);
 					tabela.add(decorator);
 				}
 			}
@@ -96,7 +114,7 @@ public class RelatorioPagamentoController extends BaseFormController {
 			ConsultaRepassePreTO argumentoPesquisa = new ConsultaRepassePreTO();
 			argumentoPesquisa.setAno(form.getAnoRepasse());
 			argumentoPesquisa.setMes(form.getMesRepasse());
-			argumentoPesquisa.setCdEOTClaro(form.getCdEOTClaro());
+			argumentoPesquisa.setCdEOTClaro(form.getCdEOT());
 			argumentoPesquisa.setCdEOTLD(form.getCdEOTLD());
 			argumentoPesquisa.setHolding(false);
 			argumentoPesquisa.setCdProdutoPrepago(null);
@@ -105,14 +123,126 @@ public class RelatorioPagamentoController extends BaseFormController {
 			{
 				for (int i=0;i<repassesPrePago.size();i++)
 				{
-					SccPagamentoRepasse pagamentoRepasse = getServiceManager().getPagamentoRepasseService().getPagamentoByRepasse(repassesPrePago.get(i).getSqPreFechamento(), form.getCdEOTClaro(), form.getCdEOTLD());
-					PagamentoSAPDecorator decorator = new PagamentoSAPDecorator(pagamentoRepasse,repassesPrePago.get(i).getOperadoraClaro(),repassesPrePago.get(i).getOperadoraLD());
+					SccPagamentoRepasse pagamentoRepasse = getServiceManager().getPagamentoRepasseService().getPagamentoByRepasse(repassesPrePago.get(i).getSqPreFechamento(), form.getCdEOT(), form.getCdEOTLD());
+					PagamentoSAPDecorator decorator = new PagamentoSAPDecorator(pagamentoRepasse,repassesPrePago.get(i).getOperadoraClaro(),repassesPrePago.get(i).getOperadoraLD(), i);
+					tabela.add(decorator);
+				}
+			}
+		}
+		//storeInSession(getClass(), DISPLAY_TAG_SPACE_1, tabela, request);
+		form.setListPagamentoSAPDecorator(tabela);
+		mav = new ModelAndView(FWD_REL_PAGAMENTO, "filtro", form);
+		
+		return mav;
+	}
+*/	
+	public ModelAndView pesquisar(HttpServletRequest request, HttpServletResponse response,@ModelAttribute("filtro")  RelatorioPagamentoForm form,BindingResult bindingResult,Model model) throws Exception
+	{
+		ModelAndView mav = null;
+		cacheMyForm(getClass(), form);
+		List<PagamentoSAPDecorator> tabela = new ArrayList<PagamentoSAPDecorator>();
+		if (form.getCdTipoContrato().equals(MODULO_POS_PAGO))
+		{
+			Date dtInicialPesquisa = getServiceManager().getPeriodicidadeService().calculaDataInicialPeriodo(form.getCdPeriodicidade(), form.getMesRepasse(), form.getAnoRepasse());
+			Date dtFinalPesquisa = getServiceManager().getPeriodicidadeService().calculaDataFinalPeriodo(form.getCdPeriodicidade(), form.getMesRepasse(), form.getAnoRepasse());
+			List<RepassePosPagoComposite> repassesPosPago = getServiceManager().getRepassePosService().pesquisaRepassesPosPago(form.getCdEOTLD(), form.getCdEOT(), form.getCdProdutoCobilling(), "C", dtInicialPesquisa, dtFinalPesquisa);
+			if (repassesPosPago != null)
+			{
+				for (int i=0;i<repassesPosPago.size();i++)
+				{
+					SccPagamentoRepasse pagamentoRepasse = getServiceManager().getPagamentoRepasseService().getPagamentoByRepasse(repassesPosPago.get(i).getNuRepasse(), form.getCdEOT(), form.getCdEOTLD());
+					
+					try {
+						PagamentoSAPDecorator decorator = new PagamentoSAPDecorator(pagamentoRepasse,repassesPosPago.get(i).getOperadoraClaro(),repassesPosPago.get(i).getOperadoraLD(), i);
+						
+						tabela.add(decorator);
+						
+					} catch(Exception e){
+						
+						e.printStackTrace();
+					}
+					
+				}
+			}
+		}
+		else if (form.getCdTipoContrato().equals(MODULO_PRE_PAGO))
+		{
+			ConsultaRepassePreTO argumentoPesquisa = new ConsultaRepassePreTO();
+			argumentoPesquisa.setAno(form.getAnoRepasse());
+			argumentoPesquisa.setMes(form.getMesRepasse());
+			argumentoPesquisa.setCdEOTClaro(form.getCdEOT());
+			argumentoPesquisa.setCdEOTLD(form.getCdEOTLD());
+			argumentoPesquisa.setHolding(false);
+			argumentoPesquisa.setCdProdutoPrepago(null);
+			List<RepassePrePagoComposite> repassesPrePago = getServiceManager().getRepassePreService().consultaRepassesPrePago(argumentoPesquisa);
+			if (repassesPrePago != null)
+			{
+				for (int i=0;i<repassesPrePago.size();i++)
+				{
+					SccPagamentoRepasse pagamentoRepasse = getServiceManager().getPagamentoRepasseService().getPagamentoByRepasse(repassesPrePago.get(i).getSqPreFechamento(), form.getCdEOT(), form.getCdEOTLD());
+					PagamentoSAPDecorator decorator = new PagamentoSAPDecorator(pagamentoRepasse,repassesPrePago.get(i).getOperadoraClaro(),repassesPrePago.get(i).getOperadoraLD(), i);
 					tabela.add(decorator);
 				}
 			}
 		}
 		storeInSession(getClass(), DISPLAY_TAG_SPACE_1, tabela, request);
-		mav.addObject("filtro", new RelatorioPagamentoForm());
+		form.setListPagamentoSAPDecorator(tabela);
+		mav = new ModelAndView(FWD_REL_PAGAMENTO, "filtro", form);
+		
+		return mav;
+	}
+	
+	
+	@RequestMapping(value="/execute" , method=RequestMethod.POST)
+	public ModelAndView executa(HttpServletRequest request, HttpServletResponse response,@ModelAttribute("filtro")  RelatorioPagamentoForm form,BindingResult bindingResult,Model model) throws Exception {
+		
+		ModelAndView mav = null;
+		
+		String operacao = form.getOperacao();
+		if (bindingResult.hasErrors()) {
+			mav = new ModelAndView(FWD_REL_PAGAMENTO);
+		} else if (operacao.equalsIgnoreCase(OPERACAO_PEQUISAR)) {
+			mav = pesquisar(request, response, form, bindingResult, model);
+		} else if (operacao.equalsIgnoreCase(OPERACAO_UPDATE)) {
+			mav = atualizarDados(request, response, form, bindingResult, model); 
+		}
+		return mav;		  
+	}
+	
+	
+	//@RequestMapping(value="/updateEntity", method=RequestMethod.POST)
+	private ModelAndView atualizarDados(HttpServletRequest request, HttpServletResponse response, @ModelAttribute("filtro")  RelatorioPagamentoForm form,BindingResult bindingResult,Model model) throws Exception {
+
+		List<SccPagamentoRepasse> pagamentoRepasseList = new ArrayList<SccPagamentoRepasse>();
+		
+		Long nuRepasse[] = form.getNuRepasse();
+		
+		List lancadosSelecionados = new ArrayList();
+		if(form.getLancadosSelecionados() != null){
+			lancadosSelecionados = Arrays.asList(form.getLancadosSelecionados());
+		}
+		
+		
+		for (int i = 0; i < nuRepasse.length; i++) {
+			SccPagamentoRepasse pagamentoRepasse = new SccPagamentoRepasse();
+			
+			pagamentoRepasse.getId().setNuRepasse(nuRepasse[i]);
+			
+			if(lancadosSelecionados.contains(pagamentoRepasse.getId().getNuRepasse())){
+				pagamentoRepasse.setFgContabAutomatica("S");
+				
+			} else {
+				pagamentoRepasse.setFgContabAutomatica("N");
+			}
+			
+			pagamentoRepasseList.add(pagamentoRepasse);
+		}		
+		
+		for (SccPagamentoRepasse pagamentoRepasse : pagamentoRepasseList) {		
+			
+			this.pagamentoRepasseService.updatePagamentoRepasse(pagamentoRepasse.getId().getNuRepasse(), pagamentoRepasse.getFgContabAutomatica());
+		}
+		ModelAndView mav = new ModelAndView(FWD_REL_PAGAMENTO, "filtro", form);			
 		return mav;
 	}
 
@@ -126,43 +256,15 @@ public class RelatorioPagamentoController extends BaseFormController {
 		comboList.addAll(getServiceManager().getPesquisaDominiosService().pequisaOperadorasClaroComM());
 		return comboList;
 	}
-	/*
-	@ModelAttribute("operadorasClaro")
-	public List<SccOperadora> populaOperadorasClaro() throws Exception
-	{
-		List<SccOperadora> comboList = new ArrayList<SccOperadora>();
-		SccOperadora nullValue = new SccOperadora();
-		nullValue.setDsOperadora("Todas");
-		nullValue.setCdEot(BasicDAO.GET_ALL_STRING);
-		comboList.add(0, nullValue);
-		comboList.addAll(getServiceManager().getPesquisaDominiosService().pequisaOperadorasClaro());
-		return comboList;
-	}
-	*/
 
 	@ModelAttribute("operadorasExternas")
 	public List<SccOperadora> populaOperadorasExternas() throws Exception {
 		List<SccOperadora> comboList = new ArrayList<SccOperadora>();
 		SccOperadora allValues = new SccOperadora();
 		allValues.setCdEot(BasicDAO.GET_ALL_STRING);
-		allValues.setDsOperadora("Todas");
-		comboList.add(0,allValues);
 		comboList.addAll(getServiceManager().getPesquisaDominiosService().pesquisaOperadorasExternas());
 		return comboList;
 	}
-	/*
-	@ModelAttribute("operadorasExternas")
-	public List<SccOperadora> populaOperadorasExternas() throws Exception
-	{
-		List<SccOperadora> comboList = new ArrayList<SccOperadora>();
-		SccOperadora nullValue = new SccOperadora();
-		nullValue.setDsOperadora("Todas");
-		nullValue.setCdEot(BasicDAO.GET_ALL_STRING);
-		comboList.add(0, nullValue);
-		comboList.addAll(getServiceManager().getPesquisaDominiosService().pesquisaOperadorasExternas());
-		return comboList;
-	}
-	*/
 
 	@ModelAttribute("tiposContrato")
 	public List<BasicStringItem> populaTiposContrato() throws Exception
@@ -284,5 +386,15 @@ public class RelatorioPagamentoController extends BaseFormController {
 		response.setContentType("application/json");
 		response.getWriter().print(jsonResponse.toString());
 	}
+
+	public void setPagamentoRepasseService(
+			PagamentoRepasseService pagamentoRepasseService) {
+		this.pagamentoRepasseService = pagamentoRepasseService;
+	}
+
+
+
+	
+	
 
 }

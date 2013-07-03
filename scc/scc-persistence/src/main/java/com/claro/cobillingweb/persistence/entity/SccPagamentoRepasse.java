@@ -11,10 +11,10 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name="SCC_PAGAMENTO_REPASSE")
-public class SccPagamentoRepasse {
+public class SccPagamentoRepasse extends FwjBaseEntidade {
 
 	private static final long serialVersionUID = 1L;
-	private SccPagamentoRepassePK id;
+	private SccPagamentoRepassePK id = new SccPagamentoRepassePK();
 	private String cdDocumentoSap;
 	private String cdFormaPagamento;
 	private String cdStatusPagamento;

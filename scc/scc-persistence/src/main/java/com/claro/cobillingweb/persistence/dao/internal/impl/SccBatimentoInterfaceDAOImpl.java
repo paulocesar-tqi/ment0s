@@ -55,8 +55,17 @@ public class SccBatimentoInterfaceDAOImpl extends HibernateBasicDAOImpl<SccBatim
 			}
 
 			if(tpArquivo != null && !tpArquivo.equals(BasicDAO.GET_ALL_STRING)){
-				mapper.addArgument("tpArquivo", tpArquivo, SccBatimentoInterfaceDAONativeSQL.FILTRO_TIPO_ARQUIVO);
+				if(tpArquivo.equals("scc.CMDATA%")){
+					mapper.addArgument("tpArquivo", tpArquivo, SccBatimentoInterfaceDAONativeSQL.FILTRO_COM_SUBSTR);
+					mapper.addArgument("tpArquivo", tpArquivo, SccBatimentoInterfaceDAONativeSQL.FILTRO_TIPO_ARQUIVO);
+					
+				}else{
+					mapper.addArgument("tpArquivo", tpArquivo, SccBatimentoInterfaceDAONativeSQL.FILTRO_SEM_SUBSTR);
+					mapper.addArgument("tpArquivo", tpArquivo, SccBatimentoInterfaceDAONativeSQL.FILTRO_TIPO_ARQUIVO);
+				}			
 			}
+			
+			
 			
 			//Claro
 			mapper.addResultMap("nomeArquivo", String.class);

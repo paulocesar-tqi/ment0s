@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.claro.cobillingweb.persistence.dao.BasicDAO;
@@ -25,9 +26,9 @@ import com.claro.cobillingweb.persistence.view.RelDetalheCreditoPrePagoView;
 import com.claro.sccweb.controller.BaseFormController;
 import com.claro.sccweb.controller.util.BasicStringItem;
 import com.claro.sccweb.controller.validator.CreditosValidator;
+import com.claro.sccweb.form.ControleRemessaCicloForm;
 import com.claro.sccweb.form.CreditosForm;
-import com.claro.sccweb.form.PesquisaProcessadosPosForm;
-import com.claro.sccweb.form.SccPaginatedList;
+import com.claro.sccweb.form.SccIndicadorForm;
 
 @Controller
 @RequestMapping(value="/user/repasse/pre/creditos")
@@ -92,7 +93,7 @@ public class CreditosController extends BaseFormController {
 	   * @return
 	   * @throws Exception
 	   */
-	  @RequestMapping(value="/execute" , method=RequestMethod.POST)
+	  @RequestMapping(value="/execute" , method = { RequestMethod.GET, RequestMethod.POST })
 	  public ModelAndView executa(HttpServletRequest request, HttpServletResponse response,@Valid @ModelAttribute("filtro")  CreditosForm form,BindingResult bindingResult,Model model) throws Exception
 	  {
 		  ModelAndView mav = null;
@@ -117,23 +118,62 @@ public class CreditosController extends BaseFormController {
 	  }
 	  
 	  
-	  @RequestMapping(value="/pagina" , method=RequestMethod.GET)
+		@RequestMapping(value="listar", method = { RequestMethod.GET, RequestMethod.POST })
+		public ModelAndView pesquisarByFiltro(HttpServletRequest request, HttpServletResponse response, CreditosForm form) throws Exception {
+			
+			  ModelAndView mav = null;
+			  if(form.getOperacao().equals("pesquisar")){
+				  cleanMyFormCache(getClass());		  
+				  cleanDisplayTag(request);		  
+				  List<RelCreditosPrePagoView> view = getServiceManager().getCreditosPrePagoService().carregaRelatorioCreditos(form.getCdEOTLD(), form.getCdEOTClaro(), form.getCdTipoCredito(), form.getCdStatusCredito(), form.getDataInicial(),form.getDataFinal());
+				  form.setListCreditosPrePago(view);
+				  cacheMyForm(getClass(), form);
+				  storeInSession(getClass(), DISPLAY_TAG_SPACE_1, view, request);	
+				  mav = new ModelAndView(getViewName(), "filtro", form);
+				  
+			  }else{
+				  mav = new ModelAndView(getViewName());
+			  }
+			  
+			  return mav;
+			
+		}
+
+	  
+		public ModelAndView tab1(HttpServletRequest request, HttpServletResponse response) throws Exception {
+			ModelAndView mav = new ModelAndView(getViewName());
+			Object form = getMyFormFromCache(getClass());
+			if (form != null) {
+				mav.addObject("filtro", form);
+			} else {
+				mav.addObject("filtro", getForm());
+			}
+	    	return mav;  
+		}
+	  
+		protected ControleRemessaCicloForm getForm() {
+			return new ControleRemessaCicloForm();
+		}
+	  
+	  
+/*	  @SuppressWarnings("unused")
+	@RequestMapping(value="/pagina" , method=RequestMethod.GET)
 		public ModelAndView pagina(@RequestParam("page") Integer page,HttpServletRequest request, HttpServletResponse response ) throws Exception
 		{
-			PesquisaProcessadosPosForm myForm = (PesquisaProcessadosPosForm)getMyFormFromCache(getClass());
+			//PesquisaProcessadosPosForm myForm = (PesquisaProcessadosPosForm)getMyFormFromCache(getClass());
 			ModelAndView mav = new ModelAndView("creditos_pre_consulta_resultados");		
 			SccPaginatedList paginatedList = new SccPaginatedList();
 			paginatedList.setObjectsPerPage(TAMANHO_PAGINA);
 			paginatedList.setPageNumber(page);
 			CreditosForm form = (CreditosForm)getMyFormFromCache(getClass());
-			List<RelCreditosPrePagoView> view = getServiceManager().getCreditosPrePagoService().carregaRelatorioCreditos(form.getCdEOTLD(), form.getCdEOTLD(), form.getCdTipoCredito(), form.getCdStatusCredito(), form.getDataInicial(),form.getDataFinal(),paginatedList.getObjectsPerPage(),paginatedList.getPageNumber()-1);		  
+			List<RelCreditosPrePagoView> view = getServiceManager().getCreditosPrePagoService().carregaRelatorioCreditos(form.getCdEOTLD(), form.getCdEOTClaro(), form.getCdTipoCredito(), form.getCdStatusCredito(), form.getDataInicial(),form.getDataFinal(),paginatedList.getObjectsPerPage(),paginatedList.getPageNumber()-1);		  
 			paginatedList.setList(view);
 			paginatedList.setFullListSize(form.getQuantidadeResultados());
 			storeInSession(getClass(), DISPLAY_TAG_SPACE_1, paginatedList, request);
 			mav.addObject("filtro",form);
 			return mav;
 		}
-	  
+*/	  
 	  /**
 	   * Pesquisa arquivos de créditos de acordo com o filtro informado.
 	   * @param request
@@ -144,22 +184,22 @@ public class CreditosController extends BaseFormController {
 	   * @return
 	   * @throws Exception
 	   */
-	  private ModelAndView pesquisa(HttpServletRequest request, HttpServletResponse response,@Valid @ModelAttribute("filtro")  CreditosForm form,BindingResult bindingResult,Model model) throws Exception
-	  {
-		  //ModelAndView mav = new ModelAndView("creditos_pre_consulta_resultados");
-		  ModelAndView mav = new ModelAndView(getViewName());
-		  cleanMyFormCache(getClass());		  
-		  cleanDisplayTag(request);		  
-		  SccPaginatedList paginatedList = new SccPaginatedList();
-		  paginatedList.setObjectsPerPage(TAMANHO_PAGINA);
-		  paginatedList.setPageNumber(1);	
-		  List<RelCreditosPrePagoView> view = getServiceManager().getCreditosPrePagoService().carregaRelatorioCreditos(form.getCdEOTLD(), form.getCdEOTLD(), form.getCdTipoCredito(), form.getCdStatusCredito(), form.getDataInicial(),form.getDataFinal(),paginatedList.getObjectsPerPage(),paginatedList.getPageNumber()-1);		  
-		  paginatedList.setList(view);
-		  Integer fullSize = getServiceManager().getCreditosPrePagoService().carregaRelatorioCreditosSize(form.getCdEOTLD(), form.getCdEOTLD(), form.getCdTipoCredito(), form.getCdStatusCredito(), form.getDataInicial(),form.getDataFinal());
-		  form.setQuantidadeResultados(fullSize);
-		  paginatedList.setFullListSize(form.getQuantidadeResultados());
-		  cacheMyForm(getClass(), form);
-		  storeInSession(getClass(), DISPLAY_TAG_SPACE_1, paginatedList, request);		
+	  private ModelAndView pesquisa(HttpServletRequest request, HttpServletResponse response,@Valid @ModelAttribute("filtro")  CreditosForm form,BindingResult bindingResult,Model model) throws Exception  {
+		
+		  ModelAndView mav = null;
+		  if(form.getOperacao().equals("pesquisar")){
+			  cleanMyFormCache(getClass());		  
+			  cleanDisplayTag(request);		  
+			  List<RelCreditosPrePagoView> view = getServiceManager().getCreditosPrePagoService().carregaRelatorioCreditos(form.getCdEOTLD(), form.getCdEOTClaro(), form.getCdTipoCredito(), form.getCdStatusCredito(), form.getDataInicial(),form.getDataFinal());
+			  form.setListCreditosPrePago(view);
+			  cacheMyForm(getClass(), form);
+			  storeInSession(getClass(), DISPLAY_TAG_SPACE_1, view, request);	
+			  mav = new ModelAndView(getViewName(), "filtro", form);
+			  
+		  }else{
+			  mav = new ModelAndView(getViewName());
+		  }
+		  
 		  return mav;
 	  }
 	  
@@ -181,19 +221,29 @@ public class CreditosController extends BaseFormController {
 		  return mav;
 	  }
 	  
+		@RequestMapping(value = "/detalhe", method=RequestMethod.GET)
+		public List<RelDetalheCreditoPrePagoView> editar(@RequestParam("sqArquivo") Long sqArquivo, @RequestParam("sqCredito") Long sqCredito , HttpServletRequest request,HttpServletResponse response, CreditosForm form) throws Exception {
+			
+			 List<RelDetalheCreditoPrePagoView> detalhes = getServiceManager().getCreditosPrePagoService().carregaDetalhesCredito(sqArquivo, sqCredito);
+			 storeInSession(getClass(), DISPLAY_TAG_SPACE_2, detalhes, request);
+			 form.setListDetalhes(detalhes);
+			
+			return detalhes;
+
+		}
+
+	  
 	
-	  
-	  
-	  
-	  @ModelAttribute("operadorasClaro")
-		public List<SccOperadora> populaOperadorasClaro() throws Exception
-		{
+		@ModelAttribute("operadorasClaro")
+		public List<SccOperadora> populaOperadorasClaro() throws Exception {
 			List<SccOperadora> comboList = new ArrayList<SccOperadora>();
-			comboList.addAll(getServiceManager().getPesquisaDominiosService().pequisaOperadorasClaro());
+			SccOperadora allValues = new SccOperadora();
+			allValues.setCdEot(BasicDAO.GET_ALL_STRING);
+			comboList.addAll(getServiceManager().getPesquisaDominiosService().pequisaOperadorasClaroComM());
 			return comboList;
 		}
 	  
-	  
+ 
 	  @ModelAttribute("operadorasExternas")
 		public List<SccOperadora> populaOperadorasExternas() throws Exception
 		{

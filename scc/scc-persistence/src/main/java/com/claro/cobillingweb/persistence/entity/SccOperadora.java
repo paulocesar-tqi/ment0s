@@ -11,6 +11,10 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import org.apache.commons.lang.StringUtils;
+
+import com.claro.cobillingweb.persistence.dao.BasicDAO;
+
 
 /**
  * The persistent class for the SCC_OPERADORA database table.
@@ -38,8 +42,7 @@ public class SccOperadora implements Serializable {
 	private Integer qtLimiteIdadeInt;
 	private Integer qtLimiteIdadeNac;
 	private String sgUf;
-	private String cdOperadoraHolding;
-	
+	private String cdOperadoraHolding;	
 	
     public SccOperadora() {
     }
@@ -251,6 +254,30 @@ public class SccOperadora implements Serializable {
 		return (getCdOperadoraHolding() == null) || (getCdEot().equals(getCdOperadoraHolding()));	
 	}
 
+	@Transient
+	public String getDsOperadoraForCombos() {
+		return getDsOperadora() + (StringUtils.isNotEmpty(getCdEot()) && !BasicDAO.GET_ALL_STRING.equals(getCdEot()) && !BasicDAO.NULL_STRING.equals(getCdEot()) ?  " (" + getCdEot() + ")" : "");
+	}
+	
+	@Transient
+    public String getOperadoraClaroSemUF() {
+    	String ret = this.dsOperadora;
+    	if (this.dsOperadora != null) {
+    		int i = this.dsOperadora.indexOf("-");
+    		if (i>=0) {
+    			ret = this.dsOperadora.substring(0, i).trim();
+    		}
+    	}
+    	return ret;
+    }
+	
+	
+/*	@Override
+	public int compare(SccOperadora o1, SccOperadora o2) {
+		// TODO Auto-generated method stub
+		return o1.getDsOperadora().compareTo(o2.getDsOperadora());
+	}
+*/
 
 	
 }

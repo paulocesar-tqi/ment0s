@@ -236,7 +236,7 @@ public class DemonstrativoRepassePosPagoController extends BaseFormController {
 		if (operadora.isHolding())
 			{
 			debug("Carregando demonstrativo de repasse para holding com EOT "+form.getCdEOTClaro());
-			List<DemonstrativoRepassePosDecorator> demonstrativoHolding =  getServiceManager().getRepasseService().carregaDemonstrativoRepasse(form.getCdEOTClaro(), form.getCdEOT(), form.getCdProdutoCobilling(), form.getDtInicialPeriodo(), form.getDtFinalPeriodo(), operadora.isHolding());
+			List<DemonstrativoRepassePosDecorator> demonstrativoHolding =  getServiceManager().getRepasseService().carregaDemonstrativoRepasse(form.getCdEOTClaro(), form.getCdEOT(), form.getCdProdutoCobilling(), form.getDtInicialPeriodo(), form.getDtFinalPeriodo(), true);
 			storeInSession(getClass(), DEMONSTRATIVO_HOLDING, demonstrativoHolding, request);			
 			}
 		debug("Carregando demonstrativo de repasse para operadora com EOT "+form.getCdEOTClaro());
@@ -260,22 +260,14 @@ public class DemonstrativoRepassePosPagoController extends BaseFormController {
 		return mav;
 	}
 	
-	
 	/**
 	 * Pequisa as operadoras holding da Claro.
 	 * @return
 	 * @throws Exception
 	 */
 	@ModelAttribute("holdingClaro")
-	public List<SccOperadora> populaHoldingClaro() throws Exception
-	{
-		List<SccOperadora> comboList = new ArrayList<SccOperadora>();
-		SccOperadora allValues = new SccOperadora();
-		allValues.setCdEot(BasicDAO.NULL_STRING);
-		allValues.setDsOperadora("Selecione...");
-		comboList.add(0,allValues);
-		comboList.addAll(getServiceManager().getPesquisaDominiosService().pesquisaHoldingClaro());
-		return comboList;
+	public List<SccOperadora> populaHolding() throws Exception {
+		return super.populaHoldingClaro(false);
 	}
 	
 	
@@ -352,12 +344,12 @@ public class DemonstrativoRepassePosPagoController extends BaseFormController {
 	{		
 		List<SccProdutoCobilling> produtos = getServiceManager().getContratoService().pesquisaProdutosOperadoraLD(cdEOT);		
 		JSONObject jsonResponse = new JSONObject();				
-		jsonResponse.put("0L","Selecione....");		
+		jsonResponse.put("0","Selecione....");		
 		for (int i=0;i<produtos.size();i++)
 			{			
 			jsonResponse.put(produtos.get(i).getCdProdutoCobilling().toString(), produtos.get(i).getNoProdutoCobilling());			
 			}
-		 response.setContentType("application/json");
+		 response.setContentType("application/json;charset=UTF-8");
 	     response.getWriter().print(jsonResponse.toString());
 	}
 	
@@ -375,12 +367,12 @@ public class DemonstrativoRepassePosPagoController extends BaseFormController {
 	{			
 		List<SccPeriodicidadeRepasse> repasses = getServiceManager().getContratoService().pesquisaPeriodicidadeRepasse(cdEOT, cdProduto);
 		JSONObject jsonResponse = new JSONObject();				
-		jsonResponse.put("0L","Selecione....");		
+		jsonResponse.put("0","Selecione....");		
 		for (int i=0;i<repasses.size();i++)
 			{			
 			jsonResponse.put(repasses.get(i).getCdPeriodicidadeRepasse().toString(), repasses.get(i).getNoPeriodicidadeRepasse());			
 			}
-		 response.setContentType("application/json");
+		 response.setContentType("application/json;charset=UTF-8");
 	     response.getWriter().print(jsonResponse.toString());
 	}
 	

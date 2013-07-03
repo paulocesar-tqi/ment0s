@@ -8,11 +8,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.claro.cobillingweb.persistence.dao.BasicDAO;
@@ -23,8 +22,6 @@ import com.claro.sccweb.controller.BaseOperationController;
 import com.claro.sccweb.controller.util.BasicIntegerItem;
 import com.claro.sccweb.controller.util.BasicStringItem;
 import com.claro.sccweb.controller.validator.RelatorioConfirmacaoRepasseValidator;
-import com.claro.sccweb.decorator.rownum.entity.SccConfirmacaoRepasseViewDecorator;
-import com.claro.sccweb.form.BaseForm;
 import com.claro.sccweb.form.RelatorioConfirmacaoRepasseForm;
 import com.claro.sccweb.service.SccConfirmacaoRepasseService;
 import com.claro.sccweb.service.ServiceException;
@@ -37,25 +34,32 @@ public class SccRelatorioConfirmacaoRepasseController extends
 	@Autowired
 	private SccConfirmacaoRepasseService sccConfirmacaoRepasseService;
 	
+	public static final String FWD_EXCEL_CONFIRMACAO_REPASSE = "relatorio_confirmacao_repasse_filtro_excel";
+	private static final String FWD_VIEW_CONFIRMACAO_REPASSE = "relatorio_confirmacao_repasse_filtro";
+	private static final String OPERACAO_EXCEL =	"excel";
 	private final RelatorioConfirmacaoRepasseValidator validator = new RelatorioConfirmacaoRepasseValidator();
 	
-	public ModelAndView pesquisar(HttpServletRequest request, HttpServletResponse response, BaseForm form, BindingResult bindingResult, Model model) throws Exception {
+	
+	@RequestMapping(value="listar", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView pesquisarByFiltro(HttpServletRequest request, HttpServletResponse response, RelatorioConfirmacaoRepasseForm form) throws Exception {
 		
-		RelatorioConfirmacaoRepasseForm formConfirmacaoRepasse = (RelatorioConfirmacaoRepasseForm)form;
-		List<SccConfirmacaoRepasseView> rows = gerarRelatorioConfirmacaoRepasse(formConfirmacaoRepasse);
+		ModelAndView mav = null;
 		
-		List<SccConfirmacaoRepasseViewDecorator> decoratorList = new ArrayList<SccConfirmacaoRepasseViewDecorator>(rows.size());
+		form.setLstConfirmacaoRepasse(gerarRelatorioConfirmacaoRepasse(form));
 		
-		for (int i = 0; i < rows.size(); i++) {
+		if(form.getOperacao().equals(OPERACAO_EXCEL)){
+			if(form.getLstConfirmacaoRepasse() != null && form.getLstConfirmacaoRepasse().size() > 0){
+				mav = new ModelAndView(FWD_EXCEL_CONFIRMACAO_REPASSE, "filtro", form);
+			}
 			
-			SccConfirmacaoRepasseViewDecorator decorator = new SccConfirmacaoRepasseViewDecorator(rows.get(i), i);
-			decoratorList.add(decorator);
+		}else{
+			mav = new ModelAndView(FWD_VIEW_CONFIRMACAO_REPASSE, "filtro", form);
 		}
-		storeInSession(getClass(), DISPLAY_TAG_SPACE_1, decoratorList, request);
-		ModelAndView mav = new ModelAndView(getViewName());
+		
 		return mav;
-
+		
 	}
+
 	
 	private List<SccConfirmacaoRepasseView> gerarRelatorioConfirmacaoRepasse(RelatorioConfirmacaoRepasseForm form) throws DAOException, ServiceException {
 		return sccConfirmacaoRepasseService.gerarRelatorioConfirmacaoRepasse(form.getMesRepasse(), form.getAnoRepasse(), form.getCdEOTLD(), form.getCdStatusRepasse());

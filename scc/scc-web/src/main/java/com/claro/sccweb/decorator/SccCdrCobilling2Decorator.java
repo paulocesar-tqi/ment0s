@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 
 import org.displaytag.decorator.TableDecorator;
+import org.displaytag.decorator.TotalTableDecorator;
 
 import com.claro.cobillingweb.persistence.entity.SccCdrCobilling;
 
@@ -19,6 +20,9 @@ public class SccCdrCobilling2Decorator extends TableDecorator {
 	private SimpleDateFormat toHourFormat = new SimpleDateFormat("HH:mm:ss");
 	
 	private DecimalFormat sccCurrencyFormat = new DecimalFormat("#.##");
+	
+	private TotalTableDecorator totals = new TotalTableDecorator();
+	
 	
 	private String getLink(String text)
 	{

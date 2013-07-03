@@ -33,8 +33,8 @@ public class SccParamProcessoDecorator extends RownumDecorator<SccParamProcessoD
 		return getRow().getCdProcesso();
 	}
 	
-	public Date getDtExercicio(){
-		return getRow().getDtAtualizacao();
+	public String getDtExercicio(){
+		return formataDate(getRow().getDtAtualizacao());
 	}
 	
 	public String getParametro() {

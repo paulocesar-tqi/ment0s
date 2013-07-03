@@ -42,7 +42,7 @@ public class SccAlocadasMobileSemProcessamentoViewDecorator extends RownumDecora
 		this.setDtRelatorio(formataDate(entity.getDtRelatorio()));
 		this.setCdCiclo(formataInteger(entity.getCdCiclo()));
 		this.setQtChamadas(formataInteger(entity.getQtChamadas()));
-		this.setQtMinutoTarifados(formataInteger(entity.getQtMinutoTarifados()));
+		this.setQtMinutoTarifados(formataDouble(entity.getQtMinutoTarifados()));
 		this.setVlLiquido(formataDouble(entity.getVlLiquido()));
 		this.setDtReferencia(formataDate(entity.getDtReferencia()));
 		

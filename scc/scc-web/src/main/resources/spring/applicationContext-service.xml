@@ -64,6 +64,7 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 		<property name="contabilService" ref="contabilService" />
 		<property name="sccParamProcessoService" ref="sccParamProcessoService" />
 		<property name="sccGrupoCobillingService" ref="sccGrupoCobillingService" />
+		<property name="sccAssociacaoRelatorioGrupoService" ref="sccAssociacaoRelatorioGrupoService"/>
 		<property name="sccEmailCobillingService" ref="sccEmailCobillingService" />
 		<property name="sccRelatorioCobillingService" ref="sccRelatorioCobillingService" />
 		<property name="sccBatimentoArquivosService" ref="sccBatimentoArquivosService"/>
@@ -85,12 +86,21 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 		<property name= "sccRelBatimentoEstornoDebitoService" ref="sccRelBatimentoEstornoDebitoService"/>
 		<property name="sccAcordoParcelamentoService" ref="sccAcordoParcelamentoService"/>
 		<property name="sccFinanceiroService" ref="sccFinanceiroService"/>
+		<property name="sccQuestionamentoService" ref="sccQuestionamentoService"/>
 		<property name="sccBatimentoInterfaceService" ref="sccBatimentoInterfaceService"/>
 		<property name="sccRelatorioConciliacaoService" ref="sccRelatorioConciliacaoService"/>
 		<property name="sccBatimentoWruppService" ref="sccBatimentoWruppService"/>
 		<property name="sccSolicitacaoVumService" ref="sccSolicitacaoVumService"/>
 		<property name="sccAssinaturaPreService" ref="sccAssinaturaPreService"/>
 		<property name="relatorioAlarmeOperacionalService" ref="relatorioAlarmeOperacionalService"/>
+		<property name="sccChamadasRefaturamentoService" ref="sccChamadasRefaturamentoService"/>
+		<property name="sccPreFechamentoService" ref="sccPreFechamentoService"/>
+		<property name="sccResultadoIndicadorService" ref="sccResultadoIndicadorService"/>
+		<property name="sccPrePagoCreditosService" ref="sccPrePagoCreditosService"/>
+		<property name="sccTarifasCobrarService" ref="sccTarifasCobrarService"/>
+		<property name="sccComposicaoGrupoEmailService" ref="sccComposicaoGrupoEmailService"/>
+		
+		
 	</bean>
 
 	<bean id="sccService" abstract="true"
@@ -108,11 +118,12 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
 	<bean id="FTPService" class="com.claro.sccweb.service.impl.FTPServiceImpl"
 		parent="sccService">
-		<property name="userName" value="rafael.eder" />
-		<property name="password" value="senha123" />
-		<property name="hostName" value="localhost" />
+		<property name="userName" value="scctst" />
+		<property name="password" value="claro123" />
+		<property name="hostName" value="172.21.40.253" />
 		<property name="port" value="23" />
-		<property name="folder" value="/arquivos" />
+<!-- 	<property name="folder" value="/PRODMTA/BATCHS/COBILLING/COBILLING_1/SCC/RVUM/out" />  -->
+		<property name="folder" value="/TESTECOBILLING/COBILLING/SCC/CCTB/out"/>
 	</bean>
 
 
@@ -140,6 +151,7 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 		<property name="cdrCobillingDAO" ref="cdrCobillingDAO" />
 		<property name="statusCdrDAO" ref="statusCdrDAO" />
 		<property name="arquivoCreditoDAO" ref="arquivoCreditoDAO" />
+		<property name="ftpService" ref="FTPService" />
 	</bean>
 
 	<bean id="sumarioService" class="com.claro.sccweb.service.impl.SumarioServiceImpl"
@@ -316,9 +328,23 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 		<property name="sccGrupoCobillingDAO" ref="sccGrupoCobillingDAO" />
 	</bean>
 	
+	<bean id="sccAssociacaoRelatorioGrupoService" class="com.claro.sccweb.service.impl.SccAssociacaoRelatorioGrupoServiceImpl" 
+		parent="sccService">
+		<property name="sccAssociacaoRelatorioGrupoDAO" ref="sccAssociacaoRelatorioGrupoDAO"/>
+		
+	</bean>
+	
+	
 	<bean id="sccEmailCobillingService" class="com.claro.sccweb.service.impl.SccEmailCobillingServiceImpl"
 		parent="sccService">
 		<property name="sccEmailCobillingDAO" ref="sccEmailCobillingDAO" />
+		
+	</bean>
+
+	<bean id="sccComposicaoGrupoEmailService" class="com.claro.sccweb.service.impl.SccComposicaoGrupoEmailServiceImpl"
+		parent="sccService">
+		<property name="sccComposicaoGrupoEmailDAO" ref="sccComposicaoGrupoEmailDAO" />
+		
 	</bean>
 	
 	<bean id="sccRelatorioCobillingService" class="com.claro.sccweb.service.impl.SccRelatorioCobillingServiceImpl"
@@ -447,12 +473,46 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 		parent="sccService">
 		<property name="sccRelatorioConciliacaoDAO" ref="sccRelatorioConciliacaoDAO" />
 	</bean>
+	<bean id="sccPreRelatorioCriticasService" class="com.claro.sccweb.service.impl.SccPreRelatorioCriticasServiceImpl"
+		parent="sccService">
+		<property name="sccPreRelatorioCriticasDAO" ref="sccPreRelatorioCriticasDAO" />
+	</bean>
+	
+	<bean id="sccRelatorioQuestionamentoService" class="com.claro.sccweb.service.impl.SccRelatorioQuestionamentoServiceImpl"
+		parent="sccService">
+		<property name="sccRelatorioQuestionamentoDAO" ref="sccRelatorioQuestionamentoDAO" />
+	</bean>
+	
+	<bean id="sccRelatorioQuestionamentoResultadoService" class="com.claro.sccweb.service.impl.SccRelatorioQuestionamentoResultadoServiceImpl"
+		parent="sccService">
+		<property name="sccRelatorioQuestionamentoResultadoDAO" ref="sccRelatorioQuestionamentoResultadoDAO" />
+	</bean>
+	
+	<bean id="sccPosRelatorioDisputaDetalheService" class="com.claro.sccweb.service.impl.SccPosRelatorioDisputaDetalheServiceImpl"
+		parent="sccService">
+		<property name="sccPosRelatorioDisputaDetalheDAO" ref="sccPosRelatorioDisputaDetalheDAO" />
+	</bean>
+	
+	<bean id="sccRelDemonstrativoDesempenhoPenalidadeService" class="com.claro.sccweb.service.impl.SccRelDemonstrativoDesempenhoPenalidadeServiceImpl"
+		parent="sccService">
+		<property name="sccRelDemonstrativoDesempenhoPenalidadeDAO" ref="sccRelDemonstrativoDesempenhoPenalidadeDAO" />
+	</bean>
 
 	<bean id="sccBatimentoWruppService" class="com.claro.sccweb.service.impl.SccBatimentoWruppServiceImpl"
 		parent="sccService">
 		<property name="sccBatimentoWruppDAO" ref="sccBatimentoWruppDAO" />
 	</bean>
+
+	<bean id="sccQuestionamentoService" class="com.claro.sccweb.service.impl.SccQuestionamentoServiceImpl"
+		parent="sccService">
+		<property name="sccQuestionamentoDAO" ref="sccQuestionamentoDAO" />
+		<property name="sccCdrQuestionamentoDAO" ref="sccCdrQuestionamentoDAO" />
+	</bean>
 	
+	<bean id="sccDisputaService" class="com.claro.sccweb.service.impl.SccDisputaServiceImpl"
+		parent="sccService">
+		<property name="sccDisputaDAO" ref="sccDisputaDAO" />		
+	</bean>
 
 	<bean id="sccSolicitacaoVumService" class="com.claro.sccweb.service.impl.SccSolicitacaoVumServiceImpl"
 		parent="sccService">
@@ -470,6 +530,56 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 	<bean id="relatorioAlarmeOperacionalService" class="com.claro.sccweb.service.impl.RelatorioAlarmeOperacionalServiceImpl"
 		parent="sccService">
 		<property name="sccRelatorioAlarmeOperacionalDAO" ref="sccRelatorioAlarmeOperacionalDAO" />
+	</bean>
+
+	<bean id="sccDisputaPrePagoService" class="com.claro.sccweb.service.impl.SccDisputaPrePagoServiceImpl"
+		parent="sccService">
+		<property name="sccDisputaPrePagoDAO" ref="sccDisputaPrePagoDAO" />		
+	</bean>
+
+	<bean id="sccContestacaoPrePagoService" class="com.claro.sccweb.service.impl.SccContestacaoPrePagoServiceImpl"
+		parent="sccService">
+		<property name="sccContestacaoPrePagoDAO" ref="sccContestacaoPrePagoDAO" />		
+	</bean>
+
+	<bean id="sccIndicadorService" class="com.claro.sccweb.service.impl.SccIndicadorServiceImpl"
+		parent="sccService">
+		<property name="sccIndicadorDAO" ref="sccIndicadorDAO" />		
+		<property name="sccIndicadoresDAO" ref="sccIndicadoresDAO" />
+	</bean>
+	
+	<bean id="sccChamadasRefaturamentoService" class="com.claro.sccweb.service.impl.SccChamadasRefaturamentoServiceImpl"
+		parent="sccService">
+		<property name="sccChamadasRefaturamentoDAO" ref="sccChamadasRefaturamentoDAO" />
+	</bean>
+	
+	<bean id="cadastroCriticaPrebillingService" class="com.claro.sccweb.service.impl.CadastroCriticaPrebillingServiceImpl"
+		parent="sccService">
+		<property name="cadastroCriticaPrebillingDAO" ref="cadastroCriticaPrebillingDAO" />
+	</bean>
+	
+	<bean id="cadastroDadosBancariosService" class="com.claro.sccweb.service.impl.CadastroDadosBancariosServiceImpl"
+		parent="sccService">
+		<property name="cadastroDadosBancariosDAO" ref="cadastroDadosBancariosDAO" />
+	</bean>
+	<bean id="sccPreFechamentoService" class="com.claro.sccweb.service.impl.SccPreFechamentoServiceImpl"
+		parent="sccService">
+		<property name="preFechamentoDAO" ref="preFechamentoDAO" />
+	</bean>
+		
+	<bean id="sccResultadoIndicadorService" class="com.claro.sccweb.service.impl.SccResultadoIndicadorServiceImpl"
+		parent="sccService">
+		<property name="sccResultadoIndicadorDAO" ref="sccResultadoIndicadorDAO" />
+	</bean>
+	
+	<bean id="sccPrePagoCreditosService" class="com.claro.sccweb.service.impl.SccPrePagoCreditosServiceImpl"
+		parent="sccService">
+		<property name="sccPrePagoCreditosDAO" ref="sccPrePagoCreditosDAO" />
+	</bean>
+
+	<bean id="sccTarifasCobrarService" class="com.claro.sccweb.service.impl.SccTarifasCobrarServiceImpl"
+		parent="sccService">
+		<property name="sccTarifasCobrarDAO" ref="sccTarifasCobrarDAO" />
 	</bean>
 
 </beans>

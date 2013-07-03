@@ -38,7 +38,50 @@ public class PesquisaProcessadosPosController extends BaseOperationController<Pe
 	
 	private final int TAMANHO_PAGINA = 50;
 	
-	public ModelAndView pesquisar(HttpServletRequest request, HttpServletResponse response,@Valid @ModelAttribute(FORM_NAME)  BaseForm form,BindingResult bindingResult,Model model) throws Exception {
+	@SuppressWarnings("unused")
+	private static final String FWD_PESQUISA = "pesquisar";
+	private static final String FWD_MOTIVO = "visualizarNOK";
+	private static final String FWD_CICLO = "visualizarOK";
+	private static final String FWD_SELECIONE = "selecionar";
+	@SuppressWarnings("unused")
+	private static final String FWD_SELECIONE_CDRS = "";
+	private static final String FWD_EXCEL_CDRS = "excelCDRs";
+	private static final String FWD_EXCEL = "excel";
+	private static final String FWD_VOLTAR = "voltar";
+	private static final String FWD_VOLTAR_ARQUIVO = "voltarArquivo";
+	private static final String FWD_LISTAR = "listar";
+	
+	
+	@RequestMapping(value="/execute" , method=RequestMethod.POST)
+	public ModelAndView executa(HttpServletRequest request, HttpServletResponse response,@ModelAttribute(FORM_NAME)  PesquisaProcessadosPosForm form,BindingResult bindingResult,Model model) throws Exception {
+		
+		ModelAndView mav = null;
+		
+		String operacao = form.getOperacao();
+		if (operacao.equalsIgnoreCase(FWD_EXCEL_CDRS)) {
+			mav = excelCDRs(request, response, form, bindingResult, model); 
+		} else if(operacao.equalsIgnoreCase(FWD_EXCEL)){
+			mav = excel(request, response, form, bindingResult, model);
+		} else if(operacao.equalsIgnoreCase(FWD_MOTIVO)){
+			mav = visualizarNOK(request, response, form, bindingResult, model);
+		} else if(operacao.equals(FWD_SELECIONE)){
+			mav = selecionar(request, response, form, bindingResult, model);
+		} else if(operacao.equalsIgnoreCase(FWD_VOLTAR)){
+			mav = voltar(request, response, form, bindingResult, model);
+		} else if(operacao.equalsIgnoreCase(FWD_VOLTAR_ARQUIVO)){
+			mav = voltarArquivo(request, response, form, bindingResult, model);
+		} else if(operacao.equalsIgnoreCase(FWD_LISTAR)){
+			mav = listar(request, response, form, bindingResult, model);
+		} else if(operacao.equalsIgnoreCase(FWD_CICLO)){
+			mav = visualizarOK(request, response, form, bindingResult, model);
+		}else{
+			mav = pesquisar(request, response, form, bindingResult, model);
+		}
+		return mav;		  
+	}
+
+	
+	public ModelAndView pesquisar(HttpServletRequest request, HttpServletResponse response,@ModelAttribute(FORM_NAME)  BaseForm form,BindingResult bindingResult,Model model) throws Exception {
 		cleanDisplayTag(request);
 		ModelAndView mav = new ModelAndView(getViewName());
 		PesquisaProcessadosPosForm myForm = (PesquisaProcessadosPosForm)form;
@@ -73,7 +116,7 @@ public class PesquisaProcessadosPosController extends BaseOperationController<Pe
 	 * @return
 	 * @throws Exception
 	 */
-	public ModelAndView selecionar(HttpServletRequest request, HttpServletResponse response,@Valid @ModelAttribute(FORM_NAME)  BaseForm form,BindingResult bindingResult,Model model) throws Exception {		 
+	private ModelAndView selecionar(HttpServletRequest request, HttpServletResponse response,@ModelAttribute(FORM_NAME)  BaseForm form,BindingResult bindingResult,Model model) throws Exception {		 
 		cleanSession(getClass(), request, DISPLAY_TAG_SPACE_2);
 		ModelAndView mav = new ModelAndView(getSumarioCDRsView());
 		PesquisaProcessadosPosForm myForm = (PesquisaProcessadosPosForm)form;
@@ -93,13 +136,14 @@ public class PesquisaProcessadosPosController extends BaseOperationController<Pe
 		return mav;	
 	}
 	
-	public ModelAndView excel(HttpServletRequest request, HttpServletResponse response,@Valid @ModelAttribute(FORM_NAME)  BaseForm form,BindingResult bindingResult,Model model) throws Exception {
+	@RequestMapping(value="excel", method = RequestMethod.GET)
+	private ModelAndView excel(HttpServletRequest request, HttpServletResponse response,@ModelAttribute(FORM_NAME)  BaseForm form,BindingResult bindingResult,Model model) throws Exception {
 		info("Iniciando geração de Excel para pesquisa de arquivos processados pós-pago");
 		ModelAndView mav = new ModelAndView("pesquisa_arquivos_processados_excel");
 		return mav;
 	}
 	
-	public ModelAndView excelCDRs(HttpServletRequest request, HttpServletResponse response,@Valid @ModelAttribute(FORM_NAME)  BaseForm form,BindingResult bindingResult,Model model) throws Exception {
+	private ModelAndView excelCDRs(HttpServletRequest request, HttpServletResponse response,@ModelAttribute(FORM_NAME)  BaseForm form,BindingResult bindingResult,Model model) throws Exception {
 		info("Iniciando geração de Excel com CDRs para pesquisa de arquivos processados pós-pago");
 		ModelAndView mav = new ModelAndView("pesquisa_arquivos_processados_cdrs_excel");
 		PesquisaProcessadosPosForm myForm = (PesquisaProcessadosPosForm)getMyFormFromCache(getClass());
@@ -113,17 +157,18 @@ public class PesquisaProcessadosPosController extends BaseOperationController<Pe
 		return mav;
 	}
 	
-	public ModelAndView voltar(HttpServletRequest request, HttpServletResponse response,@Valid @ModelAttribute(FORM_NAME)  BaseForm form,BindingResult bindingResult,Model model) throws Exception {
-		ModelAndView mav = new ModelAndView(getViewName());
+	private ModelAndView voltar(HttpServletRequest request, HttpServletResponse response,@ModelAttribute(FORM_NAME)  BaseForm form,BindingResult bindingResult,Model model) throws Exception {
+		ModelAndView mav = new ModelAndView(getViewName(), "filtro", form);
 		return mav;	
 	}
 	
-	public ModelAndView voltarArquivo(HttpServletRequest request, HttpServletResponse response,@Valid @ModelAttribute(FORM_NAME)  BaseForm _form,BindingResult bindingResult,Model model) throws Exception {
+	public ModelAndView voltarArquivo(HttpServletRequest request, HttpServletResponse response,@ModelAttribute(FORM_NAME)  BaseForm _form,BindingResult bindingResult,Model model) throws Exception {
 		PesquisaProcessadosPosForm form = (PesquisaProcessadosPosForm)getMyFormFromCache(getClass());
 		return new ModelAndView(form.getVisaoArquivo());
 	}
 	
-	public ModelAndView selecionarCDR(HttpServletRequest request, HttpServletResponse response,@Valid @ModelAttribute(FORM_NAME)  BaseForm form,BindingResult bindingResult,Model model) throws Exception {
+	@SuppressWarnings("unused")
+	public ModelAndView selecionarCDR(HttpServletRequest request, HttpServletResponse response,@ModelAttribute(FORM_NAME)  BaseForm form,BindingResult bindingResult,Model model) throws Exception {
 		PesquisaProcessadosPosForm myForm = (PesquisaProcessadosPosForm)getMyFormFromCache(getClass());		
 		Integer itemSelecionado = ((PesquisaProcessadosPosForm)form).getItemSelecionado();
 		ModelAndView mav = new ModelAndView(myForm.getVisaoArquivo());
@@ -140,7 +185,7 @@ public class PesquisaProcessadosPosController extends BaseOperationController<Pe
 	 * @return
 	 * @throws Exception
 	 */
-	public ModelAndView visualizarOK(HttpServletRequest request, HttpServletResponse response,@Valid @ModelAttribute(FORM_NAME)  BaseForm form,BindingResult bindingResult,Model model) throws Exception {
+	private ModelAndView visualizarOK(HttpServletRequest request, HttpServletResponse response,@Valid @ModelAttribute(FORM_NAME)  BaseForm form,BindingResult bindingResult,Model model) throws Exception {
 		cleanSession(getClass(), request, DISPLAY_TAG_SPACE_2);
 		ModelAndView mav = new ModelAndView(getSumarioProcessadosView());
 		PesquisaProcessadosPosForm myForm = (PesquisaProcessadosPosForm)form;
@@ -169,7 +214,7 @@ public class PesquisaProcessadosPosController extends BaseOperationController<Pe
 	 * @return
 	 * @throws Exception
 	 */
-	public ModelAndView visualizarNOK(HttpServletRequest request, HttpServletResponse response,@Valid @ModelAttribute(FORM_NAME)  BaseForm form,BindingResult bindingResult,Model model) throws Exception {
+	private ModelAndView visualizarNOK(HttpServletRequest request, HttpServletResponse response,@Valid @ModelAttribute(FORM_NAME)  BaseForm form,BindingResult bindingResult,Model model) throws Exception {
 		cleanSession(getClass(), request, DISPLAY_TAG_SPACE_2);
 		ModelAndView mav = new ModelAndView(getSumarioErrosView());
 		PesquisaProcessadosPosForm myForm = (PesquisaProcessadosPosForm)form;
@@ -197,9 +242,9 @@ public class PesquisaProcessadosPosController extends BaseOperationController<Pe
 	 * @return
 	 * @throws Exception
 	 */
-	public ModelAndView listar(HttpServletRequest request, HttpServletResponse response,@Valid @ModelAttribute(FORM_NAME)  BaseForm form,BindingResult bindingResult,Model model) throws Exception {
+	private ModelAndView listar(HttpServletRequest request, HttpServletResponse response,@ModelAttribute(FORM_NAME) BaseForm form,BindingResult bindingResult,Model model) throws Exception {
 		cleanSession(getClass(), request, DISPLAY_TAG_SPACE_3);
-		ModelAndView mav = new ModelAndView(getListaCDRsView());
+		ModelAndView mav = new ModelAndView(getListaCDRsView(), "filtro", form);
 		PesquisaProcessadosPosForm myForm = (PesquisaProcessadosPosForm)form;
 		PesquisaProcessadosPosForm myCachedForm = (PesquisaProcessadosPosForm)getMyFormFromCache(getClass());
 		SccCdrCobillingDecorator decorator = (SccCdrCobillingDecorator)getItemSelecionado(request, DISPLAY_TAG_SPACE_2, form);
@@ -249,6 +294,7 @@ public class PesquisaProcessadosPosController extends BaseOperationController<Pe
 		return "pesquisa_arquivos_processados_pos_status";
 	}
 	
+	@SuppressWarnings("unused")
 	private String getDetalheCDRView() {
 		return "pesquisa_arquivos_processados_pos_cdr_detail";
 	}
@@ -333,10 +379,5 @@ public class PesquisaProcessadosPosController extends BaseOperationController<Pe
 		comboList.addAll(getServiceManager().getPesquisaDominiosService().pesquisaOperadorasExternas());
 		return comboList;
 	}
-	/*
-	@ModelAttribute("operadorasExternas")
-	public List<SccOperadora> populaOperadorasExternas() throws Exception {
-		return super.populaOperadorasExternas(false);
-	}
-	*/
+
 }

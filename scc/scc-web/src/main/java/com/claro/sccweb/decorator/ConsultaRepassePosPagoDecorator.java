@@ -55,7 +55,7 @@ public class ConsultaRepassePosPagoDecorator  {
 
 	public String getOperadoraLD()
 	{
-		return getRow().getOperadoraLD().getDsOperadora();
+		return getRow().getOperadoraLD().getDsOperadora()+"("+getRow().getOperadoraLD().getCdEot()+")";
 	}
 	
 	public String getOperadoraClaro()

@@ -11,11 +11,13 @@ public class ConsultaRepassePrePagoDecorator extends RownumDecorator<RepassePreP
 	private String novoStatus;	
 	private boolean modificado;
 	CalculoRepassePrePago calculoRepassePrePago = null;
+	private int rownum;
 	
 	
 	public ConsultaRepassePrePagoDecorator(RepassePrePagoComposite entity,int rownum) {
 		super(entity, rownum);
 		calculoRepassePrePago = new CalculoRepassePrePago(entity.getPreFechamento());
+		this.rownum = rownum;
 	}
 
 	
@@ -55,21 +57,21 @@ public class ConsultaRepassePrePagoDecorator extends RownumDecorator<RepassePreP
 		StringBuffer sb = new StringBuffer();		
 		if (getRow().getStatus() == null)
 			{
-			sb.append("<input type='radio' name='getRownum()_"+getRownum()+"' "); 
+			sb.append("<input type='radio' class='rdb' name='rownum_"+rownum+"' "); 
 			if ((novoStatus == null) || (novoStatus.equals(SccRepasse.STATUS_NULO)))
 				sb.append(" checked ");
-			sb.append("value='E"+getRownum()+"'>Nulo");
+			sb.append("value='E"+rownum+"'>Nulo");
 			
 			
-			sb.append("<input type='radio' name='getRownum()_"+getRownum()+"' "); 
+			sb.append("<input type='radio' class='rdb' name='rownum_"+rownum+"' "); 
 			if ((novoStatus != null) && (novoStatus.equals(SccRepasse.STATUS_CONFIRMADO)))
 				sb.append(" checked ");
-			sb.append("value='C"+getRownum()+"'>Sim");			
+			sb.append("value='C"+rownum+"'>Sim");			
 			
-			sb.append("<input type='radio' name='getRownum()_"+getRownum()+"' ");
+			sb.append("<input type='radio' class='rdb' name='rownum_"+rownum+"' ");
 			if ((novoStatus != null) && (novoStatus.equals(SccRepasse.STATUS_CANCELADO)))
 				sb.append(" checked ");
-			sb.append("value='N"+getRownum()+"'>Não");
+			sb.append("value='N"+rownum+"'>Não");
 			}
 		else if (getRow().getStatus().equalsIgnoreCase(SccRepasse.STATUS_CONFIRMADO))
 			{
@@ -109,6 +111,12 @@ public class ConsultaRepassePrePagoDecorator extends RownumDecorator<RepassePreP
 	protected boolean isDeleteEnabled() {
 		return false;
 	}
+
+
+	public int getRownum() {
+		return rownum;
+	}
+	
 	
 	
 	

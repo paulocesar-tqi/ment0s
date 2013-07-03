@@ -12,7 +12,7 @@ import javax.persistence.Transient;
 
 @Entity
 @Table(name="SCC_PRE_FECHAMENTO")
-public class SccPreFechamento {
+public class SccPreFechamento extends FwjBaseEntidade {
 
 	/*Contantes para campo dsCriterioCusto*/
 	public static final String CRITERIO_CHAMADAS = "POR CHAMADA";
@@ -123,7 +123,7 @@ public class SccPreFechamento {
 	}
 
 
-    @Temporal( TemporalType.DATE)
+    //@Temporal( TemporalType.DATE)
 	@Column(name="DT_ATUALIZACAO")
 	public Date getDtAtualizacao() {
 		return this.dtAtualizacao;

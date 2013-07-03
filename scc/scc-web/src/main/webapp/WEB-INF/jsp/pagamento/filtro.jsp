@@ -103,14 +103,14 @@ function selecionaProduto()
 <table width="100%" border="0" cellspacing="0" cellpadding="0" >
 <tr>
     <td width="10%"><spring:message code="pagamento_operadoraClaro"/>:</td>
-    <td ><form:select path="cdEOT" id="cdEOT" items="${operadorasClaro}" itemLabel="dsOperadora" itemValue="cdEot" />
+    <td ><form:select path="cdEOT" id="cdEOT" items="${operadorasClaro}" itemLabel="dsOperadoraForCombos" itemValue="cdEot" />
     <form:errors path="cdEOT" /></td>
 </tr>
 
 
 <tr>
     <td width="10%"><spring:message code="pagamento_operadoraLD"/>:</td>
-    <td ><form:select path="cdEOTLD" id="cdEOTLD" items="${operadorasExternas}" itemLabel="dsOperadora" itemValue="cdEot" />
+    <td ><form:select path="cdEOTLD" id="cdEOTLD" items="${operadorasExternas}" itemLabel="dsOperadoraForCombos" itemValue="cdEot" />
     <form:errors path="cdEOTLD" /></td>
 </tr>
 <tr>

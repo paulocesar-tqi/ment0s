@@ -16,12 +16,6 @@
 		$('#tabs').tabs();
 	});
 
-	$(document).ready(function() {
-		$('#pesquisar_button').click(pesquisar);
-		$('#excel_button').click(excel);
-		$('#excel_button').attr('disabled', 'disabled');
-		$('#tabs').tabs();
-	});
 
 	function pesquisar() {
 		$('#pesquisar_button').attr('disabled', 'disabled');
@@ -41,7 +35,7 @@
 	<ul>
 		<li><a href="#tabs-1"><spring:message code="crud.titulo.pesquisar" /></a></li>
 	</ul>
-	<form:form modelAttribute="filtro" method="post" action="/scc//user/relatorio/confirmacao/repasse/execute.scc" id="form1">
+	<form:form modelAttribute="filtro" method="post" action="/scc//user/relatorio/confirmacao/repasse/listar.scc" id="form1">
 		<form:hidden path="operacao" id="operacao" />
 		<form:hidden path="itemSelecionado" id="itemSelecionado" />
 		
@@ -50,7 +44,7 @@
 			<table width="100%" border="0" cellspacing="0" cellpadding="0" id="filtroPesquisaTable">
 				<tr>
 					<td width="15%"><spring:message code="relatorio.confirmacao.repasse.label.operadorald" /></td>
-					<td id="cdEOTLD"><form:select path="cdEOTLD" id="cdEOTLD" items="${operadorasExternas}" itemLabel="dsOperadora" itemValue="cdEot" /></td>
+					<td id="cdEOTLD"><form:select path="cdEOTLD" id="cdEOTLD" items="${operadorasExternas}" itemLabel="dsOperadoraForCombos" itemValue="cdEot" /></td>
 				</tr>
 				<tr>
 					<td width="15%"><spring:message code="relatorio.confirmacao.repasse.label.statusrepasse" /></td>
@@ -82,11 +76,11 @@
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
 					<td>
-						<display:table style="width:90%" name="sessionScope._DISPLAY_TAG_SPACE_1" pagesize="20" id="repasses" requestURI="/scc/user/relatorio/confirmacao/repasse/tab1.scc" class="ui-state-default">
+						<display:table style="width:90%" name="requestScope.filtro.lstConfirmacaoRepasse" pagesize="20" id="repasses" requestURI="/scc/user/relatorio/confirmacao/repasse/listar.scc" class="ui-state-default">
 							<display:column property="anoMesRepasse" title="Ano / Mês"/>
 							<display:column property="operadoraLD" title="Operadora LD"/>
 							<display:column property="operadoraClaro" title="Operadora Claro / UF"/>
-							<display:column property="valorRepasse" title="Valor do Repasse"/>
+							<display:column property="valorRepasse" title="Valor do Repasse" format="{0, number, #,##0.00}" style="text-align:right" />
 							<display:column property="statusRepasse" title="Status do Repasse"/>
 						</display:table>
 					</td>

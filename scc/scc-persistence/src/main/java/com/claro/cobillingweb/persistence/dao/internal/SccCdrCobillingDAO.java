@@ -7,6 +7,7 @@ import com.claro.cobillingweb.persistence.dao.BasicDAO;
 import com.claro.cobillingweb.persistence.dao.DAOException;
 import com.claro.cobillingweb.persistence.entity.SccCdrCobilling;
 import com.claro.cobillingweb.persistence.filtro.SccCdrCobillingFiltro;
+import com.claro.cobillingweb.persistence.view.SccCdrCobillingView;
 
 public interface SccCdrCobillingDAO extends BasicDAO<SccCdrCobilling> {
 
@@ -31,4 +32,7 @@ public interface SccCdrCobillingDAO extends BasicDAO<SccCdrCobilling> {
 	public Long contaCDRsArquivo(Long seqArquivo,SccCdrCobilling filtro) throws DAOException;
 	
 	public List<SccCdrCobilling> pesquisaCDRsRejeitados(String cdMotivoRejeicao,String cdEOTClaro , String cdEOTLD,Date dataInicial,Date dataFinal ) throws DAOException;
+
+	List<SccCdrCobillingView> gerarResumoCDRsComErroArquivo(Long seqArquivo)
+			throws DAOException;
 }

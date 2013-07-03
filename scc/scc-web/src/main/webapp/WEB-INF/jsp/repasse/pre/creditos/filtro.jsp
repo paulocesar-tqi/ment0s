@@ -40,6 +40,23 @@ $(document).ready(function(){
 	
 });
 
+$('body').delegate('.detalhe', 'click', function() {
+	 var dados = $("#form1").serialize();
+		$.ajax({
+			type: "GET",
+			//dataType:"json",
+			//contentType: "application/json; charset=utf-8",
+			data:dados,
+			url : this.href,
+			success : function(data) {
+				$('#detalhesDialog').dialog('open');					
+			}
+		});
+
+	return false;
+});
+
+
 
 function selecionaDetalhe(seqArquivo,seqCredito)
 {
@@ -55,19 +72,21 @@ $('#form1').submit();
 <ul>
 <li><a href="#tabs-1"><spring:message code="repasse_pre_consulta.filtro.titulo"/></a></li>
 </ul>
-<form:form modelAttribute="filtro" method="post" action="execute.scc" id="form1">
+<form:form modelAttribute="filtro" method="post" action="listar.scc" id="form1">
 <form:hidden path="operacao" id="operacao"/>
+<!-- 
 <form:hidden path="seqCredito" id="seqCredito"/>
 <form:hidden path="seqArquivo" id="seqArquivo"/>
+ -->
 <div id="tabs-1">
 <table width="100%" border="0" cellspacing="0" cellpadding="0" >
 <tr>
     <td width="10%"><spring:message code="creditos_pre_pesquisa.operadoraClaro"/>:</td>
-    <td ><form:select path="cdEOTClaro" id="cdEOTClaro" items="${operadorasClaro}" itemLabel="dsOperadora" itemValue="cdEot" />    
+    <td ><form:select path="cdEOTClaro" id="cdEOTClaro" items="${operadorasClaro}" itemLabel="dsOperadoraForCombos" itemValue="cdEot" />    
 </tr>
 <tr>
     <td width="10%"><spring:message code="creditos_pre_pesquisa.operadoraLD"/>:</td>
-    <td ><form:select path="cdEOTLD" id="cdEOTLD" items="${operadorasExternas}" itemLabel="dsOperadora" itemValue="cdEot" />    
+    <td ><form:select path="cdEOTLD" id="cdEOTLD" items="${operadorasExternas}" itemLabel="dsOperadoraForCombos" itemValue="cdEot" />    
 </tr>
 
 <tr>
@@ -105,8 +124,8 @@ $('#form1').submit();
 <c:if test="${!empty sessionScope._DISPLAY_TAG_SPACE_1}">
 <table  width="100%" border="0" cellspacing="0" cellpadding="0" >
  <tr><td>                            
-<display:table  name="sessionScope._DISPLAY_TAG_SPACE_1"  decorator="com.claro.sccweb.decorator.RelCreditosPrePagoDecorator" pagesize="50"  id="repasses" partialList="true" size="sessionScope._DISPLAY_TAG_SPACE_1.fullListSize" requestURI="/scc/user/repasse/pre/creditos/pagina" class="ui-state-default">
-<display:column property="nomeArquivo" title="Nome do Aquivo" />
+<display:table  name="requestScope.filtro.listCreditosPrePago"  decorator="com.claro.sccweb.decorator.RelCreditosPrePagoDecorator" pagesize="20"  id="repasses" requestURI="/scc/user/repasse/pre/creditos/listar.scc" class="ui-state-default">
+<display:column property="nomeArquivo"  title="Nome do Aquivo" />
 <display:column property="operadoraLD" title="EOT LD" />
 <display:column property="operadoraClaro" title="EOT Claro" />
 <display:column property="tipoCredito" title="Tipo de Crédito" />
@@ -117,6 +136,11 @@ $('#form1').submit();
 <display:column property="qtChamadasAgrupadas" title="Qt. Chamadas Agrupadas" />
 <display:column property="minutosQueimados" title="Min. Queimados" />
 <display:column property="minutosAjustados" title="Min. Ajustados" />
+
+<display:column title="Editar"><a href="detalhe.scc?sqArquivo=${repasses.sqArquivo}&sqCredito=${repasses.sqCredito}" 
+																class="detalhe" >
+																<img  src="/scc/images/editIcon.gif"></a>
+</display:column>
 </display:table>
 </td></tr>
 </table>

@@ -112,7 +112,7 @@ function num(dom){
     <td colspan="1" align="right" class="TdFormularioUp" nowrap="nowrap">
     <input id="novo_button" type="button" value=<spring:message code="crud.botao.novo"/> />    
     <c:if test="${!empty sessionScope._DISPLAY_TAG_SPACE_1}">
-    <input id="novo_button" type="button" value="Excel" />
+    <!--<input id="novo_button" type="button" value="Excel" />-->
     </c:if>
     </td>
 </tr>

@@ -39,8 +39,8 @@ public class ConsultaRetornoRepassePosExcelHandler extends BasicExcelHandler {
 		columnDefinitions.add(new ExcelColumnDefinition("getOperadoraLD",	"Operadora LD", style, 15));
 		columnDefinitions.add(new ExcelColumnDefinition("getUf", "UF", style, 15));
 		columnDefinitions.add(new ExcelColumnDefinition("getStatus",	"Status", style, 20));
-		columnDefinitions.add(new ExcelColumnDefinition("getMes",	"Mes Conta", style, 20));
-		columnDefinitions.add(new ExcelColumnDefinition("getValor",	"Valor", style, 20));
+		columnDefinitions.add(new ExcelColumnDefinition("getMes",	"Mês/Ano", style, 20));
+		columnDefinitions.add(new ExcelColumnDefinition("getValorStr",	"Valor", style, 20));
 		columnDefinitions.add(new ExcelColumnDefinition("getNumRepasse",	"Demonstrativo de Repasse", style, 20));
 		columnDefinitions.add(new ExcelColumnDefinition("getArquivo",	"Nome do Arquivo", style, 40));
 		ExcelPrinter printer = new ExcelPrinter(columnDefinitions,workbook);

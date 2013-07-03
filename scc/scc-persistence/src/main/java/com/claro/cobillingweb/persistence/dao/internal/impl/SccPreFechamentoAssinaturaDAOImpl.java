@@ -29,20 +29,20 @@ public class SccPreFechamentoAssinaturaDAOImpl extends HibernateBasicDAOImpl<Scc
 	@SuppressWarnings("unchecked")
 	public List<SccPreFechamentoAssinatura> pesquisaAssinaturas(SccPreFechamentoAssinatura filtro) throws DAOException {
 		try {
-			Criteria criteria = getSessionFactory().getCurrentSession()
-					.createCriteria(SccPreFechamentoAssinatura.class);
+			Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(SccPreFechamentoAssinatura.class);
 			if ((filtro.getCdEOTClaro() != null) && (!filtro.getCdEOTClaro().equals(BasicDAO.GET_ALL_STRING)))
 				criteria.add(Restrictions.eq("cdEOTClaro", filtro.getCdEOTClaro()));
 
 			if ((filtro.getCdEOTLD() != null) && (!filtro.getCdEOTLD().equals(BasicDAO.GET_ALL_STRING)))
-				criteria.add(Restrictions.eq("cdEOTLD", filtro.getCdEOTLD()));
-
+					criteria.add(Restrictions.eq("cdEOTLD", filtro.getCdEOTLD()));
+			
 			criteria.add(Restrictions.eq("cdProdutoPrepago", filtro.getCdProdutoPrepago()));
 			criteria.add(Restrictions.eq("dtInicialFechamento", filtro.getDtInicialFechamento()));
 			return criteria.list();
-		} catch (Exception e) {
+		} catch (Exception e)
+			{
 			throw new DAOException(e.getMessage(), "SccPreFechamentoAssinaturaDAO.pesquisaAssinaturas");
-		}
+			}
 	}
 	
 
@@ -92,12 +92,13 @@ public class SccPreFechamentoAssinaturaDAOImpl extends HibernateBasicDAOImpl<Scc
 			
 			projectionList.add(Projections.groupProperty("flRepassaIcms").as("flRepassaIcms"));
 			projectionList.add(Projections.groupProperty("cdEOTLD").as("cdEOTLD"));
+			projectionList.add(Projections.groupProperty("cdEOTClaro").as("cdEOTClaro"));
 			projectionList.add(Projections.groupProperty("cdProdutoPrepago").as("cdProdutoPrepago"));
 			criteria.setProjection(projectionList);
 			ResultTransformer resultTransformer = Transformers.aliasToBean(SccPreFechamentoAssinatura.class);			
 			criteria.setResultTransformer(resultTransformer);				
 			return criteria.list();
-		} catch (Exception e) { throw new DAOException("SccPreFechamentoAssinaturaDAO.pesquisaAssinaturasHolding",e); }		
+		} catch (Exception e) { throw new DAOException("SccPreFechamentoAssinaturaDAO.pesquisaAssinaturas",e); }		
 	}
 	
 	public List<String> sccOperadora2String(List<SccOperadora> lista) {

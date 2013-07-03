@@ -146,10 +146,11 @@ public class DemonstrativoSaldoLotesController extends BaseOperationController<D
 	}
 	*/
 	
+
 	@ModelAttribute("produtos")
-	public List<SccProdutoCobilling> populaProdutos() throws Exception
-	{
-		return super.populaProdutos(false);
+	public List<SccProdutoCobilling> populaProdutos() throws Exception {
+		return  getServiceManager().getContratoService().listaTodosProdutos();
+		
 	}
 	
 	@ModelAttribute("tiposArquivo")

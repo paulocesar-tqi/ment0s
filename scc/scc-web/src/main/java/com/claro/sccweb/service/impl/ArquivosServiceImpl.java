@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.claro.cobillingweb.persistence.dao.BasicDAO;
 import com.claro.cobillingweb.persistence.dao.DAOException;
 import com.claro.cobillingweb.persistence.dao.external.ControlConnectFileDAO;
@@ -18,6 +21,7 @@ import com.claro.cobillingweb.persistence.dao.internal.SccTipoArquivoDAO;
 import com.claro.cobillingweb.persistence.entity.SccArquivoCobilling;
 import com.claro.cobillingweb.persistence.entity.SccArquivoCredito;
 import com.claro.cobillingweb.persistence.entity.SccCdrCobilling;
+import com.claro.cobillingweb.persistence.entity.SccMotivoRejeicao;
 import com.claro.cobillingweb.persistence.entity.SccPreDominio;
 import com.claro.cobillingweb.persistence.entity.SccStatusArquivo;
 import com.claro.cobillingweb.persistence.entity.SccTipoArquivo;
@@ -25,16 +29,20 @@ import com.claro.cobillingweb.persistence.entity.external.ControlConnectFile;
 import com.claro.cobillingweb.persistence.entity.external.ViewArquivoPrePago;
 import com.claro.cobillingweb.persistence.filtro.SCCArquivoCobillingFiltro;
 import com.claro.cobillingweb.persistence.filtro.SCCArquivoCobillingFiltroMulti;
+import com.claro.cobillingweb.persistence.filtro.SccFiltroControleArquivo;
 import com.claro.cobillingweb.persistence.view.RelEventosArquivoView;
+import com.claro.cobillingweb.persistence.view.SccCdrCobillingView;
+import com.claro.sccweb.form.RelatorioContabilTransicaoForm;
 import com.claro.sccweb.service.AbstractService;
 import com.claro.sccweb.service.ArquivosService;
+import com.claro.sccweb.service.FTPService;
 import com.claro.sccweb.service.ServiceException;
-import com.claro.sccweb.service.to.PesquisaArquivosConnectTO;
 
 /**
  * Implementação do serviço ArquivosService.
  *
  */
+@Service
 public class ArquivosServiceImpl extends AbstractService implements ArquivosService {
 	
 	private ControlConnectFileDAO controlConnectFileDAO;
@@ -55,6 +63,9 @@ public class ArquivosServiceImpl extends AbstractService implements ArquivosServ
 	
 	private SccArquivoCreditoDAO arquivoCreditoDAO;
 	
+	@Autowired
+	private FTPService ftpService;
+	
 	public ControlConnectFileDAO getControlConnectFileDAO() {
 		return controlConnectFileDAO;
 	}
@@ -63,8 +74,8 @@ public class ArquivosServiceImpl extends AbstractService implements ArquivosServ
 		this.controlConnectFileDAO = controlConnectFileDAO;
 	}
 	
-	public List<ControlConnectFile> pesquisaArquivosConnect(PesquisaArquivosConnectTO to) throws ServiceException,DAOException {
-		return getControlConnectFileDAO().pesquisaPorFiltros(to.getStatusArquivo(), to.getTipoArquivo(), to.getNomeArquivo(), to.getDataInicio(), to.getDataFinal());		
+	public List<ControlConnectFile> pesquisaArquivosConnect(SccFiltroControleArquivo filtro) throws ServiceException,DAOException {
+		return getControlConnectFileDAO().pesquisaPorFiltros(filtro);		
 	}
 	
 	public SccArquivoCobillingDAO getSccArquivoCobillingDAO() {
@@ -218,8 +229,27 @@ public class ArquivosServiceImpl extends AbstractService implements ArquivosServ
 	}
 	
 	public List<SccCdrCobilling> geraResumoCDRsComErroArquivo(Long seqArquivo) throws DAOException {
-		return getCdrCobillingDAO().geraResumoCDRsComErroArquivo(seqArquivo);
+		
+		List<SccCdrCobilling> listCdrCobilling = new ArrayList<SccCdrCobilling>();
+		List<SccCdrCobillingView> list = getCdrCobillingDAO().gerarResumoCDRsComErroArquivo(seqArquivo);
+		for (SccCdrCobillingView sccCdrCobillingView : list) {
+			SccCdrCobilling entity = new SccCdrCobilling();
+			entity.setNuCdr(sccCdrCobillingView.getNuCdr());
+			SccMotivoRejeicao motivo = new SccMotivoRejeicao();
+			motivo.setCdMotivoRejeicao(sccCdrCobillingView.getCdMotivoRejeicao());
+			if(sccCdrCobillingView.getDsMotivoRejeicao() == null && sccCdrCobillingView.getCdMotivoRejeicao() != null){
+				motivo.setDsMotivoRejeicao(sccCdrCobillingView.getCdMotivoRejeicao());
+			}else{
+				motivo.setDsMotivoRejeicao(sccCdrCobillingView.getDsMotivoRejeicao());
+			}
+			entity.setCdMotivoRejeicao(motivo);
+			listCdrCobilling.add(entity);
+			
+		}
+		return listCdrCobilling;
+		
 	}
+	
 	
 	public List<SccCdrCobilling> listaCDRsArquivo(Long seqArquivo,SccCdrCobilling filtro, int pagina, int quantidadeRegistros) throws DAOException {		
 		return getCdrCobillingDAO().listaCDRsArquivo(seqArquivo, filtro, pagina, quantidadeRegistros);
@@ -274,8 +304,26 @@ public class ArquivosServiceImpl extends AbstractService implements ArquivosServ
 		return getCdrCobillingDAO().geraResumoCDRs(cdEOTClaro, cdEOTLD, dataInicial, dataFinal);
 	}
 	
+
 	public List<SccCdrCobilling> listaCDRsStatus(Long cdStatus, String cdEOTClaro , String cdEOTLD,Date dataInicial,Date dataFinal,int pagina, int quantidadeRegistros) throws DAOException {
 		return getCdrCobillingDAO().listaCDRsStatus(cdStatus, cdEOTClaro, cdEOTLD, dataInicial, dataFinal, pagina, quantidadeRegistros);
 	}
+
+	public SccArquivoCobilling pesquisaRelatorioTransicaoByArquivo(String nomeArquivo) throws DAOException{
+		
+		return getSccArquivoCobillingDAO().pesquisaRelatorioTransicaoByArquivo(nomeArquivo);
+	}
+	
+	@Override
+	public boolean fileExists(RelatorioContabilTransicaoForm form) throws ServiceException {
+		String ret = ftpService.fileExists(form.getDiretorio(), form.getNomeArquivo());
+		return ret != null;
+	}
+
+	public void setFtpService(FTPService ftpService) {
+		this.ftpService = ftpService;
+	}
+	
+	
 	
 }

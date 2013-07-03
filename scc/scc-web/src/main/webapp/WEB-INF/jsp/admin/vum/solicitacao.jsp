@@ -63,7 +63,7 @@ function remove(nmParametro) {
 		    <td><form:input id="dataFimRepasse" path="dataFimRepasse" /></td>
 		
 		    <td><spring:message code="solicitacao_vum.ld"/>:</td>
-		    <td ><form:select path="cdEOTLD" id="cdEOTLD" items="${operadorasExternas}" itemLabel="dsOperadora" itemValue="cdEot" />
+		    <td ><form:select path="cdEOTLD" id="cdEOTLD" items="${operadorasExternas}" itemLabel="dsOperadoraForCombos" itemValue="cdEot" />
 		    </td>
 		
 			<td><spring:message code="solicitacao_vum.plataforma"/>:</td>

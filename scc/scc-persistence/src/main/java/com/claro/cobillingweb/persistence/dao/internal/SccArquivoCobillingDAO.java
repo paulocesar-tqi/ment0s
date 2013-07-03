@@ -44,6 +44,8 @@ public interface SccArquivoCobillingDAO extends BasicDAO<SccArquivoCobilling> {
 	public List<SccArquivoCobilling> pesquisaArquivosDataProcessamento(String cdEOTClaro,String cdEOTLD,Date dataInicial,Date dataFinal) throws DAOException;
 	
 	public List<SccArquivoCobilling> pesquisaRelatoriosTransicao(Long tiposArquivo,Date dataInicial,Date dataFinal) throws DAOException;
-	
+
 	public List<SccArquivoCobilling> pesquisaArquivosVum(String cdEOTLD, String plataforma, long tipoArquivo, Date dataInicial, Date dataFinal) throws DAOException;
+	
+	SccArquivoCobilling pesquisaRelatorioTransicaoByArquivo(String nomeArquivo) throws DAOException;
 }

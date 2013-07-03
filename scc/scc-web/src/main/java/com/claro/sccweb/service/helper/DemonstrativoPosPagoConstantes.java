@@ -32,6 +32,8 @@ public class DemonstrativoPosPagoConstantes {
 	public static final Long PENALIDADE_SLA_CONTRA_CLARO = 43L;
 	public static final Long MULTAS_JUROS_ATRASO_REPASSE_CONTRA_CLARO = 12L;
 	public static final Long MULTAS_JUROS_ATRASO_PAGAMENTO_CONTRA_LD = 13L;
+	public static final Long TOTAL_DOS_ACERTOS = -2L;
+	public static final Long TOTAL_DAS_PENALIDADES = -3L;
 	
 	/**
 	 * A ordem com que os itens são listados nesse array será a mesma ordem com que serão populados no demonstrativo.
@@ -50,10 +52,10 @@ public class DemonstrativoPosPagoConstantes {
 			DETALHAMENTO_CHAMADAS_FATURADAS,
 			REMUNERACAO_SERVICO_EXTRA_CARTAO,
 			REMUNERACAO_SERVICO_EXTRA_COBRANCA,
-			TITULO,
+			TOTAL_DOS_ACERTOS,
 			ACERTO_CONCILIACAO_CONTRA_CLARO,
 			ACERTO_CONCILIACAO_CONTRA_OPERADORA_LD,
-			TITULO,
+			TOTAL_DAS_PENALIDADES,
 			PENALIDADE_REJEICOES_INDEVIDAS_CONTRA_CLARO,
 			PENALIDADE_REJEICOES_DEVIDAS_CONTRA_LD,
 			PENALIDADE_CHAMADA_PERDIDA_CONTRA_CLARO,

@@ -28,6 +28,7 @@ public class PesquisaPagamentosDecorator extends BasicSccDecorator {
 		operadoraClaro = composite.getOperadoraClaro().getDsOperadora()+" ("+composite.getOperadoraClaro().getCdEot()+")";
 		vlrRepasse = decimalFormat.format(composite.getValorBrutoRepasse());
 		tipoContrato = BaseFormController.MODULO_POS_PAGO;
+		lancado = composite.getStatusRepasse();
 	}
 	
 	public PesquisaPagamentosDecorator(int posicaoLinha,RepassePrePagoComposite composite)
@@ -39,14 +40,15 @@ public class PesquisaPagamentosDecorator extends BasicSccDecorator {
 		operadoraClaro = composite.getOperadoraClaro().getDsOperadora()+" ("+composite.getOperadoraClaro().getCdEot()+")";
 		vlrRepasse = decimalFormat.format(composite.getValorRepasse());
 		tipoContrato = BaseFormController.MODULO_PRE_PAGO;
+		lancado = composite.getStatus();
 	}
 
 	public String getPeriodo() {
-		return getLink(periodo);
+		return periodo;
 	}
 
 	public String getNuRepasse() {
-		return getLink(nuRepasse);
+		return nuRepasse;
 	}
 	
 	public Long getPkRepasse()
@@ -55,22 +57,29 @@ public class PesquisaPagamentosDecorator extends BasicSccDecorator {
 	}
 
 	public String getOperadoraLD() {
-		return getLink(operadoraLD);
+		return operadoraLD;
 	}
 
 	public String getOperadoraClaro() {
-		return getLink(operadoraClaro);
+		return operadoraClaro;
 	}
 
 	public String getVlrRepasse() {
-		return getLink(vlrRepasse);
+		return vlrRepasse;
 	}
 
 	public String getLancado() {
-		return getLink(lancado);
+		String value = "";
+		if(lancado.equalsIgnoreCase("C")){
+			value = "Sim";
+		}else{
+			value = "Não";
+		}
+		return value;
 	}
 	
 	
+	@SuppressWarnings("unused")
 	private String getLink(String valor)
 	{
 		return "<a href='#' onClick=selecionaRepasse("+posicaoLinha+")>"+valor+"</a>";		

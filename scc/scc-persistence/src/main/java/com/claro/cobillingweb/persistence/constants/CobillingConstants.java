@@ -14,6 +14,8 @@ public class CobillingConstants implements Serializable {
 	
 	
 	
+	public static final String TODOS = "*";
+	
 	/*
      * INFO ResourceBundle names
      */
@@ -69,6 +71,8 @@ public class CobillingConstants implements Serializable {
     public static final String FTP_BALANCE = "ftp.configbalance";
     public static final String FTP_PC = "ftp.configpc";
     public static final String FTP_BALANCEPC = "ftp.configbalancepc";
+    
+    public static final String FILE_NOT_FOUND = "Arquivo não existe";
 	/**
      * Resource Bundle for S - Sintetico
      */
@@ -121,6 +125,12 @@ public class CobillingConstants implements Serializable {
     public static final String LIST_REGRA_CODE = "R";
     public static final String LIST_PARAMETRO_CODE = "P";
     public static final String LIST_LOGICA_CODE = "L";
+    
+	// Questionamento Constants
+	public static final String PROCEDENTE = "P";
+	public static final String NAOPROCEDENTE = "N";
+	public static final String NAOAPLICAVEL = "Q";
+
 
     public static final String LIST_ASSINANTE = " IN ('104','105','109','143') ";
     public static final String LIST_REGRA = " IN ('121','124','125','126','127','128','129','130','132','133','134','135','136','137','138','140','141','150') ";

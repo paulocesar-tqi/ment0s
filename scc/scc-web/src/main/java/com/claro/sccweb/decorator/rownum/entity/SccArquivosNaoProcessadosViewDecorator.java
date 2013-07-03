@@ -40,7 +40,7 @@ public class SccArquivosNaoProcessadosViewDecorator extends RownumDecorator<SccA
 		this.setDtRelatorio(formataDate(entity.getDtRelatorio()));
 		this.setNoArquivoRetorno(entity.getNoArquivoRetorno());
 		this.setQtChamadas(formataInteger(entity.getQtChamadas()));
-		this.setQtMinutoTarifados(formataInteger(entity.getQtMinutoTarifados()));
+		this.setQtMinutoTarifados(formataDouble(entity.getQtMinutoTarifados()));
 		this.setVlLiquido(formataDouble(entity.getVlLiquido()));
 		this.setDtRecebimento(formataDate(entity.getDtRecebimento()));	
 		

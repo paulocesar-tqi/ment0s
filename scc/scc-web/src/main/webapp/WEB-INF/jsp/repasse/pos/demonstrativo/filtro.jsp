@@ -113,12 +113,12 @@ function selecionaProduto()
 <table width="100%" border="0" cellspacing="0" cellpadding="0" >
 <tr>
     <td width="10%"><spring:message code="repasse_pos_demonstrativo.claro"/>:</td>
-    <td ><form:select path="operadoraClaro" id="operadoraClaro" items="${holdingClaro}" itemLabel="dsOperadora" itemValue="cdEot" />
+    <td ><form:select path="operadoraClaro" id="operadoraClaro" items="${holdingClaro}" itemLabel="dsOperadoraForCombos" itemValue="cdEot" />
     <form:errors path="operadoraClaro" /></td>
 </tr>
 <tr>
     <td width="10%"><spring:message code="repasse_pos_demonstrativo.ld"/>:</td>
-    <td ><form:select path="operadoraExterna" id="operadoraExterna" items="${operadorasExternas}" itemLabel="dsOperadora" itemValue="cdEot" />
+    <td ><form:select path="operadoraExterna" id="operadoraExterna" items="${operadorasExternas}" itemLabel="dsOperadoraForCombos" itemValue="cdEot" />
     <form:errors path="operadoraExterna" /></td>
 </tr>
 <tr>

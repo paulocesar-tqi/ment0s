@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import com.claro.cobillingweb.persistence.dao.DAOException;
 import com.claro.cobillingweb.persistence.dao.internal.SccFaturasDAO;
 import com.claro.cobillingweb.persistence.filtro.SccFiltro;
+import com.claro.cobillingweb.persistence.filtro.SccFiltroAgingFaturas;
+import com.claro.cobillingweb.persistence.filtro.SccFiltroFaturas;
 import com.claro.cobillingweb.persistence.view.SccAgingFaturasView;
 import com.claro.cobillingweb.persistence.view.SccFaturaView;
 import com.claro.sccweb.service.AbstractService;
@@ -22,7 +24,7 @@ public class SccFaturasServiceImpl extends AbstractService implements
 	private SccFaturasDAO sccFaturasDAO;
 	
 	@Override
-	public List<SccFaturaView> gerarRelatorioFaturas(SccFiltro filtro) throws ServiceException, DAOException {
+	public List<SccFaturaView> gerarRelatorioFaturas(SccFiltroFaturas filtro) throws ServiceException, DAOException {
 		
 		return this.sccFaturasDAO.gerarRelatorioFaturas(filtro);
 	}
@@ -33,10 +35,16 @@ public class SccFaturasServiceImpl extends AbstractService implements
 		return this.sccFaturasDAO.gerarRelatorioJurosMultas(filtro);
 	}
 	
+	public List<SccFaturaView> gerarComboCiclo() throws ServiceException, DAOException {
+		
+		return this.sccFaturasDAO.gerarComboCiclo();
+		
+	}
+	
 	
 
 	@Override
-	public List<SccAgingFaturasView> gerarRelatorioAgingFaturas(SccFiltro filtro) throws ServiceException, DAOException {
+	public List<SccAgingFaturasView> gerarRelatorioAgingFaturas(SccFiltroAgingFaturas filtro) throws ServiceException, DAOException {
 
 		return this.sccFaturasDAO.gerarRelatorioAgingFaturas(filtro);
 	}

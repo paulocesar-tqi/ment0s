@@ -11,8 +11,8 @@ public class SccNãoConfAplFaturamentoSQL {
 	
 	public static final String SQL = "SELECT "+
 												"FAT.CD_EOT_CLARO AS operadoraClaro, "+
-												"FAT.CD_CSP AS operadoraLD, "+
-											    "FAT.SG_UF AS UF, "+
+												"CAST(FAT.CD_CSP AS VARCHAR2(2)) AS operadoraLD, "+
+											    "CAST(FAT.SG_UF AS VARCHAR2(2)) AS UF, "+
 											    "FAT.CD_CICLO,  " +
 											    "AC.MM_CICLO,  "+ 
 											    "AC.AA_CICLO , "+
@@ -33,6 +33,6 @@ public class SccNãoConfAplFaturamentoSQL {
 	
 	public static final String FILTRO_MM_CICLO = "AND AC.MM_CICLO = :mmCiclo";
     
-	public static final String FITLRO_AA_CICLO = "AND AC.AA_CICLO = a:aCiclo ";
+	public static final String FITLRO_AA_CICLO = "AND AC.AA_CICLO = :aaCiclo ";
 
 }

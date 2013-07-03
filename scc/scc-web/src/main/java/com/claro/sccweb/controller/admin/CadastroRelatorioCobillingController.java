@@ -84,7 +84,7 @@ public class CadastroRelatorioCobillingController extends BaseCRUDAndMethodContr
 		ModelAndView mav = new ModelAndView(getViewName());
 		form.getEntity().setDtCriacao(data);
 		form.getEntity().setDtInicioVigencia(data);
-		form.getEntity().setCdUsuarioManutencao(getSessionDataManager().getUserPrincipal());
+		form.getEntity().setCdUsuarioManut(getSessionDataManager().getUserPrincipal());
 		sccRelatorioCobillingService.create(form.getEntity());
 		return mav;
 
@@ -108,6 +108,7 @@ public class CadastroRelatorioCobillingController extends BaseCRUDAndMethodContr
 		
 		ModelAndView mav = new ModelAndView(getViewName());
 		form.getEntity().setDtAtualizacao(Calendar.getInstance().getTime());
+		form.getEntity().setCdUsuarioManut(getSessionDataManager().getUserPrincipal());
 		sccRelatorioCobillingService.update(form.getEntity());
 		return mav;
 
@@ -149,7 +150,7 @@ public class CadastroRelatorioCobillingController extends BaseCRUDAndMethodContr
 	protected Serializable getPkEntidade(Object entidadeSelecionada) {
 		
 		SccRelatorioCobillingDecorator decorator = (SccRelatorioCobillingDecorator)entidadeSelecionada;
-		return decorator.getRow().getCodigo();
+		return decorator.getRow().getSqRelatorio();
 	}
 
 	@Override

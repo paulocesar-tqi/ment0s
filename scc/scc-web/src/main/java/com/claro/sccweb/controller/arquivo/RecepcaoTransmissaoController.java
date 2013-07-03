@@ -168,7 +168,7 @@ public class RecepcaoTransmissaoController extends BaseOperationController<Recep
 		List<SccOperadora> list = populaOperadorasClaro();
 		JSONObject jsonResponse = new JSONObject();		 
 		for (int i=0;i<list.size();i++) {			
-			jsonResponse.put(list.get(i).getCdEot(),list.get(i).getDsOperadora());			
+			jsonResponse.put(list.get(i).getCdEot(),list.get(i).getDsOperadoraForCombos());			
 		}
 		response.setContentType("application/json");
 	    response.getWriter().print(jsonResponse.toString());
@@ -179,7 +179,7 @@ public class RecepcaoTransmissaoController extends BaseOperationController<Recep
 		List<SccOperadora> list = populaHoldingClaro();
 		JSONObject jsonResponse = new JSONObject();		 
 		for (int i=0;i<list.size();i++) {
-			jsonResponse.put(list.get(i).getCdEot(),list.get(i).getDsOperadora());			
+			jsonResponse.put(list.get(i).getCdEot(),list.get(i).getDsOperadoraForCombos());			
 		}
 		response.setContentType("application/json");
 	    response.getWriter().print(jsonResponse.toString());

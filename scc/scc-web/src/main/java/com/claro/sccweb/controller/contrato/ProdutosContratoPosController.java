@@ -54,11 +54,12 @@ public class ProdutosContratoPosController extends BaseCRUDAndMethodController<P
 		
 		List<SccProdutoContratado> rows = getServiceManager().getContratoService().pesquisaProdutosContratados(form.getCdContratoCobilling());
 		List<SccProdutoContratadoDecorator> decoratorList = new ArrayList<SccProdutoContratadoDecorator>();
-		
+		cleanSession(getClass(), request);
 		for (int i=0;i<rows.size();i++) {			
 			SccProdutoContratadoDecorator decorator = new SccProdutoContratadoDecorator(rows.get(i), i);
 			decoratorList.add(decorator);
 		}
+		
 		storeInSession(getClass(), DISPLAY_TAG_SPACE_1, decoratorList, request);
 		cacheMyForm(getClass(), form);
 		return mav;
@@ -101,6 +102,7 @@ public class ProdutosContratoPosController extends BaseCRUDAndMethodController<P
 		}
 		getServiceManager().getContratoService().update(entity);		
 		ModelAndView mav = pesquisar(request, response, cachedForm, bindingResult, model);
+		
 		mav.addObject(FORM_NAME, getForm());
 		return mav;
 	}

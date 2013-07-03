@@ -25,17 +25,17 @@ $(document).ready(function(){
 <table  width="100%" border="0" cellspacing="0" cellpadding="0" >
 <tr><td>
 <display:table style="width:90%"  name="sessionScope._DISPLAY_TAG_SPACE_1"   pagesize="20"  id="repasses" requestURI="/scc/user/recepcao_transmissao/tab1.scc" class="ui-state-default">
-<display:column property="dataConnect" title="Dt Connect" />
-<display:column property="dataReferencia" title="Dt Referência" />
-<display:column property="dataProcClaro" title="Dt Proc Claro" />
-<display:column property="dataProcPPC" title="Dt Proc PPC" />
+<display:column property="dataConnect2" title="Dt Connect" style="width:7%" />
+<display:column property="dataReferencia2" title="Dt Referência" style="width:7%" />
+<display:column property="dataProcClaro2" title="Dt Proc Claro" style="width:7%" />
+<display:column property="dataProcPPC2" title="Dt Proc PPC" style="width:7%"/>
 <display:column property="noComposto" title="Arquivo" />
 <display:column property="minutosTarifados" title="Minutos Tarifados" />
-<display:column property="qtCDR" title="CDRs" />
-<display:column property="valorLiquido" title="Vlr Liquido" />
-<display:column property="valorBruto" title="Vlr Bruto" />
+<display:column property="qtCDR" title="Qtde CDR" />
+<display:column property="valorLiquido" title="Valor Liquido" />
+<display:column property="valorBruto" title="Valor Bruto" />
 <display:column property="status" title="Status Arquivo" />
-<display:column property="statusProtocolo" title="Status Protocolo" />
+<display:column property="statusProtocolo2" title="Status Protocolo" />
 </display:table>
 </td></tr>
 </table>

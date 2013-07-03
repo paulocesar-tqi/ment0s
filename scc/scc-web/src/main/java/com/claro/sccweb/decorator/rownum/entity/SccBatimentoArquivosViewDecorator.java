@@ -62,12 +62,14 @@ public class SccBatimentoArquivosViewDecorator extends RownumDecorator<SccBatime
 		this.setDuracaoTarifadaClaro(formataDouble(entity.getDuracaoTarifadaClaro()));
 		this.setQuantidadeClaro(formataDouble(entity.getQuantidadeClaro()));
 		this.setValorLiquidoClaro(formataDouble(entity.getValorLiquidoClaro()));
-		this.setErroProtocoloClaro(entity.getErroProtocoloClaro());
-		this.setDescErroProtocoloClaro(entity.getDescErroProtocoloClaro());
 		this.setNomeArquivoLD(entity.getNomeArquivoLD());
 		this.setQuantidadeLD(formataDouble(entity.getQuantidadeLD()));
 		this.setStatusLD(entity.getStatusLD());
 		this.setQuantidadeBat(formataDouble(entity.getQuantidadeBat()));
+		this.setErroProtocoloClaro(entity.getErroProtocoloClaro() != null && entity.getErroProtocoloClaro().equals("OK") ? entity.getErroProtocoloClaro() : "-");
+		this.setDescErroProtocoloClaro(entity.getDescErroProtocoloClaro() != null ? entity.getDescErroProtocoloClaro() : "-");
+		
+		
 		
 	}
 

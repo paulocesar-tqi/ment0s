@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -39,6 +40,8 @@ public class SccRelatorioBatimentoArquivosController extends
 	
 	private final RelatorioBatimentoArquivosValidator validator = new RelatorioBatimentoArquivosValidator();
 	
+	private static final String FWD_EXCEL_BATIMENTO_ARQUIVOS = "relatorio_batimento_arquivos_filtro_excel";
+	
 	public ModelAndView pesquisar(HttpServletRequest request, HttpServletResponse response, BaseForm form, BindingResult bindingResult, Model model) throws Exception {
 		
 		RelatorioBatimentoArquivosForm formBatimentoArquivos = (RelatorioBatimentoArquivosForm)form;
@@ -56,6 +59,11 @@ public class SccRelatorioBatimentoArquivosController extends
 		return mav;
 
 	}
+	
+	public ModelAndView excel(HttpServletRequest request,HttpServletResponse response,@Valid @ModelAttribute(FORM_NAME) BaseForm _form,BindingResult bindingResult, Model model) throws Exception{
+		return new ModelAndView(FWD_EXCEL_BATIMENTO_ARQUIVOS);
+	}
+
 	
 	private List<SccBatimentoArquivosView> gerarRelatorioBatimentoArquivos(RelatorioBatimentoArquivosForm form) throws DAOException, ServiceException {
 		return sccBatimentoArquivosService.gerarRelatorioBatimento(form.getDtInicioBatimento(), form.getDtFimBatimento(), form.getCdEOTLD(), form.getCdEOTClaro(), form.getTpArquivo());
@@ -107,10 +115,11 @@ public class SccRelatorioBatimentoArquivosController extends
 	public List<BasicStringItem> populaTiposArquivos() throws Exception {
 		List<BasicStringItem> comboList = new ArrayList<BasicStringItem>();
 		comboList.add(new BasicStringItem("REM", "Remessa"));
-		comboList.add(new BasicStringItem("RET", "Ret"));
+		comboList.add(new BasicStringItem("RET", "Retorno"));
 		return comboList;
 	}
 	
+/*
 	@RequestMapping(value="/tab1" , method = RequestMethod.GET)
 	public ModelAndView tab1(HttpServletRequest request, HttpServletResponse response) throws Exception {
 			ModelAndView mav = new ModelAndView(getViewName());
@@ -121,7 +130,7 @@ public class SccRelatorioBatimentoArquivosController extends
 				mav.addObject(FORM_NAME, getForm());
 	    	return mav;  
 	}
-
+*/
 
 	public SccBatimentoArquivosService getSccBatimentoArquivosService() {
 		return sccBatimentoArquivosService;

@@ -57,9 +57,16 @@ public class SccRelatorioJurosMultaDAOImpl extends HibernateBasicDAOImpl<SccRela
 	 
 	public List<SccRelatorioJurosMulta> pesquisaDemonstrativoJurosMultas(String cdEOTClaro, String cdEOT, Long cdProdutoCobilling,Date dtInicialRepasse) 
 			throws DAOException {
-		String SQL = "SELECT CD_EOT_CLARO,SG_UF,NU_FATURA,DT_ARRECADACAO,DT_VENCIMENTO,VL_JUROS," +
-			"VL_MULTAS,NO_ARQUIVO ,CD_EOT_LD FROM SCC_RELATORIO_JUROS_MULTAS WHERE CD_EOT_CLARO = ? "+
-			"AND CD_EOT_LD = ? AND CD_PRODUTO_COBILLING = ? AND DT_INICIAL_REPASSE = ?";
+		String SQL = "SELECT CD_EOT_CLARO," +
+				"            CAST(SG_UF AS VARCHAR2(2)) AS SG_UF , " +
+				"            NU_FATURA,DT_ARRECADACAO,DT_VENCIMENTO,VL_JUROS, " +
+			"                VL_MULTAS,NO_ARQUIVO ,CD_EOT_LD  " +
+			"FROM SCC_RELATORIO_JUROS_MULTAS  " +
+			"WHERE CD_EOT_CLARO = ?  "+
+			"  AND CD_EOT_LD = ?  " +
+			"  AND CD_PRODUTO_COBILLING = ?  " +
+			"  AND DT_INICIAL_REPASSE = ? ";
+		
 		List<SccRelatorioJurosMulta> list = new ArrayList<SccRelatorioJurosMulta>();
 		try {
 			SQLQuery query = getSessionFactory().getCurrentSession().createSQLQuery(SQL);
@@ -73,7 +80,7 @@ public class SccRelatorioJurosMultaDAOImpl extends HibernateBasicDAOImpl<SccRela
 				SccRelatorioJurosMulta multa = new SccRelatorioJurosMulta();
 				SccOperadora operadoraClaro = getOperadoraDAO().getByPk((String)rows.get(i)[0], SccOperadora.class);
 				multa.setOperadoraClaro(operadoraClaro);
-				multa.setSgUf(((Character)rows.get(i)[1]).toString());
+				multa.setSgUf((String) rows.get(i)[1]);
 				multa.setNuFatura((String)rows.get(i)[2]);
 				multa.setDtArrecadacao((Date)rows.get(i)[3]);
 				multa.setDtVencimento((Date)rows.get(i)[4]);
@@ -125,7 +132,7 @@ public class SccRelatorioJurosMultaDAOImpl extends HibernateBasicDAOImpl<SccRela
 			query.setDate(1, dtInicialRepasse);
 			query.setLong(2, cdPeriodicidade);
 			query.setLong(3, cdProdutoCobilling);
-			query.setString(3, cdEOT);
+			query.setString(4, cdEOT);
 			return query.executeUpdate();
 		} catch (Exception e)
 			{

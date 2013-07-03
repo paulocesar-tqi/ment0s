@@ -20,16 +20,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.claro.cobillingweb.persistence.dao.BasicDAO;
+import com.claro.cobillingweb.persistence.dao.DAOException;
 import com.claro.cobillingweb.persistence.entity.SccOperadora;
 import com.claro.cobillingweb.persistence.entity.SccProdutoPrepago;
 import com.claro.cobillingweb.persistence.view.RelApuracaoFechamentoPrePagoView;
 import com.claro.cobillingweb.persistence.view.RelSinteticoFechamentoPrePagoView;
 import com.claro.cobillingweb.persistence.view.RelSinteticoServicoPrePagoView;
+import com.claro.cobillingweb.persistence.view.RelatorioApuracaoFechamentoPrePagoView;
+import com.claro.cobillingweb.persistence.view.RelatorioApuracaoPreSumarizado;
 import com.claro.sccweb.controller.BaseFormController;
 import com.claro.sccweb.controller.util.BasicIntegerItem;
 import com.claro.sccweb.controller.util.BasicStringItem;
 import com.claro.sccweb.controller.validator.RelatoriosRepassePreValidator;
 import com.claro.sccweb.decorator.RelApuracaoFechamentoPrePagoViewDecorator;
+import com.claro.sccweb.decorator.RelSinteticoFechamentoPrePagoViewDecorator;
 import com.claro.sccweb.form.BaseForm;
 import com.claro.sccweb.form.RelatoriosRepassePreForm;
 
@@ -182,11 +186,26 @@ public class RelatoriosRepassePreController extends BaseFormController {
 		List<RelSinteticoServicoPrePagoView> parte2 = getServiceManager().getRepassePreService().geraRelatorioSinteticoService(form.getCdProdutoPrepago(),form.getCdEOTLD(), form.getCdEOTClaro(), form.getCdStatusFechamento(), dataInicial, dataFinal);
 		List<RelSinteticoFechamentoPrePagoView> parte1 = getServiceManager().getRepassePreService().geraRelatorioSintetico(form.getCdProdutoPrepago(),form.getCdEOTLD(), form.getCdEOTClaro(), form.getCdStatusFechamento(), dataInicial, dataFinal);
 		
-		storeInSession(getClass(), DISPLAY_TAG_SPACE_1, parte1, request);
+		
+		storeInSession(getClass(), DISPLAY_TAG_SPACE_1, montarRelatorio(parte1), request);
 		storeInSession(getClass(), DISPLAY_TAG_SPACE_2, parte2, request);
 		
 		return mav;
 	}
+	
+	private List<RelSinteticoFechamentoPrePagoViewDecorator> montarRelatorio(List<RelSinteticoFechamentoPrePagoView> rows){
+		
+		List<RelSinteticoFechamentoPrePagoViewDecorator> decoratorList = new ArrayList<RelSinteticoFechamentoPrePagoViewDecorator>(rows.size());
+		for (int i = 0; i < rows.size(); i++) {
+			RelSinteticoFechamentoPrePagoViewDecorator decorator = new RelSinteticoFechamentoPrePagoViewDecorator(rows.get(i), i);
+			decoratorList.add(decorator);
+		}
+		
+		return decoratorList;
+	}
+	
+	
+	
 	
 	private ModelAndView geraResumoApurado(HttpServletRequest request, HttpServletResponse response,@Valid @ModelAttribute("filtro")  RelatoriosRepassePreForm form,BindingResult bindingResult,Model model) throws Exception {
 		info("Gerando relatório repasse de repasse pré-pago : "+form.toString());
@@ -194,14 +213,33 @@ public class RelatoriosRepassePreController extends BaseFormController {
 		ModelAndView mav = new ModelAndView("repasse_pre_relatorios_apurado");
 		Date dataInicial = calculaDataInicialPeriodo(form.getMesRelatorio(), form.getAnoRelatorio());
 		Date dataFinal = calculaDataFinalPeriodo(form.getMesRelatorio(), form.getAnoRelatorio());
-		List<RelApuracaoFechamentoPrePagoView> parte1 = getServiceManager().getRepassePreService().geraRelatorioApuracao(form.getCdProdutoPrepago(),form.getCdEOTLD(), form.getCdEOTClaro(), form.getCdStatusFechamento(), dataInicial, dataFinal);
-		List<RelApuracaoFechamentoPrePagoViewDecorator> decoratorList = new ArrayList<RelApuracaoFechamentoPrePagoViewDecorator>(parte1.size());
-		for (int i=0;i<parte1.size();i++) {
-			RelApuracaoFechamentoPrePagoViewDecorator decorator = new RelApuracaoFechamentoPrePagoViewDecorator(parte1.get(i), i);
-			decoratorList.add(decorator);
+		
+		List<RelatorioApuracaoFechamentoPrePagoView> parte1 = (List<RelatorioApuracaoFechamentoPrePagoView>) getServiceManager().getRepassePreService()
+					.gerarRelatorioApuracao(form.getCdProdutoPrepago(),form.getCdEOTLD(), form.getCdEOTClaro(), form.getCdStatusFechamento(), dataInicial, dataFinal);
+		
+
+		List<RelatorioApuracaoPreSumarizado> listSumarizado = new ArrayList<RelatorioApuracaoPreSumarizado>();
+		for (RelatorioApuracaoFechamentoPrePagoView relatorioApuracaoFechamentoPrePagoView : parte1) {
+			RelatorioApuracaoPreSumarizado sumarizado = new RelatorioApuracaoPreSumarizado(relatorioApuracaoFechamentoPrePagoView);
+			listSumarizado.add(sumarizado);
 		}
-		storeInSession(getClass(), DISPLAY_TAG_SPACE_1, decoratorList, request);
+		// Gerar total
+		List<RelatorioApuracaoPreSumarizado> lstTotal = new ArrayList<RelatorioApuracaoPreSumarizado>();
+		lstTotal.add(gerarTotal(form));
+		
+		storeInSession(getClass(), DISPLAY_TAG_SPACE_1, listSumarizado, request);
+		storeInSession(getClass(), DISPLAY_TAG_SPACE_2, lstTotal, request);
 		return mav;
+	}
+	
+
+	private RelatorioApuracaoPreSumarizado gerarTotal(RelatoriosRepassePreForm form) throws DAOException{
+
+		Date dataInicial = calculaDataInicialPeriodo(form.getMesRelatorio(), form.getAnoRelatorio());
+		Date dataFinal = calculaDataFinalPeriodo(form.getMesRelatorio(), form.getAnoRelatorio());
+
+		return getServiceManager().getRepassePreService().gerarTotal(form.getCdProdutoPrepago(),form.getCdEOTLD(), form.getCdEOTClaro(), form.getCdStatusFechamento(), dataInicial, dataFinal);
+		
 	}
 	
 	private ModelAndView exportaExcelApurado(HttpServletRequest request, HttpServletResponse response,@Valid @ModelAttribute("filtro")  RelatoriosRepassePreForm form,BindingResult bindingResult,Model model) throws Exception {
@@ -251,7 +289,12 @@ public class RelatoriosRepassePreController extends BaseFormController {
 	
 	@ModelAttribute("produtos")
 	public List<SccProdutoPrepago> populaProdutos() throws Exception {
-		return getServiceManager().getProdutoPrepagoService().getAll();
+		List<SccProdutoPrepago> comboList = new ArrayList<SccProdutoPrepago>();
+		SccProdutoPrepago nullValue = new SccProdutoPrepago();
+		nullValue.setNoProdutoPrepago("Selecione...");
+		nullValue.setCdProdutoPrepago(BasicDAO.NULL_STRING);
+		comboList.add(0,nullValue);
+		return comboList;
 	}
 	
 	@ModelAttribute("tipos")
@@ -274,16 +317,18 @@ public class RelatoriosRepassePreController extends BaseFormController {
 	  * @param response
 	  * @throws Exception
 	  */
-	@RequestMapping(value="/json/lista_produtos/{cdEOTHolding}/{cdEOTLD}" , method=RequestMethod.GET)
-	public void atualizaProdutos(@PathVariable("cdEOTHolding") String cdEOTHolding,@PathVariable("cdEOTLD") String cdEOTLD,HttpServletRequest request, HttpServletResponse response) throws Exception {
-		List<SccProdutoPrepago> produtos = getServiceManager().getContratoPrePagoService().pesquisaProdutosContratadosEmpresa(cdEOTHolding, cdEOTLD, false);
-		JSONObject jsonResponse = new JSONObject();
-		jsonResponse.put(BasicDAO.GET_ALL_STRING,"Todos");
-		for (int i=0;i<produtos.size();i++) {
-			jsonResponse.put(produtos.get(i).getCdProdutoPrepago().toString(), produtos.get(i).getNoProdutoPrepago());
-		}
-		response.setContentType("application/json");
-		response.getWriter().print(jsonResponse.toString());
+	@RequestMapping(value="/json/lista_produtos/{cdEOTLD}/{cdEOTClaro}" , method=RequestMethod.GET)
+	public void pesquisaProdutosLD(@PathVariable("cdEOTLD") String cdEOTLD,@PathVariable("cdEOTClaro") String cdEOTClaro,HttpServletRequest request, HttpServletResponse response,@ModelAttribute("form") RelatoriosRepassePreForm form) throws Exception
+	{
+		List<SccProdutoPrepago> produtos = getServiceManager().getContratoPrePagoService().pesquisaProdutosContratadosEmpresa(cdEOTClaro, cdEOTLD, false);		
+		JSONObject jsonResponse = new JSONObject();				
+		jsonResponse.put("0L","Selecione....");		
+		for (int i=0;i<produtos.size();i++)
+			{			
+			jsonResponse.put(produtos.get(i).getCdProdutoPrepago().toString(), produtos.get(i).getNoProdutoPrepago());			
+			}
+		 response.setContentType("application/json;charset=UTF-8");
+	     response.getWriter().print(jsonResponse.toString());
 	}
 	
 	

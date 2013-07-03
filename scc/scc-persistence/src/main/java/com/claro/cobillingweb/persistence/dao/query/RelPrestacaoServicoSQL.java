@@ -26,7 +26,11 @@ public class RelPrestacaoServicoSQL {
 											 "SUM(CASE WHEN O.CD_EOT = '911' THEN R.VL_BRUTO_ITEM_REPASSE "+
 											 "ELSE  0         END) AS IPCORP, "+
 					                         "SUM(CASE WHEN O.CD_EOT = '777' THEN R.VL_BRUTO_ITEM_REPASSE "+
-											 "ELSE  0         END) AS NEXUS "+ 
+											 "ELSE  0         END) AS NEXUS, "+
+											 "SUM(CASE WHEN O.CD_EOT = '587' THEN R.VL_BRUTO_ITEM_REPASSE "+
+						                     "ELSE  0         END) AS TELECOM65, "+
+						                     "SUM(CASE WHEN O.CD_EOT = '507' THEN R.VL_BRUTO_ITEM_REPASSE "+ 
+						                     "ELSE  0         END) AS CAMBRIDGE "+
 							         "FROM SCC_REPASSE R, SCC_OPERADORA O, SCC_OPERADORA O2, "+
 									 	  "SCC_COMPOSICAO_PRODUTO CP, SCC_PRODUTO_COBILLING P "+
 							         "WHERE R.CD_COMPONENTE_PRODUTO = CP.CD_COMPONENTE_PRODUTO "+      
@@ -82,7 +86,11 @@ public class RelPrestacaoServicoSQL {
 											    "SUM(CASE WHEN O.cd_eot = '911' THEN PF.vl_serv_prest_bruto "+ 
 											    "ELSE 0          END)        AS IPCORP, "+
 											    "SUM(CASE WHEN O.cd_eot = '777' THEN PF.vl_serv_prest_bruto "+ 
-											    "ELSE 0          END)        AS NEXUS  "+
+											    "ELSE 0          END)        AS NEXUS,  "+
+												"SUM(CASE WHEN O.cd_eot = '587' THEN PF.vl_serv_prest_bruto "+
+							                    "ELSE  0         END) AS TELECOM65, "+
+							                    "SUM(CASE WHEN O.cd_eot = '507' THEN PF.vl_serv_prest_bruto "+ 
+							                    "ELSE  0         END) AS CAMBRIDGE "+
 											"FROM   scc_pre_fechamento PF,  "+
 											    "scc_operadora O,  "+
 											    "scc_operadora O2  "+
@@ -92,6 +100,5 @@ public class RelPrestacaoServicoSQL {
 											    "AND Nvl(PF.cd_status_fechamento, ' ') <> 'N' ";
     
      
-
 
 }

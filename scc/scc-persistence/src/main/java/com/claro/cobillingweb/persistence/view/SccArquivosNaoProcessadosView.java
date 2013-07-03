@@ -4,17 +4,18 @@
 package com.claro.cobillingweb.persistence.view;
 
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * @author 92031709
  *
  */
 public class SccArquivosNaoProcessadosView {
-
+	
 	private Date dtRelatorio;
 	private String noArquivoRetorno;
 	private Integer qtChamadas;
-	private Integer qtMinutoTarifados;
+	private Double qtMinutoTarifados;
 	private Double vlLiquido;
 	private Date dtRecebimento;
 	
@@ -36,15 +37,17 @@ public class SccArquivosNaoProcessadosView {
 	public void setQtChamadas(Integer qtChamadas) {
 		this.qtChamadas = qtChamadas;
 	}
-	public Integer getQtMinutoTarifados() {
+	public Double getQtMinutoTarifados() {
 		return qtMinutoTarifados;
 	}
-	public void setQtMinutoTarifados(Integer qtMinutoTarifados) {
+	public void setQtMinutoTarifados(Double qtMinutoTarifados) {
 		this.qtMinutoTarifados = qtMinutoTarifados;
 	}
+	
 	public Double getVlLiquido() {
 		return vlLiquido;
 	}
+	
 	public void setVlLiquido(Double vlLiquido) {
 		this.vlLiquido = vlLiquido;
 	}

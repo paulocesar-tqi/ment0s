@@ -10,6 +10,7 @@ public class SccRelBatimentoEstornoDebitoView {
 	private String uf;
 	private String noArquivo;
 	private String dsStatus;
+	private String mesAno;
 	private Double valorTotalNf;
 	private Double valorTotalImpugnado;
 	private Date dtConnect;
@@ -68,6 +69,12 @@ public class SccRelBatimentoEstornoDebitoView {
 	}
 	public void setDtConnect(Date dtConnect) {
 		this.dtConnect = dtConnect;
+	}
+	public String getMesAno() {
+		return mesAno;
+	}
+	public void setMesAno(String mesAno) {
+		this.mesAno = mesAno;
 	}
 	
 

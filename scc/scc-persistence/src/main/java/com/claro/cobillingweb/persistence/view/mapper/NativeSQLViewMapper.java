@@ -208,6 +208,8 @@ public class NativeSQLViewMapper<E> {
 			result =  value.longValue();
 		else if (clazz.equals(Integer.class))
 			result =  value.intValue();
+		else if (clazz.equals(BigDecimal.class))
+			result = value;
 		else
 			throw new DAOException("Tipo "+clazz+" não suportado por fixBigDecimal().");
 		return result;

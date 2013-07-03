@@ -1,8 +1,10 @@
 package com.claro.sccweb.form;
 
 import java.util.Date;
+import java.util.List;
 
 import com.claro.cobillingweb.persistence.view.SccAcordoParcelamentoView;
+import com.claro.sccweb.decorator.view.SccAcordoParcelamentoViewDecorator;
 
 public class SccAcordoParcelamentoForm extends BaseForm {
 	
@@ -25,7 +27,10 @@ public class SccAcordoParcelamentoForm extends BaseForm {
 	private Date dataFinalPeriodo;
 	
 	private Boolean isSintetico;
-
+	
+	private List <SccAcordoParcelamentoViewDecorator> listSintetico;
+	private List <SccAcordoParcelamentoViewDecorator> listAnalitico;
+	
 	public SccAcordoParcelamentoView getEntity() {
 		return entity;
 	}
@@ -105,6 +110,24 @@ public class SccAcordoParcelamentoForm extends BaseForm {
 	public void setIsSintetico(Boolean isSintetico) {
 		isSintetico = this.tipoRelatorio.equalsIgnoreCase("S");
 		this.isSintetico = isSintetico;
+	}
+
+	public List<SccAcordoParcelamentoViewDecorator> getListSintetico() {
+		return listSintetico;
+	}
+
+	public void setListSintetico(
+			List<SccAcordoParcelamentoViewDecorator> listSintetico) {
+		this.listSintetico = listSintetico;
+	}
+
+	public List<SccAcordoParcelamentoViewDecorator> getListAnalitico() {
+		return listAnalitico;
+	}
+
+	public void setListAnalitico(
+			List<SccAcordoParcelamentoViewDecorator> listAnalitico) {
+		this.listAnalitico = listAnalitico;
 	}
 	
 	

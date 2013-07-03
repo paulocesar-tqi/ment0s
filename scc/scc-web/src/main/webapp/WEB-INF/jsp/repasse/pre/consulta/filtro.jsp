@@ -25,11 +25,16 @@ $(document).ready(function(){
 		$('#form1').submit();
 	});
 	
-	$('[type=radio]').change(function(){
+
+	$('body').delegate('.rdb', 'change', function() {
 		var valor = $(this).val();
 		$.ajax({url: "/scc/user/repasse/pre/consulta/json/mudaStatus/"+valor+".scc"});
 		$('#efetivarButton').removeAttr('disabled');
-	});
+
+
+});
+
+	
 	
 	$('#demonstrativoDialog').dialog({
 		autoOpen: false,
@@ -86,7 +91,7 @@ function selecionar(linhaSelecionada) {
 	<table width="100%" border="0" cellspacing="0" cellpadding="0" >
 		<tr>
 		    <td width="10%"><spring:message code="repasse_pre_consulta.ld"/>:</td>
-		    <td ><form:select path="to.cdEOTLD" id="cdEOTLD" items="${operadorasExternas}" itemLabel="dsOperadora" itemValue="cdEot" />
+		    <td ><form:select path="to.cdEOTLD" id="cdEOTLD" items="${operadorasExternas}" itemLabel="dsOperadoraForCombos" itemValue="cdEot" />
 		    <form:errors path="to.cdEOTLD" /></td>
 		</tr>
 		<tr>
@@ -197,7 +202,7 @@ $(function() {
 	$('#pesquisar_button').removeAttr('disabled');
 	
 	op = $('#operacao').val();
-	if (o p == 'DEMONSTRATIVO') {
+	if (op == 'DEMONSTRATIVO') {
 		$('#demonstrativoDialog').dialog('open');	
 	}
 });

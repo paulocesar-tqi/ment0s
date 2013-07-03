@@ -327,7 +327,7 @@ public class PesquisaProcessadosPosController_old extends BaseFormController {
 		JSONObject jsonResponse = new JSONObject();		
 		for (int i=0;i<list.size();i++)
 			{			
-			jsonResponse.put(list.get(i).getCdEot(),list.get(i).getDsOperadora());			
+			jsonResponse.put(list.get(i).getCdEot(),list.get(i).getDsOperadoraForCombos());			
 			}
 		 response.setContentType("application/json");
 	     response.getWriter().print(jsonResponse.toString());
@@ -347,7 +347,7 @@ public class PesquisaProcessadosPosController_old extends BaseFormController {
 		JSONObject jsonResponse = new JSONObject();		 
 		for (int i=0;i<list.size();i++)
 			{
-			jsonResponse.put(list.get(i).getCdEot(),list.get(i).getDsOperadora());			
+			jsonResponse.put(list.get(i).getCdEot(),list.get(i).getDsOperadoraForCombos());			
 			}
 		 response.setContentType("application/json");
 	     response.getWriter().print(jsonResponse.toString());

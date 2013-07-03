@@ -97,18 +97,33 @@ function selecionar(linha)
 <c:if test="${!empty sessionScope._DISPLAY_TAG_SPACE_1}">
 <table  width="100%" border="0" cellspacing="0" cellpadding="0" >
  <tr><td align="center">                            
-<display:table style="width:100%"  name="sessionScope._DISPLAY_TAG_SPACE_1"   pagesize="20"  id="repasses" requestURI="/scc/user/pre/processados/pesquisa/tab1.scc" class="ui-state-default">
+<display:table style="width:100%"  name="sessionScope._DISPLAY_TAG_SPACE_1" pagesize="20" varTotals="myTotal" id="repasses" requestURI="/scc/user/pre/processados/pesquisa/tab1.scc" class="ui-state-default">
 <display:column property="row.noArquivo" title="Nome" />
-<display:column property="qtCDR" title="Qtd. Registros" />
-<display:column property="dataProcClaro" title="Data Processamento" />
+<display:column property="qtCDR" title="Qtd. Registros" total="true" />
+<display:column property="dataReferencia" title="Data Processamento" />
 <display:column property="dataInicioTrafego" title="Dt. Inicial" />
 <display:column property="dataFinalTrafego" title="Dt. Final" />
 <display:column property="status" title="Status" />
 <display:column property="row.tipoArquivo.dsTipoArquivo" title="Tipo" />
-<display:column property="qtDuracaoReal" title="Qt. Min. Reais" />
-<display:column property="qtDuracaoTarifada" title="Qt. Min. Tarifados" />
-<display:column property="valorBruto" title="Valor Bruto" />
+<display:column property="qtDuracaoReal" title="Qt. Min. Reais" total="true" />
+<display:column property="qtDuracaoTarifada" title="Qt. Min. Tarifados" total="true" />
+<display:column property="valorBruto" title="Valor Bruto" total="true" />
 <display:column property="selecionar" title="Selecionar" />
+<display:footer>
+    <tr>
+      <th>Total:</th>
+      <th>${sessionScope._DISPLAY_TAG_SPACE_2.totalRegistros}</td>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th>${sessionScope._DISPLAY_TAG_SPACE_2.totalMinReais}</th>
+      <th>${sessionScope._DISPLAY_TAG_SPACE_2.totalMinTarifados}</th>
+      <th>${sessionScope._DISPLAY_TAG_SPACE_2.totalValor}</th>
+      <th></th>
+    <tr>
+</display:footer>
 </display:table>
 </td></tr>
 </table>

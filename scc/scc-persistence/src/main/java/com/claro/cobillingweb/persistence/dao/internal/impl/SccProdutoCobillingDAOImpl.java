@@ -11,6 +11,7 @@ import org.hibernate.FetchMode;
 import org.hibernate.Query;
 import org.hibernate.criterion.Restrictions;
 
+import com.claro.cobillingweb.persistence.dao.BasicDAO;
 import com.claro.cobillingweb.persistence.dao.DAOException;
 import com.claro.cobillingweb.persistence.dao.impl.HibernateBasicDAOImpl;
 import com.claro.cobillingweb.persistence.dao.internal.SccProdutoCobillingDAO;
@@ -28,19 +29,27 @@ public class SccProdutoCobillingDAOImpl extends HibernateBasicDAOImpl<SccProduto
 		} catch (Exception e) { throw new DAOException(e.getMessage(), e); }		
 	}
 	
+	
 	public List<SccProdutoCobilling> pesquisaProdutosOperadoraLD(String cdEOT) throws DAOException {
 		Map<Long, SccProdutoCobilling> filter = new HashMap<Long, SccProdutoCobilling>();
 		try {
-			Query query = getSessionFactory().getCurrentSession().createQuery("SELECT A FROM SccContratoAcordado A WHERE A.operadoraExterna.cdEot = ? AND dtFimVigencia > ? and id.dtInicioVigencia < ?" );
-			query.setString(0, cdEOT);			
+			String sql = "SELECT A.sccContratoCobl.cdContratoCobilling FROM SccContratoAcordado A WHERE dtFimVigencia > ? and id.dtInicioVigencia < ? ";
+			if(!BasicDAO.GET_ALL.toString().equals(cdEOT) && !BasicDAO.GET_ALL_STRING.equals(cdEOT)) {
+				sql += "AND A.operadoraExterna.cdEot = ? ";
+			}
+			Query query = getSessionFactory().getCurrentSession().createQuery(sql);
+			query.setDate(0, new Date());
 			query.setDate(1, new Date());
-			query.setDate(2, new Date());
-			List<SccContratoAcordado> acordos = query.list();
+
+			if(!BasicDAO.GET_ALL.toString().equals(cdEOT) && !BasicDAO.GET_ALL_STRING.equals(cdEOT)) {
+				query.setString(2, cdEOT);			
+			}
+
+			List<Long> acordos = query.list();
 			
-			for (int a=0;a<acordos.size();a++) {
-				SccContratoAcordado acordo = (SccContratoAcordado)acordos.get(a);
-				query = getSessionFactory().getCurrentSession().createQuery("SELECT P FROM SccProdutoContratado P WHERE P.sccContratoCobl.cdContratoCobilling = ?");				
-				query.setLong(0, acordo.getSccContratoCobl().getCdContratoCobilling());
+			if(acordos.size() > 0) {
+				query = getSessionFactory().getCurrentSession().createQuery("SELECT P FROM SccProdutoContratado P WHERE P.sccContratoCobl.cdContratoCobilling in (:ids)");
+				query.setParameterList("ids", acordos);
 				List<SccProdutoContratado> produtosInner = query.list();
 				for (int p=0;p<produtosInner.size();p++) {
 					SccProdutoCobilling produtoCobilling = (SccProdutoCobilling)getSessionFactory().getCurrentSession().get(SccProdutoCobilling.class, produtosInner.get(p).getSccProdutoCobilling().getCdProdutoCobilling());

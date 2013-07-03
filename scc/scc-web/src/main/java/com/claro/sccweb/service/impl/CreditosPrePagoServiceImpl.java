@@ -15,9 +15,9 @@ public class CreditosPrePagoServiceImpl extends AbstractService implements Credi
 	private SccCreditoDAO creditoDAO;
 	
 	 
-	public List<RelCreditosPrePagoView> carregaRelatorioCreditos(String cdEOTLD, String cdEOTClaro, String tipoCredito,String statusCredito, Date dtInicio,Date dtFinal,int tamanhoPagina,int pagina) 
+	public List<RelCreditosPrePagoView> carregaRelatorioCreditos(String cdEOTLD, String cdEOTClaro, String tipoCredito,String statusCredito, Date dtInicio,Date dtFinal) 
 			throws DAOException {
-		return getCreditoDAO().carregaRelatorioCreditos(cdEOTLD, cdEOTClaro, tipoCredito, statusCredito, dtInicio,dtFinal,tamanhoPagina,pagina);
+		return getCreditoDAO().carregaRelatorioCreditos(cdEOTLD, cdEOTClaro, tipoCredito, statusCredito, dtInicio,dtFinal);
 	}
 
 	public SccCreditoDAO getCreditoDAO() {

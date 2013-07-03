@@ -93,12 +93,12 @@
 			<table width="100%" border="0" cellspacing="0" cellpadding="0" id="filtroPesquisaTable">
 				<tr>
 					<td width="15%"><spring:message code="relatorio_batimento_estorno_debito.label.operadorald" /></td>
-					<td id="cdEOTLD"><form:select path="cdEOTLD" id="cdEOTLD" items="${operadorasExternas}" itemLabel="dsOperadora" itemValue="cdEot" /></td>
+					<td id="cdEOTLD"><form:select path="cdEOTLD" id="cdEOTLD" items="${operadorasExternas}" itemLabel="dsOperadoraForCombos" itemValue="cdEot" /></td>
 				</tr>
 
 				<tr>
 					<td width="15%"><spring:message code="relatorio_batimento_estorno_debito.label.operadoraclaro" /></td>
-					<td id="comboOperadoraClaro"><form:select path="cdEOTClaro" id="cdEOTClaro" items="${operadorasClaro}" itemLabel="dsOperadora" itemValue="cdEot" /></td>
+					<td id="comboOperadoraClaro"><form:select path="cdEOTClaro" id="cdEOTClaro" items="${operadorasClaro}" itemLabel="dsOperadoraForCombos" itemValue="cdEot" /></td>
 				</tr>
 
 				<tr>
@@ -139,15 +139,15 @@
 					<td>
 						<display:table style="width:90%" name="sessionScope._DISPLAY_TAG_SPACE_1" pagesize="20" id="repasses" requestURI="/scc/user/fiscal/relatorio/batimento/estorno/debito/tab1.scc" class="ui-state-default">
 							<display:column property="operadoraLD" title="Longa Distancia" />
-							<display:column property="sistema" title="Sistema"	/>
+							<display:column title="Sistema">SCC</display:column>
 							<display:column property="operadoraClaro" title="Operadora" />
 							<display:column property="uf" title="UF" />
 							<display:column property="noArquivo" title="DSName" />
 							<display:column property="dsStatus" title="Status" />
-							<display:column property="periodoReferencia" title="Período Referência" />
-							<display:column property="vlNFST" title="Valor da NFST" />
-							<display:column property="vlImpugnado" title="Valor do TOTAL item impugnado" />
-							<display:column property="dtTransmissao" title="Data Transmissão" />
+							<display:column property="mesAno" title="Período Referência" />
+							<display:column property="valorTotalNf" title="Valor da NFST" />
+							<display:column property="valorTotalImpugnado" title="Valor do TOTAL item impugnado" />
+							<display:column property="dtConnect" title="Data Transmissão" />
 						</display:table>
 					</td>
 				</tr>

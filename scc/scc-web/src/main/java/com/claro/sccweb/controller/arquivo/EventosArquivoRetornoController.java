@@ -32,6 +32,8 @@ public class EventosArquivoRetornoController extends BaseOperationController<Eve
 	
 	private final EventosArquivoRetornoValidator validator = new EventosArquivoRetornoValidator();
 	
+	public static final String FWD_VIEW_EXCEL ="arquivos_retorno_eventos_excel";
+	
 	public ModelAndView pesquisar(HttpServletRequest request,HttpServletResponse response,@Valid @ModelAttribute(FORM_NAME) BaseForm _form,BindingResult bindingResult, Model model) throws Exception {
 		ModelAndView mav = new ModelAndView(getViewName());
 		EventosArquivoRetornoForm form = (EventosArquivoRetornoForm)_form;
@@ -47,7 +49,8 @@ public class EventosArquivoRetornoController extends BaseOperationController<Eve
 	}
 	
 	public ModelAndView excel(HttpServletRequest request,HttpServletResponse response, BaseForm _form,BindingResult bindingResult, Model model) throws Exception {
-		return new ModelAndView("arquivos_retorno_eventos_excel");
+		ModelAndView mav = new ModelAndView(FWD_VIEW_EXCEL);
+		return mav;
 	}
 	
 	protected String getViewName() {
@@ -83,12 +86,6 @@ public class EventosArquivoRetornoController extends BaseOperationController<Eve
 		comboList.addAll(getServiceManager().getPesquisaDominiosService().pequisaOperadorasClaroComM());
 		return comboList;
 	}
-	/*
-	@ModelAttribute("operadorasClaro")
-	public List<SccOperadora> populaOperadoras() throws Exception {
-		return super.populaOperadorasClaro(false);
-	}
-	*/
 	
 	@ModelAttribute("operadorasExternas")
 	public List<SccOperadora> populaOperadorasExternas() throws Exception {
@@ -100,11 +97,5 @@ public class EventosArquivoRetornoController extends BaseOperationController<Eve
 		comboList.addAll(getServiceManager().getPesquisaDominiosService().pesquisaOperadorasExternas());
 		return comboList;
 	}
-	/*
-	@ModelAttribute("operadorasExternas")
-	public List<SccOperadora> populaOperadorasExternas() throws Exception {
-		return super.populaOperadorasExternas(false);
-	}
-	*/
 	
 }

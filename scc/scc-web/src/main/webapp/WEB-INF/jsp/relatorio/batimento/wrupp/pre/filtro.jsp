@@ -67,13 +67,13 @@ th.fundoVermelho {background:#FF5544;}
 			<table width="100%" border="0" cellspacing="0" cellpadding="0" >
 				<tr>
 					<td width="10%"><spring:message code="relatorio.label.operadora.claro"/>:</td>
-    				<td ><form:select path="cdEOTClaro" id="cdEOTClaro" items="${operadorasClaro}" itemLabel="dsOperadora" itemValue="cdEot" />   
+    				<td ><form:select path="cdEOTClaro" id="cdEOTClaro" items="${operadorasClaro}" itemLabel="dsOperadoraForCombos" itemValue="cdEot" />   
     				<form:errors path="cdEOTClaro" />
     				</td> 
 				</tr>
 				<tr>
     				<td width="10%"><spring:message code="relatorio.label.operadora.ld"/>:</td>
-    				<td ><form:select path="cdEOTLD" id="cdEOTLD" items="${operadorasExternas}" itemLabel="dsOperadora" itemValue="cdEot" />   
+    				<td ><form:select path="cdEOTLD" id="cdEOTLD" items="${operadorasExternas}" itemLabel="dsOperadoraForCombos" itemValue="cdEot" />   
     				<form:errors path="cdEOTLD" />
     				</td> 
 				</tr>

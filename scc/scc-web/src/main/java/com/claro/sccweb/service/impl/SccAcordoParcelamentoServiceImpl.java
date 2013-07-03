@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.claro.cobillingweb.persistence.dao.DAOException;
 import com.claro.cobillingweb.persistence.dao.internal.SccAcordoParcelamentoDAO;
 import com.claro.cobillingweb.persistence.filtro.SccFiltro;
+import com.claro.cobillingweb.persistence.filtro.SccFiltroParcelamento;
 import com.claro.cobillingweb.persistence.view.SccAcordoParcelamentoView;
 import com.claro.sccweb.service.AbstractService;
 import com.claro.sccweb.service.SccAcordoParcelamentoService;
@@ -21,7 +22,7 @@ public class SccAcordoParcelamentoServiceImpl extends AbstractService implements
 	private SccAcordoParcelamentoDAO sccAcordoParcelamentoDAO;
 
 	@Override
-	public Collection<SccAcordoParcelamentoView> findByFilter(SccFiltro filtro) throws ServiceException, DAOException {
+	public Collection<SccAcordoParcelamentoView> findByFilter(SccFiltroParcelamento filtro) throws ServiceException, DAOException {
 		
 		Collection<SccAcordoParcelamentoView> collection = null;
 		

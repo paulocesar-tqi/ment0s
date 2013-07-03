@@ -27,6 +27,10 @@ public class RelPrestacaoServicoView {
 	private Double ipCorp;
 	
 	private Double nexus;
+	
+	private Double telecom65;
+	
+	private Double cambridge;
 
 	public String getDsOperadoraClaro() {
 		return dsOperadoraClaro;
@@ -131,13 +135,22 @@ public class RelPrestacaoServicoView {
 	public void setNexus(Double nexus) {
 		this.nexus = nexus;
 	}
-	
-	
-	
-	
-	
 
-	
-	
+	public Double getTelecom65() {
+		return telecom65;
+	}
 
+	public void setTelecom65(Double telecom65) {
+		this.telecom65 = telecom65;
+	}
+
+	public Double getCambridge() {
+		return cambridge;
+	}
+
+	public void setCambridge(Double cambridge) {
+		this.cambridge = cambridge;
+	}
+	
+	
 }

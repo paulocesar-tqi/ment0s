@@ -5,12 +5,14 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -33,6 +35,8 @@ public class RelatorioEncaminhadoMobileController extends
 	@Autowired
 	private SccEncaminhadoMobileService sccEncaminhadoMobileService;
 	
+	public static final String FWD_EXCEL_ENCAMINHADO_MOBILE = "relatorio_encaminhado_mobile_filtro_excel";
+	
 	private final RelatorioEncaminhadoMobileValidator validator = new RelatorioEncaminhadoMobileValidator();
 	
 	public ModelAndView pesquisar(HttpServletRequest request, HttpServletResponse response, BaseForm form, BindingResult bindingResult, Model model) throws Exception {
@@ -52,6 +56,13 @@ public class RelatorioEncaminhadoMobileController extends
 		return mav;
 
 	}
+	
+	public ModelAndView excel(HttpServletRequest request, HttpServletResponse response,
+			@Valid @ModelAttribute(FORM_NAME)  BaseForm _form,BindingResult bindingResult,Model model) throws Exception	{
+		ModelAndView mav = new ModelAndView(FWD_EXCEL_ENCAMINHADO_MOBILE);
+		return mav;
+	}
+
 	
 	private List<SccEncaminhadoMobileView> gerarRelatorioEncaminhadoMobile(RelatorioEncaminhadoMobileForm form) throws DAOException, ServiceException {
 		return sccEncaminhadoMobileService.gerarRelatorioEncaminhadoMobile(form.getDtInicial(), form.getDtFinal(), form.getNoArquivoGerado());

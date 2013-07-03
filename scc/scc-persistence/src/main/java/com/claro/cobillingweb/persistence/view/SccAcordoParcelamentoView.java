@@ -4,6 +4,9 @@
 package com.claro.cobillingweb.persistence.view;
 
 import java.io.Serializable;
+import java.util.Date;
+
+
 
 /**
  * @author 93046251
@@ -23,7 +26,7 @@ public class SccAcordoParcelamentoView implements Serializable {
 	
 	private Double codAcordo;
 	
-	private java.util.Date dataAcordo;
+	private Date dataAcordo;
 	
 	private Double valorAcordado;
 	
@@ -37,7 +40,7 @@ public class SccAcordoParcelamentoView implements Serializable {
 			
 	private String status;
 	
-	private Double qtdParcelas;
+	private Long qtdParcelas;
 	
 	private Long nuParcela;
 	
@@ -67,11 +70,11 @@ public class SccAcordoParcelamentoView implements Serializable {
 		this.codAcordo = codAcordo;
 	}
 
-	public java.util.Date getDataAcordo() {
+	public Date getDataAcordo() {
 		return dataAcordo;
 	}
 
-	public void setDataAcordo(java.util.Date dataAcordo) {
+	public void setDataAcordo(Date dataAcordo) {
 		this.dataAcordo = dataAcordo;
 	}
 
@@ -123,11 +126,11 @@ public class SccAcordoParcelamentoView implements Serializable {
 		this.status = status;
 	}
 
-	public Double getQtdParcelas() {
+	public Long getQtdParcelas() {
 		return qtdParcelas;
 	}
 
-	public void setQtdParcelas(Double qtdParcelas) {
+	public void setQtdParcelas(Long qtdParcelas) {
 		this.qtdParcelas = qtdParcelas;
 	}
 

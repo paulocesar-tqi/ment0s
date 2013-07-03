@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 import com.claro.cobillingweb.persistence.dao.DAOException;
@@ -17,6 +18,7 @@ public class SccMotivoRejeicaoDAOImpl extends HibernateBasicDAOImpl<SccMotivoRej
 	public List<SccMotivoRejeicao> getAll() throws DAOException {
 		try {
 			Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(SccMotivoRejeicao.class);
+			criteria.addOrder(Order.asc("cdMotivoRejeicao"));
 			return criteria.list();
 		} catch (Exception e)
 			{

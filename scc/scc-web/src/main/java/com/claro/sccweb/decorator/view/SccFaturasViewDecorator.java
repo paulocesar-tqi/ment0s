@@ -26,13 +26,15 @@ public class SccFaturasViewDecorator extends RownumDecorator<SccFaturaView> {
 		return value;
 	}
 	
-	public Character getCsp(){
-		
-		if(getRow().getCsp() != null){
-			return  getRow().getCsp();
+	
+	public String getCsp(){
+		String value = "";
+		if(StringUtils.isNotEmpty(getRow().getCsp())){
+			value = getRow().getCsp();
 		}
-		return null;
+		return value;
 	}
+
 	
 	public String getOperadoraLd(){
 		String value = "";

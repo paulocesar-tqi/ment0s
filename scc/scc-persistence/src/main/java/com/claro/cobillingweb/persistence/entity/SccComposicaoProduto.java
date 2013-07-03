@@ -17,7 +17,7 @@ import javax.persistence.TemporalType;
 @Entity
 @SequenceGenerator(name="SCC_COMPOSICAO_PRODUTO_SQ01" , sequenceName="SCC_COMPOSICAO_PRODUTO_SQ01")
 @Table(name="SCC_COMPOSICAO_PRODUTO")
-public class SccComposicaoProduto {
+public class SccComposicaoProduto extends FwjBaseEntidade {
 
 	private static final long serialVersionUID = 1L;
 	private long cdComponenteProduto;

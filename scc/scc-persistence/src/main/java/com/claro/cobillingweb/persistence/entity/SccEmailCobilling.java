@@ -4,12 +4,14 @@
 package com.claro.cobillingweb.persistence.entity;
 
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -34,8 +36,11 @@ public class SccEmailCobilling {
 	private Date dtAtualizacao;
 	
 	private String cdUsuarioManutencao;
+	
+	private Set<SccComposicaoGrupoEmail> sccComposicaoGrupoEmails;
 
-	@Id
+
+	@Id															
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SCC_EMAIL_COBILLING_SQ01")
 	@Column(name="SQ_EMAIL")
 	public Long getCodigo() {
@@ -82,6 +87,17 @@ public class SccEmailCobilling {
 
 	public void setCdUsuarioManutencao(String cdUsuarioManutencao) {
 		this.cdUsuarioManutencao = cdUsuarioManutencao;
+	}
+
+	//bi-directional many-to-one association to SccComposicaoGrupoEmail
+	@OneToMany(mappedBy="sccEmailCobilling")
+	public Set<SccComposicaoGrupoEmail> getSccComposicaoGrupoEmails() {
+		return sccComposicaoGrupoEmails;
+	}
+
+	public void setSccComposicaoGrupoEmails(
+			Set<SccComposicaoGrupoEmail> sccComposicaoGrupoEmails) {
+		this.sccComposicaoGrupoEmails = sccComposicaoGrupoEmails;
 	}
 	
 	

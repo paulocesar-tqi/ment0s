@@ -18,13 +18,15 @@ import com.claro.sccweb.excel.ExcelUtils;
 public class DemonstrativoRepassePreItemDecorator {
 
 	private static NumberFormat sccCurrencyFormat = new DecimalFormat("#.##");
-	
+	private static NumberFormat integerFormat = new DecimalFormat("#.##");
 	static {
     	Locale locale = new Locale("pt","BR");
-
     	sccCurrencyFormat = NumberFormat.getInstance(locale);
     	sccCurrencyFormat.setMinimumFractionDigits(2);
     	sccCurrencyFormat.setMaximumFractionDigits(2);
+    	integerFormat = NumberFormat.getInstance(locale);
+    	integerFormat.setMinimumFractionDigits(0);
+    	integerFormat.setMaximumFractionDigits(0);
     }
 	
 	private String descricao;
@@ -134,8 +136,7 @@ public class DemonstrativoRepassePreItemDecorator {
 			return " ";
 		if (getQuantidadeChamandas().equals(0.0))
 			return " ";
-		Integer qtdChamadas = getQuantidadeChamandas().intValue();
-		return qtdChamadas.toString();
+		return integerFormat.format(getQuantidadeChamandas());
 	}
 	
 	public String getCampoMinutos()

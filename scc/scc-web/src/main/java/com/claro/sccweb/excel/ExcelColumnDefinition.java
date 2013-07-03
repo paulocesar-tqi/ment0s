@@ -29,12 +29,22 @@ public class ExcelColumnDefinition {
 	 */
 	private int width;
 	
+	private String[] properties;
+	
 	public ExcelColumnDefinition(String property,String title,ExcelStyle style,int width)
 	{
 		this.property = property;
 		this.title = title;
 		this.style = style;
 		this.width = width;
+	}
+	
+	public ExcelColumnDefinition(String[] properties, String title, ExcelStyle style, int width){
+		this.properties = properties;
+		this.title = title;
+		this.style = style;
+		this.width = width;
+
 	}
 	
 	public String getProperty() {
@@ -63,5 +73,15 @@ public class ExcelColumnDefinition {
 	public void setWidth(int width) {
 		this.width = width;
 	}
+
+	public String[] getProperties() {
+		return properties;
+	}
+
+	public void setProperties(String[] properties) {
+		this.properties = properties;
+	}
+	
+	
 	
 }

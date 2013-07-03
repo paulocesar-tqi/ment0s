@@ -16,7 +16,7 @@ $(document).ready(function(){
 	$('#atualizar_button').click(atualizar);
 	$('#cancelar_button').click(cancelar);
 	$('#salvar_button').click(salvar);	
-	$('#holding').click(clickHolding);
+	$('#holding').click(clickHolding);	
 	$('#tabs').tabs();
 });
 
@@ -97,6 +97,25 @@ function num(dom){
     dom.value=dom.value.replace(/\D/g,""); 
 }
 
+
+$('body').delegate('.tipoOper', 'change', function() {
+	$('#tipoServico option').each(function(){           
+		if($('#tipoServico').val() == 'C'){               
+			$('#holding').attr('disabled','disabled');
+			$('#cdOperadoraHolding').attr('disabled','disabled');
+			$('#operContabil').attr('disabled','disabled');
+
+		}
+		if($('#tipoServico').val() == 'M'){               
+			$('#holding').removeAttr('disabled');	
+			$('#cdOperadoraHolding').removeAttr('disabled');	
+			$('#operContabil').removeAttr('disabled');	
+			
+		}       
+	});
+
+});
+
 </script>
 
 
@@ -150,7 +169,12 @@ function num(dom){
 
 <tr>
 <td width="15%">Tipo de Serviço:</td>
-<td><form:select path="entity.cdTipoServico" items="${tiposServico}" itemValue="key" itemLabel="label"/></td>
+<td><form:select id="tipoServico" cssClass="tipoOper" path="entity.cdTipoServico" 
+				 items="${tiposServico}" itemValue="key" itemLabel="label">
+				 <form:option value="${item.key}">
+				 </form:option>
+	</form:select>
+</td>
 </tr>
 
 <tr>
@@ -181,13 +205,13 @@ function num(dom){
 
 <tr>
 <td width="15%">Claro Holding:</td>
-<td><form:select path="entity.cdOperadoraHolding" id="cdOperadoraHolding" items="${holdingClaro}" itemValue="cdEot" itemLabel="dsOperadora"/></td>
+<td><form:select path="entity.cdOperadoraHolding" id="cdOperadoraHolding" items="${holdingClaro}" itemValue="cdEot" itemLabel="dsOperadoraForCombos"/></td>
 </tr>
 
 
 <tr>
 <td width="15%">Operadora Claro Contábil:</td>
-<td><form:select path="entity.cdEmpresaContabil" items="${empresasContabeis}" itemValue="key" itemLabel="label"/></td>
+<td><form:select id="operContabil" path="entity.cdEmpresaContabil" items="${empresasContabeis}" itemValue="key" itemLabel="label"/></td>
 </tr>
 
 <tr>
@@ -210,7 +234,7 @@ function num(dom){
 </tr>
 
 <tr>
-<td width="15%">Qtd. Limite Idade Nac:</td>
+<td width="15%">Qtd. Dias Expira Chamada Nac:</td>
 <td><form:input path="entity.qtDiasChamadaNacExpira" maxlength="3" onkeyup="num(this)"/>
 </td>
 </tr>

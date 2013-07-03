@@ -134,6 +134,17 @@ public class GrupoCDR extends BasicSccDecorator {
 		return statusConcretos;
 	}
 
+	public String getStatusConcretosString() {
+		String result = "";
+		try {
+			for(Long item : statusConcretos)
+				result += item + ",";
+			result = result.substring(0, result.length()-1);
+		} catch (Exception e) {}
+		return result;
+	}
+
+	
 	public void setStatusConcretos(Long[] statusConcretos) {
 		this.statusConcretos = statusConcretos;
 	}

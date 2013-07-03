@@ -101,29 +101,29 @@
 			<table width="100%" border="0" cellspacing="0" cellpadding="0" id="filtroPesquisaTable">
 				<tr>
 					<td width="15%"><spring:message code="relatorio.naoconforme.ajustes.label.operadorald" /></td>
-					<td id="cdEOTLD"><form:select path="entity.cdCsp" id="cdEOTLD" items="${operadorasExternas}" itemLabel="dsOperadora" itemValue="cdEot" /></td>
+					<td id="cdEOTLD"><form:select path="cdCsp" id="cdEOTLD" items="${operadorasExternas}" itemLabel="dsOperadoraForCombos" itemValue="cdCsp" /></td>
 				</tr>
 				
 				<tr>
 					<td width="15%"><spring:message code="relatorio.naoconforme.faturamento.label.cdciclo"/>	</td>
 					<td>
-						<form:input path="entity.cdCiclo" id="cdCiclo" maxlength="3" />
-						<form:errors path="entity.cdCiclo"/>
+						<form:input path="cdCiclo" id="cdCiclo" maxlength="3" />
+						
 					</td>
 				</tr>
 
 				<tr>
 					<td width="15%"><spring:message code="relatorio.naoconforme.faturamento.label.mmciclo" /></td>
 					<td> 
-						<form:select id="mmCiclo" path="entity.mmCiclo" itemValue="key" itemLabel="label" items="${meses}"/>
+						<form:select id="mmCiclo" path="mmCiclo" itemValue="key" itemLabel="label" items="${meses}"/>
 					</td>
 				</tr>
 				
 				<tr>
 					<td width="15%"><spring:message code="relatorio.naoconforme.faturamento.label.aaCiclo" /></td>
 					<td>
-						<form:input path="entity.aaCiclo" size="5" maxlength="4"/>
-						<form:errors path="entity.aaCiclo"/> 
+						<form:input path="aaCiclo" size="5" maxlength="4"/>
+						<form:errors path="aaCiclo"/> 
 					</td>
 				</tr>
 				
@@ -142,13 +142,13 @@
 				<tr>
 					<td>
 						<display:table style="width:90%" name="sessionScope._DISPLAY_TAG_SPACE_1" pagesize="20" id="repasses" requestURI="/scc/user/relatorio/naoconf/faturamento/tab1.scc" class="ui-state-default">
-							<display:column property="operadoraLd" title="Operadora Ld"/>
 							<display:column property="operadoraClaro" title="Operadora Claro"/>
+							<display:column property="operadoraLd" title="Operadora Ld"/>
 							<display:column property="uf" title="Uf"/>
 							<display:column property="ciclo" title="Ciclo"/>
+							<display:column property="numeroNota" title="Numero Nf"/>
 							<display:column property="serieNotaFiscal" title="Serie Nf"/>
 							<display:column property="subSerieNotaFiscal" title="Sub Serie Nf"/>
-							<display:column property="numeroNota" title="Numero Nf"/>							
 						</display:table>
 					</td>
 				</tr>

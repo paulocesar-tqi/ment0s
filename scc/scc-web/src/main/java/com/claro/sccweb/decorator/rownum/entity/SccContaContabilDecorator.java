@@ -23,4 +23,12 @@ public class SccContaContabilDecorator extends RownumDecorator<SccContaContabil>
 		return TipoCentroConstants.getLabel(getRow().getTpCentro());		 
 	}
 	
+	public String getCdConta() {
+		return (getRow().getCdConta().toString());		 
+	}
+	
+	public String getDsConta() {
+		return (getRow().getDsConta().toString());		 
+	}
+	
 }

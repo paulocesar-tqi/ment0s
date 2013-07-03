@@ -180,6 +180,175 @@ public class SccArquivoSumarizadoDAOImpl extends HibernateBasicDAOImpl<SccArquiv
 		} catch (Exception e) { throw new DAOException(e.getMessage(), e); }
 	}
 	
+	public List<SccArquivoSumarizado> findSumarizadoPeriodo(String cdEOTClaro,String cdEOTLD, Date dataInicial, Date dataFinal, Long produto, boolean holding) throws DAOException{
+		
+		List<SccArquivoSumarizado> lista = null;
+		try {
+			Session session = getSessionFactory().getCurrentSession();
+			NativeSQLViewMapper<SccArquivoSumarizado> mapper = null;
+			if(produto != null && produto.intValue() != -1 && produto.intValue() != 0) {
+				if(produto.intValue() == 1 ) //arrecadado
+					mapper = new NativeSQLViewMapper<SccArquivoSumarizado>(session, SumarizadoPeriodoSQL.SQL_ARRECADADO, SccArquivoSumarizado.class);
+				else // diferente de arrecadado
+					mapper = new NativeSQLViewMapper<SccArquivoSumarizado>(session, SumarizadoPeriodoSQL.SQL_DIF_ARRECADADO, SccArquivoSumarizado.class);
+				
+				mapper.addArgument("produto", produto);
+			} else{
+				mapper = new NativeSQLViewMapper<SccArquivoSumarizado>(session, SumarizadoPeriodoSQL.SQL2, SccArquivoSumarizado.class);
+			}
+			
+			if ((cdEOTClaro != null)&& (!cdEOTClaro.equals(BasicDAO.GET_ALL_STRING))) {
+				if (holding) {
+					mapper.addArgument("cdEOTClaro", cdEOTClaro,SumarizadoPeriodoSQL.FILTRO_EOT_CLARO_HOLDING);
+				} else {
+					mapper.addArgument("cdEOTClaro", cdEOTClaro,SumarizadoPeriodoSQL.FILTRO_EOT_CLARO);
+				}
+			}
+			if ((cdEOTLD != null) && (!cdEOTLD.equals(BasicDAO.GET_ALL_STRING))) {				
+				mapper.addArgument("cdEOTLD", cdEOTLD,SumarizadoPeriodoSQL.FILTRO_EOT_LD);
+			}	
+			
+		
+			mapper.addArgument("dataInicial", dataInicial, SumarizadoPeriodoSQL.FILTRO_DATA_INICIO);
+			mapper.addArgument("dataFinal", dataFinal, SumarizadoPeriodoSQL.FILTRO_DATA_FIM);			
+			mapper.setProjections(SumarizadoPeriodoSQL.PROJECTIONS2);
+			gerarResultMap(mapper, 1);
+			
+			lista = (List<SccArquivoSumarizado>) mapper.execute();
+			
+		} catch (Exception e) {
+			 throw new DAOException(e.getMessage(), e);
+		}
+		
+		return lista;
+	}
+	
+	public List<SccArquivoSumarizado> findSumarizadoByPeriodoAgrupado(String cdEOTClaro,String cdEOTLD, Date dataInicial, Date dataFinal, Long produto, boolean holding) throws DAOException{
+		
+		List<SccArquivoSumarizado> lista = null;
+		try {
+			Session session = getSessionFactory().getCurrentSession();
+			NativeSQLViewMapper<SccArquivoSumarizado> mapper = null;
+			if(produto != null && produto.intValue() != -1 && produto.intValue() != 0) {
+				if(produto.intValue() == 1 ) //arrecadado
+					mapper = new NativeSQLViewMapper<SccArquivoSumarizado>(session, SumarizadoPeriodoSQL.SQL_ARRECADADO_AGRUPADO, SccArquivoSumarizado.class);
+				else // diferente de arrecadado
+					mapper = new NativeSQLViewMapper<SccArquivoSumarizado>(session, SumarizadoPeriodoSQL.SQL_DIF_ARRECADADO_AGRUPADO, SccArquivoSumarizado.class);
+
+				mapper.addArgument("produto", produto);
+			} else{
+				mapper = new NativeSQLViewMapper<SccArquivoSumarizado>(session, SumarizadoPeriodoSQL.SQL_AGRUPADO, SccArquivoSumarizado.class);
+			}
+			
+			if ((cdEOTClaro != null)&& (!cdEOTClaro.equals(BasicDAO.GET_ALL_STRING))) {
+				if (holding) {
+					mapper.addArgument("cdEOTClaro", cdEOTClaro,SumarizadoPeriodoSQL.FILTRO_EOT_CLARO_HOLDING);
+				} else {
+					mapper.addArgument("cdEOTClaro", cdEOTClaro,SumarizadoPeriodoSQL.FILTRO_EOT_CLARO);
+				}
+			}
+			if ((cdEOTLD != null) && (!cdEOTLD.equals(BasicDAO.GET_ALL_STRING))) {				
+				mapper.addArgument("cdEOTLD", cdEOTLD,SumarizadoPeriodoSQL.FILTRO_EOT_LD);
+			}	
+			mapper.addArgument("dataInicial", dataInicial);
+			mapper.addArgument("dataFinal", dataFinal);			
+			mapper.setProjections(SumarizadoPeriodoSQL.SQL_AGRUPADO2);
+			gerarResultMap(mapper,2);
+			
+			lista = (List<SccArquivoSumarizado>) mapper.execute();
+			
+		} catch (Exception e) {
+			 throw new DAOException(e.getMessage(), e);
+		}
+		
+		return lista;
+	}
+	
+	private void gerarResultMap(NativeSQLViewMapper<SccArquivoSumarizado> mapper, int opc){
+		if(opc == 1){
+			mapper.addResultMap("aaCiclo", Long.class);
+			mapper.addResultMap("mmCiclo", Long.class);
+		}
+		mapper.addResultMap("cdStatusCdr", Long.class);
+		mapper.addResultMap("dsStatusCdr", String.class);
+		mapper.addResultMap("qtCdrs", Long.class);
+		mapper.addResultMap("vlLiquidoChamada", Double.class);
+		mapper.addResultMap("vlBrutoChamada", Double.class);
+		mapper.addResultMap("qtDuracaoReal", Double.class);
+		mapper.addResultMap("qtDuracaoTarifada", Double.class);
+	}
+	
+	@Override
+	public List<SccArquivoSumarizado> geraEvolucaoCDRs(String grpCdr, String cdEOTClaro, String cdEOTLD, Date dataInicial,Date dataFinal, Long cdProdutoCobilling,boolean holding) throws DAOException {
+		
+		List<SccArquivoSumarizado> list = null;
+		try {
+			Session session = getSessionFactory().getCurrentSession();
+			NativeSQLViewMapper<SccArquivoSumarizado> mapper = new NativeSQLViewMapper<SccArquivoSumarizado>(session, SumarizadoPeriodoCicloSQL.SQL_EVOLUCAO_STATUS, SccArquivoSumarizado.class);
+			if(!cdProdutoCobilling.equals(BasicDAO.GET_ALL)){
+				mapper.appendSQL(",SCC_COMPOSICAO_PRODUTO CP , SCC_PRODUTO_COBILLING P  ");
+				mapper.appendSQL("WHERE A.SQ_ARQUIVO_ORIGEM = 0  AND A.CD_TIPO_ARQUIVO in (5,555)  ");
+				mapper.appendSQL("AND  ST.CD_STATUS_CDR = S.CD_STATUS_CDR ");
+				mapper.appendSQL("AND S.CD_COMPONENTE_PRODUTO = CP.CD_COMPONENTE_PRODUTO  ");
+				mapper.appendSQL("AND CP.CD_PRODUTO_COBILLING = P.CD_PRODUTO_COBILLING  ");
+				mapper.appendSQL("AND A.SQ_ARQUIVO = S.SQ_ARQUIVO_ORIGINAL  AND S.QT_CDRS <> 0  ");
+				mapper.appendSQL("AND A.DT_PROC_EXTERNA >= :dataInicial ");
+				mapper.appendSQL("AND A.DT_PROC_EXTERNA <= :dataFinal");
+
+			}else{
+//				mapper.appendSQL(", SCC_OPERADORA O  ");
+				mapper.appendSQL("WHERE A.SQ_ARQUIVO_ORIGEM = 0  ");
+				mapper.appendSQL("AND A.CD_TIPO_ARQUIVO in (5,555)  ");
+				mapper.appendSQL("AND  ST.CD_STATUS_CDR = S.CD_STATUS_CDR ");
+//				mapper.appendSQL("AND S.CD_COMPONENTE_PRODUTO = CP.CD_COMPONENTE_PRODUTO  ");
+//				mapper.appendSQL("AND CP.CD_PRODUTO_COBILLING = P.CD_PRODUTO_COBILLING  ");
+				mapper.appendSQL("AND A.SQ_ARQUIVO = S.SQ_ARQUIVO_ORIGINAL  AND S.QT_CDRS <> 0  ");
+				mapper.appendSQL("AND A.DT_PROC_EXTERNA >= :dataInicial ");
+				mapper.appendSQL("AND A.DT_PROC_EXTERNA <= :dataFinal");
+				
+			}
+			
+			if(StringUtils.isNotEmpty(grpCdr)) {
+				mapper.appendSQL("AND S.CD_STATUS_CDR IN (" + grpCdr + ")");
+			}
+
+			mapper.addResultMap("cdStatusCdr", Long.class);
+			mapper.addResultMap("qtCdrs", Long.class);
+			mapper.addResultMap("vlLiquidoChamada", Double.class);
+			mapper.addResultMap("vlBrutoChamada", Double.class);
+			mapper.addResultMap("mesAno", String.class);
+			mapper.addResultMap("dsStatusCdr", String.class);
+						
+			if ((cdEOTClaro != null)&& (!cdEOTClaro.equals(BasicDAO.GET_ALL_STRING))) {
+				if (holding) {
+					mapper.addArgument("cdEOTClaro", cdEOTClaro, SumarizadoPeriodoCicloSQL.FILTRO_EOT_CLARO_HOLDING);
+				} else {
+					mapper.addArgument("cdEOTClaro", cdEOTClaro, SumarizadoPeriodoCicloSQL.FILTRO_EOT_CLARO);
+				}
+			}	
+			if ((cdEOTLD != null) && (!cdEOTLD.equals(BasicDAO.GET_ALL_STRING))) {				
+				mapper.addArgument("cdEOTLD", cdEOTLD,SumarizadoPeriodoCicloSQL.FILTRO_EOT_LD);
+			}
+			
+			if(!cdProdutoCobilling.equals(1L) && !cdProdutoCobilling.equals(BasicDAO.GET_ALL)){
+				mapper.addArgument("cdProdutoCobilling", cdProdutoCobilling,SumarizadoPeriodoCicloSQL.FILTRO_PRODUTO);
+			}else if(cdProdutoCobilling.equals(1L)){
+				mapper.addArgument("cdProdutoCobilling", cdProdutoCobilling,SumarizadoPeriodoCicloSQL.FILTRO_PRODUTO_1);
+			}
+			
+			mapper.addArgument("dataInicial", dataInicial);
+			mapper.addArgument("dataFinal", dataFinal);			
+			mapper.setProjections(SumarizadoPeriodoCicloSQL.PROJECTIONS_EVOLUCAO_STATUS);
+			
+			list =(List<SccArquivoSumarizado>) mapper.execute();
+			
+		} catch (Exception e) {
+			throw new DAOException(e.getMessage(), e);
+		}
+		return list;
+		
+	}
+	
 	public List<SccArquivoSumarizado> geraSumarizadoPeriodoCiclo(String cdEOTClaro, String cdEOTLD, Date dataInicial,Date dataFinal, boolean holding) throws DAOException {
 		try {
 			Session session = getSessionFactory().getCurrentSession();			
@@ -210,6 +379,49 @@ public class SccArquivoSumarizadoDAOImpl extends HibernateBasicDAOImpl<SccArquiv
 		} catch (Exception e) { throw new DAOException(e.getMessage(), e); }
 	}
 	
+	@Override
+	public DemonstrativoSaldosLotesView gerarTotalSaldoLote(String cdEOTClaro, String cdEOTLD, Long cdProdutoCobilling,Long cdTipoArquivo, Date dataInicial, Date dataFinal) throws DAOException {
+		
+		DemonstrativoSaldosLotesView entity = null;
+		try {
+			Session session = getSessionFactory().getCurrentSession();
+			NativeSQLViewMapper<DemonstrativoSaldosLotesView> mapper = new NativeSQLViewMapper<DemonstrativoSaldosLotesView>(session, DemonstrativoSaldosLotesSQL.SQL_TOTAL, DemonstrativoSaldosLotesView.class);
+			mapper.addResultMap("cdMotivoEvento"	, String.class);
+			mapper.addResultMap("dsMotivoEvento"	, String.class);
+			mapper.addResultMap("cdMotivoRejeicao"	, String.class);
+			mapper.addResultMap("dsMotivoRejeicao"	, String.class);
+			mapper.addResultMap("qtCdrs"			, Long.class);
+			mapper.addResultMap("qtMinutos"			, Double.class);
+			mapper.addResultMap("valor"				, Double.class);
+			if ((cdEOTClaro != null)&& (!cdEOTClaro.equals(BasicDAO.GET_ALL_STRING))) {	
+				mapper.addArgument("cdEOTClaro", cdEOTClaro,DemonstrativoSaldosLotesSQL.FILTRO_CLARO);
+			}
+			if ((cdEOTLD != null)&& (!cdEOTLD.equals(BasicDAO.GET_ALL_STRING))) {	
+				mapper.addArgument("cdEOTLD", cdEOTLD,DemonstrativoSaldosLotesSQL.FILTRO_LD);
+			}
+			
+			if(!cdProdutoCobilling.equals(1L)){
+				mapper.addArgument("cdProdutoCobilling", cdProdutoCobilling,DemonstrativoSaldosLotesSQL.FILTRO_PRODUTO);
+			}else{
+				mapper.addArgument("cdProdutoCobilling", cdProdutoCobilling,DemonstrativoSaldosLotesSQL.FILTRO_PRODUTO_1);
+			}
+			if ((cdTipoArquivo != null)&& (!cdTipoArquivo.equals(BasicDAO.GET_ALL))) {	
+				mapper.addArgument("cdTipoArquivo", cdTipoArquivo,DemonstrativoSaldosLotesSQL.FILTRO_ARQUIVO);
+			}
+			mapper.addArgument("dataInicial", dataInicial);
+			mapper.addArgument("dataFinal", dataFinal);
+			
+			List<DemonstrativoSaldosLotesView> list = mapper.execute();
+			if(list != null && list.size() > 0){
+				entity = list.get(0);
+			}
+		} catch (Exception e) {
+			throw new DAOException(e.getMessage(), e);
+		}
+		
+		return entity;
+	}
+	
 	public List<DemonstrativoSaldosLotesView> geraDemonstrativoSaldosLotes(String cdEOTClaro, String cdEOTLD, Long cdProdutoCobilling,Long cdTipoArquivo, Date dataInicial, Date dataFinal) throws DAOException {
 		try {
 			Session session = getSessionFactory().getCurrentSession();
@@ -227,8 +439,11 @@ public class SccArquivoSumarizadoDAOImpl extends HibernateBasicDAOImpl<SccArquiv
 			if ((cdEOTLD != null)&& (!cdEOTLD.equals(BasicDAO.GET_ALL_STRING))) {	
 				mapper.addArgument("cdEOTLD", cdEOTLD,DemonstrativoSaldosLotesSQL.FILTRO_LD);
 			}
-			if ((cdProdutoCobilling != null)&& (!cdProdutoCobilling.equals(BasicDAO.GET_ALL))) {	
+			
+			if(!cdProdutoCobilling.equals(1L)){
 				mapper.addArgument("cdProdutoCobilling", cdProdutoCobilling,DemonstrativoSaldosLotesSQL.FILTRO_PRODUTO);
+			}else{
+				mapper.addArgument("cdProdutoCobilling", cdProdutoCobilling,DemonstrativoSaldosLotesSQL.FILTRO_PRODUTO_1);
 			}
 			if ((cdTipoArquivo != null)&& (!cdTipoArquivo.equals(BasicDAO.GET_ALL))) {	
 				mapper.addArgument("cdTipoArquivo", cdTipoArquivo,DemonstrativoSaldosLotesSQL.FILTRO_ARQUIVO);
@@ -248,14 +463,14 @@ public class SccArquivoSumarizadoDAOImpl extends HibernateBasicDAOImpl<SccArquiv
 			Session session = getSessionFactory().getCurrentSession();
 			NativeSQLViewMapper<SccArquivoSumarizado> mapper = new NativeSQLViewMapper<SccArquivoSumarizado>(session, ControleRemessaPorCicloSQL.SQL_PERDA_FATURAMENTO, SccArquivoSumarizado.class);
 			mapper.addArgument("dataInicial", DateUtils.lowDateTime(filtro.getDataInicialPeriodo()));
-			mapper.addArgument("dataFinal", DateUtils.highDateTime(filtro.getDataFinalPeriodo()));
+			mapper.addArgument("dataFinal", DateUtils.highDateTime2(filtro.getDataFinalPeriodo()));
 
 			if(StringUtils.isNotEmpty(filtro.getOperadoraClaro()) && !filtro.getOperadoraClaro().equals(BasicDAO.GET_ALL_STRING)){
 				mapper.addArgument("cdEOTClaro", filtro.getOperadoraClaro(), ControleRemessaPorCicloSQL.FILTRO_EOT_CLARO_REL_PF);
 			}
 			
 			if(StringUtils.isNotEmpty(filtro.getOperadoraExterna()) && ! filtro.getOperadoraExterna().equals(BasicDAO.GET_ALL_STRING)){
-				mapper.addArgument("cdEOTLD", filtro.getOperadoraExterna());
+				mapper.addArgument("cdEOTLD", filtro.getOperadoraExterna(), ControleRemessaPorCicloSQL.FILTRO_EOT_LT_REL_PF);
 			}
 	        if (StringUtils.isNotEmpty(filtro.getEvento()) && !filtro.getEvento().equals(BasicDAO.GET_ALL_STRING)) {
 	        	mapper.appendSQL(getBetweenStatus(filtro.getEvento()));

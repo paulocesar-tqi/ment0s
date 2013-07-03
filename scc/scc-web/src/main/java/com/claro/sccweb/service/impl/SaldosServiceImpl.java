@@ -20,9 +20,20 @@ public class SaldosServiceImpl extends AbstractService implements SaldosService 
 
 	private SccArquivoSumarizadoDAO arquivoSumarizadoDAO;
 	
+	private static final int NUMBER_100 = 100;
+	
+	
+	private DemonstrativoSaldosLotesView gerarTotais(String cdEOTClaro,String cdEOTLD, Long cdProdutoCobilling, Long cdTipoArquivo,Date dataInicial, Date dataFinal) throws DAOException{
+		
+		return this.arquivoSumarizadoDAO.gerarTotalSaldoLote(cdEOTClaro, cdEOTLD, cdProdutoCobilling, cdTipoArquivo, dataInicial, dataFinal);
+	}
+	
+	
+	
 	public Map<String, DemonstrativoSaldoEvento> geraDemonstrativoSaldo(String cdEOTClaro,String cdEOTLD, Long cdProdutoCobilling, Long cdTipoArquivo,Date dataInicial, Date dataFinal) 
 			throws DAOException,ServiceException {
 		Map<String, DemonstrativoSaldoEvento> tmpMap = new HashMap<String, DemonstrativoSaldoEvento>();
+		DemonstrativoSaldosLotesView view = gerarTotais(cdEOTClaro, cdEOTLD, cdProdutoCobilling, cdTipoArquivo, dataInicial, dataFinal);
 		Long totalCDRs = 0L;
 		Double totalValor = 0.0;
 		Double totalMinutos = 0.0;
@@ -66,18 +77,21 @@ public class SaldosServiceImpl extends AbstractService implements SaldosService 
 			while (itr.hasNext()) {
 				key = itr.next();
 				double _cdr = tmpMap.get(key).getQtCdrs();
-				tmpMap.get(key).setPercentualCDRs((_cdr/totalCDRs)*100);
-				tmpMap.get(key).setPercentualMinutos((tmpMap.get(key).getQtMinutos()/totalMinutos)*100);
-				tmpMap.get(key).setPercentualValor((tmpMap.get(key).getValor()/totalValor)*100);
+				tmpMap.get(key).setPercentualCDRs((_cdr/view.getQtCdrs())*100);
+				tmpMap.get(key).setPercentualMinutos((tmpMap.get(key).getQtMinutos()/view.getQtMinutos())*100);
+				tmpMap.get(key).setPercentualValor((tmpMap.get(key).getValor()/view.getValor())*100);
 				if ((tmpMap.get(key).getDetalhesRejeicao().size() > 0)) {
 					for (int r=0;r<tmpMap.get(key).getDetalhesRejeicao().size();r++) {
-						tmpMap.get(key).getDetalhesRejeicao().get(r).setPercentualCDRs((tmpMap.get(key).getDetalhesRejeicao().get(r).getQtCdrs()/_cdr)*100);
-						tmpMap.get(key).getDetalhesRejeicao().get(r).setPercentualMinutos((tmpMap.get(key).getDetalhesRejeicao().get(r).getQtMinutos()/totalMinutos)*100);
-						tmpMap.get(key).getDetalhesRejeicao().get(r).setPercentualValor((tmpMap.get(key).getDetalhesRejeicao().get(r).getValor()/totalValor)*100);
+						tmpMap.get(key).getDetalhesRejeicao().get(r).setPercentualCDRs((tmpMap.get(key).getDetalhesRejeicao().get(r).getQtCdrs()/view.getQtCdrs().doubleValue())*100);
+						tmpMap.get(key).getDetalhesRejeicao().get(r).setPercentualMinutos((tmpMap.get(key).getDetalhesRejeicao().get(r).getQtMinutos()/view.getQtMinutos())*100);
+						tmpMap.get(key).getDetalhesRejeicao().get(r).setPercentualValor((tmpMap.get(key).getDetalhesRejeicao().get(r).getValor()/view.getValor())*100);
 					}
 				}
 			}
 			
+			tmpMap.put("Y", montarTotalChamadasRetornadas(totalCDRs, totalValor, totalMinutos, view));
+			tmpMap.put("X", montarTotalGeral(view));
+			tmpMap.put("Z", montarTotalChamadasAceitasNaoRetornadas(totalCDRs, totalValor, totalMinutos, view));
 			return tmpMap;
 		} catch (DAOException daoEx) {
 			throw daoEx;
@@ -85,6 +99,56 @@ public class SaldosServiceImpl extends AbstractService implements SaldosService 
 			throw new ServiceException(e.getMessage(), e);
 		}
 	}
+	
+	private DemonstrativoSaldoEvento montarTotalChamadasRetornadas(Long totalCdr, Double totalValor, Double totalMinutos, DemonstrativoSaldosLotesView view){
+		DemonstrativoSaldoEvento entity = new DemonstrativoSaldoEvento();
+		
+		entity.setCdMotivoEvento("Y");
+		entity.setDsMotivoEvento("TOTAL DE CHAMADAS RETORNADAS");
+		entity.setQtCdrs(totalCdr);
+		entity.setPercentualCDRs((totalCdr/view.getQtCdrs().doubleValue()) * NUMBER_100);
+		entity.setQtMinutos(totalMinutos);
+		entity.setPercentualMinutos((totalMinutos/view.getQtMinutos()) * NUMBER_100);
+		entity.setValor(totalValor);
+		entity.setPercentualValor((totalValor/view.getValor()) * NUMBER_100);
+		return entity;
+	}
+	
+	private DemonstrativoSaldoEvento montarTotalChamadasAceitasNaoRetornadas(Long totalCdr, Double totalValor, Double totalMinutos, DemonstrativoSaldosLotesView view){
+		DemonstrativoSaldoEvento total = montarTotalGeral(view);
+		DemonstrativoSaldoEvento chamadaRetornada = montarTotalChamadasRetornadas(totalCdr, totalValor, totalMinutos, view);
+		DemonstrativoSaldoEvento entity = new DemonstrativoSaldoEvento();
+		
+		
+		entity.setCdMotivoEvento("Z");
+		entity.setDsMotivoEvento("TOTAL DE CHAMADAS ACEITAS NÃO RETORNADAS (SALDO)");
+		entity.setQtCdrs(total.getQtCdrs() - chamadaRetornada.getQtCdrs());
+		entity.setPercentualCDRs(100D - chamadaRetornada.getPercentualCDRs());
+		entity.setQtMinutos(total.getQtMinutos() - chamadaRetornada.getQtMinutos());
+		entity.setPercentualMinutos(100 - chamadaRetornada.getPercentualMinutos());
+		entity.setValor(total.getValor() - chamadaRetornada.getValor());
+		entity.setPercentualValor(100 - chamadaRetornada.getPercentualValor());
+		return entity;
+	}
+ 
+	
+	private DemonstrativoSaldoEvento montarTotalGeral(DemonstrativoSaldosLotesView view){
+		DemonstrativoSaldoEvento entity = new DemonstrativoSaldoEvento();
+		entity.setCdMotivoEvento("X");
+		entity.setDsMotivoEvento("TOTAL DE CHAMADAS ACEITAS");
+		entity.setQtCdrs(view.getQtCdrs());
+		entity.setPercentualCDRs(100D);
+		entity.setQtMinutos(view.getQtMinutos());
+		entity.setPercentualMinutos(100D);
+		entity.setValor(view.getValor());
+		entity.setPercentualValor(100D);
+		return entity;
+		
+	}
+	Long totalCDRs = 0L;
+	Double totalValor = 0.0;
+	Double totalMinutos = 0.0;
+
 
 	public SccArquivoSumarizadoDAO getArquivoSumarizadoDAO() {
 		return arquivoSumarizadoDAO;

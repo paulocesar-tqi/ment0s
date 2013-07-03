@@ -94,7 +94,85 @@ public class SccParamProcessoDAOImpl extends HibernateBasicDAOImpl<SccParamProce
 			throw new DAOException(e.getMessage(), "SccParamProcessoDAO.pesquisaRepassesAgendados");
 			}		
 	}
+	
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<SccParamProcesso> pesquisaRepassesProcessadosPre(String idProcesso, int max) throws DAOException {
+		
+		List<SccParamProcesso> list = null;
+		try {
+			Criteria criteria = getSessionFactory().getCurrentSession()
+					.createCriteria(SccParamProcesso.class);
+			criteria.add(Restrictions.eq("id.cdProcesso", idProcesso));
+			criteria.add(Restrictions.eq("txValorParametro", "LOADED"));
+			if (max > 0)
+				criteria.setMaxResults(max);
+			list = (List<SccParamProcesso>) criteria.list();
+		} catch (Exception e) {
+			throw new DAOException(e.getMessage(),
+					"SccParamProcessoDAO.pesquisaRepassesAgendadosPre");
+		}
+		return list;
+	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<SccParamProcesso> pesquisaRepassesProcessandoPre(String idProcesso,int max) throws DAOException {
+		
+		List<SccParamProcesso> list = null;
+		
+		try {
+			Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(SccParamProcesso.class);
+			criteria.add(Restrictions.eq("id.cdProcesso", idProcesso));
+			criteria.add(Restrictions.eq("txValorParametro", "LOADING"));
+			if (max > 0)
+				criteria.setMaxResults(max);
+			list =  criteria.list();
+		} catch (Exception e){
+			throw new DAOException(e.getMessage(), "SccParamProcessoDAO.pesquisaRepassesAgendados");
+		}
+		
+		return list;
+	}
+	
+	
+	
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<SccParamProcesso> gerarRelatorios(String idProcesso, String valorParametro) throws DAOException{
+		
+		List<SccParamProcesso> list = null;
+		try{
+			Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(SccParamProcesso.class);
+			criteria.add(Restrictions.eq("id.cdProcesso", idProcesso));
+			criteria.add(Restrictions.eq("txValorParametro", valorParametro));
+			list = (List<SccParamProcesso>) criteria.list();
+		} catch (Exception e) {
+			throw new DAOException(e.getMessage(), "SccParamProcessoDAO.gerarRelatorios");
+		}
+		
+		return list;
+
+	}
+
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<SccParamProcesso> pesquisaRepassesAgendadosPre(String idProcesso) throws DAOException {
+		
+		List<SccParamProcesso> list = null;
+		try {
+			Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(SccParamProcesso.class);
+			criteria.add(Restrictions.eq("id.cdProcesso", idProcesso));
+			criteria.add(Restrictions.eq("txValorParametro", "TOLOAD"));			
+			list =  criteria.list();
+		} catch (Exception e)	{
+			throw new DAOException(e.getMessage(), "SccParamProcessoDAO.pesquisaRepassesAgendados");
+		}	
+		return list;
+	}
 	 
 	public List<SccParamProcesso> pesquisaRepassesProcessados(int max,String cdEOT, Long cdPeriodo, Long mes) throws DAOException {
 		return null;
@@ -209,6 +287,7 @@ public class SccParamProcessoDAOImpl extends HibernateBasicDAOImpl<SccParamProce
 		}
 		return list;
 	}
+	
 	
 	
 }

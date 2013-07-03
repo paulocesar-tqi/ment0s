@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +25,7 @@ import com.claro.cobillingweb.persistence.entity.SccOperadora;
 import com.claro.sccweb.controller.BaseCRUDAndMethodController;
 import com.claro.sccweb.controller.validator.CadastroAtividadeContabilValidator;
 import com.claro.sccweb.decorator.rownum.entity.SccAtividadeContabilDecorator;
+import com.claro.sccweb.form.BaseForm;
 import com.claro.sccweb.form.CadastroAtividadeContabilForm;
 
 @Controller
@@ -122,6 +124,11 @@ public class CadastroAtividadeContabilController extends BaseCRUDAndMethodContro
 		}		
 		storeInSession(getClass(), DISPLAY_TAG_SPACE_1, decoratorList, request);
 	}
+	
+	public ModelAndView excel(HttpServletRequest request,HttpServletResponse response,@Valid @ModelAttribute(FORM_NAME) BaseForm _form,BindingResult bindingResult, Model model) throws Exception {
+		return new ModelAndView("atividade_contabil_excel");
+	}
+	
 	
 	@ModelAttribute("operadorasExternas")
 	public List<SccOperadora> populaOperadorasExternas() throws Exception {

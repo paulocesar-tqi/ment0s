@@ -1,8 +1,11 @@
 package com.claro.sccweb.form;
 
-import com.claro.cobillingweb.persistence.entity.SccPagamentoRepasse;
+import java.util.List;
 
-public class CadastroPagamentoForm  {	
+import com.claro.cobillingweb.persistence.entity.SccPagamentoRepasse;
+import com.claro.sccweb.decorator.PagamentoSAPDecorator;
+
+public class CadastroPagamentoForm  extends BaseForm{	
 	
 	private SccPagamentoRepasse entity;
 	
@@ -29,6 +32,8 @@ public class CadastroPagamentoForm  {
 	private String operacao;
 	
 	private int linhaSelacionada;
+	
+	private List<PagamentoSAPDecorator> listPagamentoSAPDecorator;
 
 	public String getOperacao() {
 		return operacao;
@@ -133,6 +138,16 @@ public class CadastroPagamentoForm  {
 	public void setPeriodo(String periodo) {
 		this.periodo = periodo;
 	}
+
+	public List<PagamentoSAPDecorator> getListPagamentoSAPDecorator() {
+		return listPagamentoSAPDecorator;
+	}
+
+	public void setListPagamentoSAPDecorator(
+			List<PagamentoSAPDecorator> listPagamentoSAPDecorator) {
+		this.listPagamentoSAPDecorator = listPagamentoSAPDecorator;
+	}
+
 
 	
 }

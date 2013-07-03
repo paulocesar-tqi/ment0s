@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+ <project name="weblogic" default="deploy">
+  <property name="wl.home" value="C:\bea10\wlserver_10.3" /> 
+  <property name="wl.nome.application" value="scc" /> 
+  <property name="ear.dir" value="C:\Desenvolvimento\Projeto\SCC_GFO\scc-ear\target\scc.ear" /> 
+  <property name="wl.user" value="weblogic" /> 
+  <property name="wl.pass" value="sccweb10" /> 
+  <property name="wl.server" value="AdminServer" /> 
+  <property name="wl.admin.url" value="t3://localhost:7002" /> 
+ <path id="classpath.weblogic">
+  <fileset dir="${wl.home}/server/lib" includes="*weblogic.jar" /> 
+  </path>
+ 	
+ <!-- 
+		================================= target: deploy
+		=================================
+	
+
+  --> 
+ <target name="deploy">
+  <taskdef name="wldeploy" classname="weblogic.ant.taskdefs.management.WLDeploy" classpathref="classpath.weblogic" /> 
+  <wldeploy action="deploy" name="${wl.nome.application}" source="${ear.dir}" user="${wl.user}" password="${wl.pass}" adminurl="${wl.admin.url}" targets="${wl.server}" /> 
+  </target>
+ <!-- 
+		================================= target: undeploy
+		=================================
+	
+
+  --> 
+ <target name="undeploy">
+  <taskdef name="wldeploy" classname="weblogic.ant.taskdefs.management.WLDeploy" classpathref="classpath.weblogic" /> 
+  <wldeploy action="undeploy" name="${wl.nome.application}" user="${wl.user}" password="${wl.pass}" adminurl="${wl.admin.url}" targets="${wl.server}" /> 
+  </target>
+ <!-- 
+		================================= target: redeploy
+		=================================
+	
+
+  --> 
+ <target name="redeploy">
+  <taskdef name="wldeploy" classname="weblogic.ant.taskdefs.management.WLDeploy" classpathref="classpath.weblogic" /> 
+  <wldeploy action="redeploy" name="${wl.nome.application}" user="${wl.user}" password="${wl.pass}" adminurl="${wl.admin.url}" targets="${wl.server}" /> 
+  </target>
+  </project>

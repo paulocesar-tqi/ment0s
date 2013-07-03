@@ -10,6 +10,8 @@ import com.claro.cobillingweb.persistence.view.ConsolidadoProdutoPreView;
 import com.claro.cobillingweb.persistence.view.RelApuracaoFechamentoPrePagoView;
 import com.claro.cobillingweb.persistence.view.RelSinteticoFechamentoPrePagoView;
 import com.claro.cobillingweb.persistence.view.RelSinteticoServicoPrePagoView;
+import com.claro.cobillingweb.persistence.view.RelatorioApuracaoFechamentoPrePagoView;
+import com.claro.cobillingweb.persistence.view.RelatorioApuracaoPreSumarizado;
 import com.claro.sccweb.decorator.DemonstrativoRepassePreDecorator;
 import com.claro.sccweb.decorator.DemonstrativoRepassePreItemDecorator;
 import com.claro.sccweb.decorator.SccPreFechamentoAssinaturaDecorator;
@@ -30,6 +32,8 @@ public interface RepassePreService {
 	 * Status de requisições de repasse pré-pago que ainda aguardam para ser processadas.
 	 */
 	public static final String VALOR_TO_LOAD_PRE = "TOLOAD";
+	
+	public static final String VALOR_ALFA_PRE = "ALFA";
 	
 	/**
 	 * Status da requisição de repasse pré-pago que está sendo executadas. 
@@ -126,5 +130,19 @@ public interface RepassePreService {
 	public List<DemonstrativoRepassePreItemDecorator> geraLinhasDemonstrativo(SccPreFechamento preFechamento) throws ServiceException;
 	
 	public List<ConsolidadoProdutoPreView> gerarRelatorioConsolidadoProdutoPre(String cdEOTLD, String cdEOTClaro, String cdProduto, Date dataInicial, Date dataFinal) throws DAOException;
+
+	List<RelatorioApuracaoFechamentoPrePagoView> gerarRelatorioApuracao(
+			String cdProduto, String cdEOTLD, String cdEOTClaro,
+			String cdStatusFechamento, Date dataInicial, Date dataFinal)
+			throws DAOException;
+
+
+	RelatorioApuracaoPreSumarizado gerarTotal(String cdProduto, String cdEOTLD,
+			String cdEOTClaro, String cdStatusFechamento, Date dataInicial,
+			Date dataFinal) throws DAOException;
+
+	DemonstrativoRepassePreDecorator carregarDemonstrativoConsolidado(
+			DemonstrativoRepassePrePagoTO to) throws DAOException,
+			ServiceException;
 	
 }

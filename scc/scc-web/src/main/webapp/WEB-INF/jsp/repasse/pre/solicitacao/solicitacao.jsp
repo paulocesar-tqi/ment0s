@@ -87,11 +87,11 @@ function selecionaOperadora()
     </td>
 
     <td><spring:message code="repasse_pre_solicitacao.ld"/>:</td>
-    <td ><form:select path="cdEOTLD" id="cdEOTLD" items="${operadorasExternas}" itemLabel="dsOperadora" itemValue="cdEot" />
+    <td ><form:select path="cdEOTLD" id="cdEOTLD" items="${operadorasExternas}" itemLabel="dsOperadoraForCombos" itemValue="cdEot" />
     </td>
 
 	<td><spring:message code="repasse_pre_solicitacao.operadoraClaro"/>:</td>
-    <td ><form:select path="cdEODClaro" id="cdEODClaro" items="${operadorasClaro}" itemLabel="dsOperadora" itemValue="cdEot" /></td>
+    <td ><form:select path="cdEODClaro" id="cdEODClaro" items="${operadorasClaro}" itemLabel="dsOperadoraForCombos" itemValue="cdEot" /></td>
 	
 	<td><spring:message code="repasse_pre_solicitacao.produto"/>:</td>
     <td ><form:select path="cdProdutoPrepago" id="cdProdutoPrepago" items="${produtos}" itemLabel="noProdutoPrepago" itemValue="cdProdutoPrepago" />

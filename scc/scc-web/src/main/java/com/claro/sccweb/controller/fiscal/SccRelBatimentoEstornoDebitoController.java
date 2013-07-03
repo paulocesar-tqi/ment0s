@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -67,6 +68,11 @@ public class SccRelBatimentoEstornoDebitoController extends
 				return sccRelBatimentoEstornoDebitoService.gerarRelBatimentoEstornoDebito(form.getCdEOTLD(), form.getCdEOTClaro(), form.getCdStatusArquivo(), form.getMmCiclo(), form.getAaCiclo()); 
 			}
 
+			
+			public ModelAndView excel(HttpServletRequest request,HttpServletResponse response,@Valid @ModelAttribute(FORM_NAME) BaseForm _form,BindingResult bindingResult, Model model) throws Exception {
+				return new ModelAndView("relatorio_batimento_estorno_debito_excel");
+			}
+			
 
 			@Override
 			protected String getViewName() {
@@ -85,6 +91,11 @@ public class SccRelBatimentoEstornoDebitoController extends
 				
 				return this.validator;
 			}
+			
+			
+			
+			
+			
 
 			@ModelAttribute("operadorasClaro")
 			public List<SccOperadora> populaOperadorasClaro() throws Exception {

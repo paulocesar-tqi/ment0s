@@ -134,7 +134,7 @@ public class RelatorioServicoPreController extends BaseOperationController<Relat
 	
 	public ModelAndView excel(HttpServletRequest request, HttpServletResponse response,
 			@Valid @ModelAttribute(FORM_NAME)  BaseForm _form,BindingResult bindingResult,Model model) throws Exception	{
-		ModelAndView mav = new ModelAndView("relatorio_prestacao_servico_pre_filtro");
+		ModelAndView mav = new ModelAndView("relatorio_prestacao_servico_pre_filtro_excel");
 		return mav;
 	}
 	

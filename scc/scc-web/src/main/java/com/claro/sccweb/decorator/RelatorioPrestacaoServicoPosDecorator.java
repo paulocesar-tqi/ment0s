@@ -27,6 +27,8 @@ public class RelatorioPrestacaoServicoPosDecorator extends RownumDecorator<RelPr
 	private String telemar;
 	private String ipCorp;
 	private String nexus;
+	private String telecom65;
+	private String cambridge;
 	
 	
 	
@@ -46,6 +48,8 @@ public class RelatorioPrestacaoServicoPosDecorator extends RownumDecorator<RelPr
 			telemar = formataDouble(entity.getTelemar());
 			ipCorp = formataDouble(entity.getIpCorp());
 			nexus = formataDouble(entity.getNexus());
+			telecom65 = formataDouble(entity.getTelecom65());
+			cambridge = formataDouble(entity.getCambridge());
 		}
 	}
 	
@@ -166,6 +170,24 @@ public class RelatorioPrestacaoServicoPosDecorator extends RownumDecorator<RelPr
 		this.nexus = nexus;
 	}
 
+	public String getTelecom65() {
+		return telecom65;
+	}
+
+
+	public void setTelecom65(String telecom65) {
+		this.telecom65 = telecom65;
+	}
+	
+	public String getCambridge() {
+		return cambridge;
+	}
+
+
+	public void setCambridge(String cambridge) {
+		this.cambridge = cambridge;
+	}
+	
 
 	@Override
 	protected boolean isDeleteEnabled() {

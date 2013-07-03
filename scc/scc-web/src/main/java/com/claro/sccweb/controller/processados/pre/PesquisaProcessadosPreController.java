@@ -1,7 +1,9 @@
 package com.claro.sccweb.controller.processados.pre;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,6 +25,7 @@ import com.claro.cobillingweb.persistence.entity.external.ViewArquivoPrePago;
 import com.claro.sccweb.controller.BaseOperationController;
 import com.claro.sccweb.controller.util.SearchResultList;
 import com.claro.sccweb.controller.validator.PesquisarProcessadosPreValidator;
+import com.claro.sccweb.decorator.BasicSccDecorator;
 import com.claro.sccweb.decorator.rownum.entity.SccArquivoCobillingDecorator;
 import com.claro.sccweb.decorator.rownum.view.ViewArquivoPrePagoDecorator;
 import com.claro.sccweb.form.BaseForm;
@@ -40,7 +43,8 @@ import com.claro.sccweb.form.PesquisaProcessadosPreForm;
 public class PesquisaProcessadosPreController extends BaseOperationController<PesquisaProcessadosPreForm> {
 
 	private PesquisarProcessadosPreValidator validator = new PesquisarProcessadosPreValidator();
-
+	private static final String FWD_VIEW_RELATORIO = "pesquisa_processados_pre_detalhes";
+	private static final String FWD_VIEW_EXCEL = "pesquisa_processados_pre_detalhes_excel";
 	
 	public ModelAndView pesquisar(HttpServletRequest request, HttpServletResponse response,@Valid @ModelAttribute(FORM_NAME)  BaseForm _form,BindingResult bindingResult,Model model) throws Exception
 	{
@@ -48,16 +52,31 @@ public class PesquisaProcessadosPreController extends BaseOperationController<Pe
 		ModelAndView mav = new ModelAndView(getViewName());
 		List<SccArquivoCobilling> arquivos = getServiceManager().getArquivosService().pesquisaArquivosPrePago(form.getPesquisa());	
 		List<SccArquivoCobillingDecorator> decoratorList = new ArrayList<SccArquivoCobillingDecorator>(arquivos.size());
+		Map<String,Object> totais = new HashMap<String, Object>();
+		Integer totalRegistros = 0;
+		Integer totalMinReais = 0;
+		Integer totalMinTarifados = 0;
+		Double totalValor = 0.0;
 		for (int i=0;i<arquivos.size();i++)
 			{
 			SccArquivoCobillingDecorator decorator = new SccArquivoCobillingDecorator(arquivos.get(i), i);
 			decoratorList.add(decorator);
+			totalRegistros += arquivos.get(i).getQtRegistros() != null ? arquivos.get(i).getQtRegistros() : 0;
+			totalMinReais += arquivos.get(i).getQtDuracaoReal() != null ? arquivos.get(i).getQtDuracaoReal() : 0;
+			totalMinTarifados += arquivos.get(i).getQtDuracaoTarifada() != null ? arquivos.get(i).getQtDuracaoTarifada() : 0;
+			totalValor += arquivos.get(i).getVlBrutoArquivo() != null ? arquivos.get(i).getVlBrutoArquivo() : 0;
 			}
+		totais.put("totalRegistros",  formataInteiro(totalRegistros));
+		totais.put("totalMinReais", formataInteiro(totalMinReais));
+		totais.put("totalMinTarifados", formataInteiro(totalMinTarifados));
+		totais.put("totalValor", formataValorMonetario(totalValor));
+		
 		cacheMyForm(this.getClass(), form);		
 		SearchResultList searchResultList = new SearchResultList();
 		searchResultList.setResult(arquivos);
 		searchResultList.setResultClassType(SccArquivoCobilling.class);
 		storeInSession(getClass(), DISPLAY_TAG_SPACE_1, decoratorList, request);			
+		storeInSession(getClass(), DISPLAY_TAG_SPACE_2, totais, request);			
 		mav.setViewName(getViewName());
 		return mav;
 	}
@@ -72,8 +91,10 @@ public class PesquisaProcessadosPreController extends BaseOperationController<Pe
 	
 	public ModelAndView selecionar(HttpServletRequest request, HttpServletResponse response,@Valid @ModelAttribute(FORM_NAME)  BaseForm _form,BindingResult bindingResult,Model model) throws Exception
 	{
-		ModelAndView mav = new ModelAndView("pesquisa_processados_pre_detalhes");
+		//ModelAndView mav = new ModelAndView("pesquisa_processados_pre_detalhes");
+		ModelAndView mav = null;
 		PesquisaProcessadosPreForm form = (PesquisaProcessadosPreForm)_form;
+		@SuppressWarnings("unchecked")
 		List<SccArquivoCobillingDecorator> tabela = (List<SccArquivoCobillingDecorator>)request.getSession().getAttribute(DISPLAY_TAG_SPACE_1);		
 		SccArquivoCobillingDecorator decorator = tabela.get(form.getItemSelecionado());
 		SccArquivoCobilling arquivoSelecionado = decorator.getRow();
@@ -84,11 +105,19 @@ public class PesquisaProcessadosPreController extends BaseOperationController<Pe
 			ViewArquivoPrePagoDecorator decoratorItem = new ViewArquivoPrePagoDecorator(detalhes.get(i), i);
 			decoratorList.add(decoratorItem);
 			}
-		storeInSession(getClass(), DISPLAY_TAG_SPACE_2, decoratorList, request);				
-		mav.setViewName("pesquisa_processados_pre_detalhes");
+		form.setListArquivoPrePagoDecorators(decoratorList);
+		//storeInSession(getClass(), DISPLAY_TAG_SPACE_2, decoratorList, request);	
+		mav = new ModelAndView(FWD_VIEW_RELATORIO, "filtro", form);
+		//mav.setViewName("pesquisa_processados_pre_detalhes");
 		return mav;
 	}
 	
+	
+	public ModelAndView excel(HttpServletRequest request,HttpServletResponse response, BaseForm _form,BindingResult bindingResult, Model model) throws Exception {
+		ModelAndView mav = new ModelAndView(FWD_VIEW_EXCEL);
+		return mav;
+	}
+
 	 
 	protected String getViewName() {		
 		return "pesquisa_processados_pre_filtro";

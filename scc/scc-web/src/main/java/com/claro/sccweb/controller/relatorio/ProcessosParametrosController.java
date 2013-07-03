@@ -11,6 +11,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,6 +40,8 @@ import com.claro.sccweb.service.ServiceException;
 @Controller
 @RequestMapping(value="/user/relatorio/processo/parametro")
 public class ProcessosParametrosController extends BaseOperationController<ProcessoParametroForm> {
+	
+	private static final String FWD_VIEW_PROCESSO_PARAMETRO = "relatorio_processo_parametro_excel";
 	
 	private final ProcessoParametroValidator validator = new ProcessoParametroValidator();
 	
@@ -79,6 +82,12 @@ public class ProcessosParametrosController extends BaseOperationController<Proce
 		ModelAndView mav = new ModelAndView(getViewName());
 		return mav;
 	}
+	
+	public ModelAndView excel(HttpServletRequest request,HttpServletResponse response,@Valid @ModelAttribute(FORM_NAME) BaseForm _form,BindingResult bindingResult, Model model) throws Exception{
+		
+		return new ModelAndView(FWD_VIEW_PROCESSO_PARAMETRO);
+	}
+
 	
 	private List<SccParamProcessoDecorator> montarRelatorio(List<SccParamProcessoDto> rows){
 		

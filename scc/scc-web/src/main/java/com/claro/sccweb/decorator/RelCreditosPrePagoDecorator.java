@@ -6,7 +6,8 @@ public class RelCreditosPrePagoDecorator extends BasicSccDecorator {
 	
 	
 	public String getNomeArquivo() {
-		return getLink(getRow().getNoArquivo());
+		return getRow().getNoArquivo();
+		//return getLink(getRow().getNoArquivo());
 	}
 
 

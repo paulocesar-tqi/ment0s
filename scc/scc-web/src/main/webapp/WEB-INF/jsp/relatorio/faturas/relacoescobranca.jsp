@@ -10,17 +10,14 @@
 <%@ taglib uri="/tags/displaytag" prefix="display"%>
 
 <script>
-	$(document).ready(function(){	
+	$(document).ready(function(){
+		$("#dataInicial").mask("99/99/9999");	
+		$("#dataFinal").mask("99/99/9999");
+		$( "#dataInicial" ).datepicker();
+		$( "#dataFinal" ).datepicker();		
+			
 		$('#pesquisar_button').click(pesquisar)
 		$('#excel_button').click(excel)
-		$('#tabs').tabs();
-	});
-
-	$(document).ready(function() {
-
-		$('#pesquisar_button').click(pesquisar);
-		$('#excel_button').click(excel);
-		$('#excel_button').attr('disabled', 'disabled');
 		$('#tabs').tabs();
 	});
 
@@ -58,7 +55,7 @@
 	<ul>
 		<li><a href="#tabs-1"><spring:message code="crud.titulo.pesquisar" /></a></li>
 	</ul>
-	<form:form modelAttribute="filtro" method="post" action="/scc/user/relatorio/faturas/acoes/cobranca/execute.scc" id="form1">
+	<form:form modelAttribute="filtro" method="post" action="/scc/user/relatorio/faturas/acoes/cobranca/listar.scc" id="form1">
 		<form:hidden path="operacao" id="operacao" />
 		<form:hidden path="itemSelecionado" id="itemSelecionado" />
 
@@ -68,20 +65,24 @@
 						
 				<tr>
 					<td width="15%"><spring:message code="relatorio.faturas.acoes.cobranca.label.operadora" /></td>
-					<td id="cdEOTLD"><form:select path="cdCsp" id="cdEOTLD" items="${operadorasExternas}" itemLabel="dsOperadora" itemValue="cdCsp" /></td>
+					<td><form:select path="filtro.cdCsp" id="cdEOTLD" items="${operadorasExternas}" itemLabel="dsOperadoraForCombos" itemValue="cdCsp" /></td>
 				</tr>
 				<tr>
-		    		<td><spring:message code="relatorio.faturas.acoes.cobranca.label.mes"/>:</td>
-				    <td ><form:select path="mes" id="mesRelatorio" items="${meses}" itemLabel="label" itemValue="key" /></td>
-		    		<td><spring:message code="relatorio.faturas.acoes.cobranca.label.ano"/>:</td>
-				    <td >
-				    	<form:input path="ano" id="anoRelatorio" size="4" maxlength="4"/>
-						<form:errors path="ano" />
-					</td>				    
+    				<td width="10%"><spring:message code="relatorio.faturas.controle.label.datainicial"/></td>
+    				<td><form:input id="dataInicial" path="filtro.dataInicialPeriodo" />
+    				<form:errors path="filtro.dataInicialPeriodo" /></td>
 				</tr>
+
 				<tr>
+    				<td width="10%"><spring:message code="relatorio.faturas.controle.label.datafinal"/></td>
+    				<td>
+    					<form:input id="dataFinal" path="filtro.dataFinalPeriodo" />
+    					<form:errors path="filtro.dataFinalPeriodo" />
+    				</td>
+				</tr>
+				
+
 			</table>
-			<!-- 
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
 					<td colspan="3" class="TdFormularioUp">&nbsp;</td>
@@ -91,40 +92,35 @@
 					</td>
 				</tr>
 			</table>
-			<br />
-			
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
 					<td>
-						<display:table style="width:90%" name="sessionScope._DISPLAY_TAG_SPACE_1" pagesize="20" id="repasses" requestURI="/scc/user/relatorio/faturas/acoes/cobranca/tab1.scc" class="ui-state-default">
+						<display:table style="width:90%" name="requestScope.filtro.listAcoesCobranca" pagesize="20" id="repasses" 
+							requestURI="/scc/user/relatorio/faturas/acoes/cobranca/listar.scc" class="ui-state-default">
 							<display:column property="ban" title="BAN" style="text-align:right" />						
 							<display:column property="terminal" title="Terminal" style="text-align:right"/>
 							<display:column property="faturaLD" title="Fatura LD"/>
-							<display:column property="valorFatura" title="Valor R$" style="text-align:right" format="#,##0.00/>							
-							<display:column property="dataEmissao" title="Data Emissão" style="text-align:right" format="dd/MM/yyyy"/>
-							<display:column property="dataVencimento" title="Data Vencto " style="text-align:right" format="dd/MM/yyyy"/>
-							<display:column property="dataCarta" title="Data Carta" style="text-align:right" format="dd/MM/yyyy"/>							
+							<display:column property="valorFatura" title="Valor R$" format="{0, number, #,##0.00}" style="width:15%; text-align:right"/>							
+							<display:column property="dataEmissao" title="Data Emissão" format="{0,date,dd-MM-yyyy}"   style="width:10%; text-align:right"/>
+							<display:column property="dataVencimento" title="Data Vencto " format="{0,date,dd-MM-yyyy}"   style="width:10%; text-align:right"/>
+							<display:column property="dataCarta" title="Data Carta" format="{0,date,dd-MM-yyyy}"   style="width:10%; text-align:right"/>							
 							<display:column property="arquivoCarta" title="Arquivo Carta" style="text-align:right" />							
-							<display:column property="dataConnectCarta" title="Data Connect Arq Carta" style="text-align:right" format="dd/MM/yyyy"/>							
-							<display:column property="dataBloqueio" title="Data Bloqueio" style="text-align:right" format="dd/MM/yyyy"/>
+							<display:column property="dataConnectCarta" title="Data Connect Arq Carta" format="{0,date,dd-MM-yyyy}"   style="width:10%; text-align:right"/>							
+							<display:column property="dataBloqueio" title="Data Bloqueio" format="{0,date,dd-MM-yyyy}"   style="width:10%; text-align:right"/>
 							<display:column property="arquivoBloqueio" title="Arquivo Bloqueio " style="text-align:right"/>
-							<display:column property="dataConnectBloqueio" title="Data Connect Arq Bloqueio" style="text-align:right" format="dd/MM/yyyy"/>							
-							<display:column property="dataPagamento" title="Data Pagamento" style="text-align:right" format="dd/MM/yyyy"/>							
+							<display:column property="dataConnectBloqueio" title="Data Connect Arq Bloqueio" format="{0,date,dd-MM-yyyy}"   style="width:10%; text-align:right"/>							
+							<display:column property="dataPagamento" title="Data Pagamento" format="{0,date,dd-MM-yyyy}"   style="width:10%; text-align:right"/>							
 							<display:column property="arquivoPagamento" title="Arquivo Pagamento" style="text-align:right" />
-							<display:column property="dataConnectPagamento" title="Data Connect Arq Pgto" style="text-align:right" format="dd/MM/yyyy"/>
-							
+							<display:column property="dataConnectPagamento" title="Data Connect Arq Pgto" format="{0,date,dd-MM-yyyy}"   style="width:10%; text-align:right"/>
 							
 						</display:table>
 					</td>
 				</tr>
 			</table>
-			 -->
+			
 		</div>
 	</form:form>
 </div>
 <script>
-	$(document).ready(function(){
-		$('#pesquisar_button').removeAttr('disabled');
-		$('#excel_button').removeAttr('disabled');
-	});
+
 </script>

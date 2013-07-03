@@ -2,12 +2,14 @@ package com.claro.sccweb.service.impl;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -60,8 +62,8 @@ public class ControleRemessaServiceImpl extends AbstractService implements Contr
 		return getArquivoSumarizadoDAO().pesquisarPorEvento(cdEOTClaro, cdEOTLD, dataInicial, dataFinal, cdProdutoCobilling, statusCdr, holding, tipoPeriodo);
 	}
 
-	@Override
-	public Collection<PerdaFaturamentoVO> gerarRelatorioPerdaFaturamento(SccFiltroRelPerdaFaturamento filtro) throws DAOException {
+	//@Override
+	public Collection<PerdaFaturamentoVO> gerarRelatorioPerdaFaturamento3(SccFiltroRelPerdaFaturamento filtro) throws DAOException {
 		
 //		Map<PerdaFaturamentoVO, PerdaFaturamentoVO> mapa = new LinkedHashMap<PerdaFaturamentoVO, PerdaFaturamentoVO>();
 //		Collection<PerdaFaturamentoVO> list = new ArrayList<PerdaFaturamentoVO>();
@@ -86,8 +88,120 @@ public class ControleRemessaServiceImpl extends AbstractService implements Contr
 		
 		
 	}
+	@Override
+	public Collection<PerdaFaturamentoVO> gerarRelatorioPerdaFaturamento(SccFiltroRelPerdaFaturamento filtro) throws DAOException {
+		
+		Collection<SccArquivoSumarizado> listFileSumarizado = gerarRelatorioPerdaFat(filtro);
+		HashMap<PerdaFaturamentoVO, PerdaFaturamentoVO> map = new HashMap<PerdaFaturamentoVO, PerdaFaturamentoVO>();
+		for (SccArquivoSumarizado sccArquivoSumarizado : listFileSumarizado) {
+			int statusCdr = getUnificaStatusFinanceiro(sccArquivoSumarizado.getCdStatusCdr().intValue());
+			String subStatusCdr = getUnificaSubStatusFinancial(sccArquivoSumarizado.getCdSubStatusCdr());
+			subStatusCdr = (subStatusCdr==null?"":subStatusCdr);
+			
+			if(statusCdr!=CobillingConstants.CDRSTATUS_INDEFINIDO){
+				long qtCdrs = sccArquivoSumarizado.getQtCdrs().longValue();
+				if (qtCdrs > 0){
+					PerdaFaturamentoVO itemQualquer = new PerdaFaturamentoVO();
+					itemQualquer.setFileType(""+statusCdr);
+					itemQualquer.setOperadoraLd(sccArquivoSumarizado.getCdEotLd());
+					itemQualquer.setOperadoraClaro(sccArquivoSumarizado.getCdEotClaro());
+					itemQualquer.setDtProcExterna(sccArquivoSumarizado.getDtProcExterna());
+					itemQualquer.setCdStatusCdr(statusCdr);
+					itemQualquer.setCdSubStatusCdr(subStatusCdr);
+					PerdaFaturamentoVO item = (PerdaFaturamentoVO) map.get(itemQualquer);
+                    if (item==null) {
+                        item = itemQualquer;
+                        map.put(itemQualquer, itemQualquer);
+                    } 
+                    item.addValorlLiquido(sccArquivoSumarizado.getVlLiquidoChamada());
+                    item.addValorBruto(sccArquivoSumarizado.getVlBrutoChamada());
+                    item.addQtCdrs(sccArquivoSumarizado.getQtCdrs());
+                    // Faturavel Inicial = valor total das chamadas aceitas menos rejeições C1 e C2
+                    gerarFaturavelInicial(map, statusCdr, sccArquivoSumarizado);
+                    gerarFaturavelFinal(map, statusCdr, sccArquivoSumarizado);
+					
+				}
+			}
+			
+		}
+		List<PerdaFaturamentoVO> list = new ArrayList<PerdaFaturamentoVO>(map.values());
+		Collections.sort(list);
+		return list;
+		
+	}
+	
+	private void gerarFaturavelInicial(HashMap<PerdaFaturamentoVO, PerdaFaturamentoVO> map, int statusCdr, SccArquivoSumarizado entity){
+		
+        // Faturavel Inicial = valor total das chamadas aceitas menos rejeições C1 e C2
+        switch(statusCdr) {
+        	case CobillingConstants.CDRSTATUS_REJEITADO:
+        	case CobillingConstants.CDRSTATUS_REJEITADO_C1:
+        	case CobillingConstants.CDRSTATUS_REJEITADO_C2:
+        	case CobillingConstants.CDRSTATUS_REJEITADO_C2_ESB:
+        	case CobillingConstants.CDRSTATUS_REJEITADO_C2_MOB:
+        		break;
+        	default:
+        		PerdaFaturamentoVO inicialFAQualquer = new PerdaFaturamentoVO();
+            	inicialFAQualquer.setFileType(""+CobillingConstants.CDRSTATUS_FATURADO_INICIAL);
+            	inicialFAQualquer.setOperadoraLd(entity.getCdEotLd());
+            	inicialFAQualquer.setOperadoraClaro(entity.getCdEotClaro());
+            	inicialFAQualquer.setDtProcExterna(entity.getDtProcExterna());
+            
+            	inicialFAQualquer.setCdStatusCdr(CobillingConstants.CDRSTATUS_FATURADO_INICIAL);
+            	inicialFAQualquer.setCdSubStatusCdr("");
+            	PerdaFaturamentoVO inicialFA = map.get(inicialFAQualquer);
+                if (inicialFA==null) {
+                	inicialFA = inicialFAQualquer;
+                    map.put(inicialFAQualquer, inicialFAQualquer);
+                }
+                inicialFA.addValorlLiquido(entity.getVlLiquidoChamada());
+                inicialFA.addValorBruto(entity.getVlBrutoChamada());
+                inicialFA.addQtCdrs(entity.getQtCdrs());
+            break;
+        }
+		
+	}
+	
+	private void gerarFaturavelFinal(HashMap<PerdaFaturamentoVO, PerdaFaturamentoVO> map, int statusCdr, SccArquivoSumarizado entity){
+		
+        switch(statusCdr) {
+        	case CobillingConstants.CDRSTATUS_REJEITADO:
+        	case CobillingConstants.CDRSTATUS_REJEITADO_C1:
+        	case CobillingConstants.CDRSTATUS_REJEITADO_C2:
+        	case CobillingConstants.CDRSTATUS_REJEITADO_C2_ESB:
+        	case CobillingConstants.CDRSTATUS_REJEITADO_C2_MOB:
+        	case CobillingConstants.CDRSTATUS_EXCLUIDO:
+        	case CobillingConstants.CDRSTATUS_EXCLUIDO_X1:
+        	case CobillingConstants.CDRSTATUS_EXCLUIDO_X2:
+        	case CobillingConstants.CDRSTATUS_EXCLUIDO_X2_ESB:
+        	case CobillingConstants.CDRSTATUS_EXCLUIDO_X2_MOB:
+        		break;
+        	default:
+        		PerdaFaturamentoVO finalFAQualquer = new PerdaFaturamentoVO();
+            	finalFAQualquer.setFileType(""+CobillingConstants.CDRSTATUS_FATURADO_FINAL);
+            	finalFAQualquer.setOperadoraLd(entity.getCdEotLd());
+            	finalFAQualquer.setOperadoraClaro(entity.getCdEotClaro());
+            	finalFAQualquer.setDtProcExterna(entity.getDtProcExterna());
+            	finalFAQualquer.setCdStatusCdr(CobillingConstants.CDRSTATUS_FATURADO_FINAL);
+            	finalFAQualquer.setCdSubStatusCdr("");
+            	PerdaFaturamentoVO finalFA = (PerdaFaturamentoVO) map.get(finalFAQualquer);
+                if (finalFA==null) {
+                	finalFA = finalFAQualquer;
+                    map.put(finalFAQualquer, finalFAQualquer);
+                }
+                finalFA.addValorlLiquido(entity.getVlLiquidoChamada());
+                finalFA.addValorBruto(entity.getVlBrutoChamada());
+                finalFA.addQtCdrs(entity.getQtCdrs());
+            break;
+        }
+		
+	}
 	
 	
+    private String getUnificaSubStatusFinancial(String status) {
+    	return status;
+    }
+
 	
 	private Collection<SccArquivoSumarizado> gerarRelatorioPerdaFat(SccFiltroRelPerdaFaturamento filtro) throws DAOException {
 		
@@ -183,7 +297,7 @@ public class ControleRemessaServiceImpl extends AbstractService implements Contr
 	}
 	
 	
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
 	private Collection<PerdaFaturamentoVO> metodoTeste(Collection<SccArquivoSumarizado> colecao){
 		Collection<PerdaFaturamentoVO> list = new ArrayList<PerdaFaturamentoVO>();
 		//ArrayList list = new ArrayList();
@@ -291,6 +405,47 @@ public class ControleRemessaServiceImpl extends AbstractService implements Contr
         //Collections.sort(list);
         
         return list;
+	}
+	
+	@SuppressWarnings("unused")
+	private void itemInicial(SccArquivoSumarizado entity, HashMap<PerdaFaturamentoVO, Date> map){
+		
+		int statusCdr = getUnificaStatusFinancial2(entity.getCdStatusCdr().intValue());
+
+		if(! isStatusInicial(statusCdr)){
+			if(oldVO == null){
+				oldVO = getPerdaFaturamentoVO(entity);
+			}else {
+				if(entity.getDtProcExterna().equals(oldVO.getDtProcExterna())){
+					
+					map.put(oldVO, oldVO.getDtProcExterna());
+					
+				}
+				
+			}
+		}
+		if (statusCdr!=CobillingConstants.CDRSTATUS_INDEFINIDO) {
+			if(entity.getQtCdrs() != null && entity.getQtCdrs() > 0){
+				if(oldVO == null){
+					oldVO = getPerdaFaturamentoVO(entity);
+				}else{
+					
+					
+					
+				}
+
+				
+			}
+			
+		}
+		
+	}
+	//TODO CONTINUAR O METODO
+	@SuppressWarnings("unused")
+	private PerdaFaturamentoVO efetuarCalculo(SccArquivoSumarizado entity){
+		return null;
+		
+	
 	}
 	
 /*	private Collection<FinanceiroVO> metodoTeste2(Collection<SccArquivoSumarizado> colecao){
@@ -428,9 +583,41 @@ public class ControleRemessaServiceImpl extends AbstractService implements Contr
     	return retorno;
  
     }
+	
+	
+	
+    private int getUnificaStatusFinanceiro(int status) 
+    {
+    	switch(status) {
+			case (CobillingConstants.CDRSTATUS_REJEITADO_C1):
+				return CobillingConstants.CDRSTATUS_REJEITADO_C1;
+    		case (CobillingConstants.CDRSTATUS_REJEITADO_C2_ESB):
+    		case (CobillingConstants.CDRSTATUS_REJEITADO_C2_MOB):
+    			return CobillingConstants.CDRSTATUS_REJEITADO_C2;
+    		case (CobillingConstants.CDRSTATUS_EXCLUIDO_X1):
+    			return CobillingConstants.CDRSTATUS_EXCLUIDO_X1;
+    		case (CobillingConstants.CDRSTATUS_EXCLUIDO_X2_ESB):
+    		case (CobillingConstants.CDRSTATUS_EXCLUIDO_X2_MOB):
+    			return CobillingConstants.CDRSTATUS_EXCLUIDO_X2;
+    		case (CobillingConstants.CDRSTATUS_PERDIDO_ESB):
+    		case (CobillingConstants.CDRSTATUS_PERDIDO_MOB):
+    		case (CobillingConstants.CDRSTATUS_PERDIDO_PPC):
+    			return CobillingConstants.CDRSTATUS_PERDIDO;
+    		case (CobillingConstants.CDRSTATUS_FATURADO_ESB):
+    		case (CobillingConstants.CDRSTATUS_FATURADO_MOB):
+    			return CobillingConstants.CDRSTATUS_FATURADO;
+    		case (CobillingConstants.CDRSTATUS_CONTESTADO_ESB):
+    		case (CobillingConstants.CDRSTATUS_CONTESTADO_MOB):
+    			return CobillingConstants.CDRSTATUS_CONTESTADO;
+    		default: 
+    			return CobillingConstants.CDRSTATUS_INDEFINIDO;
+    	}
+    }
+
     
     //private void gerarItem(Collection<SccArquivoSumarizado> colecao, Map<PerdaFaturamentoVO, PerdaFaturamentoVO> mapa, PerdaFaturamentoVO oldVO){
-    private void gerarItem(Collection<SccArquivoSumarizado> colecao, Collection<PerdaFaturamentoVO> mapa, PerdaFaturamentoVO oldVO){    	
+    @SuppressWarnings("unused")
+	private void gerarItem(Collection<SccArquivoSumarizado> colecao, Collection<PerdaFaturamentoVO> mapa, PerdaFaturamentoVO oldVO){    	
     	PerdaFaturamentoVO geralVO = null;
     	
 		for (SccArquivoSumarizado entity : colecao) {
@@ -518,7 +705,8 @@ public class ControleRemessaServiceImpl extends AbstractService implements Contr
 		oldVO = getPerdaFaturamentoVO(entity, oldVO);
 
     }
-    private void gerarItemFinal(SccArquivoSumarizado entity, int status, Map<PerdaFaturamentoVO, PerdaFaturamentoVO> mapa, PerdaFaturamentoVO oldVO){
+    @SuppressWarnings("unused")
+	private void gerarItemFinal(SccArquivoSumarizado entity, int status, Map<PerdaFaturamentoVO, PerdaFaturamentoVO> mapa, PerdaFaturamentoVO oldVO){
     	
     	if(!isStatusFinal(status) || !isStatusInicial(status)){
     		if(entity != null){

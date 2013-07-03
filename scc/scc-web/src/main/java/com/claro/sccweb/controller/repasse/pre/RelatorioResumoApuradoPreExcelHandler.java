@@ -10,46 +10,47 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
+import com.claro.cobillingweb.persistence.view.RelatorioApuracaoPreSumarizado;
 import com.claro.sccweb.controller.BaseFormController;
 import com.claro.sccweb.controller.BasicExcelHandler;
 import com.claro.sccweb.controller.ControllerExecutionException;
-import com.claro.sccweb.decorator.RelApuracaoFechamentoPrePagoViewDecorator;
 import com.claro.sccweb.excel.ExcelColumnDefinition;
 import com.claro.sccweb.excel.ExcelPrinter;
 
 public class RelatorioResumoApuradoPreExcelHandler extends BasicExcelHandler{
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "unused" })
 	@Override
 	protected void buildExcelDocument(Map<String, Object> model,HSSFWorkbook workbook, 
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
-		List<RelApuracaoFechamentoPrePagoViewDecorator> decoratorList = (List<RelApuracaoFechamentoPrePagoViewDecorator>)getFromSession(BaseFormController.DISPLAY_TAG_SPACE_1, request);
-		
+		List<RelatorioApuracaoPreSumarizado> decoratorList = (List<RelatorioApuracaoPreSumarizado>)getFromSession(BaseFormController.DISPLAY_TAG_SPACE_1, request);
+		List<RelatorioApuracaoPreSumarizado> decoratorListTotal = (List<RelatorioApuracaoPreSumarizado>)getFromSession(BaseFormController.DISPLAY_TAG_SPACE_2, request);
+		decoratorList.add(decoratorListTotal.get(0));
 		if (decoratorList == null){
 			throw new ControllerExecutionException("Navegação inválida. Tabela é nula!.");
 		}
 		
 		List<ExcelColumnDefinition> columnDefinitions = new ArrayList<ExcelColumnDefinition>();
-		columnDefinitions.add(new ExcelColumnDefinition("getOperadoraClaro",	"Operadora Claro", style, 30));
-		columnDefinitions.add(new ExcelColumnDefinition("getValorApuradoLiquido",	"Vl. Apurado Liq.", style, 30));
-		columnDefinitions.add(new ExcelColumnDefinition("getPisCofins",	"Pis/Cofins", style, 30));
-		columnDefinitions.add(new ExcelColumnDefinition("getValorIcmsRepassar",	"ICMS a Repassar", style, 30));
+		columnDefinitions.add(new ExcelColumnDefinition("getDsOperadora",	"UF - OP Claro", style, 30));
+		columnDefinitions.add(new ExcelColumnDefinition("getValorApuradoLiquido",	"Vlr Apurado Liquido", style, 30));
+		columnDefinitions.add(new ExcelColumnDefinition("getPisCofins",	"Pis Cofins", style, 30));
+		columnDefinitions.add(new ExcelColumnDefinition("getValorIcmsRepassar",	"ICMS A Repassar", style, 30));
 		columnDefinitions.add(new ExcelColumnDefinition("getValorIcmsNaoRepassado",	"ICMS Não Repassado", style, 30));
-		columnDefinitions.add(new ExcelColumnDefinition("getValorRepassar",	"Valor Repassar", style, 30));
-		columnDefinitions.add(new ExcelColumnDefinition("getServicoPrestadoLiquido",	"Ser. Prest. Líquido", style, 30));
-		columnDefinitions.add(new ExcelColumnDefinition("getPisCofinsServicePrestado",	"Pis/Cofins Ser. Prestado", style, 30));
-		columnDefinitions.add(new ExcelColumnDefinition("getIss",	"ISS", style, 30));
-		columnDefinitions.add(new ExcelColumnDefinition("getValorBrutoServico",	"Vlr. Bruto Serv.", style, 30));
-		columnDefinitions.add(new ExcelColumnDefinition("getCreditosAutorizados",	"Créd. Autorizados", style, 30));
-		columnDefinitions.add(new ExcelColumnDefinition("getCreditos226",	"Créd. 226", style, 30));
-		columnDefinitions.add(new ExcelColumnDefinition("getPenalidadesMinutosPerdidos",	"Penalidades Min. Perd.", style, 30));
-		columnDefinitions.add(new ExcelColumnDefinition("getTotalMultasJuros",	"Total Jutos e Multas", style, 30));
-		columnDefinitions.add(new ExcelColumnDefinition("getTotalAcertosConciliacoes",	"Total Acertos e Conc.", style, 30));
-		columnDefinitions.add(new ExcelColumnDefinition("getCpmfDescontar",	"CPMF Descontar", style, 30));
-		columnDefinitions.add(new ExcelColumnDefinition("getIcmsDescontar",	"ICMS Descontar", style, 30));
-		columnDefinitions.add(new ExcelColumnDefinition("getIcmsRepassar",	"ICMS Repassar", style, 30));
-		columnDefinitions.add(new ExcelColumnDefinition("getValorFinalRepassar",	"Vlr. Final Repassar", style, 30));
+		columnDefinitions.add(new ExcelColumnDefinition("getValorRepassar",	"Vlr A Repassar", style, 30));
+		columnDefinitions.add(new ExcelColumnDefinition("getServicoPrestadoLiquido",	"Serv Prest Liquido", style, 30));
+		columnDefinitions.add(new ExcelColumnDefinition("getPisCofinsServicePrestado",	"Pis Cofins Serv Prest", style, 30));
+		columnDefinitions.add(new ExcelColumnDefinition("getIss",	"Iss", style, 30));
+		columnDefinitions.add(new ExcelColumnDefinition("getValorBrutoServico",	"Vlr Bruto Serv Prest", style, 30));
+		columnDefinitions.add(new ExcelColumnDefinition("getCreditosAutorizados",	"Créditos Autorizados", style, 30));
+		columnDefinitions.add(new ExcelColumnDefinition("getCreditos226",	"Créditos 226", style, 30));
+		columnDefinitions.add(new ExcelColumnDefinition("getPenalidadesMinutosPerdidos",	"Penalidades Minutos Perdidos", style, 30));
+		columnDefinitions.add(new ExcelColumnDefinition("getTotalMultasJuros",	"Total Multas e Juros", style, 30));
+		columnDefinitions.add(new ExcelColumnDefinition("getTotalAcertosConciliacoes",	"Total Acertos Conciliações", style, 30));
+		columnDefinitions.add(new ExcelColumnDefinition("getCpmfDescontar",	"CPMF A Descontar", style, 30));
+		columnDefinitions.add(new ExcelColumnDefinition("getIcmsDescontar",	"ICMS A Descontar", style, 30));
+		columnDefinitions.add(new ExcelColumnDefinition("getIcmsRepassar",	"ICMS A Repassar", style, 30));
+		columnDefinitions.add(new ExcelColumnDefinition("getValorFinalRepassar",	"Vlr Final A Repassar", style, 30));
 		columnDefinitions.add(new ExcelColumnDefinition("getValorNotaFiscal", "Valor Nota Fiscal", style, 30));
 		columnDefinitions.add(new ExcelColumnDefinition("getDestaqueIcms", "Destaque ICMS", style, 30));
 		ExcelPrinter printer = new ExcelPrinter(columnDefinitions,workbook);
@@ -64,9 +65,6 @@ public class RelatorioResumoApuradoPreExcelHandler extends BasicExcelHandler{
 		printer.generateColumnsTitle();
 		printer.addData(decoratorList);
 		printer.writeData();
-		printer.generateFile("Resumo_Apuração.xls");
-
-		
 	}
 
 }

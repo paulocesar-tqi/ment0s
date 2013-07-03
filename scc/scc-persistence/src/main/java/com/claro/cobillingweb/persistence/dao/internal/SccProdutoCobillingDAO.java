@@ -33,4 +33,5 @@ public interface SccProdutoCobillingDAO extends BasicDAO<SccProdutoCobilling>{
 	
 	List<SccProdutoCobilling> pesquisaProdutosOperadoraLDTodas() throws DAOException;
 	
+	
 }

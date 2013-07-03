@@ -46,7 +46,7 @@ public class SccArquivosNaoProcessadosDAOImpl extends HibernateBasicDAOImpl<SccA
 			mapper.addResultMap("dtRelatorio", Date.class);
 			mapper.addResultMap("noArquivoRetorno", String.class);
 			mapper.addResultMap("qtChamadas", Integer.class);
-			mapper.addResultMap("qtMinutoTarifados", Integer.class);
+			mapper.addResultMap("qtMinutoTarifados", Double.class);
 			mapper.addResultMap("vlLiquido", Double.class);
 			mapper.addResultMap("dtRecebimento", Date.class);
 			

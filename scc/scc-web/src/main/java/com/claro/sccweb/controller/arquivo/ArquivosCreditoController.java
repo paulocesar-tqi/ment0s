@@ -57,14 +57,19 @@ public class ArquivosCreditoController extends BaseOperationController<ArquivosC
 		ArquivosCreditoForm form = (ArquivosCreditoForm)_form;
 		List<SccArquivoCredito> rows = getServiceManager().getArquivosService().pesquisaArquivosCredito(form.getCdOrigem(), form.getCdStatus(), form.getDataInicial(), form.getDataFinal());
 		List<SccArquivoCreditoDecorator> decoratorList = new ArrayList<SccArquivoCreditoDecorator>(rows.size());
+		Map<String,Object> totais = new HashMap<String, Object>();
+		Long totalRegistros = 0L;
 		for (int i=0;i<rows.size();i++)
 			{						
 			String status = statusMap.get(rows.get(i).getCdStatus());
 			String origem = origemMap.get(rows.get(i).getCdOrigem());
+			totalRegistros += rows.get(i).getQtRegistros() != null ? rows.get(i).getQtRegistros() : 0;
 			SccArquivoCreditoDecorator decorator = new SccArquivoCreditoDecorator(rows.get(i), status, origem, i);			
 			decoratorList.add(decorator);
 			}
+		totais.put("totalRegistros",  formataInteiro(totalRegistros));
 		storeInSession(getClass(), DISPLAY_TAG_SPACE_1, decoratorList, request);
+		storeInSession(getClass(), DISPLAY_TAG_SPACE_2, totais, request);
 		return mav;
 	}
 	

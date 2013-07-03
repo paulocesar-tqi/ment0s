@@ -40,6 +40,12 @@ public class SccParamProcessoServiceImpl extends AbstractService implements
 		}
 		return sccParamProcessoDAO.pesquisaProcessoParametros(codProcesso, dtInicio, dtFim);
 	}
+	
+	@Override
+	public List<SccParamProcesso> gerarRelatorios(String idProcesso, String valorParametro) throws DAOException{
+		return this.sccParamProcessoDAO.gerarRelatorios(idProcesso, valorParametro);
+		
+	}
 
 	public SccParamProcessoDAO getSccParamProcessoDAO() {
 		return sccParamProcessoDAO;

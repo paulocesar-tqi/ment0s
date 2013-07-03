@@ -5,7 +5,9 @@ package com.claro.sccweb.form;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
+import com.claro.cobillingweb.persistence.filtro.SccFiltroAcoesCobranca;
 import com.claro.cobillingweb.persistence.view.SccAcoesCobrancaView;
 
 /**
@@ -21,6 +23,13 @@ public class SccAcoesCobrancaForm extends BaseForm {
 	private Long mes;
 	
 	private Long ano;
+	
+	private Date dataInicialPeriodo;
+	private Date dataFinalPeriodo;
+	
+	private List<SccAcoesCobrancaView> listAcoesCobranca;
+	
+	private SccFiltroAcoesCobranca filtro;
 	
 	
 
@@ -56,6 +65,42 @@ public class SccAcoesCobrancaForm extends BaseForm {
 		this.ano = ano;
 	}
 	
+	
+	public List<SccAcoesCobrancaView> getListAcoesCobranca() {
+		return listAcoesCobranca;
+	}
+
+	public void setListAcoesCobranca(List<SccAcoesCobrancaView> listAcoesCobranca) {
+		this.listAcoesCobranca = listAcoesCobranca;
+	}
+	
+	public SccFiltroAcoesCobranca getFiltro() {
+		return filtro;
+	}
+
+	public void setFiltro(SccFiltroAcoesCobranca filtro) {
+		this.filtro = filtro;
+	}
+	
+	
+
+	public Date getDataInicialPeriodo() {
+		return dataInicialPeriodo;
+	}
+
+	public void setDataInicialPeriodo(Date dataInicialPeriodo) {
+		this.dataInicialPeriodo = dataInicialPeriodo;
+	}
+
+	public Date getDataFinalPeriodo() {
+		return dataFinalPeriodo;
+	}
+
+	public void setDataFinalPeriodo(Date dataFinalPeriodo) {
+		this.dataFinalPeriodo = dataFinalPeriodo;
+	}
+
+	@SuppressWarnings("unused")
 	private Long pegarAnoAtual(){
 		SimpleDateFormat anoAtual = new SimpleDateFormat("yyyy");
 		return new Long(anoAtual.format(new Date()));

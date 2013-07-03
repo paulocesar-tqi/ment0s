@@ -8,6 +8,7 @@ import com.claro.cobillingweb.persistence.dao.DAOException;
 import com.claro.cobillingweb.persistence.entity.SccArquivoSumarizado;
 import com.claro.cobillingweb.persistence.entity.SccCdrCobilling;
 import com.claro.cobillingweb.persistence.filtro.SccCdrCobillingFiltro;
+import com.claro.sccweb.controller.graficos.distribuicao.ItemGraficoDistribuicao;
 import com.claro.sccweb.decorator.rownum.entity.SccArquivoSumarizadoDecorator;
 
 
@@ -67,4 +68,24 @@ public interface CDRService {
 	public List<SccArquivoSumarizado> agrupaAlocadosPorCiclo(List<SccArquivoSumarizado> rows)  throws ServiceException;
 	
 	public List<SccArquivoSumarizado> agrupaFaturadosPorCiclo(List<SccArquivoSumarizado> rows) throws ServiceException;
+	
+	List<SccArquivoSumarizado> findSumarizadoPeriodo(String cdEOTClaro,String cdEOTLD, Date dataInicial, Date dataFinal, Long produto, boolean holding) throws DAOException, ServiceException;
+	
+	SccArquivoSumarizado gerarSumarizadoByPeriodo(List<SccArquivoSumarizado> lstSumarizado) throws ServiceException;
+	
+	Long calcularTotais(List<SccArquivoSumarizado> lstSumarizado);
+	
+	List<ItemGraficoDistribuicao> gerarItensGrafico(List<SccArquivoSumarizado> lstSumarizado, Long total);
+	 
+	List<SccArquivoSumarizado> gerarAlocados(List<SccArquivoSumarizado> lstSumarizado) throws ServiceException;
+	 
+	List<SccArquivoSumarizado> gerarFaturado(List<SccArquivoSumarizado> lstSumarizado) throws ServiceException;
+
+	List<SccArquivoSumarizado> findSumarizadoByPeriodoAgrupado(String cdEOTClaro,String cdEOTLD, Date dataInicial, Date dataFinal, Long produto, boolean holding) throws DAOException, ServiceException;
+	
+	SccArquivoSumarizado gerarBackLog(List<SccArquivoSumarizado>lstSumarizado);
+	
+	List<SccArquivoSumarizado> gerarMetrica(List<SccArquivoSumarizado> lstSumarizado, Long totalRejeitado) throws ServiceException;
+	
+	List<ItemGraficoDistribuicao> gerarDadosGrafico(List<SccArquivoSumarizado> lstSumarizado, Long total);
 }

@@ -28,7 +28,7 @@ public class CadastroRelatorioCobilligValidator  implements Validator {
 		CadastroRelatorioCobillingForm form = (CadastroRelatorioCobillingForm)_form;
 		
 		if (form.getOperacao().equals(BaseCRUDAndMethodController.OPERACAO_CREATE) || (form.getOperacao().equals(BaseCRUDAndMethodController.OPERACAO_UPDATE))){
-			ValidatorUtil.verificaCampoObrigatorio("entity.descricao", form.getEntity().getDescricao(), errors);
+			ValidatorUtil.verificaCampoObrigatorio("entity.descricao", form.getEntity().getNoRelatorio(), errors);
 								
 		}
 

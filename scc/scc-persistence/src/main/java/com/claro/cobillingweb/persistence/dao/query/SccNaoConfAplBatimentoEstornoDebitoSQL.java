@@ -12,7 +12,7 @@ public class SccNaoConfAplBatimentoEstornoDebitoSQL {
 	public static final String SQL = "SELECT "+
 										"    B.CD_EOT_LD as operadoraLd, "+
 										"    B.CD_EOT_CLARO as operadoraClaro, "+
-										"    O.SG_UF as UF, "+
+										"    CAST(O.SG_UF AS VARCHAR2(2)) AS UF, "+
 										"    B.CD_CICLO as ciclo, "+
 										"    B.NU_NF as notaFiscal, "+
 										"    B.VL_ESTORNO as estornoDebitos, "+

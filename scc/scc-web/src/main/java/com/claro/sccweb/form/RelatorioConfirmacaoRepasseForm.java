@@ -3,6 +3,8 @@
  */
 package com.claro.sccweb.form;
 
+import java.util.List;
+
 import com.claro.cobillingweb.persistence.view.SccConfirmacaoRepasseView;
 
 /**
@@ -20,6 +22,8 @@ public class RelatorioConfirmacaoRepasseForm extends BaseForm {
 	private String cdEOTLD;
 	
 	private String cdStatusRepasse;
+	
+	private List<SccConfirmacaoRepasseView> lstConfirmacaoRepasse;
 	
 	public SccConfirmacaoRepasseView getEntity() {
 		return entity;
@@ -60,5 +64,16 @@ public class RelatorioConfirmacaoRepasseForm extends BaseForm {
 	public void setCdStatusRepasse(String cdStatusRepasse) {
 		this.cdStatusRepasse = cdStatusRepasse;
 	}
+
+	public List<SccConfirmacaoRepasseView> getLstConfirmacaoRepasse() {
+		return lstConfirmacaoRepasse;
+	}
+
+	public void setLstConfirmacaoRepasse(
+			List<SccConfirmacaoRepasseView> lstConfirmacaoRepasse) {
+		this.lstConfirmacaoRepasse = lstConfirmacaoRepasse;
+	}
+	
+	
 
 }

@@ -81,6 +81,10 @@ public class CadastroTipoEventoPreController extends BaseCRUDAndMethodController
 	{		
 		form.getEntity().setDtAtualizacao(Calendar.getInstance().getTime());
 		form.getEntity().setCdUsuarioManut(getSessionDataManager().getUserPrincipal());
+		if(form.getEntity() != null && form.getEntity().getFgAtribuirProdPadrao() == null){
+			form.getEntity().setFgAtribuirProdPadrao("N");
+		}
+
 		getServiceManager().getProdutoPrepagoService().update(form.getEntity());
 		return limpar(request, response, form, bindingResult, model);
 	}
