@@ -35,17 +35,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import copyleft.by.pc.model.Ativo;
 import copyleft.by.pc.model.Opcao;
 
 @Controller
 public class OpcaoController {
 	private static final String OPTIONS_URL = "http://www.bmfbovespa.com.br/opcoes/opcoes.aspx?idioma=pt-br";
+	private static final String QUOTES_URL = "http://www.bmfbovespa.com.br/Pregao-Online/ExecutaAcaoAjax.asp?CodigoPapel=";
 
 	private static final Logger log = Logger.getLogger(OpcaoController.class.getName());
+	
+	private static List<Ativo> ativos = null;
 
-    @RequestMapping(value = "/vai", method = RequestMethod.GET)
+    @RequestMapping(value = "/showOptions", method = RequestMethod.GET)
     @ResponseBody
-	public static String updateOptions() {
+	public static  List<Ativo> showOptions() {
+    	return ativos;
+    }
+	
+    @RequestMapping(value = "/updateOptions", method = RequestMethod.GET)
+    @ResponseBody
+	public static String loadOptions() {
+    	ativos = null;
 		BasicCookieStore cookieStore = new BasicCookieStore();
 
 		CloseableHttpClient httpclient = HttpClients.custom().setDefaultCookieStore(cookieStore).build();
@@ -81,10 +92,10 @@ public class OpcaoController {
 				System.out.println("content-type: " + entity.getContentType().toString());
 				System.out.println("content-length: " + entity.getContentLength());
 
-				List<Opcao> opcoes = formatStringFile(entity.getContent());
+				formatStringFile(entity.getContent());
 				
-				if(opcoes != null && opcoes.size() > 0) {
-					updateOptions(opcoes);
+				if(ativos != null && ativos.size() > 0) {
+					updateOptions(ativos);
 				}
 
 				EntityUtils.consume(entity);
@@ -103,15 +114,15 @@ public class OpcaoController {
 			} catch (Exception e) {}
 		}
 		
-		return "Foi!";
+		return "OK";
 	}
 
-	private static void updateOptions(List<Opcao> opcoes) {
+	private static void updateOptions(List<Ativo> opcoes) {
 		
 	}
 
-	private static List<Opcao> formatStringFile(InputStream content) throws IOException {
-		List<Opcao> opcoes = new ArrayList<Opcao>();
+	private static void formatStringFile(InputStream content) throws IOException {
+		ativos = new ArrayList<Ativo>();
 		
 		StringWriter writer = new StringWriter();
 		IOUtils.copy(content, writer, Charsets.UTF_8);
@@ -121,20 +132,17 @@ public class OpcaoController {
 		Date now = new Date();
 		for(String linha : lines) {
 			if(linha.startsWith("01")) {
-				Opcao opcao = new Opcao();
-				opcao.setDataAtualizacao(now);
-				opcao.setDataVencimentoFromString(linha.substring(24, 32));
-				opcao.setNomeAtivo(linha.substring(02,14).trim());
-				opcao.setNomeOpcao(linha.substring(42,54).trim());
-				opcao.setStrikeFromString(linha.substring(62,75).trim());
-				opcao.setTipo(linha.substring(39,42).trim());
-				
-				opcoes.add(opcao);
+				String tipo = Ativo.getTipoAtivo(linha.substring(14, 17).trim());
+				if(tipo != null) {
+					Ativo ativo = new Ativo(linha.substring(02,07).trim(), tipo, now);
+					if(!ativos.contains(ativo))
+						ativos.add(ativo);
+					
+					Opcao opcao = new Opcao(linha, now, ativo.getCodigoAtivo());
+					ativos.get(ativos.indexOf(ativo)).addOpcao(opcao);
+				}
 			}
 		}
-		
-		return opcoes;
-
 	}
 
 	private static List<NameValuePair> getFormParams(InputStream content) throws IOException {
@@ -179,8 +187,76 @@ public class OpcaoController {
 		return paramList;
 
 	}
+	
+	private void updateQuotes(Ativo ativo) {
+		CloseableHttpClient httpclient = HttpClients.createDefault();
+		try {
+			HttpGet httpget = new HttpGet(QUOTES_URL + ativo.getCodes());
+
+			httpget.addHeader("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:26.0) Gecko/20100101 Firefox/26.0");
+			httpget.addHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
+			httpget.addHeader("Accept-Language", "pt-BR,pt;q=0.8,en-US;q=0.5,en;q=0.3");
+			httpget.addHeader("Accept-Encoding", "gzip, deflate");
+
+			CloseableHttpResponse response1 = httpclient.execute(httpget);
+			try {
+				HttpEntity entity = response1.getEntity();
+
+				BufferedReader rd = new BufferedReader(new InputStreamReader(response1.getEntity().getContent()));
+
+				StringBuffer result = new StringBuffer();
+				String line = "";
+				while ((line = rd.readLine()) != null) {
+					result.append(line);
+				}
+				EntityUtils.consume(entity);
+				
+				Document doc = Jsoup.parse(result.toString());
+				
+				for(Element cotacao : doc.select("Papel")) {
+					String codigo = cotacao.attr("Codigo");
+					String nome = cotacao.attr("Nome");
+					String data = cotacao.attr("Data");
+					String abertura = cotacao.attr("Abertura");
+					String minimo = cotacao.attr("Minimo");
+					String maximo = cotacao.attr("Maximo");
+					String medio = cotacao.attr("Medio");
+					String ultimo = cotacao.attr("Ultimo");
+					String oscilacao = cotacao.attr("Oscilacao");
+					
+					System.out.println("codigo: " + codigo + " | " +
+							"nome: " + nome + " | " +
+							"data: " + data + " | " +
+							"abertura: " + abertura + " | " +
+							"minimo: " + minimo + " | " +
+							"maximo: " + maximo + " | " +
+							"medio: " + medio + " | " +
+							"ultimo: " + ultimo + " | " +
+							"oscilacao: " + oscilacao + " | ");
+				}
+
+				
+		
+
+				
+			} catch (Exception e) {
+				log.log(Level.SEVERE, "Erro no controller ao recuperar as cotacoes.",e);
+			} finally {
+				response1.close();
+			}
+		} catch (Exception e) {
+			log.log(Level.SEVERE, "Erro no controller ao recuperar as cotacoes.",e);
+		} finally {
+			try {
+				httpclient.close();
+			} catch (Exception e) {}
+		}
+		
+	}
 
 	public static void main(String[] args) {
-		updateOptions();
+		Ativo ativo = new Ativo("BBAS","3",new Date());
+		OpcaoController controller = new OpcaoController();
+		controller.updateQuotes(ativo);
 	}
 }

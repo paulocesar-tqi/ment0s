@@ -17,6 +17,16 @@ public class Opcao {
 	String tipo;
 	Double strike;
 	Date dataAtualizacao;
+	
+	public Opcao(String linha, Date now, String codigoAtivo) {
+		dataAtualizacao = now;
+		setDataVencimentoFromString(linha.substring(24, 32));
+		setNomeAtivo(codigoAtivo);
+		setNomeOpcao(linha.substring(42,54).trim());
+		setStrikeFromString(linha.substring(62,75).trim());
+		setTipo(linha.substring(39,42).trim());
+	}
+	
 	public String getNomeAtivo() {
 		return nomeAtivo;
 	}

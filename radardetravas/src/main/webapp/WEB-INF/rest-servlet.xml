@@ -14,5 +14,4 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 
     <context:component-scan base-package="copyleft.by.pc"/>
     <mvc:annotation-driven/>
-
 </beans>
