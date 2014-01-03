@@ -14,7 +14,7 @@ public class RadardetravasServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
 		resp.setContentType("text/plain");
-		OpcaoController.updateOptions();
+		//OpcaoController.updateOptions();
 		resp.getWriter().println("Foi!");
 	}
 
