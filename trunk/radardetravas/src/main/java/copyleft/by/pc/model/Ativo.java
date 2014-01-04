@@ -4,16 +4,21 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import org.springframework.util.StringUtils;
 
 public class Ativo {
+
+	private static final Logger log = Logger.getLogger(Ativo.class.getName());
 
 	public static final String TIPO_ON = "3";
 	public static final String TIPO_PN = "4";
 	public static final String TIPO_PNA = "5";
 	public static final String TIPO_PNB = "6";
 	public static final String TIPO_UNT = "11";
-
-	private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
 
 	String codigoAtivo;
 	String nomeAtivo;
@@ -23,6 +28,7 @@ public class Ativo {
 	Double medio;
 	Double ultimo;
 	Double oscilacao;
+	Integer negocios;
 	Date dataAtualizacao;
 	Date dataCriacao;
 	List<Opcao> opcoesPut;
@@ -32,7 +38,7 @@ public class Ativo {
 		codigoAtivo = nome.trim() + tipo;
 		dataCriacao = now;
 	}
-	
+
 	public String getCodigoAtivo() {
 		return codigoAtivo;
 	}
@@ -105,18 +111,26 @@ public class Ativo {
 		return dataCriacao;
 	}
 
+	public Integer getNegocios() {
+		return negocios;
+	}
+
+	public void setNegocios(Integer negocios) {
+		this.negocios = negocios;
+	}
+
 	private void addOpcaoPut(Opcao opcao) {
-		if(opcoesPut == null)
+		if (opcoesPut == null)
 			opcoesPut = new ArrayList<Opcao>();
 		opcoesPut.add(opcao);
 	}
 
 	private void addOpcaoCall(Opcao opcao) {
-		if(opcoesCall == null)
+		if (opcoesCall == null)
 			opcoesCall = new ArrayList<Opcao>();
 		opcoesCall.add(opcao);
 	}
-	
+
 	public void addOpcao(Opcao opcao) {
 		switch (opcao.getTipo()) {
 		case Opcao.TIPO_CALL:
@@ -127,7 +141,7 @@ public class Ativo {
 			break;
 		}
 	}
-	
+
 	public List<Opcao> getOpcoesPut() {
 		return opcoesPut;
 	}
@@ -157,21 +171,36 @@ public class Ativo {
 		default:
 			break;
 		}
-		
+
 		return result;
 	}
-	
+
 	public String getCodes() {
 		String result = getCodigoAtivo();
-		
-		if(getOpcoesCall() != null && getOpcoesCall().size() > 0)
-			for(Opcao opcao : getOpcoesCall())
-				result += "|" + opcao.getNomeOpcao();
-		
-		if(getOpcoesPut() != null && getOpcoesPut().size() > 0)
-			for(Opcao opcao : getOpcoesPut())
-				result += "|" + opcao.getNomeOpcao();
-		
+
+		if (getOpcoesCall() != null && getOpcoesCall().size() > 0)
+			for (Opcao opcao : getOpcoesCall())
+				result += "%7C" + opcao.getNomeOpcao();
+
+		if (getOpcoesPut() != null && getOpcoesPut().size() > 0)
+			for (Opcao opcao : getOpcoesPut())
+				result += "%7C" + opcao.getNomeOpcao();
+
+		return result;
+	}
+
+	public List<String> getCodesAsList() {
+		List<String> result = new ArrayList<String>();
+		result.add(getCodigoAtivo());
+
+		if (getOpcoesCall() != null && getOpcoesCall().size() > 0)
+			for (Opcao opcao : getOpcoesCall())
+				result.add(opcao.getNomeOpcao());
+
+		if (getOpcoesPut() != null && getOpcoesPut().size() > 0)
+			for (Opcao opcao : getOpcoesPut())
+				result.add(opcao.getNomeOpcao());
+
 		return result;
 	}
 
@@ -200,5 +229,39 @@ public class Ativo {
 			return false;
 		return true;
 	}
-	
+
+	public void updateFromMap(Map<String,Map<String,String>> dadosCompletos) {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		SimpleDateFormat dateFormat2 = new SimpleDateFormat("dd/MM/yyyyHH:mm:ss");
+		
+		try {
+			//atualiza os dados do ativo
+			Map<String,String> dados = dadosCompletos.get(codigoAtivo);
+			if(dados != null) {
+				nomeAtivo = dados.get("nomeAtivo");
+				abertura = !StringUtils.isEmpty(dados.get("abertura")) ? Double.parseDouble(dados.get("abertura").replace(",", ".")) : null;		
+				minimo = !StringUtils.isEmpty(dados.get("minimo")) ? Double.parseDouble(dados.get("minimo").replace(",", ".")) : null;		
+				maximo = !StringUtils.isEmpty(dados.get("maximo")) ? Double.parseDouble(dados.get("maximo").replace(",", ".")) : null;		
+				medio = !StringUtils.isEmpty(dados.get("medio")) ? Double.parseDouble(dados.get("medio").replace(",", ".")) : null;		
+				ultimo = !StringUtils.isEmpty(dados.get("ultimo")) ? Double.parseDouble(dados.get("ultimo").replace(",", ".")) : null;		
+				oscilacao = !StringUtils.isEmpty(dados.get("oscilacao")) ? Double.parseDouble(dados.get("oscilacao").replace(",", ".")) : null;		
+				negocios = !StringUtils.isEmpty(dados.get("negocios")) ? Integer.parseInt(dados.get("negocios")) : null;		
+				
+				if(!StringUtils.isEmpty(dados.get("dataAtualizacao")) && dados.get("dataAtualizacao").length() == 19)
+					dataAtualizacao = dateFormat.parse(dados.get("dataAtualizacao"));
+				else if(!StringUtils.isEmpty(dados.get("dataAtualizacao")) && dados.get("dataAtualizacao").length() == 18)
+					dataAtualizacao = dateFormat2.parse(dados.get("dataAtualizacao"));
+			}
+			//atualiza as opcoes
+			if(opcoesCall != null && opcoesCall.size() > 0)
+				for(Opcao opcao : opcoesCall)
+					opcao.updateFromMap(dadosCompletos.get(opcao.nomeOpcao));
+			if(opcoesPut != null && opcoesPut.size() > 0)
+				for(Opcao opcao : opcoesPut)
+					opcao.updateFromMap(dadosCompletos.get(opcao.nomeOpcao));
+
+		} catch (Exception e) {
+			log.log(Level.SEVERE,"Erro ao atualizar ativo: " + codigoAtivo ,e);
+		}		
+	}
 }
