@@ -30,6 +30,7 @@ import org.jsoup.helper.StringUtil;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -40,32 +41,40 @@ import copyleft.by.pc.model.Opcao;
 
 @Controller
 public class OpcaoController {
-	private static final String OPTIONS_URL = "http://www.bmfbovespa.com.br/opcoes/opcoes.aspx?idioma=pt-br";
-	private static final String QUOTES_URL = "http://www.bmfbovespa.com.br/Pregao-Online/ExecutaAcaoAjax.asp?CodigoPapel=";
-
-	private static final Logger log = Logger.getLogger(OpcaoController.class.getName());
 	
+	@Autowired
+    private QuotesController quotesController;
+	
+	private static final String OPTIONS_URL = "http://www.bmfbovespa.com.br/opcoes/opcoes.aspx?idioma=pt-br";
+
+	private static final Logger log = Logger.getLogger(OpcaoController.class
+			.getName());
+
 	private static List<Ativo> ativos = null;
 
-    @RequestMapping(value = "/showOptions", method = RequestMethod.GET)
-    @ResponseBody
-	public static  List<Ativo> showOptions() {
-    	return ativos;
-    }
-	
-    @RequestMapping(value = "/updateOptions", method = RequestMethod.GET)
-    @ResponseBody
-	public static String loadOptions() {
-    	ativos = null;
+	@RequestMapping(value = "/showOptions", method = RequestMethod.GET)
+	@ResponseBody
+	public static List<Ativo> showOptions() {
+		return ativos;
+	}
+
+	@RequestMapping(value = "/loadOptions", method = RequestMethod.GET)
+	@ResponseBody
+	public String loadOptions() {
+		ativos = null;
 		BasicCookieStore cookieStore = new BasicCookieStore();
 
-		CloseableHttpClient httpclient = HttpClients.custom().setDefaultCookieStore(cookieStore).build();
+		CloseableHttpClient httpclient = HttpClients.custom()
+				.setDefaultCookieStore(cookieStore).build();
 		try {
 			HttpGet httpget = new HttpGet(OPTIONS_URL);
 
-			httpget.addHeader("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:26.0) Gecko/20100101 Firefox/26.0");
-			httpget.addHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
-			httpget.addHeader("Accept-Language", "pt-BR,pt;q=0.8,en-US;q=0.5,en;q=0.3");
+			httpget.addHeader("User-Agent",
+					"Mozilla/5.0 (Windows NT 6.1; WOW64; rv:26.0) Gecko/20100101 Firefox/26.0");
+			httpget.addHeader("Accept",
+					"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
+			httpget.addHeader("Accept-Language",
+					"pt-BR,pt;q=0.8,en-US;q=0.5,en;q=0.3");
 			httpget.addHeader("Accept-Encoding", "gzip, deflate");
 
 			CloseableHttpResponse response1 = httpclient.execute(httpget);
@@ -74,70 +83,93 @@ public class OpcaoController {
 
 				HttpPost httpost = new HttpPost(OPTIONS_URL);
 
-				httpost.addHeader("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:26.0) Gecko/20100101 Firefox/26.0");
-				httpost.addHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
-				httpost.addHeader("Accept-Language", "pt-BR,pt;q=0.8,en-US;q=0.5,en;q=0.3");
+				httpost.addHeader("User-Agent",
+						"Mozilla/5.0 (Windows NT 6.1; WOW64; rv:26.0) Gecko/20100101 Firefox/26.0");
+				httpost.addHeader("Accept",
+						"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
+				httpost.addHeader("Accept-Language",
+						"pt-BR,pt;q=0.8,en-US;q=0.5,en;q=0.3");
 				httpost.addHeader("Accept-Encoding", "gzip, deflate");
 				httpost.addHeader("Referer", OPTIONS_URL);
 
-				List<NameValuePair> postParams = getFormParams(entity.getContent());
+				List<NameValuePair> postParams = getFormParams(entity
+						.getContent());
 
 				EntityUtils.consume(entity);
 
-				httpost.setEntity(new UrlEncodedFormEntity(postParams, Consts.UTF_8));
+				httpost.setEntity(new UrlEncodedFormEntity(postParams,
+						Consts.UTF_8));
 
 				response1 = httpclient.execute(httpost);
 				entity = response1.getEntity();
 
-				System.out.println("content-type: " + entity.getContentType().toString());
-				System.out.println("content-length: " + entity.getContentLength());
+				System.out.println("content-type: "
+						+ entity.getContentType().toString());
+				System.out.println("content-length: "
+						+ entity.getContentLength());
 
 				formatStringFile(entity.getContent());
-				
-				if(ativos != null && ativos.size() > 0) {
-					updateOptions(ativos);
+
+				if (ativos != null && ativos.size() > 0) {
+					updateOptions();
 				}
 
 				EntityUtils.consume(entity);
-				
+
 			} catch (Exception e) {
-				log.log(Level.SEVERE, "Erro no controller ao recuperar o arquivo das opcoes.",e);
+				log.log(Level.SEVERE,
+						"Erro no controller ao recuperar o arquivo das opcoes.",
+						e);
 			} finally {
 				response1.close();
 			}
 
 		} catch (Exception e) {
-			log.log(Level.SEVERE, "Erro no controller ao recuperar o arquivo das opcoes.",e);
+			log.log(Level.SEVERE,
+					"Erro no controller ao recuperar o arquivo das opcoes.", e);
 		} finally {
 			try {
 				httpclient.close();
-			} catch (Exception e) {}
+			} catch (Exception e) {
+			}
 		}
-		
+
 		return "OK";
 	}
 
-	private static void updateOptions(List<Ativo> opcoes) {
+	@RequestMapping(value = "/updateOptions", method = RequestMethod.GET)
+	@ResponseBody
+	public String updateOptions() {
 		
+		if(ativos != null && ativos.size() > 0) {
+			for(Ativo ativo : ativos)
+				quotesController.updateQuotes(ativo);
+//			quotesController.updateQuotes(ativos.get(0));
+		}
+		
+		return "OK!";
 	}
 
-	private static void formatStringFile(InputStream content) throws IOException {
+	private void formatStringFile(InputStream content)
+			throws IOException {
 		ativos = new ArrayList<Ativo>();
-		
+
 		StringWriter writer = new StringWriter();
 		IOUtils.copy(content, writer, Charsets.UTF_8);
 		String fullFile = writer.toString();
 
 		String[] lines = fullFile.split("\n");
 		Date now = new Date();
-		for(String linha : lines) {
-			if(linha.startsWith("01")) {
-				String tipo = Ativo.getTipoAtivo(linha.substring(14, 17).trim());
-				if(tipo != null) {
-					Ativo ativo = new Ativo(linha.substring(02,07).trim(), tipo, now);
-					if(!ativos.contains(ativo))
+		for (String linha : lines) {
+			if (linha.startsWith("01")) {
+				String tipo = Ativo
+						.getTipoAtivo(linha.substring(14, 17).trim());
+				if (tipo != null) {
+					Ativo ativo = new Ativo(linha.substring(02, 07).trim(),
+							tipo, now);
+					if (!ativos.contains(ativo))
 						ativos.add(ativo);
-					
+
 					Opcao opcao = new Opcao(linha, now, ativo.getCodigoAtivo());
 					ativos.get(ativos.indexOf(ativo)).addOpcao(opcao);
 				}
@@ -145,7 +177,8 @@ public class OpcaoController {
 		}
 	}
 
-	private static List<NameValuePair> getFormParams(InputStream content) throws IOException {
+	private List<NameValuePair> getFormParams(InputStream content)
+			throws IOException {
 
 		BufferedReader rd = new BufferedReader(new InputStreamReader(content));
 
@@ -168,9 +201,11 @@ public class OpcaoController {
 
 			if ("ctl00$ucTopo$btnPesquisa".equals(key))
 				continue;
-			if ("ctl00$contentPlaceHolderConteudo$posicoesAbertoEmp$".equals(key))
+			if ("ctl00$contentPlaceHolderConteudo$posicoesAbertoEmp$"
+					.equals(key))
 				continue;
-			if ("ctl00$contentPlaceHolderConteudo$posicoesAbertoEmp$btnBuscarEmpresa".equals(key))
+			if ("ctl00$contentPlaceHolderConteudo$posicoesAbertoEmp$btnBuscarEmpresa"
+					.equals(key))
 				continue;
 			if ("ctl00$botaoNavegacaoVoltar".equals(key))
 				continue;
@@ -180,83 +215,21 @@ public class OpcaoController {
 
 		}
 
-		paramList.add(new BasicNameValuePair("ctl00$contentPlaceHolderConteudo$posicoesAbertoEmp$", "rbTodos"));
+		paramList.add(new BasicNameValuePair(
+				"ctl00$contentPlaceHolderConteudo$posicoesAbertoEmp$",
+				"rbTodos"));
 		paramList.add(new BasicNameValuePair("cboAgentesCorretorasNome", "#"));
-		paramList.add(new BasicNameValuePair("cboAgentesCorretorasCodigo", "#"));
+		paramList
+				.add(new BasicNameValuePair("cboAgentesCorretorasCodigo", "#"));
 
 		return paramList;
 
 	}
-	
-	private void updateQuotes(Ativo ativo) {
-		CloseableHttpClient httpclient = HttpClients.createDefault();
-		try {
-			HttpGet httpget = new HttpGet(QUOTES_URL + ativo.getCodes());
 
-			httpget.addHeader("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:26.0) Gecko/20100101 Firefox/26.0");
-			httpget.addHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
-			httpget.addHeader("Accept-Language", "pt-BR,pt;q=0.8,en-US;q=0.5,en;q=0.3");
-			httpget.addHeader("Accept-Encoding", "gzip, deflate");
 
-			CloseableHttpResponse response1 = httpclient.execute(httpget);
-			try {
-				HttpEntity entity = response1.getEntity();
-
-				BufferedReader rd = new BufferedReader(new InputStreamReader(response1.getEntity().getContent()));
-
-				StringBuffer result = new StringBuffer();
-				String line = "";
-				while ((line = rd.readLine()) != null) {
-					result.append(line);
-				}
-				EntityUtils.consume(entity);
-				
-				Document doc = Jsoup.parse(result.toString());
-				
-				for(Element cotacao : doc.select("Papel")) {
-					String codigo = cotacao.attr("Codigo");
-					String nome = cotacao.attr("Nome");
-					String data = cotacao.attr("Data");
-					String abertura = cotacao.attr("Abertura");
-					String minimo = cotacao.attr("Minimo");
-					String maximo = cotacao.attr("Maximo");
-					String medio = cotacao.attr("Medio");
-					String ultimo = cotacao.attr("Ultimo");
-					String oscilacao = cotacao.attr("Oscilacao");
-					
-					System.out.println("codigo: " + codigo + " | " +
-							"nome: " + nome + " | " +
-							"data: " + data + " | " +
-							"abertura: " + abertura + " | " +
-							"minimo: " + minimo + " | " +
-							"maximo: " + maximo + " | " +
-							"medio: " + medio + " | " +
-							"ultimo: " + ultimo + " | " +
-							"oscilacao: " + oscilacao + " | ");
-				}
-
-				
-		
-
-				
-			} catch (Exception e) {
-				log.log(Level.SEVERE, "Erro no controller ao recuperar as cotacoes.",e);
-			} finally {
-				response1.close();
-			}
-		} catch (Exception e) {
-			log.log(Level.SEVERE, "Erro no controller ao recuperar as cotacoes.",e);
-		} finally {
-			try {
-				httpclient.close();
-			} catch (Exception e) {}
-		}
-		
-	}
-
-	public static void main(String[] args) {
-		Ativo ativo = new Ativo("BBAS","3",new Date());
-		OpcaoController controller = new OpcaoController();
-		controller.updateQuotes(ativo);
-	}
+//\	public static void main(String[] args) {
+//		Ativo ativo = new Ativo("BBAS", "3", new Date());
+//		OpcaoController controller = new OpcaoController();
+//		controller.updateQuotes(ativo);
+//	}
 }
