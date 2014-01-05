@@ -166,7 +166,7 @@ public class Opcao {
 				medio = !StringUtils.isEmpty(dados.get("medio")) ? Double.parseDouble(dados.get("medio").replace(",", ".")) : null;		
 				ultimo = !StringUtils.isEmpty(dados.get("ultimo")) ? Double.parseDouble(dados.get("ultimo").replace(",", ".")) : null;		
 				oscilacao = !StringUtils.isEmpty(dados.get("oscilacao")) ? Double.parseDouble(dados.get("oscilacao").replace(",", ".")) : null;
-				negocios = !StringUtils.isEmpty(dados.get("negocios")) ? Integer.parseInt(dados.get("negocios")) : null;
+				negocios = !StringUtils.isEmpty(dados.get("negocios")) ? Integer.parseInt(dados.get("negocios")) : 0;
 
 				if(!StringUtils.isEmpty(dados.get("dataAtualizacao")) && dados.get("dataAtualizacao").length() == 19)
 					dataAtualizacao = dateFormat.parse(dados.get("dataAtualizacao"));
