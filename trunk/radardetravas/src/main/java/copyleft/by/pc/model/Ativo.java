@@ -8,6 +8,8 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
 import org.springframework.util.StringUtils;
 
 public class Ativo {
@@ -31,12 +33,14 @@ public class Ativo {
 	Integer negocios;
 	Date dataAtualizacao;
 	Date dataCriacao;
+	Boolean possuiOpcoesNegociadas;
 	List<Opcao> opcoesPut;
 	List<Opcao> opcoesCall;
 
 	public Ativo(String nome, String tipo, Date now) {
 		codigoAtivo = nome.trim() + tipo;
 		dataCriacao = now;
+		possuiOpcoesNegociadas = false;
 	}
 
 	public String getCodigoAtivo() {
@@ -119,6 +123,14 @@ public class Ativo {
 		this.negocios = negocios;
 	}
 
+	public Boolean getPossuiOpcoesNegociadas() {
+		return possuiOpcoesNegociadas;
+	}
+
+	public void setPossuiOpcoesNegociadas(Boolean possuiOpcoesNegociadas) {
+		this.possuiOpcoesNegociadas = possuiOpcoesNegociadas;
+	}
+
 	private void addOpcaoPut(Opcao opcao) {
 		if (opcoesPut == null)
 			opcoesPut = new ArrayList<Opcao>();
@@ -132,6 +144,7 @@ public class Ativo {
 	}
 
 	public void addOpcao(Opcao opcao) {
+
 		switch (opcao.getTipo()) {
 		case Opcao.TIPO_CALL:
 			addOpcaoCall(opcao);
@@ -175,7 +188,7 @@ public class Ativo {
 		return result;
 	}
 
-	public String getCodes() {
+	public String listCodes() {
 		String result = getCodigoAtivo();
 
 		if (getOpcoesCall() != null && getOpcoesCall().size() > 0)
@@ -189,7 +202,7 @@ public class Ativo {
 		return result;
 	}
 
-	public List<String> getCodesAsList() {
+	public List<String> listCodesAsList() {
 		List<String> result = new ArrayList<String>();
 		result.add(getCodigoAtivo());
 
@@ -208,8 +221,7 @@ public class Ativo {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((codigoAtivo == null) ? 0 : codigoAtivo.hashCode());
+		result = prime * result + ((codigoAtivo == null) ? 0 : codigoAtivo.hashCode());
 		return result;
 	}
 
@@ -230,38 +242,57 @@ public class Ativo {
 		return true;
 	}
 
-	public void updateFromMap(Map<String,Map<String,String>> dadosCompletos) {
+	public void updateFromMap(Map<String, Map<String, String>> dadosCompletos) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 		SimpleDateFormat dateFormat2 = new SimpleDateFormat("dd/MM/yyyyHH:mm:ss");
-		
+
 		try {
-			//atualiza os dados do ativo
-			Map<String,String> dados = dadosCompletos.get(codigoAtivo);
-			if(dados != null) {
+			// atualiza os dados do ativo
+			Map<String, String> dados = dadosCompletos.get(codigoAtivo);
+			if (dados != null) {
 				nomeAtivo = dados.get("nomeAtivo");
-				abertura = !StringUtils.isEmpty(dados.get("abertura")) ? Double.parseDouble(dados.get("abertura").replace(",", ".")) : null;		
-				minimo = !StringUtils.isEmpty(dados.get("minimo")) ? Double.parseDouble(dados.get("minimo").replace(",", ".")) : null;		
-				maximo = !StringUtils.isEmpty(dados.get("maximo")) ? Double.parseDouble(dados.get("maximo").replace(",", ".")) : null;		
-				medio = !StringUtils.isEmpty(dados.get("medio")) ? Double.parseDouble(dados.get("medio").replace(",", ".")) : null;		
-				ultimo = !StringUtils.isEmpty(dados.get("ultimo")) ? Double.parseDouble(dados.get("ultimo").replace(",", ".")) : null;		
-				oscilacao = !StringUtils.isEmpty(dados.get("oscilacao")) ? Double.parseDouble(dados.get("oscilacao").replace(",", ".")) : null;		
-				negocios = !StringUtils.isEmpty(dados.get("negocios")) ? Integer.parseInt(dados.get("negocios")) : null;		
-				
-				if(!StringUtils.isEmpty(dados.get("dataAtualizacao")) && dados.get("dataAtualizacao").length() == 19)
+				abertura = !StringUtils.isEmpty(dados.get("abertura")) ? Double.parseDouble(dados.get("abertura").replace(",", ".")) : null;
+				minimo = !StringUtils.isEmpty(dados.get("minimo")) ? Double.parseDouble(dados.get("minimo").replace(",", ".")) : null;
+				maximo = !StringUtils.isEmpty(dados.get("maximo")) ? Double.parseDouble(dados.get("maximo").replace(",", ".")) : null;
+				medio = !StringUtils.isEmpty(dados.get("medio")) ? Double.parseDouble(dados.get("medio").replace(",", ".")) : null;
+				ultimo = !StringUtils.isEmpty(dados.get("ultimo")) ? Double.parseDouble(dados.get("ultimo").replace(",", ".")) : null;
+				oscilacao = !StringUtils.isEmpty(dados.get("oscilacao")) ? Double.parseDouble(dados.get("oscilacao").replace(",", ".")) : null;
+				negocios = !StringUtils.isEmpty(dados.get("negocios")) ? Integer.parseInt(dados.get("negocios")) : 0;
+
+				if (!StringUtils.isEmpty(dados.get("dataAtualizacao")) && dados.get("dataAtualizacao").length() == 19)
 					dataAtualizacao = dateFormat.parse(dados.get("dataAtualizacao"));
-				else if(!StringUtils.isEmpty(dados.get("dataAtualizacao")) && dados.get("dataAtualizacao").length() == 18)
+				else if (!StringUtils.isEmpty(dados.get("dataAtualizacao")) && dados.get("dataAtualizacao").length() == 18)
 					dataAtualizacao = dateFormat2.parse(dados.get("dataAtualizacao"));
 			}
-			//atualiza as opcoes
-			if(opcoesCall != null && opcoesCall.size() > 0)
-				for(Opcao opcao : opcoesCall)
+			// atualiza as opcoes
+			if (opcoesCall != null && opcoesCall.size() > 0)
+				for (Opcao opcao : opcoesCall)
 					opcao.updateFromMap(dadosCompletos.get(opcao.nomeOpcao));
-			if(opcoesPut != null && opcoesPut.size() > 0)
-				for(Opcao opcao : opcoesPut)
+			if (opcoesPut != null && opcoesPut.size() > 0)
+				for (Opcao opcao : opcoesPut)
 					opcao.updateFromMap(dadosCompletos.get(opcao.nomeOpcao));
 
 		} catch (Exception e) {
-			log.log(Level.SEVERE,"Erro ao atualizar ativo: " + codigoAtivo ,e);
-		}		
+			log.log(Level.SEVERE, "Erro ao atualizar ativo: " + codigoAtivo, e);
+		}
+	}
+
+	public void removeOpcoesSemNegocios() {
+
+		if (opcoesCall != null && opcoesCall.size() > 0)
+			CollectionUtils.filter(opcoesCall, new Predicate() {
+				@Override
+				public boolean evaluate(Object input) {
+					return ((Opcao) input).getNegocios() > 0;
+				}
+			});
+
+		if (opcoesPut != null && opcoesPut.size() > 0)
+			CollectionUtils.filter(opcoesPut, new Predicate() {
+				@Override
+				public boolean evaluate(Object input) {
+					return ((Opcao) input).getNegocios() > 0;
+				}
+			});
 	}
 }
