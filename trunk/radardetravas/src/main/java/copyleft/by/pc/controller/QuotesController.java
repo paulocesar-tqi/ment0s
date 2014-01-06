@@ -34,7 +34,7 @@ public class QuotesController {
 
 	@Async
 	public Future<Void> updateQuotes(Ativo ativo) {
-		log.info("INI - Atualizando ativo: " + ativo.getCodigoAtivo());
+		//log.info("INI - Atualizando ativo: " + ativo.getCodigoAtivo());
 
 		CloseableHttpClient httpclient = HttpClients.createDefault();
 		try {
@@ -88,7 +88,7 @@ public class QuotesController {
 			} catch (Exception e) {
 			}
 		}
-		log.info("FIM - Atualizando ativo: " + ativo.getCodigoAtivo());
+		//log.info("FIM - Atualizando ativo: " + ativo.getCodigoAtivo());
 
 		return new AsyncResult<Void>(null);
 	}
@@ -131,7 +131,7 @@ public class QuotesController {
 
 	@Async
 	public Future<Void> updateNegocios(Ativo ativo) {
-		log.info("INI - Atualizando negocios: " + ativo.getCodigoAtivo());
+		//log.info("INI - Atualizando negocios: " + ativo.getCodigoAtivo());
 
 		CloseableHttpClient httpclient = HttpClients.createDefault();
 		try {
@@ -183,7 +183,7 @@ public class QuotesController {
 			} catch (Exception e) {
 			}
 		}
-		log.info("FIM - Atualizando negocios: " + ativo.getCodigoAtivo());
+		//log.info("FIM - Atualizando negocios: " + ativo.getCodigoAtivo());
 
 		return new AsyncResult<Void>(null);
 	}
