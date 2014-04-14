@@ -14,51 +14,9 @@ import org.sikuli.script.Finder;
 import org.sikuli.script.Region;
 import org.sikuli.script.Screen;
 import org.sikuli.script.ScreenImage;
+import br.pc.Constants;
 
 public class PCPoker {
-	private static final int cardWidth = 13;
-	private static final int cardHeight = 35;
-
-	private static final int xMyCard1 = 356;
-	private static final int xMyCard2 = 404;
-	private static final int yMyCards = 381;
-
-	private static final int xFlopCard1 = 273;
-	private static final int xFlopCard2 = 327;
-	private static final int xFlopCard3 = 381;
-	private static final int xTurnCard = 435;
-	private static final int xRiverCard = 489;
-	private static final int yDeskCards = 222;
-
-	private static final Region boardCardsRegion = new Region(271, 220, 266, 4);
-	private static final Region buttonsRegion = new Region(384, 519, 411, 59);
-	private static final Region player1CardsRegion = new Region(60, 301, 97, 10);
-	private static final Region player2CardsRegion = new Region(60, 129, 97, 10);
-	private static final Region player3CardsRegion = new Region(357, 63, 97, 10);
-	private static final Region player4CardsRegion = new Region(655, 129, 97, 10);
-	private static final Region player5CardsRegion = new Region(655, 301, 97, 10);
-
-	private static final String cardsDir = "D:/workspace/PCPoker/imgs/cards";
-	private static final String assetsDir = "D:/workspace/PCPoker/imgs/assets";
-	private static final String foldButton = assetsDir + "/fold_button.png";
-	private static final String checkButton = assetsDir + "/check_button.png";
-	private static final String callButton = assetsDir + "/call_button.png";
-	private static final String raiseButton = assetsDir + "/raise_button.png";
-	private static final String betButton = assetsDir + "/bet_button.png";
-
-	private static final String haveFlop = assetsDir + "/flop.png";
-	private static final String haveTurn = assetsDir + "/turn.png";
-	private static final String haveRiver = assetsDir + "/river.png";
-
-	private static Screen s = new Screen();
-
-	public enum Action {
-		FOLD, CHECK, RAISE;
-	};
-
-	public enum Moment {
-		PRE_FLOP, FLOP_TURNED, TURN_TURNED, RIVER_TURNED;
-	};
 
 	private void letTheShowBegin() {
 		try {
@@ -66,17 +24,17 @@ public class PCPoker {
 			String boardCards = "";
 			String myCards = "";
 			while (true) {
-				Moment moment = getMoment();
 				buttonsRegion.wait(foldButton, 40);
-				
+
+				Moment moment = getMoment();
 				System.out.println(moment);
+
+				boardCards = fillBoardCards(moment, boardCards);
 				
 				if(moment == Moment.PRE_FLOP)
 					myCards = getMyCards();
 				
 				String cardsFromOthersPlayers = getCardsFromOthersPlayers();
-
-				boardCards = fillBoardCards(moment, boardCards);
 
 				System.out.println("Mesa: " + myCards + "," + cardsFromOthersPlayers + " | " + boardCards);
 
@@ -225,7 +183,7 @@ public class PCPoker {
 		}
 
 		System.out.println("resultado flop: " + retorno);
-		return retorno.length() == 6 ? retorno : null;
+		return retorno.length() == 6 ? retorno : "";
 	}
 
 	private String getTurn() {
@@ -244,7 +202,7 @@ public class PCPoker {
 		}
 
 		 System.out.println("resultado turn: " + retorno);
-		return retorno.length() == 2 ? retorno : null;
+		return retorno.length() == 2 ? retorno : "";
 	}
 
 	private String getRiver() {
@@ -263,7 +221,7 @@ public class PCPoker {
 		}
 
 		System.out.println("resultado river: " + retorno);
-		return retorno.length() == 2 ? retorno : null;
+		return retorno.length() == 2 ? retorno : "";
 	}
 
 	private String getCardsFromOthersPlayers() {
