@@ -44,7 +44,9 @@ public class Auth {
     private static HttpPost post;
     private static HttpResponse response;
 
-    private static void makeRequest(String nextRequest){
+    private static void makeRequest(int id, String nextRequest){
+    	System.out.println(id + " POST========");
+    	System.out.println("URL: " + nextRequest);
         post = new HttpPost(nextRequest);
         try {
             response = httpclient.execute(post);
@@ -52,10 +54,10 @@ public class Auth {
             e.printStackTrace();
         }
         post.abort();
-//        for(Header h : response.getAllHeaders() ) {
-//        	System.out.println(h.getName() + " : " + h.getValue());
-//        }
-//        System.out.println("NOVO========");
+        for(Header h : response.getAllHeaders() ) {
+        	System.out.println(h.getName() + " : " + h.getValue());
+        }
+        System.out.println("FIM POST========");
     }
 
     /**
@@ -72,7 +74,7 @@ public class Auth {
 
             //First request
 
-            makeRequest("http://api.vkontakte.ru/oauth/authorize?" +
+            makeRequest(0, "http://api.vkontakte.ru/oauth/authorize?" +
                     "client_id=" + idapp +
                     "&scope=" + settings +
                     "&display=wap" +
@@ -82,10 +84,10 @@ public class Auth {
 
             //Second request
             String nextRequest = response.getFirstHeader("location").getValue();
-            makeRequest(nextRequest);
+            makeRequest(1, nextRequest);
             
             //terceiro
-            makeRequest(nextRequest);
+            makeRequest(2, nextRequest);
 
             HttpEntity entity = response.getEntity();
             String responseString = EntityUtils.toString(entity, "UTF-8");
@@ -120,13 +122,13 @@ public class Auth {
 
             if(body.length() == 0){
                 nextRequest = response.getFirstHeader("location").getValue();
-                makeRequest(nextRequest);
+                makeRequest(1000, nextRequest);
 
             } else {
             	document = Jsoup.parse(body);
                 nextRequest = document.select("form").first().attr("action");
 
-                makeRequest(nextRequest);
+                makeRequest(3, nextRequest);
             }
             nextRequest = response.getFirstHeader("location").getValue();
 
