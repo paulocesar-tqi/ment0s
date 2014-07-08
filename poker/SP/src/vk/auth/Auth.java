@@ -52,10 +52,10 @@ public class Auth {
             e.printStackTrace();
         }
         post.abort();
-        for(Header h : response.getAllHeaders() ) {
-        	System.out.println(h.getName() + " : " + h.getValue());
-        }
-        System.out.println("NOVO========");
+//        for(Header h : response.getAllHeaders() ) {
+//        	System.out.println(h.getName() + " : " + h.getValue());
+//        }
+//        System.out.println("NOVO========");
     }
 
     /**
@@ -136,8 +136,6 @@ public class Auth {
 
             return new Token(id, accessToken, new Date(System.currentTimeMillis() + Long.parseLong(expires)));
         } catch (Exception e) {
-            //e.printStackTrace();
-            //return null;
             throw new AuthorizationException();
         }
     }
