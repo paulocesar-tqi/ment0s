@@ -1,13 +1,11 @@
 package pc;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import org.apache.commons.lang3.StringEscapeUtils;
-import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -22,21 +20,17 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 import org.jsoup.Jsoup;
-import org.jsoup.safety.Whitelist;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
-import twitter4j.JSONObject;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.conf.ConfigurationBuilder;
-import vk.api.Api;
-import vk.api.utils.P;
 import vk.auth.AcceptAllSpecFactory;
-import vk.auth.Auth;
-import vk.auth.Token;
 
-public class Monitor {
-    
+public class GatryMonitor {
 	private static HttpClient httpclient = new DefaultHttpClient() {
         @Override
         protected CookieSpecRegistry createCookieSpecRegistry() {
@@ -57,44 +51,26 @@ public class Monitor {
 	
     private static TwitterFactory tf = new TwitterFactory(cb.build());
     private static Twitter twitter = tf.getInstance();
+    
+    private static ArrayList<String> currentOffers = new ArrayList<String>();
 
     
 	public static void main(String[] args) throws TwitterException {
-		Token it = null;
-		int oldId = 0;
-		
 		try {
-			// Recupera o token
-			it = Auth.logIn("4448828", "groups", "contato@paulocesar.tk", "Yusuke123");
-			//it = new Token("260181154", "086ab8b869442249489a11ed888c6785bb9a538d609d1cbb745abfe010b2e5c8ce0ba1fdad33c5dab7f69", new Date(System.currentTimeMillis() + Long.parseLong("86400")));
-			 while(true) {
+//			 while(true) {
 				 try {
-					 if(it.isExpired())
-						 it = Auth.logIn("4448828", "groups", "contato@paulocesar.tk", "Yusuke123");
-
-					// Recupera o ultimo comentario do topico
-					String retorno = Api.make(it, "board.getComments", new P("group_id=60157925,topic_id=30270057,count=1,extended=0,sort=desc"));
-					//String retorno = "{\"response\":{\"comments\":[7,{\"id\":25267,\"from_id\":228422840,\"date\":1404935850,\"text\":\"ctrl c ctrl v <br><br>Bug Paqueta &gt; Loja confiavel com v?rias lojas fisicas pelo pa?s<br><br>Anunciam o modelo Phantom, chuteira de 1000 conto que o neymar usa e a foto ? do modelo Phelon :D x?ii isso vai dar merda pra eles hen<br><br>http:\\/\\/www.paquetaesportes.com.br\\/Chuteira-de-Campo-Hypervenom-Phantom-FG-Dourado-2000948088\\/p<br><br>http:\\/\\/www.nike.com.br\\/Chuteira-Hypervenom-Gold-Phantom-FG-301850.html\"}]}}";
-					System.out.println(new Date() + " | " + retorno);
-					JSONObject json = new JSONObject(retorno);
-					json = json.getJSONObject("response").getJSONArray("comments").getJSONObject(1);
-					if(oldId != json.getInt("id")){
-						oldId = json.getInt("id");
-						mountSendTweet(json.getString("text"));
-					}					
-				} catch (Exception e) {
+					 getOffers();
+				 } catch (Exception e) {
 					e.printStackTrace();
 				}
-				Thread.sleep(1000 * 60 * 2);
-			}
+				//Thread.sleep(1000 * 60 * 2);
+//			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
 	private static void mountSendTweet(String text) throws ClientProtocolException, IOException, TwitterException {
-		text = StringEscapeUtils.unescapeHtml4(Jsoup.clean(text.replaceAll("<br>", "\n"), Whitelist.none()));
-		
 		HttpResponse response = null;
 		HttpPost post = new HttpPost("http://shortText.com/api.aspx");
         List<NameValuePair> postform = new ArrayList<NameValuePair>();
@@ -112,6 +88,62 @@ public class Monitor {
         System.out.println("Publicando tweet: " + text + "... " + url);
 		twitter.updateStatus(text + " | " + url);
 
+	}
+
+	
+	private static void getOffers() throws ClientProtocolException, IOException, TwitterException {
+		HttpResponse response = null;
+		HttpPost post = new HttpPost("http://www.intensedebate.com/js/wordpressTemplateCommentWrapper2.php?acct=152aad78d7b44d72a43402870c2d1c89&postid=http://gatry.com/comprei/&title=Gatry%2520-%2520Promo%25C3%25A7%25C3%25B5es&url=http://gatry.com/comprei/");
+       	
+        response = httpclient.execute(post);
+        HttpEntity entity = response.getEntity();
+        String responseString = EntityUtils.toString(entity, "UTF-8");
+        post.abort();
+        responseString = responseString.replaceAll("\\\\", "");
+        responseString = responseString.substring(responseString.indexOf("<div id=\"idc-cover\" class=\"idc-comments\">"), responseString.indexOf("<div id=\"IDCommentsNewThreadCover\""));
+        //System.out.println(responseString);
+        
+        Document document = Jsoup.parse(responseString);
+        
+        Elements elements = document.select("div[class=idc-c-t-inner]");
+        
+        Map<String,String> offersMap = new HashMap<String,String>();
+        for(Element el : elements) {
+        	Elements links = el.select("a[href]");
+        	String strLinks = "";
+        	for(Element link : links) {
+        		strLinks += link.attr("abs:href") + " ";
+        	}
+        	//System.out.println(el.text() + " | " + strLinks);
+        	offersMap.put(el.attr("id"), el.text() + " | " + strLinks);
+        	System.out.println(el.attr("id"));
+        }
+        processOffers(offersMap);
+	}
+	
+	private static void processOffers(Map<String,String> map) throws ClientProtocolException, IOException, TwitterException {
+		//Se a list for vazia, popula a lista e não printa
+		if (currentOffers.size() == 0) {
+			for(String key : map.keySet()) {
+				currentOffers.add(key);
+			}
+		}
+		
+		//Remove do currentOffers todos que não vieram no map
+		@SuppressWarnings("unchecked")
+		ArrayList<String> newOffers = (ArrayList<String>) currentOffers.clone();
+		for(String offer : newOffers) {
+			if(!map.containsKey(offer))
+				currentOffers.remove(offer);
+		}
+		
+		//twitta as novas offers e adiciona na lista
+		for(String key : map.keySet()) {
+			if(!currentOffers.contains(key)) {
+				currentOffers.add(key);
+				mountSendTweet(map.get(key));
+			}
+		}
 	}
 
 }

@@ -13,7 +13,7 @@ import java.util.Collection;
  * Date:   12/8/11
  * Time:   4:56 PM
  */
-class AcceptAllSpecFactory implements CookieSpecFactory {
+public class AcceptAllSpecFactory implements CookieSpecFactory {
 
     public CookieSpec newInstance(final HttpParams params) {
         if (params != null) {
