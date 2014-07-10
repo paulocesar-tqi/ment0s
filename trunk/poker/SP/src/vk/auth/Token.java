@@ -1,6 +1,6 @@
 package vk.auth;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class Token {
 	final private String id;
