@@ -14,7 +14,7 @@ public class CrawlerGatryPostWriter implements ItemWriter<Post> {
 	@Override
 	public void write(List<? extends Post> posts) throws Exception {
 		for(Post post : posts) {
-			log.info("process: " + post.getHtml());
+			log.info("writer: " + post.getHtml());
 		}
 	}
 	

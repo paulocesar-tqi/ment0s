@@ -1,5 +1,9 @@
 package copyleft.by.pc.jobs.crawlergatry;
 
+import java.util.ArrayList;
+import java.util.concurrent.Future;
+import java.util.concurrent.ThreadPoolExecutor;
+
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
@@ -7,6 +11,8 @@ import org.springframework.batch.core.configuration.annotation.JobBuilderFactory
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.core.partition.support.Partitioner;
+import org.springframework.batch.integration.async.AsyncItemProcessor;
+import org.springframework.batch.integration.async.AsyncItemWriter;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
@@ -46,43 +52,46 @@ public class CrawlerGatryJobConfiguration {
 	public Job crawlerGatryJob(){
 		return jobs.get("crawlerGatryJob")
 //				.listener(protocolListener())
-				.start(partitionStep())
+				.start(step())
 				.build();
 	}
 	
-	@StepScope
-	@Bean
-	public Step partitionStep(){
-		return stepBuilderFactory.get("partitionStep")
-				.partitioner(step())
-				.partitioner("step", partitioner())
-				.taskExecutor(gatryTaskExecutor())
-				.build();
-	}
+//	@StepScope
+//	@Bean
+//	public Step partitionStep(){
+//		return stepBuilderFactory.get("partitionStep")
+//				.partitioner(step())
+//				.partitioner("step", partitioner())
+//				.taskExecutor(gatryTaskExecutor())
+//				.build();
+//	}
 	
 	@Bean
-	public TaskExecutor gatryTaskExecutor() {
+	public TaskExecutor gatryAsyncTaskExecutor() {
 		ThreadPoolTaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
 		taskExecutor.setMaxPoolSize(Integer.parseInt(env.getProperty("gatry.threads")));
 		taskExecutor.setCorePoolSize(Integer.parseInt(env.getProperty("gatry.threads")));
+		taskExecutor.setQueueCapacity(Integer.parseInt(env.getProperty("gatry.threads")) * 1000);
+		taskExecutor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
+		taskExecutor.setThreadNamePrefix("AsyncExecutor-");
 		taskExecutor.afterPropertiesSet();
 		return taskExecutor;
 	}
 	
-	@StepScope
-	@Bean
-	public Partitioner partitioner(){
-		return new CrawlerGatryPartitioner();
-	}
- 
+//	@StepScope
+//	@Bean
+//	public Partitioner partitioner(){
+//		return new CrawlerGatryPartitioner();
+//	}
+// 
 	
 	@Bean
 	public Step step(){
 		return stepBuilderFactory.get("step")
-				.<Post,Post>chunk(1) //important to be one in this case to commit after every line read
-				.reader(reader(null))
-				.processor(processor())
-				.writer(writer())
+				.<String,Future<Post>>chunk(100) //important to be one in this case to commit after every line read
+				.reader(reader())
+				.processor(asyncItemProcessor())
+				.writer(asyncItemWriter())
 //				.listener(logProcessListener())
 				.faultTolerant()
 				.skipLimit(10) //default is set to 0
@@ -92,18 +101,34 @@ public class CrawlerGatryJobConfiguration {
 
 	@StepScope
 	@Bean
-	public ItemReader<Post> reader(@Value("#{stepExecutionContext['html']}") String html){
+	public ItemReader<String> reader(){
 		CrawlerGatryPostReader reader = new CrawlerGatryPostReader();
-		reader.setHtml(html);
 		return reader; 
 	}
 
 	@StepScope
     @Bean
-    public ItemProcessor<Post, Post> processor() {
+    public ItemProcessor<String, Future<Post>> asyncItemProcessor() {
+		AsyncItemProcessor<String, Post> asyncItemProcessor = new AsyncItemProcessor<String, Post>();
+		asyncItemProcessor.setDelegate(processor());
+        asyncItemProcessor.setTaskExecutor(gatryAsyncTaskExecutor());
+        return asyncItemProcessor;
+    }
+
+	@StepScope
+    @Bean
+    public ItemProcessor<String, Post> processor() {
         return new CrawlerGatryPostProcessor();
     }
-    
+	
+	@StepScope
+    @Bean
+    public ItemWriter<Future<Post>> asyncItemWriter() {
+		AsyncItemWriter<Post> asyncItemWriter = new AsyncItemWriter<Post>();
+        asyncItemWriter.setDelegate(writer());
+        return asyncItemWriter;
+    }
+
 	@StepScope
     @Bean
     public ItemWriter<Post> writer() {
