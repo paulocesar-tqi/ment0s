@@ -15,14 +15,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 @Scope("step")
-public class CrawlerGatryPostReader implements ItemReader<String> {
+public class CrawlerGatryPostReader implements ItemReader<Element> {
 	private static final Log log = LogFactory.getLog(CrawlerGatryPostReader.class);
 
-	private List<String> list = null;
+	private List<Element> list = null;
 	
-	public CrawlerGatryPostReader() {
+	public CrawlerGatryPostReader(String gatryEndpoint) {
 		RestTemplate template = new RestTemplate();
-		ResponseEntity<String> entity = template.getForEntity("http://www.intensedebate.com/js/wordpressTemplateCommentWrapper2.php?acct=152aad78d7b44d72a43402870c2d1c89&postid=http://gatry.com/comprei/&title=Gatry%2520-%2520Promo%25C3%25A7%25C3%25B5es&url=http://gatry.com/comprei/", String.class);
+		ResponseEntity<String> entity = template.getForEntity(gatryEndpoint, String.class);
 		String html = entity.getBody();
 		html = html.replaceAll("\\\\", "");
 		html = html.substring(html.indexOf("<div id=\"idc-cover\" class=\"idc-comments\">"), html.indexOf("<div id=\"IDCommentsNewThreadCover\""));
@@ -30,22 +30,22 @@ public class CrawlerGatryPostReader implements ItemReader<String> {
         Document document = Jsoup.parse(html);
         Elements elements = document.select("div[class=idc-c-t-inner]");
         
-        list = new ArrayList<String>();
+        list = new ArrayList<Element>();
         for(Element el : elements) {
-    		list.add(el.text());
+    		list.add(el);
 
     		log.info("readLoader: " + el.attr("id") + " | " + el.text());
         }
 	}
 
 	@Override
-	public String read() {
+	public Element read() {
 		
-		String html = null;
+		Element html = null;
 		if (!list.isEmpty()) {
 			html = list.remove(0);
 		}
-		log.info("reader: " + html);
+		//log.info("reader: " + html);
 		
 		return html;
 	}

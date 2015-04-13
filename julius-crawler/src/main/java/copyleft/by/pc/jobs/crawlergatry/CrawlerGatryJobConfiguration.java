@@ -1,16 +1,15 @@
 package copyleft.by.pc.jobs.crawlergatry;
 
-import java.util.ArrayList;
 import java.util.concurrent.Future;
 import java.util.concurrent.ThreadPoolExecutor;
 
+import org.jsoup.nodes.Element;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepScope;
-import org.springframework.batch.core.partition.support.Partitioner;
 import org.springframework.batch.integration.async.AsyncItemProcessor;
 import org.springframework.batch.integration.async.AsyncItemWriter;
 import org.springframework.batch.item.ItemProcessor;
@@ -21,8 +20,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.Scope;
-import org.springframework.core.env.Environment;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
@@ -45,7 +42,12 @@ public class CrawlerGatryJobConfiguration {
 	private StepBuilderFactory stepBuilderFactory;
 
 	@Autowired
-	Environment env;
+	@Value("${gatry.endpoint}") 
+	private String gatryEndpoint;
+	 
+	@Autowired
+	@Value("${gatry.threads}") 
+	private Integer gatryThreads;
 	 
 	
 	@Bean
@@ -56,39 +58,22 @@ public class CrawlerGatryJobConfiguration {
 				.build();
 	}
 	
-//	@StepScope
-//	@Bean
-//	public Step partitionStep(){
-//		return stepBuilderFactory.get("partitionStep")
-//				.partitioner(step())
-//				.partitioner("step", partitioner())
-//				.taskExecutor(gatryTaskExecutor())
-//				.build();
-//	}
-	
 	@Bean
 	public TaskExecutor gatryAsyncTaskExecutor() {
 		ThreadPoolTaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
-		taskExecutor.setMaxPoolSize(Integer.parseInt(env.getProperty("gatry.threads")));
-		taskExecutor.setCorePoolSize(Integer.parseInt(env.getProperty("gatry.threads")));
-		taskExecutor.setQueueCapacity(Integer.parseInt(env.getProperty("gatry.threads")) * 1000);
+		taskExecutor.setMaxPoolSize(gatryThreads);
+		taskExecutor.setCorePoolSize(gatryThreads);
+		taskExecutor.setQueueCapacity(gatryThreads * 1000);
 		taskExecutor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
 		taskExecutor.setThreadNamePrefix("AsyncExecutor-");
 		taskExecutor.afterPropertiesSet();
 		return taskExecutor;
 	}
 	
-//	@StepScope
-//	@Bean
-//	public Partitioner partitioner(){
-//		return new CrawlerGatryPartitioner();
-//	}
-// 
-	
 	@Bean
 	public Step step(){
 		return stepBuilderFactory.get("step")
-				.<String,Future<Post>>chunk(100) //important to be one in this case to commit after every line read
+				.<Element,Future<Post>>chunk(100)
 				.reader(reader())
 				.processor(asyncItemProcessor())
 				.writer(asyncItemWriter())
@@ -101,15 +86,15 @@ public class CrawlerGatryJobConfiguration {
 
 	@StepScope
 	@Bean
-	public ItemReader<String> reader(){
-		CrawlerGatryPostReader reader = new CrawlerGatryPostReader();
-		return reader; 
+	public ItemReader<Element> reader(){
+		CrawlerGatryPostReader reader = new CrawlerGatryPostReader(gatryEndpoint);
+		return reader;
 	}
 
 	@StepScope
     @Bean
-    public ItemProcessor<String, Future<Post>> asyncItemProcessor() {
-		AsyncItemProcessor<String, Post> asyncItemProcessor = new AsyncItemProcessor<String, Post>();
+    public ItemProcessor<Element, Future<Post>> asyncItemProcessor() {
+		AsyncItemProcessor<Element, Post> asyncItemProcessor = new AsyncItemProcessor<Element, Post>();
 		asyncItemProcessor.setDelegate(processor());
         asyncItemProcessor.setTaskExecutor(gatryAsyncTaskExecutor());
         return asyncItemProcessor;
@@ -117,7 +102,7 @@ public class CrawlerGatryJobConfiguration {
 
 	@StepScope
     @Bean
-    public ItemProcessor<String, Post> processor() {
+    public ItemProcessor<Element, Post> processor() {
         return new CrawlerGatryPostProcessor();
     }
 	
