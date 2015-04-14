@@ -1,6 +1,6 @@
 package copyleft.by.pc.jobs.crawlergatry;
 
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -27,6 +27,9 @@ public class CrawlerGatryPostProcessor implements ItemProcessor<Element,Post> {
 	@Override
 	public Post process(Element el) throws Exception {
 
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.DATE, -30);
+		
 		String externalCode = el.attr("id"); 
 		if(!externalIds.contains(externalCode)) {
 			Post post = new Post();
@@ -34,7 +37,7 @@ public class CrawlerGatryPostProcessor implements ItemProcessor<Element,Post> {
 			post.setExternalId(externalCode);
 			post.setTitle(el.text());
 			post.setHtml(el.html());
-			post.setPublicationDate(new Date());
+			post.setPublicationDate(cal.getTime());
 			return post;	
 		} else {
 			log.info("Post id " + externalCode + " ja incluido.");

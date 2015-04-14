@@ -34,6 +34,10 @@ public class Post implements Serializable{
 	@Column(name="external_id")
 	private String externalId;
 
+	public Long getId() {
+		return id;
+	}
+	
 	public String getTitle() {
 		return title;
 	}

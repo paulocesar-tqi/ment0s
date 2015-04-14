@@ -65,7 +65,7 @@ public class CrawlerGatryJobConfiguration {
 	public Job crawlerGatryJob(){
 		return jobs.get("crawlerGatryJob")
 //				.listener(protocolListener())
-				.start(step())
+				.start(crawlerGatryStep1())
 				.build();
 	}
 	
@@ -82,8 +82,8 @@ public class CrawlerGatryJobConfiguration {
 	}
 	
 	@Bean
-	public Step step(){
-		return stepBuilderFactory.get("step")
+	public Step crawlerGatryStep1(){
+		return stepBuilderFactory.get("crawlerGatryStep1")
 				.<Element,Future<Post>>chunk(100)
 				.reader(reader())
 				.processor(asyncItemProcessor())

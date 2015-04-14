@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import copyleft.by.pc.jobs.crawlergatry.CrawlerGatryJobConfiguration;
+import copyleft.by.pc.jobs.purgeposts.PurgePostsJobConfiguration;
 
 @Configuration
 @EnableBatchProcessing(modular=true)
@@ -15,6 +16,11 @@ public class AppConfig {
     @Bean
     public ApplicationContextFactory crawlerGatryJob(){
     	return new GenericApplicationContextFactory(CrawlerGatryJobConfiguration.class);
+    }
+    
+    @Bean
+    public ApplicationContextFactory purgePostsJob(){
+    	return new GenericApplicationContextFactory(PurgePostsJobConfiguration.class);
     }
     
     /*

@@ -28,8 +28,11 @@ import org.springframework.scheduling.annotation.Scheduled;
 @EnableAutoConfiguration
 @EnableScheduling
 public class Application {
-
+	
+	private Log log = LogFactory.getLog(Application.class);
+	
 	private static final String CRAWLER_GATRY_JOB = "crawlerGatryJob";
+	private static final String PURGE_POSTS_JOB = "purgePostsJob";
 	
 	private static ConfigurableApplicationContext ctx = null;
 
@@ -38,12 +41,11 @@ public class Application {
         SpringApplication app = new SpringApplication(Application.class);
         app.setWebEnvironment(false);
         ctx = app.run();
-    }
-	
-	@Scheduled(fixedDelay=30000,initialDelay=20000)
-	private static void runGatryJob() throws JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException, JobParametersInvalidException, InterruptedException {
-    	Log log = LogFactory.getLog(Application.class);
-    	
+
+	}
+
+	@Scheduled(fixedDelay=50000,initialDelay=20000)
+	public void runGatryJob() throws JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException, JobParametersInvalidException, InterruptedException {
         JobLauncher jobLauncher = ctx.getBean(JobLauncher.class);
     	        		
     	Job crawlerGatryJob = ctx.getBean(CRAWLER_GATRY_JOB, Job.class);
@@ -65,5 +67,29 @@ public class Application {
     	log.info(String.format("*********** job instance Id: %d", jobInstance.getId()));
 
 	}
-    
+ 
+	@Scheduled(fixedDelay=30000,initialDelay=10000)
+	public void runPurgePostsJob() throws JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException, JobParametersInvalidException, InterruptedException {
+        JobLauncher jobLauncher = ctx.getBean(JobLauncher.class);
+
+    	Job purgePostsJob = ctx.getBean(PURGE_POSTS_JOB, Job.class);
+    	JobParameters jobParameters = new JobParametersBuilder()
+		.addDate("date", new Date())
+		.toJobParameters();
+    	
+    	JobExecution jobExecution = jobLauncher.run(purgePostsJob, jobParameters);
+    	
+    	BatchStatus batchStatus = jobExecution.getStatus();
+    	while(batchStatus.isRunning()){
+    		log.info("*********** Still running.... **************");
+    		Thread.sleep(1000);
+    	}
+    	log.info(String.format("*********** Exit status: %s", jobExecution.getExitStatus().getExitCode()));
+    	JobInstance jobInstance = jobExecution.getJobInstance();
+    	log.info(String.format("********* Name of the job %s", jobInstance.getJobName()));
+    	
+    	log.info(String.format("*********** job instance Id: %d", jobInstance.getId()));
+
+	}
+ 
 }
