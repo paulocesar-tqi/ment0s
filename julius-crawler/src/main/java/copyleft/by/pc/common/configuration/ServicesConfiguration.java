@@ -1,16 +1,20 @@
-package copyleft.by.pc.jobs.crawlergatry;
+package copyleft.by.pc.common.configuration;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import copyleft.by.pc.common.dao.GenericDao;
 
 @Configuration
 public class ServicesConfiguration {
 
-	/*
+	
 	@Bean
-	public ReadDao readDao(){
-		return new ReadDaoImpl();
+	public GenericDao readDao(){
+		return new GenericDao();
 	}
 	
+	/*
 	@Bean
 	public SyndFeedService syndFeedService(){
 		return new SyndFeedServiceImpl();

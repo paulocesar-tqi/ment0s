@@ -1,5 +1,7 @@
 package copyleft.by.pc.jobs.crawlergatry;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Future;
 import java.util.concurrent.ThreadPoolExecutor;
 
@@ -26,6 +28,8 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 
 import copyleft.by.pc.common.configuration.InfrastructureConfiguration;
+import copyleft.by.pc.common.configuration.ServicesConfiguration;
+import copyleft.by.pc.common.dao.GenericDao;
 import copyleft.by.pc.common.entities.Post;
 import copyleft.by.pc.common.listeners.LogProcessListener;
 import copyleft.by.pc.common.listeners.ProtocolListener;
@@ -40,7 +44,10 @@ public class CrawlerGatryJobConfiguration {
  
 	@Autowired
 	private StepBuilderFactory stepBuilderFactory;
-
+		
+	@Autowired
+	private GenericDao dao;
+	
 	@Autowired
 	@Value("${gatry.endpoint}") 
 	private String gatryEndpoint;
@@ -48,6 +55,10 @@ public class CrawlerGatryJobConfiguration {
 	@Autowired
 	@Value("${gatry.threads}") 
 	private Integer gatryThreads;
+	
+	@Autowired
+	@Value("${gatry.id}") 
+	private Integer gatryId;
 	 
 	
 	@Bean
@@ -128,5 +139,12 @@ public class CrawlerGatryJobConfiguration {
 	@Bean
 	public LogProcessListener logProcessListener(){
 		return new LogProcessListener();
-	}    
+	}
+	
+	@StepScope
+	@Bean
+	public List<String> externalIds(){
+		return dao.getExternalIdsBySource(gatryId);
+	}
+
 }

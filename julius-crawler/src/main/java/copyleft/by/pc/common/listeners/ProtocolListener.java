@@ -13,7 +13,7 @@ import org.springframework.batch.core.StepExecution;
 
 public class ProtocolListener implements JobExecutionListener {
 	private static final Log LOGGER = LogFactory.getLog(ProtocolListener.class);
-
+	
 	public void afterJob(JobExecution jobExecution) {
 		StringBuilder protocol = new StringBuilder();
 		protocol.append("\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++ \n");
@@ -47,7 +47,6 @@ public class ProtocolListener implements JobExecutionListener {
 	}
 
 	public void beforeJob(JobExecution arg0) {
-		// nothing to do
 	}
 
 }

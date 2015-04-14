@@ -10,14 +10,20 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.batch.item.ItemReader;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
+
+import copyleft.by.pc.common.dao.GenericDao;
 
 @Scope("step")
 public class CrawlerGatryPostReader implements ItemReader<Element> {
 	private static final Log log = LogFactory.getLog(CrawlerGatryPostReader.class);
 
+	@Autowired
+	private GenericDao dao;
+	
 	private List<Element> list = null;
 	
 	public CrawlerGatryPostReader(String gatryEndpoint) {

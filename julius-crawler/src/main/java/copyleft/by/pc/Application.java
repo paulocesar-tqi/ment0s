@@ -20,50 +20,50 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 
 
 @ComponentScan
 @EnableAutoConfiguration
+@EnableScheduling
 public class Application {
 
 	private static final String CRAWLER_GATRY_JOB = "crawlerGatryJob";
+	
+	private static ConfigurableApplicationContext ctx = null;
 
 	public static void main(String[] args) throws BeansException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException, JobParametersInvalidException, InterruptedException {
-    	
-    	Log log = LogFactory.getLog(Application.class);
-    	    	
+
         SpringApplication app = new SpringApplication(Application.class);
         app.setWebEnvironment(false);
-        ConfigurableApplicationContext ctx= app.run(args);
+        ctx = app.run();
+    }
+	
+	@Scheduled(fixedDelay=30000,initialDelay=20000)
+	private static void runGatryJob() throws JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException, JobParametersInvalidException, InterruptedException {
+    	Log log = LogFactory.getLog(Application.class);
+    	
         JobLauncher jobLauncher = ctx.getBean(JobLauncher.class);
     	        		
-     //   if(CRAWLER_GATRY_JOB.equals(args[0])){
-        	//addNewPodcastJob
-        	Job crawlerGatryJob = ctx.getBean(CRAWLER_GATRY_JOB, Job.class);
-        	JobParameters jobParameters = new JobParametersBuilder()
-    		.addDate("date", new Date())
-    		.toJobParameters();
-        	
-        	JobExecution jobExecution = jobLauncher.run(crawlerGatryJob, jobParameters);
-        	
-        	BatchStatus batchStatus = jobExecution.getStatus();
-        	while(batchStatus.isRunning()){
-        		log.info("*********** Still running.... **************");
-        		Thread.sleep(1000);
-        	}
-        	log.info(String.format("*********** Exit status: %s", jobExecution.getExitStatus().getExitCode()));
-        	JobInstance jobInstance = jobExecution.getJobInstance();
-        	log.info(String.format("********* Name of the job %s", jobInstance.getJobName()));
-        	
-        	log.info(String.format("*********** job instance Id: %d", jobInstance.getId()));
-        	
-        	System.exit(0);
-        	
- //       } else {
- //       	throw new IllegalArgumentException("Please provide a valid Job name as first application parameter");
- //       }
-     
-        System.exit(0);
-    }
+    	Job crawlerGatryJob = ctx.getBean(CRAWLER_GATRY_JOB, Job.class);
+    	JobParameters jobParameters = new JobParametersBuilder()
+		.addDate("date", new Date())
+		.toJobParameters();
+    	
+    	JobExecution jobExecution = jobLauncher.run(crawlerGatryJob, jobParameters);
+    	
+    	BatchStatus batchStatus = jobExecution.getStatus();
+    	while(batchStatus.isRunning()){
+    		log.info("*********** Still running.... **************");
+    		Thread.sleep(1000);
+    	}
+    	log.info(String.format("*********** Exit status: %s", jobExecution.getExitStatus().getExitCode()));
+    	JobInstance jobInstance = jobExecution.getJobInstance();
+    	log.info(String.format("********* Name of the job %s", jobInstance.getJobName()));
+    	
+    	log.info(String.format("*********** job instance Id: %d", jobInstance.getId()));
+
+	}
     
 }

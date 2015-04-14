@@ -1,6 +1,9 @@
 package copyleft.by.pc.jobs.crawlergatry;
 
 import java.util.Date;
+import java.util.List;
+
+import javax.annotation.Resource;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -18,18 +21,26 @@ public class CrawlerGatryPostProcessor implements ItemProcessor<Element,Post> {
 	@Value("${gatry.id}") 
 	private Integer gatryId;
 	
+	@Resource(name="externalIds")
+	private List<String> externalIds; 
+	
 	@Override
 	public Post process(Element el) throws Exception {
-		//log.info("process: " + el.html());
-		//Thread.sleep(1000 * 5);
-		Post post = new Post();
-		post.setSourceId(gatryId);
-		post.setExternalId(el.attr("id"));
-		post.setTitle(el.text());
-		post.setHtml(el.html());
-		post.setPublicationDate(new Date());
+
+		String externalCode = el.attr("id"); 
+		if(!externalIds.contains(externalCode)) {
+			Post post = new Post();
+			post.setSourceId(gatryId);
+			post.setExternalId(externalCode);
+			post.setTitle(el.text());
+			post.setHtml(el.html());
+			post.setPublicationDate(new Date());
+			return post;	
+		} else {
+			log.info("Post id " + externalCode + " ja incluido.");
+		}
+		return null;
 		
-		return post;
 	}
 	
 }

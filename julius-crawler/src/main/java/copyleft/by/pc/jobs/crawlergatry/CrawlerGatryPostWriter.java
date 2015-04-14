@@ -21,19 +21,14 @@ public class CrawlerGatryPostWriter implements ItemWriter<Post> {
 	
 	@Override
 	public void write(List<? extends Post> posts) throws Exception {
-		boolean hasSaved=false;
+		
 		for(Post post : posts) {
-			try {
+			if(post != null) {
 				em.persist(post);
-				hasSaved = true;
-			} catch (Exception e) {
-				log.info("Não salvou o post: " + post.getExternalId() + " por causa de: " + e.getMessage());
 			}
-			
-			if(hasSaved)
-				em.flush();
-			//log.info("writer: " + post.getExternalId());
 		}
+		em.flush();
+		//log.info("writer: " + post.getExternalId());
 	}
 	
 }
