@@ -82,10 +82,10 @@ public class CrawlerHardmobJobConfiguration {
 	@Bean
 	public Step crawlerHardmobStep1(){
 		return stepBuilderFactory.get("crawlerHardmobStep1")
-				.<Post,Future<Post>>chunk(20)
-				.reader(reader())
-				.processor(asyncItemProcessor())
-				.writer(asyncItemWriter())
+				.<Post,Future<Post>>chunk(100)
+				.reader(readerHardmob())
+				.processor(asyncItemProcessorHardmob())
+				.writer(asyncItemWriterHardmob())
 //				.listener(logProcessListener())
 				.faultTolerant()
 				.skipLimit(10) //default is set to 0
@@ -95,37 +95,37 @@ public class CrawlerHardmobJobConfiguration {
 
 	@StepScope
 	@Bean
-	public ItemReader<Post> reader(){
+	public ItemReader<Post> readerHardmob(){
 		CrawlerHardmobPostReader reader = new CrawlerHardmobPostReader(hardmobEndpoint);
 		return reader;
 	}
 
 	@StepScope
     @Bean
-    public ItemProcessor<Post, Future<Post>> asyncItemProcessor() {
+    public ItemProcessor<Post, Future<Post>> asyncItemProcessorHardmob() {
 		AsyncItemProcessor<Post, Post> asyncItemProcessor = new AsyncItemProcessor<Post, Post>();
-		asyncItemProcessor.setDelegate(processor());
+		asyncItemProcessor.setDelegate(processorHardmob());
         asyncItemProcessor.setTaskExecutor(hardmobAsyncTaskExecutor());
         return asyncItemProcessor;
     }
 
 	@StepScope
     @Bean
-    public ItemProcessor<Post, Post> processor() {
+    public ItemProcessor<Post, Post> processorHardmob() {
         return new CrawlerHardmobPostProcessor();
     }
 	
 	@StepScope
     @Bean
-    public ItemWriter<Future<Post>> asyncItemWriter() {
+    public ItemWriter<Future<Post>> asyncItemWriterHardmob() {
 		AsyncItemWriter<Post> asyncItemWriter = new AsyncItemWriter<Post>();
-        asyncItemWriter.setDelegate(writer());
+        asyncItemWriter.setDelegate(writerHardmob());
         return asyncItemWriter;
     }
 
 	@StepScope
     @Bean
-    public ItemWriter<Post> writer() {
+    public ItemWriter<Post> writerHardmob() {
     	return new CrawlerHardmobPostWriter();
     }
     

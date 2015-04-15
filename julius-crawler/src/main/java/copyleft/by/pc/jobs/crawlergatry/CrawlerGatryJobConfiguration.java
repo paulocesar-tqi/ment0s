@@ -84,9 +84,9 @@ public class CrawlerGatryJobConfiguration {
 	public Step crawlerGatryStep1(){
 		return stepBuilderFactory.get("crawlerGatryStep1")
 				.<Element,Future<Post>>chunk(100)
-				.reader(reader())
-				.processor(asyncItemProcessor())
-				.writer(asyncItemWriter())
+				.reader(readerGatry())
+				.processor(asyncItemProcessorGatry())
+				.writer(asyncItemWriterGatry())
 //				.listener(logProcessListener())
 				.faultTolerant()
 				.skipLimit(10) //default is set to 0
@@ -96,37 +96,37 @@ public class CrawlerGatryJobConfiguration {
 
 	@StepScope
 	@Bean
-	public ItemReader<Element> reader(){
+	public ItemReader<Element> readerGatry(){
 		CrawlerGatryPostReader reader = new CrawlerGatryPostReader(gatryEndpoint);
 		return reader;
 	}
 
 	@StepScope
     @Bean
-    public ItemProcessor<Element, Future<Post>> asyncItemProcessor() {
+    public ItemProcessor<Element, Future<Post>> asyncItemProcessorGatry() {
 		AsyncItemProcessor<Element, Post> asyncItemProcessor = new AsyncItemProcessor<Element, Post>();
-		asyncItemProcessor.setDelegate(processor());
+		asyncItemProcessor.setDelegate(processorGatry());
         asyncItemProcessor.setTaskExecutor(gatryAsyncTaskExecutor());
         return asyncItemProcessor;
     }
 
 	@StepScope
     @Bean
-    public ItemProcessor<Element, Post> processor() {
+    public ItemProcessor<Element, Post> processorGatry() {
         return new CrawlerGatryPostProcessor();
     }
 	
 	@StepScope
     @Bean
-    public ItemWriter<Future<Post>> asyncItemWriter() {
+    public ItemWriter<Future<Post>> asyncItemWriterGatry() {
 		AsyncItemWriter<Post> asyncItemWriter = new AsyncItemWriter<Post>();
-        asyncItemWriter.setDelegate(writer());
+        asyncItemWriter.setDelegate(writerGatry());
         return asyncItemWriter;
     }
 
 	@StepScope
     @Bean
-    public ItemWriter<Post> writer() {
+    public ItemWriter<Post> writerGatry() {
     	return new CrawlerGatryPostWriter();
     }
     

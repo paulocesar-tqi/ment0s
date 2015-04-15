@@ -44,9 +44,9 @@ public class Application {
         ctx = app.run();
 
 	}
+	
 
-	/*
-	@Scheduled(fixedDelay=50000,initialDelay=20000)
+	@Scheduled(fixedDelayString="${gatry.runevery}",initialDelay=30000)
 	public void runGatryJob() throws JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException, JobParametersInvalidException, InterruptedException {
         JobLauncher jobLauncher = ctx.getBean(JobLauncher.class);
     	        		
@@ -69,9 +69,8 @@ public class Application {
     	log.info(String.format("*********** job instance Id: %d", jobInstance.getId()));
 
 	}
-*/
 	
-	@Scheduled(fixedDelay=30000,initialDelay=20000)
+	@Scheduled(fixedDelayString="${hardmob.runevery}",initialDelay=60000)
 	public void runHardmobJob() throws JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException, JobParametersInvalidException, InterruptedException {
         JobLauncher jobLauncher = ctx.getBean(JobLauncher.class);
     	        		
@@ -94,8 +93,9 @@ public class Application {
     	log.info(String.format("*********** job instance Id: %d", jobInstance.getId()));
 
 	}
-	/*
-	@Scheduled(fixedDelay=60000,initialDelay=10000)
+
+	
+	@Scheduled(cron="${purge.cron}")
 	public void runPurgePostsJob() throws JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException, JobParametersInvalidException, InterruptedException {
         JobLauncher jobLauncher = ctx.getBean(JobLauncher.class);
 
@@ -118,5 +118,10 @@ public class Application {
     	log.info(String.format("*********** job instance Id: %d", jobInstance.getId()));
 
 	}
- */
+
+	@Scheduled(fixedDelayString="${gatry.runevery}",initialDelay=60000)
+	public void runoi() {
+		System.out.println("oi");
+	}
+ 
 }
