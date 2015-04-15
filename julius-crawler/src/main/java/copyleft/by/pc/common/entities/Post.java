@@ -25,6 +25,9 @@ public class Post implements Serializable{
 	@Column(name="html")
 	private String html;
 	
+	@Column(name="url")
+	private String url;
+	
 	@Column(name="publication_date")
 	private Date publicationDate; 
 
@@ -76,5 +79,15 @@ public class Post implements Serializable{
 
 	public void setExternalId(String externalId) {
 		this.externalId = externalId;
-	}	
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+	
+	
 }

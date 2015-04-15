@@ -1,10 +1,9 @@
-package copyleft.by.pc.jobs.crawlergatry;
+package copyleft.by.pc.jobs.crawlerhardmob;
 
 import java.util.List;
 import java.util.concurrent.Future;
 import java.util.concurrent.ThreadPoolExecutor;
 
-import org.jsoup.nodes.Element;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
@@ -36,7 +35,7 @@ import copyleft.by.pc.common.listeners.ProtocolListener;
 @Configuration
 @EnableBatchProcessing
 @Import({InfrastructureConfiguration.class, ServicesConfiguration.class})
-public class CrawlerGatryJobConfiguration {
+public class CrawlerHardmobJobConfiguration {
 
 	@Autowired
 	private JobBuilderFactory jobs;
@@ -48,42 +47,42 @@ public class CrawlerGatryJobConfiguration {
 	private GenericDao dao;
 	
 	@Autowired
-	@Value("${gatry.endpoint}") 
-	private String gatryEndpoint;
+	@Value("${hardmob.endpoint}") 
+	private String hardmobEndpoint;
 	 
 	@Autowired
-	@Value("${gatry.threads}") 
-	private Integer gatryThreads;
+	@Value("${hardmob.threads}") 
+	private Integer hardmobThreads;
 	
 	@Autowired
-	@Value("${gatry.id}") 
-	private Integer gatryId;
+	@Value("${hardmob.id}") 
+	private Integer hardmobId;
 	 
 	
 	@Bean
-	public Job crawlerGatryJob(){
-		return jobs.get("crawlerGatryJob")
+	public Job crawlerHardmobJob(){
+		return jobs.get("crawlerHardmobJob")
 //				.listener(protocolListener())
-				.start(crawlerGatryStep1())
+				.start(crawlerHardmobStep1())
 				.build();
 	}
 	
 	@Bean
-	public TaskExecutor gatryAsyncTaskExecutor() {
+	public TaskExecutor hardmobAsyncTaskExecutor() {
 		ThreadPoolTaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
-		taskExecutor.setMaxPoolSize(gatryThreads);
-		taskExecutor.setCorePoolSize(gatryThreads);
-		taskExecutor.setQueueCapacity(gatryThreads * 1000);
+		taskExecutor.setMaxPoolSize(hardmobThreads);
+		taskExecutor.setCorePoolSize(hardmobThreads);
+		taskExecutor.setQueueCapacity(hardmobThreads * 1000);
 		taskExecutor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
-		taskExecutor.setThreadNamePrefix("AsyncGatry-");
+		taskExecutor.setThreadNamePrefix("AsyncHardmob-");
 		taskExecutor.afterPropertiesSet();
 		return taskExecutor;
 	}
 	
 	@Bean
-	public Step crawlerGatryStep1(){
-		return stepBuilderFactory.get("crawlerGatryStep1")
-				.<Element,Future<Post>>chunk(100)
+	public Step crawlerHardmobStep1(){
+		return stepBuilderFactory.get("crawlerHardmobStep1")
+				.<Post,Future<Post>>chunk(20)
 				.reader(reader())
 				.processor(asyncItemProcessor())
 				.writer(asyncItemWriter())
@@ -96,24 +95,24 @@ public class CrawlerGatryJobConfiguration {
 
 	@StepScope
 	@Bean
-	public ItemReader<Element> reader(){
-		CrawlerGatryPostReader reader = new CrawlerGatryPostReader(gatryEndpoint);
+	public ItemReader<Post> reader(){
+		CrawlerHardmobPostReader reader = new CrawlerHardmobPostReader(hardmobEndpoint);
 		return reader;
 	}
 
 	@StepScope
     @Bean
-    public ItemProcessor<Element, Future<Post>> asyncItemProcessor() {
-		AsyncItemProcessor<Element, Post> asyncItemProcessor = new AsyncItemProcessor<Element, Post>();
+    public ItemProcessor<Post, Future<Post>> asyncItemProcessor() {
+		AsyncItemProcessor<Post, Post> asyncItemProcessor = new AsyncItemProcessor<Post, Post>();
 		asyncItemProcessor.setDelegate(processor());
-        asyncItemProcessor.setTaskExecutor(gatryAsyncTaskExecutor());
+        asyncItemProcessor.setTaskExecutor(hardmobAsyncTaskExecutor());
         return asyncItemProcessor;
     }
 
 	@StepScope
     @Bean
-    public ItemProcessor<Element, Post> processor() {
-        return new CrawlerGatryPostProcessor();
+    public ItemProcessor<Post, Post> processor() {
+        return new CrawlerHardmobPostProcessor();
     }
 	
 	@StepScope
@@ -127,7 +126,7 @@ public class CrawlerGatryJobConfiguration {
 	@StepScope
     @Bean
     public ItemWriter<Post> writer() {
-    	return new CrawlerGatryPostWriter();
+    	return new CrawlerHardmobPostWriter();
     }
     
 	@Bean
@@ -142,8 +141,8 @@ public class CrawlerGatryJobConfiguration {
 	
 	@StepScope
 	@Bean
-	public List<String> externalGatryIds(){
-		return dao.getExternalIdsBySource(gatryId);
+	public List<String> externalHardmobIds(){
+		return dao.getExternalIdsBySource(hardmobId);
 	}
 
 }

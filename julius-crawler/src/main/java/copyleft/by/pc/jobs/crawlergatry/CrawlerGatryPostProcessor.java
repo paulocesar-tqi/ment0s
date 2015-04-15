@@ -21,22 +21,23 @@ public class CrawlerGatryPostProcessor implements ItemProcessor<Element,Post> {
 	@Value("${gatry.id}") 
 	private Integer gatryId;
 	
-	@Resource(name="externalIds")
-	private List<String> externalIds; 
+	@Resource(name="externalGatryIds")
+	private List<String> externalGatryIds; 
 	
 	@Override
 	public Post process(Element el) throws Exception {
 
 		Calendar cal = Calendar.getInstance();
-		cal.add(Calendar.DATE, -30);
+		//cal.add(Calendar.DATE, -30);
 		
 		String externalCode = el.attr("id"); 
-		if(!externalIds.contains(externalCode)) {
+		if(!externalGatryIds.contains(externalCode)) {
 			Post post = new Post();
 			post.setSourceId(gatryId);
 			post.setExternalId(externalCode);
 			post.setTitle(el.text());
 			post.setHtml(el.html());
+			post.setUrl("http://gatry.com/promocoes");
 			post.setPublicationDate(cal.getTime());
 			return post;	
 		} else {
