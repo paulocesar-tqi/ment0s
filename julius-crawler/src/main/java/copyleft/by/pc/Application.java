@@ -118,10 +118,5 @@ public class Application {
     	log.info(String.format("*********** job instance Id: %d", jobInstance.getId()));
 
 	}
-
-	@Scheduled(fixedDelayString="${gatry.runevery}",initialDelay=60000)
-	public void runoi() {
-		System.out.println("oi");
-	}
  
 }

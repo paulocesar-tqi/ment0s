@@ -40,8 +40,9 @@ public class CrawlerGatryPostReader implements ItemReader<Element> {
         for(Element el : elements) {
     		list.add(el);
 
-    		log.info("readLoader: " + el.attr("id") + " | " + el.text());
+    		log.debug("Gatryreader: " + el.attr("id") + " | " + el.text());
         }
+        log.info("GatryReader: " + list.size() + " posts lidos.");
 	}
 
 	@Override
@@ -50,8 +51,8 @@ public class CrawlerGatryPostReader implements ItemReader<Element> {
 		Element html = null;
 		if (!list.isEmpty()) {
 			html = list.remove(0);
+			log.debug("GatryReader: " + html.text());
 		}
-		//log.info("reader: " + html);
 		
 		return html;
 	}

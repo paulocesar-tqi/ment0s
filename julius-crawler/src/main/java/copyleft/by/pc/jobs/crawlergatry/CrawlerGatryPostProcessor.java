@@ -41,7 +41,7 @@ public class CrawlerGatryPostProcessor implements ItemProcessor<Element,Post> {
 			post.setPublicationDate(cal.getTime());
 			return post;	
 		} else {
-			log.info("Post id " + externalCode + " ja incluido.");
+			log.debug("Post id " + externalCode + " ja incluido.");
 		}
 		return null;
 		

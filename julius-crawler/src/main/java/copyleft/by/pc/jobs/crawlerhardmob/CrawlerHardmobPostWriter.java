@@ -22,13 +22,15 @@ public class CrawlerHardmobPostWriter implements ItemWriter<Post> {
 	@Override
 	public void write(List<? extends Post> posts) throws Exception {
 		
+		int insertedCount = 0;
 		for(Post post : posts) {
 			if(post != null) {
 				em.persist(post);
+				++insertedCount;
 			}
 		}
 		em.flush();
-		//log.info("writer: " + post.getExternalId());
+		log.info("HardmobWriter: " + insertedCount + " novos posts inseridos.");
 	}
 	
 }

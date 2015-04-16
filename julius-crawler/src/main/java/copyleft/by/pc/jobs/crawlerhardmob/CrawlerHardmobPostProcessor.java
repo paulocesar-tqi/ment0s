@@ -44,7 +44,7 @@ public class CrawlerHardmobPostProcessor implements ItemProcessor<Post,Post> {
 			retrieveHtmlAndRealUrl(post);
 			return post;	
 		} else {
-			log.info("Post id " + post.getExternalId() + " ja incluido.");
+			log.debug("Post id " + post.getExternalId() + " ja incluido.");
 		}
 		return null;
 		

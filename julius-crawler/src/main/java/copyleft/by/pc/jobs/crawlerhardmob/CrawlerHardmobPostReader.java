@@ -65,8 +65,9 @@ public class CrawlerHardmobPostReader implements ItemReader<Post> {
 			post.setExternalId(id);
 			list.add(post);
 
-			log.info("readLoaderHardmob: " + id + " | " + el.text());
+			log.debug("HardmobReader: " + id + " | " + el.text());
 		}
+        log.info("HardmobReader: " + list.size() + " posts lidos.");
 	}
 
 	@Override
@@ -75,8 +76,8 @@ public class CrawlerHardmobPostReader implements ItemReader<Post> {
 		Post post = null;
 		if (!list.isEmpty()) {
 			post = list.remove(0);
+			log.debug("reader: " + post.getTitle());
 		}
-		// log.info("reader: " + html);
 
 		return post;
 	}
