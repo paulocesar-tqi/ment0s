@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/Users/yusuke/Desktop/Projetos/git/stuff/gcm-client/GcmClient/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.0.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="d84409890828e07d344a3b9b1da545dba9897b51">
+        <dex dex="/Users/yusuke/Desktop/Projetos/git/stuff/gcm-client/GcmClient/build/intermediates/pre-dexed/debug/classes-de40fc7e271ecbd5d6c4b4e0f1543d9831b8d543.jar" />
+    </item>
+    <item
+        jar="/Users/yusuke/Desktop/Projetos/git/stuff/gcm-client/GcmClient/build/intermediates/exploded-aar/com.android.support/support-v4/22.0.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="4e86306289ace4aa0cfec44a05ed2b410d36989d">
+        <dex dex="/Users/yusuke/Desktop/Projetos/git/stuff/gcm-client/GcmClient/build/intermediates/pre-dexed/debug/classes-1c6f413e2db710f0d754efb1dbb593704fe70073.jar" />
+    </item>
+    <item
+        jar="/Users/yusuke/Desktop/Projetos/git/stuff/gcm-client/GcmClient/build/intermediates/exploded-aar/com.google.android.gms/play-services/4.0.30/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="cebe8e4a3a469c4623addcca1dc571407ff3a08e">
+        <dex dex="/Users/yusuke/Desktop/Projetos/git/stuff/gcm-client/GcmClient/build/intermediates/pre-dexed/debug/classes-2091945c8b4346ce674b0a933a7d5a96e14b3ff3.jar" />
+    </item>
+    <item
+        jar="/Users/yusuke/Desktop/Projetos/git/stuff/gcm-client/GcmClient/build/intermediates/exploded-aar/com.android.support/support-v4/22.0.0/libs/internal_impl-22.0.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="b5b92f469d515a13d778900f6d50c03d12f35504">
+        <dex dex="/Users/yusuke/Desktop/Projetos/git/stuff/gcm-client/GcmClient/build/intermediates/pre-dexed/debug/internal_impl-22.0.0-55a00171ab5b372ebe83a138e4ba5bf679043a11.jar" />
+    </item>
+    <item
+        jar="/Users/yusuke/android-sdks/extras/android/m2repository/com/android/support/support-annotations/22.0.0/support-annotations-22.0.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="685d0b2c590447e85284ed84712cb363ba04eff8">
+        <dex dex="/Users/yusuke/Desktop/Projetos/git/stuff/gcm-client/GcmClient/build/intermediates/pre-dexed/debug/support-annotations-22.0.0-8f812dee7cdcb8bc90a867e03812f920c15fd791.jar" />
+    </item>
+
+</items>
