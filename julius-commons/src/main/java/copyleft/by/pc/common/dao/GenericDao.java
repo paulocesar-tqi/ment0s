@@ -10,8 +10,10 @@ import javax.persistence.TypedQuery;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import copyleft.by.pc.common.entities.Source;
+import copyleft.by.pc.common.entities.User;
 
 public class GenericDao {
 	
@@ -20,7 +22,7 @@ public class GenericDao {
 	@PersistenceContext
 	@Autowired
 	private EntityManager em;
-	
+
 	public List<String> getExternalIdsBySource(Integer sourceId) {
 		
 		String jpql = "SELECT p.externalId FROM Post p WHERE p.sourceId = :sourceId";
@@ -58,6 +60,16 @@ public class GenericDao {
 			
 			log.info("Source: " + source.getId() + " - " + result1 + " posts copiados - " + result2 + " posts deletados.");
 		}
-		
+	}
+	
+	@Transactional
+	public void createUser(String id) {
+		User user = new User(id);
+		try {
+			em.persist(user);
+			em.flush();
+		} catch (Exception e) {
+			log.error("Erro ao persistir o usuario: " + user.getRegId(), e);
+		}
 	}
 }

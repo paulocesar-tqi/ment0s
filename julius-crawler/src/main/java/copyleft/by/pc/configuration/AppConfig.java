@@ -1,4 +1,4 @@
-package copyleft.by.pc.common.configuration;
+package copyleft.by.pc.configuration;
 
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.support.ApplicationContextFactory;

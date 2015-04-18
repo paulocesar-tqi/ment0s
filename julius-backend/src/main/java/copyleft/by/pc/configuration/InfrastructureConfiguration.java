@@ -1,4 +1,4 @@
-package copyleft.by.pc.common.configuration;
+package copyleft.by.pc.configuration;
 
 import java.util.Properties;
 
@@ -28,7 +28,7 @@ public class InfrastructureConfiguration {
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
 		LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
 		em.setDataSource(dataSource());
-		em.setPackagesToScan(new String[] { "copyleft.by.pc.common.*" });
+		em.setPackagesToScan(new String[] { "copyleft.by.pc.common.entities" });
 
 		JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
 		em.setJpaVendorAdapter(vendorAdapter);

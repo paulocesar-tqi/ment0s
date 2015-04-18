@@ -12,8 +12,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
-import copyleft.by.pc.common.configuration.InfrastructureConfiguration;
-import copyleft.by.pc.common.configuration.ServicesConfiguration;
+import copyleft.by.pc.configuration.InfrastructureConfiguration;
+import copyleft.by.pc.configuration.ServicesConfiguration;
 
 @Configuration
 @EnableBatchProcessing

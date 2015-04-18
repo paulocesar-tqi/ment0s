@@ -25,12 +25,12 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 
-import copyleft.by.pc.common.configuration.InfrastructureConfiguration;
-import copyleft.by.pc.common.configuration.ServicesConfiguration;
 import copyleft.by.pc.common.dao.GenericDao;
 import copyleft.by.pc.common.entities.Post;
 import copyleft.by.pc.common.listeners.LogProcessListener;
 import copyleft.by.pc.common.listeners.ProtocolListener;
+import copyleft.by.pc.configuration.InfrastructureConfiguration;
+import copyleft.by.pc.configuration.ServicesConfiguration;
 
 @Configuration
 @EnableBatchProcessing

@@ -55,8 +55,15 @@
             <artifactId>jsoup</artifactId>
             <version>1.7.3</version>
         </dependency>
-    </dependencies>
 
+  	    <dependency>
+            <groupId>julius</groupId>
+            <artifactId>julius-commons</artifactId>
+            <version>1.0</version>
+        </dependency>
+
+    </dependencies>
+  	
     <build>
         <plugins>
             <plugin>

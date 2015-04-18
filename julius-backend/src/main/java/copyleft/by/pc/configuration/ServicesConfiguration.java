@@ -1,4 +1,4 @@
-package copyleft.by.pc.common.configuration;
+package copyleft.by.pc.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,7 +10,7 @@ public class ServicesConfiguration {
 
 	
 	@Bean
-	public GenericDao readDao(){
+	public GenericDao genericDao(){
 		return new GenericDao();
 	}
 	
