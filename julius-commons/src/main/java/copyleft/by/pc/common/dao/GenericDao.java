@@ -32,6 +32,15 @@ public class GenericDao {
 		return query.getResultList();
 	}
 	
+	public List<String> getRegistrationIdsByPlatform(String platform) {
+		
+		String jpql = "SELECT u.regId FROM User u WHERE u.platform = :platform";
+		TypedQuery<String> query = em.createQuery(jpql, String.class);
+		query.setParameter("platform", platform);
+		
+		return query.getResultList();
+	}
+	
 	public void backupPostsBySources() {
 
 		String jpqlActiveSources = "FROM Source s WHERE s.active = 1";
@@ -63,13 +72,40 @@ public class GenericDao {
 	}
 	
 	@Transactional
-	public void createUser(String id) {
-		User user = new User(id);
+	public void removeUser(String deviceId) {
+
+		User user = em.find(User.class, deviceId);
 		try {
-			em.persist(user);
+			if(user != null) {
+				em.remove(user);
+				em.flush();
+			}
+		} catch (Exception e) {
+			log.error("Erro ao remover o usuario: " + user.getRegId(), e);
+		}
+	}
+	
+	@Transactional
+	public void createOrUpdateUser(String id, String platform) {
+		User user = em.find(User.class, id);
+		if(user == null)
+			user = new User(id, platform);
+		try {
+			em.merge(user);
 			em.flush();
 		} catch (Exception e) {
 			log.error("Erro ao persistir o usuario: " + user.getRegId(), e);
 		}
+	}	
+
+	public List<String> getUserIdsByPlatform(String platformId) {
+		
+		String jpql = "SELECT u.regId FROM User u WHERE u.platformId = :platformId";
+		TypedQuery<String> query = em.createQuery(jpql, String.class);
+		query.setParameter("platformId", platformId);
+		
+		return query.getResultList();
 	}
+	
+
 }

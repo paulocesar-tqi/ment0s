@@ -1,5 +1,7 @@
 package copyleft.by.pc.endpoints;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
@@ -10,6 +12,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,26 +34,25 @@ public class Endpoints {
 	@Autowired
 	private GenericDao dao;
 	
-	private final Queue<String> registrationQueue = new ConcurrentLinkedQueue<String>();
+	private final Queue<List<String>> registrationQueue = new ConcurrentLinkedQueue<List<String>>();
 
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
 	@ResponseBody
-	public DeferredResult<String> showOptions(
-			@RequestParam(value = "regId", required = true) String value) {
+	public HttpEntity<String> showOptions(
+			@RequestParam(value = "regId", required = true) String value,
+			@RequestParam(value = "platform", required = false, defaultValue = "Android") String type) {
 		
-		DeferredResult<String> result = new DeferredResult<String>();
-		this.registrationQueue.add(value);
-		result.setResult("ok");
-		return result;
+		this.registrationQueue.add(Arrays.asList(value,type));
+		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	
 	
 	@Scheduled(fixedDelay=5000)
 	public void processQueues() {
-		for (String id : this.registrationQueue) {
-			dao.createUser(id);
-			this.registrationQueue.remove(id);
-			log.info("User " + id + " processado.");
+		for (List<String> list : this.registrationQueue) {
+			dao.createOrUpdateUser(list.get(0), list.get(1));
+			this.registrationQueue.remove(list);
+			log.info("User " + list.get(0) + " | " + list.get(1) + " processado.");
 		}
 	}
 }

@@ -1,17 +1,36 @@
 package copyleft.by.pc.configuration;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.google.android.gcm.server.Sender;
+
 import copyleft.by.pc.common.dao.GenericDao;
+import copyleft.by.pc.listeners.NotificationService;
 
 @Configuration
 public class ServicesConfiguration {
+
+	@Autowired
+	@Value("${notification.android.key}") 
+	private String notificationGoogleKey;
 
 	
 	@Bean
 	public GenericDao genericDao(){
 		return new GenericDao();
+	}
+	
+	@Bean
+	public Sender gcmSender(){
+		return new Sender(notificationGoogleKey);
+	}
+	
+	@Bean
+	public NotificationService notificationService(){
+		return new NotificationService();
 	}
 	
 	/*

@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.concurrent.Future;
 import java.util.concurrent.ThreadPoolExecutor;
 
+import javax.management.NotificationListener;
+
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
@@ -27,10 +29,9 @@ import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationExceptio
 
 import copyleft.by.pc.common.dao.GenericDao;
 import copyleft.by.pc.common.entities.Post;
-import copyleft.by.pc.common.listeners.LogProcessListener;
-import copyleft.by.pc.common.listeners.ProtocolListener;
 import copyleft.by.pc.configuration.InfrastructureConfiguration;
 import copyleft.by.pc.configuration.ServicesConfiguration;
+import copyleft.by.pc.listeners.ProtocolListener;
 
 @Configuration
 @EnableBatchProcessing
@@ -132,11 +133,6 @@ public class CrawlerHardmobJobConfiguration {
 	@Bean
 	public ProtocolListener protocolListener(){
 		return new ProtocolListener();
-	}
- 
-	@Bean
-	public LogProcessListener logProcessListener(){
-		return new LogProcessListener();
 	}
 	
 	@StepScope

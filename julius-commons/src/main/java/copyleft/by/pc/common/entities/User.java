@@ -5,7 +5,6 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -16,23 +15,24 @@ public class User implements Serializable{
 	private static final long serialVersionUID = 373272697984502898L;
 
 	@Id
-	@GeneratedValue
-	private Long id;
-	
 	@Column(name="reg_id")
 	private String regId;
 	
+	@Column(name="platform")
+	private String platform;
+	
 	@Column(name="registration_date")
 	private Date registrationDate;
-
-	public User(String regId) {
+	
+	public User() {
 		super();
-		this.regId = regId;
-		this.registrationDate = new Date();
 	}
 
-	public Long getId() {
-		return id;
+	public User(String regId, String platform) {
+		super();
+		this.regId = regId;
+		this.platform = platform;
+		this.registrationDate = new Date();
 	}
 
 	public String getRegId() {
@@ -49,7 +49,14 @@ public class User implements Serializable{
 
 	public void setRegistrationDate(Date registrationDate) {
 		this.registrationDate = registrationDate;
-	} 
+	}
 
+	public String getPlatform() {
+		return platform;
+	}
+
+	public void setPlatform(String platform) {
+		this.platform = platform;
+	}
 
 }

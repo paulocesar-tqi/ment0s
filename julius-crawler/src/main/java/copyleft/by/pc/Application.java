@@ -46,7 +46,7 @@ public class Application {
 	}
 	
 
-	@Scheduled(fixedDelayString="${gatry.runevery}",initialDelay=30000)
+	@Scheduled(fixedDelayString="${gatry.runevery}",initialDelay=10000)
 	public void runGatryJob() throws JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException, JobParametersInvalidException, InterruptedException {
         JobLauncher jobLauncher = ctx.getBean(JobLauncher.class);
     	        		
@@ -70,7 +70,7 @@ public class Application {
 
 	}
 	
-	@Scheduled(fixedDelayString="${hardmob.runevery}",initialDelay=60000)
+//	@Scheduled(fixedDelayString="${hardmob.runevery}",initialDelay=60000)
 	public void runHardmobJob() throws JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException, JobParametersInvalidException, InterruptedException {
         JobLauncher jobLauncher = ctx.getBean(JobLauncher.class);
     	        		
@@ -95,7 +95,7 @@ public class Application {
 	}
 
 	
-	@Scheduled(cron="${purge.cron}")
+//	@Scheduled(cron="${purge.cron}")
 	public void runPurgePostsJob() throws JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException, JobParametersInvalidException, InterruptedException {
         JobLauncher jobLauncher = ctx.getBean(JobLauncher.class);
 

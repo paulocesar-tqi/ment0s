@@ -28,10 +28,9 @@ import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationExceptio
 
 import copyleft.by.pc.common.dao.GenericDao;
 import copyleft.by.pc.common.entities.Post;
-import copyleft.by.pc.common.listeners.LogProcessListener;
-import copyleft.by.pc.common.listeners.ProtocolListener;
 import copyleft.by.pc.configuration.InfrastructureConfiguration;
 import copyleft.by.pc.configuration.ServicesConfiguration;
+import copyleft.by.pc.listeners.ProtocolListener;
 
 @Configuration
 @EnableBatchProcessing
@@ -87,7 +86,6 @@ public class CrawlerGatryJobConfiguration {
 				.reader(readerGatry())
 				.processor(asyncItemProcessorGatry())
 				.writer(asyncItemWriterGatry())
-//				.listener(logProcessListener())
 				.faultTolerant()
 				.skipLimit(10) //default is set to 0
 				.skip(MySQLIntegrityConstraintViolationException.class)
@@ -135,11 +133,6 @@ public class CrawlerGatryJobConfiguration {
 		return new ProtocolListener();
 	}
  
-	@Bean
-	public LogProcessListener logProcessListener(){
-		return new LogProcessListener();
-	}
-	
 	@StepScope
 	@Bean
 	public List<String> externalGatryIds(){

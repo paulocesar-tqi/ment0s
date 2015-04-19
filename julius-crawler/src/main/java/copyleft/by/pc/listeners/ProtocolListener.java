@@ -1,4 +1,4 @@
-package copyleft.by.pc.common.listeners;
+package copyleft.by.pc.listeners;
 
 import java.util.Iterator;
 import java.util.Map.Entry;
