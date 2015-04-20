@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="org.devgirl.push.sample" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="copyleft.by.pc" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <preference name="loglevel" value="DEBUG" />
     <feature name="PushPlugin">
         <param name="android-package" value="com.plugin.gcm.PushPlugin" />
@@ -20,14 +20,14 @@
     <feature name="Media">
         <param name="android-package" value="org.apache.cordova.media.AudioHandler" />
     </feature>
-    <name>PushNotificationSample</name>
+    <name>Julius</name>
     <description>
-        A sample of push notification handling.
+        An app to find the best promotions.
     </description>
-    <author email="hi@ionicframework" href="http://ionicframework.com/">
-      Ionic Framework Team
+    <author email="contato@paulocesar.tk" href="http://ionicframework.com/">
+      Paulo Cesar
     </author>
-    <content original-src="index.html" src="http://192.168.0.102:8100" />
+    <content src="index.html" />
     <access origin="*" />
     <icon src="www/img/app-icon.png" />
     <preference name="webviewbounce" value="false" />

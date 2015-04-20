@@ -5,8 +5,10 @@
  * more tutorials: hollyschinsky.github.io
  */
 
-app.controller('AppCtrl', function($scope, $cordovaPush, $cordovaDialogs, $cordovaMedia, $cordovaToast, ionPlatform, localstorage, $http) {
-    $scope.notifications = [];
+app.controller('AppCtrl', function($scope, $sce, $ionicLoading, PostService, $cordovaPush, $cordovaDialogs, $cordovaMedia, $cordovaToast, ionPlatform, localstorage, $http) {
+    $scope.posts = [];
+    $scope.beforeDate = null;    
+    $scope.infiniteLoad = false;
 
     // call to register automatically upon device ready
     ionPlatform.ready.then(function (device) {
@@ -38,18 +40,20 @@ app.controller('AppCtrl', function($scope, $cordovaPush, $cordovaDialogs, $cordo
             }
         }
 
-        $cordovaPush.register(config).then(function (result) {
-            console.log("Register success " + result);
+        if(config) {
+            $cordovaPush.register(config).then(function (result) {
+                console.log("Register success " + result);
 
-            $cordovaToast.showShortCenter('Registered for push notifications');
-            // ** NOTE: Android regid result comes back in the pushNotificationReceived, only iOS returned here
-            if (ionic.Platform.isIOS()) {
-                $scope.regId = result;
-                storeDeviceToken("ios");
-            }
-        }, function (err) {
-            console.log("Register error " + err)
-        });
+                $cordovaToast.showShortCenter('Registered for push notifications');
+                // ** NOTE: Android regid result comes back in the pushNotificationReceived, only iOS returned here
+                if (ionic.Platform.isIOS()) {
+                    $scope.regId = result;
+                    storeDeviceToken("ios");
+                }
+            }, function (err) {
+                console.log("Register error " + err)
+            });
+        }
     }
 
     // Notification Received
@@ -65,6 +69,33 @@ app.controller('AppCtrl', function($scope, $cordovaPush, $cordovaDialogs, $cordo
             })
         }
     });
+
+    $scope.viewBlog = function(url) {        
+        window.open(url, "_blank", "location=no");        
+    }
+    $scope.loadBlogs = function() {
+        $scope.infiniteLoad = false;    
+        $scope.beforeDate = null;
+        if ($scope.posts.length) {
+            $scope.posts = [];
+            $scope.moreBlogs();
+        }        
+        $scope.$broadcast("scroll.refreshComplete");
+        $scope.infiniteLoad = true; 
+    }
+    $scope.moreBlogs = function() {    
+        $ionicLoading.show({ template: "Loading blogs..."});
+        PostService.loadBlogs($scope.beforeDate)
+            .success(function(result) {
+                $scope.posts = $scope.posts.concat(result.posts);
+                $scope.beforeDate = result.date_range.oldest;
+                $scope.$broadcast("scroll.infiniteScrollComplete");   
+                $ionicLoading.hide();
+            });
+    }
+    $scope.toTrusted = function(text) {
+        return ($sce.trustAsHtml(text));
+    }
 
     // Android Notification Received Handler
     function handleAndroid(notification) {
@@ -134,7 +165,7 @@ app.controller('AppCtrl', function($scope, $cordovaPush, $cordovaDialogs, $cordo
         );
     }
 
-})
+});
 
 // Android Notification Received Handler
 function registerNotificationAndroid(e) {
@@ -152,4 +183,14 @@ function registerNotificationAndroid(e) {
 }
 
 
+app.service('PostService', function($http) {
+    this.loadBlogs = function(date) {
+        var params = { number: 15 };
+        if (date)
+            params.before = date;
+        return ($http.get("https://public-api.wordpress.com/rest/v1/freshly-pressed/", {
+            params: params
+        }));
+    }
+})
 

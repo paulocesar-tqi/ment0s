@@ -12,6 +12,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import copyleft.by.pc.common.entities.Post;
 import copyleft.by.pc.common.entities.Source;
 import copyleft.by.pc.common.entities.User;
 
@@ -104,6 +105,15 @@ public class GenericDao {
 		TypedQuery<String> query = em.createQuery(jpql, String.class);
 		query.setParameter("platformId", platformId);
 		
+		return query.getResultList();
+	}
+	
+	public List<Post> getPostsByFilter(int pageNumber, int pageSize) {
+		
+		String jpql = "SELECT p FROM Post p ORDER BY p.id DESC";
+		TypedQuery<Post> query = em.createQuery(jpql, Post.class);
+		query.setMaxResults(pageSize);
+		query.setFirstResult(pageNumber * pageSize);
 		return query.getResultList();
 	}
 	

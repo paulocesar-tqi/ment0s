@@ -17,7 +17,7 @@
        under the License.
  */
 
-package org.devgirl.push.sample;
+package copyleft.by.pc;
 
 import android.os.Bundle;
 import org.apache.cordova.*;
