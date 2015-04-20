@@ -35,3 +35,11 @@
     float: right;
     font-style: italic;    
 }
+
+.item {
+    white-space: normal !important;
+}
+
+p {
+    white-space: normal !important;
+}

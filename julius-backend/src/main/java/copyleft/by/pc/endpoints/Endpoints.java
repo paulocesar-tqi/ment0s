@@ -5,19 +5,11 @@ import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PagedResourcesAssembler;
-import org.springframework.hateoas.PagedResources;
-import org.springframework.hateoas.Resource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.context.request.async.DeferredResult;
 
 import copyleft.by.pc.common.dao.GenericDao;
 import copyleft.by.pc.common.entities.Post;
@@ -61,12 +52,21 @@ public class Endpoints {
 	@RequestMapping(value = "/posts", method = RequestMethod.GET)
 	@ResponseBody
 	public HttpEntity<List<Post>> listPosts(
-			@RequestParam(value = "pageNumber", required = false, defaultValue = "1") Integer pageNumber) {
+			@RequestParam(value = "pageNumber", required = false, defaultValue = "0") Integer pageNumber) {
 		
 		List<Post> posts = dao.getPostsByFilter(pageNumber, postPageSize);
 		return new ResponseEntity<>(posts, HttpStatus.OK);
 	}
-	
+
+	@RequestMapping(value = "/post", method = RequestMethod.GET)
+	@ResponseBody
+	public HttpEntity<Post> getPostById(
+			@RequestParam(value = "id", required = true) Long id) {
+		
+		Post post = dao.getPostById(id);
+		return new ResponseEntity<>(post, HttpStatus.OK);
+	}
+
 	
 	@Scheduled(fixedDelay=5000)
 	public void processQueues() {

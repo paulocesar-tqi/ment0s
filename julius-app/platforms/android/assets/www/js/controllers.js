@@ -39,7 +39,7 @@ app.controller('AppCtrl', function($scope, $sce, $ionicLoading, PostService, $co
                 "ecb": "handleIOS"
             }
         }
-
+/*
         if(config) {
             $cordovaPush.register(config).then(function (result) {
                 console.log("Register success " + result);
@@ -52,8 +52,8 @@ app.controller('AppCtrl', function($scope, $sce, $ionicLoading, PostService, $co
                 }
             }, function (err) {
                 console.log("Register error " + err)
-            });
-        }
+            }); 
+        } */
     }
 
     // Notification Received

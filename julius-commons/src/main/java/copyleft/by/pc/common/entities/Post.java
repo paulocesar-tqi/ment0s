@@ -9,38 +9,56 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 @Entity
-@Table(name="post")
-public class Post implements Serializable{
+@Table(name = "post")
+@JsonInclude(Include.NON_NULL)
+public class Post implements Serializable {
 
 	private static final long serialVersionUID = 219264453988823416L;
+
+	public Post() {
+		
+	}
+	
+	public Post(Long id, String title, Date publicationDate, Integer sourceId) {
+		super();
+		this.id = id;
+		this.title = title;
+		this.publicationDate = publicationDate;
+		this.sourceId = sourceId;
+	}
 
 	@Id
 	@GeneratedValue
 	private Long id;
-	
-	@Column(name="title")
+
+	@Column(name = "title")
 	private String title;
-	
-	@Column(name="html")
+
+	@Column(name = "html")
 	private String html;
-	
-	@Column(name="url")
+
+	@Column(name = "url")
 	private String url;
-	
-	@Column(name="publication_date")
-	private Date publicationDate; 
 
-	@Column(name="source_id")
-	private Integer sourceId; 
+	@Column(name = "publication_date")
+	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
+	private Date publicationDate;
 
-	@Column(name="external_id")
+	@Column(name = "source_id")
+	private Integer sourceId;
+
+	@Column(name = "external_id")
 	private String externalId;
 
 	public Long getId() {
 		return id;
 	}
-	
+
 	public String getTitle() {
 		return title;
 	}
@@ -88,6 +106,5 @@ public class Post implements Serializable{
 	public void setUrl(String url) {
 		this.url = url;
 	}
-	
-	
+
 }

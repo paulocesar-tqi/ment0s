@@ -110,12 +110,16 @@ public class GenericDao {
 	
 	public List<Post> getPostsByFilter(int pageNumber, int pageSize) {
 		
-		String jpql = "SELECT p FROM Post p ORDER BY p.id DESC";
+		String jpql = "SELECT new Post(p.id, p.title, p.publicationDate, p.sourceId) FROM Post p ORDER BY p.id DESC";
 		TypedQuery<Post> query = em.createQuery(jpql, Post.class);
 		query.setMaxResults(pageSize);
 		query.setFirstResult(pageNumber * pageSize);
 		return query.getResultList();
 	}
-	
+
+	public Post getPostById(Long id) {
+		return em.find(Post.class, id);
+	}	
+
 
 }

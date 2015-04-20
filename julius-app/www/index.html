@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html data-ng-app="app">
+<html>
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
@@ -26,36 +26,7 @@
         <link rel="stylesheet" href="css/style.css">
     </head>
 
-    <body data-ng-controller="AppCtrl">
-
-        <ion-header-bar class="bar-assertive">
-            <h1 class="title">Freshly Pressed</h1>
-        </ion-header-bar>
-        <ion-content>
-            <ion-refresher on-refresh="loadBlogs()">
-            </ion-refresher>
-            <div data-ng-if="!posts.length">
-                <center>                                        
-                    <br>
-                    <h2> Pull down to load </h2>
-                </center>
-            </div>
-            <div class="list" data-ng-if="posts.length">
-                <a data-ng-repeat="p in posts" data-ng-click="viewBlog(p.URL)">                    
-                    <div class="post-title" data-ng-bind-html="toTrusted(p.title)"> 
-                    </div>
-                    <div class="post-details">
-                        <img data-ng-src="{{p.author.avatar_URL}}" alt="">
-                        <span>
-                            <span class="blogger"> {{ p.author.nice_name }} </span>  
-                            <span class="pubdate">{{ p.date }} </span>
-                        </span>
-                    </div>
-                    </div>
-                </a>            
-            <ion-infinite-scroll on-infinite="moreBlogs()" 
-                    data-ng-if="infiniteLoad" icon="">
-            </ion-infinite-scroll>
-        </ion-content>
+    <body data-ng-app="app" animation="slide-left-right-ios7">
+        <ion-nav-view></ion-nav-view>
     </body>
 </html>

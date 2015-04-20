@@ -5,10 +5,18 @@
  * more tutorials: hollyschinsky.github.io
  */
 
-app.controller('AppCtrl', function($scope, $sce, $ionicLoading, PostService, $cordovaPush, $cordovaDialogs, $cordovaMedia, $cordovaToast, ionPlatform, localstorage, $http) {
+app.controller('PostsCtrl', function($scope, $ionicModal, $sce, $ionicLoading, PostService, $cordovaPush, $cordovaDialogs, $cordovaMedia, $cordovaToast, ionPlatform, localstorage, $http) {
     $scope.posts = [];
-    $scope.beforeDate = null;    
+    $scope.page = 0;    
     $scope.infiniteLoad = false;
+
+    //init the modal
+    $ionicModal.fromTemplateUrl('/templates/post-detail.html', {
+      scope: $scope,
+      animation: 'slide-in-up'
+    }).then(function (modal) {
+      $scope.modal = modal;
+    });
 
     // call to register automatically upon device ready
     ionPlatform.ready.then(function (device) {
@@ -19,6 +27,22 @@ app.controller('AppCtrl', function($scope, $sce, $ionicLoading, PostService, $co
             console.log("Found regId: " + localstorage.get("regId"));
         }
     });
+
+    // function to open the modal
+    $scope.openModal = function (id) {
+        $ionicLoading.show({ template: "Loading post"});
+        PostService.loadPost(id)
+            .success(function(result) {
+                $scope.post = result;
+                $ionicLoading.hide();
+                $scope.modal.show();
+            });
+    };
+
+    // function to close
+    $scope.closeModal = function (id) {
+        $scope.modal.hide();
+    };
 
 
     // Register
@@ -70,25 +94,22 @@ app.controller('AppCtrl', function($scope, $sce, $ionicLoading, PostService, $co
         }
     });
 
-    $scope.viewBlog = function(url) {        
-        window.open(url, "_blank", "location=no");        
-    }
-    $scope.loadBlogs = function() {
+    $scope.loadPosts = function() {
         $scope.infiniteLoad = false;    
-        $scope.beforeDate = null;
+        $scope.page = 0;
         if ($scope.posts.length) {
             $scope.posts = [];
-            $scope.moreBlogs();
+            $scope.morePosts();
         }        
         $scope.$broadcast("scroll.refreshComplete");
         $scope.infiniteLoad = true; 
     }
-    $scope.moreBlogs = function() {    
-        $ionicLoading.show({ template: "Loading blogs..."});
-        PostService.loadBlogs($scope.beforeDate)
+    $scope.morePosts = function() {    
+        $ionicLoading.show({ template: "Loading posts..."});
+        PostService.loadPosts($scope.page)
             .success(function(result) {
-                $scope.posts = $scope.posts.concat(result.posts);
-                $scope.beforeDate = result.date_range.oldest;
+                $scope.posts = $scope.posts.concat(result);
+                $scope.page++;
                 $scope.$broadcast("scroll.infiniteScrollComplete");   
                 $ionicLoading.hide();
             });
@@ -167,6 +188,17 @@ app.controller('AppCtrl', function($scope, $sce, $ionicLoading, PostService, $co
 
 });
 
+
+app.controller('PostDetailCtrl', function($scope, $stateParams, PostService) {
+        console.log('details');
+        //$ionicLoading.show({ template: "Loading posts..."});
+        PostService.loadPost($stateParams.id)
+            .success(function(result) {
+                $scope.post = result;
+//                $ionicLoading.hide();
+            });
+});
+
 // Android Notification Received Handler
 function registerNotificationAndroid(e) {
     switch( e.event )
@@ -184,11 +216,16 @@ function registerNotificationAndroid(e) {
 
 
 app.service('PostService', function($http) {
-    this.loadBlogs = function(date) {
-        var params = { number: 15 };
-        if (date)
-            params.before = date;
-        return ($http.get("https://public-api.wordpress.com/rest/v1/freshly-pressed/", {
+    this.loadPosts = function(page) {
+        var params = { pageNumber: page };
+        return ($http.get("http://localhost:8080/posts", {
+            params: params
+        }));
+    }
+
+    this.loadPost = function(id) {
+        var params = { id: id };
+        return ($http.get("http://localhost:8080/post", {
             params: params
         }));
     }
