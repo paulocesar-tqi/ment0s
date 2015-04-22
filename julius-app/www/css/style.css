@@ -1,6 +1,32 @@
+.active .modal-backdrop-bg {
+  opacity: 0;
+}
+
 .title {
     font-weight: bold;
 }
+
+.item-icon-left ion-spinner {
+  float: left;
+  margin-left: -3.2em;
+  margin-top: -0.2em;
+ }
+
+.item-icon-left {
+    margin: 0 0 0 0px;
+}
+
+.spinner {
+  height: 26px;
+}
+
+.spinner svg {
+  width: 28px;
+  height: 28px;
+  stroke: #999;
+  fill: #999;
+}
+
 .post-title {    
     margin-top: 5px;
     margin-left: 10px;

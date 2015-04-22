@@ -4,7 +4,8 @@
  * blog: devgirl.org
  * more tutorials: hollyschinsky.github.io
  */
- var URL_ENDPOINTS = 'http://192.168.0.102:8080';
+ //var URL_ENDPOINTS = 'http://192.168.0.102:8080';
+ var URL_ENDPOINTS = 'http://localhost:8080';
 
 app.controller('PostsCtrl', function($scope, $ionicModal, $timeout, $sce, $ionicLoading, PostService, $cordovaPush, $cordovaDialogs, $cordovaMedia, $cordovaToast, ionPlatform, localstorage, $http) {
     $scope.posts = [];

@@ -4,7 +4,8 @@
  * blog: devgirl.org
  * more tutorials: hollyschinsky.github.io
  */
- var URL_ENDPOINTS = 'http://192.168.0.102:8080';
+ //var URL_ENDPOINTS = 'http://192.168.0.102:8080';
+ var URL_ENDPOINTS = 'http://localhost:8080';
 
 app.controller('PostsCtrl', function($scope, $ionicModal, $timeout, $sce, $ionicLoading, PostService, $cordovaPush, $cordovaDialogs, $cordovaMedia, $cordovaToast, ionPlatform, localstorage, $http) {
     $scope.posts = [];
@@ -27,15 +28,17 @@ app.controller('PostsCtrl', function($scope, $ionicModal, $timeout, $sce, $ionic
         } else {
             console.log("Found regId: " + localstorage.get("regId"));
         }
+
+        $scope.morePosts();
     });
 
     // function to open the modal
     $scope.openModal = function (id) {
-        $ionicLoading.show({ template: "Loading post"});
+        //$ionicLoading.show({ noBackdrop: true, template: "Loading post"});
         PostService.loadPost(id)
             .success(function(result) {
                 $scope.post = result;
-                $ionicLoading.hide();
+                //$ionicLoading.hide();
                 $scope.modal.show();
             });
     };
@@ -106,7 +109,7 @@ app.controller('PostsCtrl', function($scope, $ionicModal, $timeout, $sce, $ionic
         $scope.infiniteLoad = true; 
     }
     $scope.morePosts = function() {    
-        $ionicLoading.show({ template: "Loading posts..."});
+        $ionicLoading.show({ template: '<p class="item-icon-left">Carregando...<ion-spinner icon="lines"/></p>'});
         PostService.loadPosts($scope.page)
             .success(function(result) {
                 if(result.length) {
@@ -121,10 +124,11 @@ app.controller('PostsCtrl', function($scope, $ionicModal, $timeout, $sce, $ionic
                 }
             })
             .error(function (data, status) {
-                $ionicLoading.show({ template: "Verifique sua conexão"});
+                $ionicLoading.show({ template: '<p class="item-icon-left">Verifique sua conexão<ion-spinner icon="lines"/></p>'});
                 $timeout(function(){
-                    $ionicLoading.hide();
-                }, 1500);
+                    $scope.morePosts();
+                }, 5000);
+
                 console.log("Error loading posts." + data + " " + status)
             });
     }
