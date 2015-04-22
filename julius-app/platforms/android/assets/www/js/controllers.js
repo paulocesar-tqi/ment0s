@@ -4,11 +4,20 @@
  * blog: devgirl.org
  * more tutorials: hollyschinsky.github.io
  */
+ var URL_ENDPOINTS = 'http://192.168.0.102:8080';
 
-app.controller('AppCtrl', function($scope, $sce, $ionicLoading, PostService, $cordovaPush, $cordovaDialogs, $cordovaMedia, $cordovaToast, ionPlatform, localstorage, $http) {
+app.controller('PostsCtrl', function($scope, $ionicModal, $timeout, $sce, $ionicLoading, PostService, $cordovaPush, $cordovaDialogs, $cordovaMedia, $cordovaToast, ionPlatform, localstorage, $http) {
     $scope.posts = [];
-    $scope.beforeDate = null;    
+    $scope.page = 0;    
     $scope.infiniteLoad = false;
+
+    //init the modal
+    $ionicModal.fromTemplateUrl('templates/post-detail.html', {
+      scope: $scope,
+      animation: 'slide-in-up'
+    }).then(function (modal) {
+      $scope.modal = modal;
+    });
 
     // call to register automatically upon device ready
     ionPlatform.ready.then(function (device) {
@@ -19,6 +28,22 @@ app.controller('AppCtrl', function($scope, $sce, $ionicLoading, PostService, $co
             console.log("Found regId: " + localstorage.get("regId"));
         }
     });
+
+    // function to open the modal
+    $scope.openModal = function (id) {
+        $ionicLoading.show({ template: "Loading post"});
+        PostService.loadPost(id)
+            .success(function(result) {
+                $scope.post = result;
+                $ionicLoading.hide();
+                $scope.modal.show();
+            });
+    };
+
+    // function to close
+    $scope.closeModal = function (id) {
+        $scope.modal.hide();
+    };
 
 
     // Register
@@ -70,27 +95,37 @@ app.controller('AppCtrl', function($scope, $sce, $ionicLoading, PostService, $co
         }
     });
 
-    $scope.viewBlog = function(url) {        
-        window.open(url, "_blank", "location=no");        
-    }
-    $scope.loadBlogs = function() {
+    $scope.loadPosts = function() {
         $scope.infiniteLoad = false;    
-        $scope.beforeDate = null;
+        $scope.page = 0;
         if ($scope.posts.length) {
             $scope.posts = [];
-            $scope.moreBlogs();
+            $scope.morePosts();
         }        
         $scope.$broadcast("scroll.refreshComplete");
         $scope.infiniteLoad = true; 
     }
-    $scope.moreBlogs = function() {    
-        $ionicLoading.show({ template: "Loading blogs..."});
-        PostService.loadBlogs($scope.beforeDate)
+    $scope.morePosts = function() {    
+        $ionicLoading.show({ template: "Loading posts..."});
+        PostService.loadPosts($scope.page)
             .success(function(result) {
-                $scope.posts = $scope.posts.concat(result.posts);
-                $scope.beforeDate = result.date_range.oldest;
-                $scope.$broadcast("scroll.infiniteScrollComplete");   
-                $ionicLoading.hide();
+                if(result.length) {
+                    $scope.posts = $scope.posts.concat(result);
+                    $scope.page++;
+                    $scope.$broadcast("scroll.infiniteScrollComplete");
+                    $ionicLoading.hide();
+                } else {
+                    $scope.infiniteLoad = false; 
+                    $scope.$broadcast("scroll.infiniteScrollComplete");
+                    $ionicLoading.hide();
+                }
+            })
+            .error(function (data, status) {
+                $ionicLoading.show({ template: "Verifique sua conexão"});
+                $timeout(function(){
+                    $ionicLoading.hide();
+                }, 1500);
+                console.log("Error loading posts." + data + " " + status)
             });
     }
     $scope.toTrusted = function(text) {
@@ -155,7 +190,7 @@ app.controller('AppCtrl', function($scope, $sce, $ionicLoading, PostService, $co
     // previously so multiple userids will be created with the same token unless you add code to check).
     function removeDeviceToken() {
         var tkn = {"token": $scope.regId};
-        $http.post('http://192.168.1.16:8000/unsubscribe', JSON.stringify(tkn))
+        $http.post(URL_ENDPOINTS + '/unsubscribe', JSON.stringify(tkn))
             .success(function (data, status) {
                 console.log("Token removed, device is successfully unsubscribed and will not receive push notifications.");
             })
@@ -167,12 +202,23 @@ app.controller('AppCtrl', function($scope, $sce, $ionicLoading, PostService, $co
 
 });
 
+
+app.controller('PostDetailCtrl', function($scope, $stateParams, PostService) {
+        console.log('details');
+        //$ionicLoading.show({ template: "Loading posts..."});
+        PostService.loadPost($stateParams.id)
+            .success(function(result) {
+                $scope.post = result;
+//                $ionicLoading.hide();
+            });
+});
+
 // Android Notification Received Handler
 function registerNotificationAndroid(e) {
     switch( e.event )
     {
     case 'registered':
-         $.get("http://192.168.0.102:8080/register?platform=android&regId=" + e.regid, function(){
+         $.get(URL_ENDPOINTS + "/register?platform=android&regId=" + e.regid, function(){
                 console.log("Id registrado com sucesso: " + e.regid);
                 window.localStorage['regId'] =  e.regid;
             });
@@ -184,11 +230,16 @@ function registerNotificationAndroid(e) {
 
 
 app.service('PostService', function($http) {
-    this.loadBlogs = function(date) {
-        var params = { number: 15 };
-        if (date)
-            params.before = date;
-        return ($http.get("https://public-api.wordpress.com/rest/v1/freshly-pressed/", {
+    this.loadPosts = function(page) {
+        var params = { pageNumber: page };
+        return ($http.get(URL_ENDPOINTS + "/posts", {
+            params: params
+        }));
+    }
+
+    this.loadPost = function(id) {
+        var params = { id: id };
+        return ($http.get(URL_ENDPOINTS + "/post", {
             params: params
         }));
     }

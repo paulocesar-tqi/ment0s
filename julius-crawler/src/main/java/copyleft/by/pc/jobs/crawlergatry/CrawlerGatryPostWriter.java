@@ -49,10 +49,10 @@ public class CrawlerGatryPostWriter implements ItemWriter<Post> {
 
 	@Async
 	private void notificateAndroidUsers(List<Post> newPosts) {
-		List<Post> posts = new ArrayList<Post>();
-		posts.add(newPosts.get(0));
-		//notificationService.notificateAndroidUsers(newPosts);
-		notificationService.notificateAndroidUsers(posts);
+//		List<Post> posts = new ArrayList<Post>();
+//		posts.add(newPosts.get(0));
+//		notificationService.notificateAndroidUsers(posts);
+		notificationService.notificateAndroidUsers(newPosts);
 	}
 	
 }

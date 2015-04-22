@@ -41,7 +41,7 @@ public class CrawlerHardmobPostProcessor implements ItemProcessor<Post,Post> {
 		if(!externalHardmobIds.contains(post.getExternalId())) {
 			post.setSourceId(hardmobId);
 			post.setPublicationDate(cal.getTime());
-			retrieveHtmlAndRealUrl(post);
+			post = retrieveHtmlAndRealUrl(post);
 			return post;	
 		} else {
 			log.debug("Post id " + post.getExternalId() + " ja incluido.");
@@ -50,7 +50,7 @@ public class CrawlerHardmobPostProcessor implements ItemProcessor<Post,Post> {
 		
 	}
 
-	private void retrieveHtmlAndRealUrl(Post post) {
+	private Post retrieveHtmlAndRealUrl(Post post) {
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Host", "www.hardmob.com.br");
 		headers.set("Connection", "keep-alive");
@@ -67,27 +67,34 @@ public class CrawlerHardmobPostProcessor implements ItemProcessor<Post,Post> {
 		RestTemplate template = new RestTemplate(clientHttpRequestFactory);
 		HttpEntity<?> entity = new HttpEntity<>(headers);
 		
-		HttpEntity<String> response = template.exchange(post.getUrl(), HttpMethod.GET, entity, String.class);
-		String html = response.getBody();
-		html = html.substring(html.indexOf("<div id=\"navbar\">"), html.indexOf("<div id=\"copyright\""));
+		try {
+			HttpEntity<String> response = template.exchange(post.getUrl(), HttpMethod.GET, entity, String.class);
+			String html = response.getBody();
+			html = html.substring(html.indexOf("<div id=\"navbar\">"), html.indexOf("<div id=\"copyright\""));
 
-		Document document = Jsoup.parse(html);
-		Elements elements = document.getElementsByClass("largefont");
-		
-		if(elements.size() != 1) {
-			log.info("PROBLEMA: Não existe apenas um <p> no topico hardmob: " + post.getUrl());
+			Document document = Jsoup.parse(html);
+			Elements elements = document.getElementsByClass("largefont");
+			
+			if(elements.size() != 1) {
+				log.info("PROBLEMA: Não existe apenas um <p> no topico hardmob: " + post.getUrl());
+			}
+			else {
+				post.setUrl(elements.get(0).child(0).attr("href"));
+			}
+			
+			elements = document.getElementsByClass("posttext");
+			
+			if(elements.size() > 0) {
+				post.setHtml(elements.get(0).html());
+			} else {
+				log.info("Não foi possivel setar o html para o topico hardmob: " + post.getUrl());
+			}			
+		} catch (Exception e) {
+			log.info("Nao foi possivel acessar o topico - topico excluido: " + post.getUrl());
+			post = null;
 		}
-		else {
-			post.setUrl(elements.get(0).child(0).attr("href"));
-		}
 		
-		elements = document.getElementsByClass("posttext");
-		
-		if(elements.size() > 0) {
-			post.setHtml(elements.get(0).html());
-		} else {
-			log.info("Não foi possivel setar o html para o topico hardmob: " + post.getUrl());
-		}
+		return post;
 	}
 		
 }

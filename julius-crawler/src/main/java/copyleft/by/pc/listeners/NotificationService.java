@@ -31,14 +31,16 @@ public class NotificationService {
 		//Retrieve ids
 		List<String> ids = dao.getRegistrationIdsByPlatform("android");
 
-		for(Post post : items) {
-			Notification notification = new Notification();
-			notification.setBadge(1);
-			notification.setRegistrationIdsToSend(ids);
-			notification.setTitle("Teste mensagem!");
-			notification.setMessage(post.getTitle());
-			
-			sender.sendNotification(notification);
+		if (ids != null && ids.size() > 0) {
+			for(Post post : items) {
+				Notification notification = new Notification();
+				notification.setBadge(1);
+				notification.setRegistrationIdsToSend(ids);
+				notification.setTitle("Teste mensagem!");
+				notification.setMessage(post.getTitle());
+				
+				sender.sendNotification(notification);
+			}
 		}
 		
 	}

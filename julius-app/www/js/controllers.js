@@ -4,14 +4,15 @@
  * blog: devgirl.org
  * more tutorials: hollyschinsky.github.io
  */
+ var URL_ENDPOINTS = 'http://192.168.0.102:8080';
 
-app.controller('PostsCtrl', function($scope, $ionicModal, $sce, $ionicLoading, PostService, $cordovaPush, $cordovaDialogs, $cordovaMedia, $cordovaToast, ionPlatform, localstorage, $http) {
+app.controller('PostsCtrl', function($scope, $ionicModal, $timeout, $sce, $ionicLoading, PostService, $cordovaPush, $cordovaDialogs, $cordovaMedia, $cordovaToast, ionPlatform, localstorage, $http) {
     $scope.posts = [];
     $scope.page = 0;    
     $scope.infiniteLoad = false;
 
     //init the modal
-    $ionicModal.fromTemplateUrl('/templates/post-detail.html', {
+    $ionicModal.fromTemplateUrl('templates/post-detail.html', {
       scope: $scope,
       animation: 'slide-in-up'
     }).then(function (modal) {
@@ -108,10 +109,23 @@ app.controller('PostsCtrl', function($scope, $ionicModal, $sce, $ionicLoading, P
         $ionicLoading.show({ template: "Loading posts..."});
         PostService.loadPosts($scope.page)
             .success(function(result) {
-                $scope.posts = $scope.posts.concat(result);
-                $scope.page++;
-                $scope.$broadcast("scroll.infiniteScrollComplete");   
-                $ionicLoading.hide();
+                if(result.length) {
+                    $scope.posts = $scope.posts.concat(result);
+                    $scope.page++;
+                    $scope.$broadcast("scroll.infiniteScrollComplete");
+                    $ionicLoading.hide();
+                } else {
+                    $scope.infiniteLoad = false; 
+                    $scope.$broadcast("scroll.infiniteScrollComplete");
+                    $ionicLoading.hide();
+                }
+            })
+            .error(function (data, status) {
+                $ionicLoading.show({ template: "Verifique sua conexão"});
+                $timeout(function(){
+                    $ionicLoading.hide();
+                }, 1500);
+                console.log("Error loading posts." + data + " " + status)
             });
     }
     $scope.toTrusted = function(text) {
@@ -176,7 +190,7 @@ app.controller('PostsCtrl', function($scope, $ionicModal, $sce, $ionicLoading, P
     // previously so multiple userids will be created with the same token unless you add code to check).
     function removeDeviceToken() {
         var tkn = {"token": $scope.regId};
-        $http.post('http://192.168.1.16:8000/unsubscribe', JSON.stringify(tkn))
+        $http.post(URL_ENDPOINTS + '/unsubscribe', JSON.stringify(tkn))
             .success(function (data, status) {
                 console.log("Token removed, device is successfully unsubscribed and will not receive push notifications.");
             })
@@ -204,7 +218,7 @@ function registerNotificationAndroid(e) {
     switch( e.event )
     {
     case 'registered':
-         $.get("http://192.168.0.102:8080/register?platform=android&regId=" + e.regid, function(){
+         $.get(URL_ENDPOINTS + "/register?platform=android&regId=" + e.regid, function(){
                 console.log("Id registrado com sucesso: " + e.regid);
                 window.localStorage['regId'] =  e.regid;
             });
@@ -218,14 +232,14 @@ function registerNotificationAndroid(e) {
 app.service('PostService', function($http) {
     this.loadPosts = function(page) {
         var params = { pageNumber: page };
-        return ($http.get("http://localhost:8080/posts", {
+        return ($http.get(URL_ENDPOINTS + "/posts", {
             params: params
         }));
     }
 
     this.loadPost = function(id) {
         var params = { id: id };
-        return ($http.get("http://localhost:8080/post", {
+        return ($http.get(URL_ENDPOINTS + "/post", {
             params: params
         }));
     }

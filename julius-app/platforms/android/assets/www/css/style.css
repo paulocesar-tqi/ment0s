@@ -1,10 +1,13 @@
+.title {
+    font-weight: bold;
+}
 .post-title {    
     margin-top: 5px;
     margin-left: 10px;
     margin-right: 10px;
-    font-size: 1.7em;
-    font-weight: bolder;
-    padding: 5px;         
+    font-size: 1.3em;
+    /*font-weight: bolder; */
+    padding: 5px;       
     border-top: 1px lightgrey solid;
     border-left: 1px lightgrey solid;
     border-right: 1px lightgrey solid;    
@@ -13,12 +16,18 @@
 .post-details {
     margin-left: 10px;
     margin-right: 10px;
-    margin-bottom: 10px;    
+    margin-bottom: 25px;    
     border: lightgrey 1px solid;
     padding: 5px;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
+    overflow: auto;
 }
+
+.post-details > p {
+    margin: 0 0 0 0px;
+}
+
 
 .post-details > img {
     height: 24px !important;    
@@ -26,12 +35,50 @@
 }
 
 .blogger {
-    font-size: 1em;    
+    font-size: 0.9em;
+    float: left;
 }
 
 .pubdate {
-    font-size: 1em;
+    font-size: 0.9em;
     color: grey;
     float: right;
     font-style: italic;    
+}
+
+.item {
+    white-space: normal !important;
+}
+
+a.link {
+    padding-top: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 5px;
+    text-align: center;
+    font-weight: bold;
+    background-color: #EF4E3A;
+
+}
+
+a.link > p {
+    font-weight: bold;
+    color: white;
+}
+
+a.footer {
+    padding-top: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 5px;
+}
+
+a.footer > p {
+    font-size: 0.7em;
+    font-style: italic;
+}
+
+
+p {
+    white-space: normal !important;
 }

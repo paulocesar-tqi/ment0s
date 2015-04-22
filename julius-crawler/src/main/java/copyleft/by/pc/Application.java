@@ -44,8 +44,8 @@ public class Application {
         ctx = app.run();
 
 	}
-	
 
+	
 	@Scheduled(fixedDelayString="${gatry.runevery}",initialDelay=10000)
 	public void runGatryJob() throws JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException, JobParametersInvalidException, InterruptedException {
         JobLauncher jobLauncher = ctx.getBean(JobLauncher.class);
@@ -59,18 +59,14 @@ public class Application {
     	
     	BatchStatus batchStatus = jobExecution.getStatus();
     	while(batchStatus.isRunning()){
-    		log.info("*********** Still running.... **************");
     		Thread.sleep(1000);
     	}
-    	log.info(String.format("*********** Exit status: %s", jobExecution.getExitStatus().getExitCode()));
     	JobInstance jobInstance = jobExecution.getJobInstance();
-    	log.info(String.format("********* Name of the job %s", jobInstance.getJobName()));
-    	
-    	log.info(String.format("*********** job instance Id: %d", jobInstance.getId()));
-
+    	log.info(String.format("Job %s instance %s exited with status %s",jobInstance.getJobName(), jobInstance.getId(), jobExecution.getExitStatus().getExitCode()));
 	}
 	
-//	@Scheduled(fixedDelayString="${hardmob.runevery}",initialDelay=60000)
+	
+	@Scheduled(fixedDelayString="${hardmob.runevery}",initialDelay=20000)
 	public void runHardmobJob() throws JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException, JobParametersInvalidException, InterruptedException {
         JobLauncher jobLauncher = ctx.getBean(JobLauncher.class);
     	        		
@@ -83,19 +79,15 @@ public class Application {
     	
     	BatchStatus batchStatus = jobExecution.getStatus();
     	while(batchStatus.isRunning()){
-    		log.info("*********** Still running.... **************");
     		Thread.sleep(1000);
     	}
-    	log.info(String.format("*********** Exit status: %s", jobExecution.getExitStatus().getExitCode()));
     	JobInstance jobInstance = jobExecution.getJobInstance();
-    	log.info(String.format("********* Name of the job %s", jobInstance.getJobName()));
-    	
-    	log.info(String.format("*********** job instance Id: %d", jobInstance.getId()));
+    	log.info(String.format("Job %s instance %s exited with status %s",jobInstance.getJobName(), jobInstance.getId(), jobExecution.getExitStatus().getExitCode()));
 
 	}
 
 	
-//	@Scheduled(cron="${purge.cron}")
+	@Scheduled(cron="${purge.cron}")
 	public void runPurgePostsJob() throws JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException, JobParametersInvalidException, InterruptedException {
         JobLauncher jobLauncher = ctx.getBean(JobLauncher.class);
 
@@ -108,14 +100,10 @@ public class Application {
     	
     	BatchStatus batchStatus = jobExecution.getStatus();
     	while(batchStatus.isRunning()){
-    		log.info("*********** Still running.... **************");
     		Thread.sleep(1000);
     	}
-    	log.info(String.format("*********** Exit status: %s", jobExecution.getExitStatus().getExitCode()));
     	JobInstance jobInstance = jobExecution.getJobInstance();
-    	log.info(String.format("********* Name of the job %s", jobInstance.getJobName()));
-    	
-    	log.info(String.format("*********** job instance Id: %d", jobInstance.getId()));
+    	log.info(String.format("Job %s instance %s exited with status %s",jobInstance.getJobName(), jobInstance.getId(), jobExecution.getExitStatus().getExitCode()));
 
 	}
  
