@@ -46,7 +46,7 @@ public class Post implements Serializable {
 	private String url;
 
 	@Column(name = "publication_date")
-	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
+	@JsonFormat(pattern="dd/MM/yyyy HH:mm", timezone="GMT-3:00")
 	private Date publicationDate;
 
 	@Column(name = "source_id")

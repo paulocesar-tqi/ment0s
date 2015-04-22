@@ -1,0 +1,32 @@
+<ion-view title="posts">
+    <ion-header-bar class="bar-assertive">
+        <div class="buttons">
+            <button class="button" ng-click="doSomething()">Left Button</button>
+        </div>
+        <h1 class="title">Promobugs</h1>
+    </ion-header-bar>
+    <ion-content>
+        <ion-refresher on-refresh="loadPosts()">
+        </ion-refresher>
+        <div data-ng-if="!posts.length">
+            <center>
+                <br>
+                <h2> Pull down to load </h2>
+            </center>
+        </div>
+        <div class="list" data-ng-if="posts.length">
+            <a data-ng-repeat="p in posts" ng-click="openModal(p.id)">
+                <div class="post-title" data-ng-bind-html="toTrusted(p.title)">
+                </div>
+                <div class="post-details">
+                    <p class="blogger">Categoria</p>
+                    <p class="pubdate">{{ p.publicationDate }} </p>
+                </div>
+                </div>
+            </a>
+        <ion-infinite-scroll on-infinite="morePosts()"
+                data-ng-if="infiniteLoad" icon="">
+        </ion-infinite-scroll>
+    </ion-content>
+
+</ion-view>

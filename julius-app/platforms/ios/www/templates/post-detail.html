@@ -1,0 +1,19 @@
+<ion-view title="post">
+    <ion-header-bar class="bar-assertive">
+        <div class="buttons">
+            <button class="button" ng-click="closeModal()">Voltar</button>
+        </div>
+        <h1 class="title">Promobugs</h1>
+    </ion-header-bar>
+    <ion-content has-header="true" padding="true">
+
+        <div class="list card">
+            <div class="item" data-ng-bind-html="toTrusted(post.html)">
+            </div>
+            <a class="item link" href="{{post.url}}"><p>Visualizar o post original</p></a>
+            <a class="item footer"><p>*Visualize sempre o post original para saber mais informações e ler os comentários de outros usuários.</p></a>
+        </div>
+
+    </ion-content>
+
+</ion-view>

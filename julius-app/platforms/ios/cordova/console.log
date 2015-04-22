@@ -1,0 +1,23 @@
+2015-04-21 23:03:41.882 Julius[5471:121851] DiskCookieStorage changing policy from 2 to 0, cookie file: file:///Users/yusuke/Library/Developer/CoreSimulator/Devices/8A7E69E8-A3C8-44A8-826C-C318C1FC320F/data/Containers/Data/Application/85E35BBB-781B-4D6F-8EEB-97101DE7AB84/Library/Cookies/Cookies.binarycookies
+2015-04-21 23:03:41.999 Julius[5471:121851] Apache Cordova native platform version 3.8.0 is starting.
+2015-04-21 23:03:42.000 Julius[5471:121851] Multi-tasking -> Device: YES, App: YES
+2015-04-21 23:03:42.002 Julius[5471:121851] Unlimited access to network resources
+2015-04-21 23:03:42.102 Julius[5471:121851] [CDVTimer][file] 3.035963ms
+2015-04-21 23:03:42.103 Julius[5471:121851] [CDVTimer][TotalPluginStartup] 3.233016ms
+2015-04-21 23:03:42.143 Julius[5471:121851] active
+2015-04-21 23:03:42.146 Julius[5471:121851] Attempting to badge the application icon but haven't received permission from the user to badge the application
+2015-04-21 23:03:42.209 Julius[5471:121851] Resetting plugins due to page load.
+2015-04-21 23:03:42.444 Julius[5471:121851] Finished load of: file:///Users/yusuke/Library/Developer/CoreSimulator/Devices/8A7E69E8-A3C8-44A8-826C-C318C1FC320F/data/Containers/Bundle/Application/B1A94C8E-4771-47A6-A407-DAC1CABAFED7/Julius.app/www/index.html#/posts
+2015-04-21 23:04:15.620 Julius[5471:121851] Error loading posts. 0
+2015-04-21 23:10:41.169 Julius[5742:124573] DiskCookieStorage changing policy from 2 to 0, cookie file: file:///Users/yusuke/Library/Developer/CoreSimulator/Devices/8CD62912-5AB1-434A-A45B-FF8F54206003/data/Containers/Data/Application/90F80AA7-14C0-489D-AD99-8E8E7838407C/Library/Cookies/Cookies.binarycookies
+2015-04-21 23:10:41.274 Julius[5742:124573] Apache Cordova native platform version 3.8.0 is starting.
+2015-04-21 23:10:41.275 Julius[5742:124573] Multi-tasking -> Device: YES, App: YES
+2015-04-21 23:10:41.289 Julius[5742:124573] Unlimited access to network resources
+2015-04-21 23:10:41.530 Julius[5742:124573] [CDVTimer][file] 2.581000ms
+2015-04-21 23:10:41.530 Julius[5742:124573] [CDVTimer][TotalPluginStartup] 2.770960ms
+2015-04-21 23:10:41.624 Julius[5742:124573] active
+2015-04-21 23:10:41.627 Julius[5742:124573] Attempting to badge the application icon but haven't received permission from the user to badge the application
+2015-04-21 23:10:41.881 Julius[5742:124573] Resetting plugins due to page load.
+2015-04-21 23:10:42.172 Julius[5742:124573] Finished load of: file:///Users/yusuke/Library/Developer/CoreSimulator/Devices/8CD62912-5AB1-434A-A45B-FF8F54206003/data/Containers/Bundle/Application/A1B4C6C9-403C-49CB-BAA9-2B3FEDA204C2/Julius.app/www/index.html#/posts
+2015-04-21 23:13:21.578 Julius[5742:124573] Resetting plugins due to page load.
+2015-04-21 23:13:49.484 Julius[5742:124573] Finished load of: http://www.hardmob.com.br/promocoes/586877-samsung-ativ-book-2-270e5g-kd2-i5-3210m-8gb-1tb-15-6-office-365-1708-10x.html
