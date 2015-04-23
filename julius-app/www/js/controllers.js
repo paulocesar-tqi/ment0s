@@ -12,12 +12,20 @@ app.controller('PostsCtrl', function($scope, $ionicModal, $timeout, $sce, $ionic
     $scope.page = 0;    
     $scope.infiniteLoad = false;
 
-    //init the modal
+    //init the modal postDetail
     $ionicModal.fromTemplateUrl('templates/post-detail.html', {
       scope: $scope,
       animation: 'slide-in-up'
     }).then(function (modal) {
-      $scope.modal = modal;
+      $scope.postDetail = modal;
+    });
+
+    //init the modal url-viewer
+    $ionicModal.fromTemplateUrl('templates/url-viewer.html', {
+      scope: $scope,
+      animation: 'slide-in-up'
+    }).then(function (modal) {
+      $scope.urlViewer = modal;
     });
 
     // call to register automatically upon device ready
@@ -32,20 +40,30 @@ app.controller('PostsCtrl', function($scope, $ionicModal, $timeout, $sce, $ionic
         $scope.morePosts();
     });
 
-    // function to open the modal
-    $scope.openModal = function (id) {
-        //$ionicLoading.show({ noBackdrop: true, template: "Loading post"});
+    // function to open the modal PostDetail
+    $scope.openPostDetail = function (id) {
+        $ionicLoading.show({ template: "Loading post"});
         PostService.loadPost(id)
             .success(function(result) {
                 $scope.post = result;
-                //$ionicLoading.hide();
-                $scope.modal.show();
+                $ionicLoading.hide();
+                $scope.postDetail.show();
             });
     };
 
-    // function to close
-    $scope.closeModal = function (id) {
-        $scope.modal.hide();
+    // function to close PostDetail
+    $scope.closePostDetail = function () {
+        $scope.postDetail.hide();
+    };
+
+    // function to open the modal urlViewer
+    $scope.openUrlViewer = function () {
+        $scope.urlViewer.show();
+    };
+
+    // function to close urlViewer
+    $scope.closeUrlViewer = function () {
+        $scope.urlViewer.hide();
     };
 
 
@@ -101,12 +119,10 @@ app.controller('PostsCtrl', function($scope, $ionicModal, $timeout, $sce, $ionic
     $scope.loadPosts = function() {
         $scope.infiniteLoad = false;    
         $scope.page = 0;
-        if ($scope.posts.length) {
-            $scope.posts = [];
-            $scope.morePosts();
-        }        
+        $scope.posts = [];
         $scope.$broadcast("scroll.refreshComplete");
         $scope.infiniteLoad = true; 
+        $scope.morePosts();
     }
     $scope.morePosts = function() {    
         $ionicLoading.show({ template: '<p class="item-icon-left">Carregando...<ion-spinner icon="lines"/></p>'});
