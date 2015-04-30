@@ -5,19 +5,28 @@
  * more tutorials: hollyschinsky.github.io
  */
  //var URL_ENDPOINTS = 'http://192.168.0.102:8080';
- var URL_ENDPOINTS = 'http://localhost:8080';
+ var URL_ENDPOINTS = 'http://10.10.1.185:8080';
+ //var URL_ENDPOINTS = 'http://localhost:8080';
 
 app.controller('PostsCtrl', function($scope, $ionicModal, $timeout, $sce, $ionicLoading, PostService, $cordovaPush, $cordovaDialogs, $cordovaMedia, $cordovaToast, ionPlatform, localstorage, $http) {
     $scope.posts = [];
     $scope.page = 0;    
     $scope.infiniteLoad = false;
 
-    //init the modal
+    //init the modal postDetail
     $ionicModal.fromTemplateUrl('templates/post-detail.html', {
       scope: $scope,
       animation: 'slide-in-up'
     }).then(function (modal) {
-      $scope.modal = modal;
+      $scope.postDetail = modal;
+    });
+
+    //init the modal url-viewer
+    $ionicModal.fromTemplateUrl('templates/url-viewer.html', {
+      scope: $scope,
+      animation: 'slide-in-up'
+    }).then(function (modal) {
+      $scope.urlViewer = modal;
     });
 
     // call to register automatically upon device ready
@@ -28,22 +37,34 @@ app.controller('PostsCtrl', function($scope, $ionicModal, $timeout, $sce, $ionic
         } else {
             console.log("Found regId: " + localstorage.get("regId"));
         }
+
+        $scope.morePosts();
     });
 
-    // function to open the modal
-    $scope.openModal = function (id) {
+    // function to open the modal PostDetail
+    $scope.openPostDetail = function (id) {
         $ionicLoading.show({ template: "Loading post"});
         PostService.loadPost(id)
             .success(function(result) {
                 $scope.post = result;
                 $ionicLoading.hide();
-                $scope.modal.show();
+                $scope.postDetail.show();
             });
     };
 
-    // function to close
-    $scope.closeModal = function (id) {
-        $scope.modal.hide();
+    // function to close PostDetail
+    $scope.closePostDetail = function () {
+        $scope.postDetail.hide();
+    };
+
+    // function to open the modal urlViewer
+    $scope.openUrlViewer = function () {
+        $scope.urlViewer.show();
+    };
+
+    // function to close urlViewer
+    $scope.closeUrlViewer = function () {
+        $scope.urlViewer.hide();
     };
 
 
@@ -99,15 +120,13 @@ app.controller('PostsCtrl', function($scope, $ionicModal, $timeout, $sce, $ionic
     $scope.loadPosts = function() {
         $scope.infiniteLoad = false;    
         $scope.page = 0;
-        if ($scope.posts.length) {
-            $scope.posts = [];
-            $scope.morePosts();
-        }        
+        $scope.posts = [];
         $scope.$broadcast("scroll.refreshComplete");
         $scope.infiniteLoad = true; 
+        $scope.morePosts();
     }
     $scope.morePosts = function() {    
-        $ionicLoading.show({ template: "Loading posts..."});
+        $ionicLoading.show({ template: '<p class="item-icon-left">Carregando...<ion-spinner icon="lines"/></p>'});
         PostService.loadPosts($scope.page)
             .success(function(result) {
                 if(result.length) {
@@ -122,10 +141,11 @@ app.controller('PostsCtrl', function($scope, $ionicModal, $timeout, $sce, $ionic
                 }
             })
             .error(function (data, status) {
-                $ionicLoading.show({ template: "Verifique sua conexão"});
+                $ionicLoading.show({ template: '<p class="item-icon-left">Verifique sua conexão<ion-spinner icon="lines"/></p>'});
                 $timeout(function(){
-                    $ionicLoading.hide();
-                }, 1500);
+                    $scope.morePosts();
+                }, 5000);
+
                 console.log("Error loading posts." + data + " " + status)
             });
     }

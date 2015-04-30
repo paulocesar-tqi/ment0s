@@ -20,7 +20,8 @@
     "com.ionic.keyboard",
     "org.apache.cordova.dialogs",
     "org.apache.cordova.file",
-    "org.apache.cordova.media"
+    "org.apache.cordova.media",
+    "org.apache.cordova.inappbrowser"
   ],
   "cordovaPlatforms": [
     "ios"

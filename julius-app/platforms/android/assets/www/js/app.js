@@ -14,7 +14,9 @@
         });
 	})
 
-	.config(function ($stateProvider, $urlRouterProvider) {
+	.config(function ($stateProvider, $urlRouterProvider, $sceProvider) {
+
+        $sceProvider.enabled(false);
 
         $stateProvider
 

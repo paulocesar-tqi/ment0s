@@ -46,7 +46,7 @@ public class Application {
 	}
 
 	
-	@Scheduled(fixedDelayString="${gatry.runevery}",initialDelay=10000)
+	//@Scheduled(fixedDelayString="${gatry.runevery}",initialDelay=10000)
 	public void runGatryJob() throws JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException, JobParametersInvalidException, InterruptedException {
         JobLauncher jobLauncher = ctx.getBean(JobLauncher.class);
     	        		

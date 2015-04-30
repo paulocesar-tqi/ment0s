@@ -5,9 +5,10 @@
  * more tutorials: hollyschinsky.github.io
  */
  //var URL_ENDPOINTS = 'http://192.168.0.102:8080';
+ //var URL_ENDPOINTS = 'http://10.10.1.185:8080';
  var URL_ENDPOINTS = 'http://localhost:8080';
 
-app.controller('PostsCtrl', function($scope, $ionicModal, $timeout, $sce, $ionicLoading, PostService, $cordovaPush, $cordovaDialogs, $cordovaMedia, $cordovaToast, ionPlatform, localstorage, $http) {
+app.controller('PostsCtrl', function($scope, $ionicModal, $timeout, $sce, $ionicLoading, PostService, CryptoService, $cordovaPush, $cordovaDialogs, $cordovaMedia, $cordovaToast, ionPlatform, localstorage, $http) {
     $scope.posts = [];
     $scope.page = 0;    
     $scope.infiniteLoad = false;
@@ -38,6 +39,7 @@ app.controller('PostsCtrl', function($scope, $ionicModal, $timeout, $sce, $ionic
         }
 
         $scope.morePosts();
+
     });
 
     // function to open the modal PostDetail
@@ -128,16 +130,22 @@ app.controller('PostsCtrl', function($scope, $ionicModal, $timeout, $sce, $ionic
         $ionicLoading.show({ template: '<p class="item-icon-left">Carregando...<ion-spinner icon="lines"/></p>'});
         PostService.loadPosts($scope.page)
             .success(function(result) {
-                if(result.length) {
-                    $scope.posts = $scope.posts.concat(result);
-                    $scope.page++;
-                    $scope.$broadcast("scroll.infiniteScrollComplete");
-                    $ionicLoading.hide();
-                } else {
-                    $scope.infiniteLoad = false; 
-                    $scope.$broadcast("scroll.infiniteScrollComplete");
-                    $ionicLoading.hide();
-                }
+                CryptoService.decrypt(result)
+                    .then(function(decrypted_plain_text) {
+                        console.log("text decrypt: " + decrypted_plain_text);
+                        if(decrypted_plain_text.length) {
+                            $scope.posts = $scope.posts.concat(JSON.parse(decrypted_plain_text));
+                            $scope.page++;
+                            $scope.$broadcast("scroll.infiniteScrollComplete");
+                            $ionicLoading.hide();
+                        } else {
+                            $scope.infiniteLoad = false; 
+                            $scope.$broadcast("scroll.infiniteScrollComplete");
+                            $ionicLoading.hide();
+                        }
+                    }).catch(function(err) {
+                        console.log("Error decrypting text." + err);
+                    });
             })
             .error(function (data, status) {
                 $ionicLoading.show({ template: '<p class="item-icon-left">Verifique sua conexão<ion-spinner icon="lines"/></p>'});
@@ -262,6 +270,20 @@ app.service('PostService', function($http) {
         return ($http.get(URL_ENDPOINTS + "/post", {
             params: params
         }));
+    }
+})
+
+
+app.service('CryptoService', function() {
+    var cryptographer = new JoseJWE.WebCryptographer();
+    cryptographer.setKeyEncryptionAlgorithm("A128KW");
+    cryptographer.setContentEncryptionAlgorithm("A128CBC-HS256");
+    var shared_key = {"kty":"oct", "k":"Q0hBVkVfREVfMTZfQklUUw"};
+    shared_key = crypto.subtle.importKey("jwk", shared_key, {name: "AES-KW"}, true, ["wrapKey", "unwrapKey"]);
+    var decrypter = new JoseJWE.Decrypter(cryptographer, shared_key);
+
+    this.decrypt = function(text) {
+        return decrypter.decrypt(text);
     }
 })
 
