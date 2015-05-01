@@ -8,21 +8,15 @@
     <ion-content>
         <ion-refresher on-refresh="loadPosts()">
         </ion-refresher>
-        <div data-ng-if="!posts.length">
-            <center>
-                <br>
-                <h2> Pull down to load </h2>
-            </center>
-        </div>
         <div class="list" data-ng-if="posts.length">
-            <a data-ng-repeat="p in posts" ng-click="openModal(p.id)">
+            <a data-ng-repeat="p in posts" ng-click="openPostDetail(p.id)">
                 <div class="post-title" data-ng-bind-html="toTrusted(p.title)">
                 </div>
                 <div class="post-details">
                     <p class="blogger">Categoria</p>
                     <p class="pubdate">{{ p.publicationDate }} </p>
                 </div>
-                </div>
+        </div>
             </a>
         <ion-infinite-scroll on-infinite="morePosts()"
                 data-ng-if="infiniteLoad" icon="">

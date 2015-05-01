@@ -1,5 +1,6 @@
 package copyleft.by.pc.endpoints;
 
+import java.security.Key;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Queue;
@@ -7,6 +8,11 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.jose4j.jwe.ContentEncryptionAlgorithmIdentifiers;
+import org.jose4j.jwe.JsonWebEncryption;
+import org.jose4j.jwe.KeyManagementAlgorithmIdentifiers;
+import org.jose4j.keys.AesKey;
+import org.jose4j.lang.JoseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -19,6 +25,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import copyleft.by.pc.common.dao.GenericDao;
 import copyleft.by.pc.common.entities.Post;
@@ -49,13 +58,26 @@ public class Endpoints {
 	}
 	
 	
-	@RequestMapping(value = "/posts", method = RequestMethod.GET)
+	@RequestMapping(value = "/posts", method = RequestMethod.GET, produces = "text/plain; charset=utf-8")
 	@ResponseBody
-	public HttpEntity<List<Post>> listPosts(
+	public HttpEntity<String> listPosts(
 			@RequestParam(value = "pageNumber", required = false, defaultValue = "0") Integer pageNumber) {
 		
 		List<Post> posts = dao.getPostsByFilter(pageNumber, postPageSize);
-		return new ResponseEntity<>(posts, HttpStatus.OK);
+		
+		ObjectMapper mapper = new ObjectMapper();
+        String json = "";
+        try {
+			json = mapper.writeValueAsString(posts);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		//ResponseEntity<List<Post>> oi = new ResponseEntity<>(posts, HttpStatus.OK);
+        log.info("Antes: " + json);
+        json = encrypt(json);
+		log.info(json);
+		return new ResponseEntity<>(json, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/post", method = RequestMethod.GET)
@@ -65,6 +87,25 @@ public class Endpoints {
 		
 		Post post = dao.getPostById(id);
 		return new ResponseEntity<>(post, HttpStatus.OK);
+	}
+	
+	
+	private String encrypt(String input) {
+		Key key = new AesKey("CHAVE_DE_16_BITS".getBytes());
+		log.info(key);
+		JsonWebEncryption jwe = new JsonWebEncryption();
+		jwe.setPayload(input);
+		jwe.setAlgorithmHeaderValue(KeyManagementAlgorithmIdentifiers.A128KW);
+		jwe.setEncryptionMethodHeaderParameter(ContentEncryptionAlgorithmIdentifiers.AES_128_CBC_HMAC_SHA_256);
+		jwe.setKey(key);
+		String serializedJwe = "";
+		try {
+			serializedJwe = jwe.getCompactSerialization();
+		} catch (JoseException e) {
+			e.printStackTrace();
+		}
+		return serializedJwe;
+
 	}
 
 	

@@ -35,6 +35,10 @@
                         {
                             "xml": "<feature name=\"Media\"><param name=\"ios-package\" value=\"CDVSound\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"InAppBrowser\"><param name=\"ios-package\" value=\"CDVInAppBrowser\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -64,6 +68,12 @@
                             "xml": false,
                             "count": 1
                         }
+                    ],
+                    "CoreGraphics.framework": [
+                        {
+                            "xml": false,
+                            "count": 1
+                        }
                     ]
                 }
             }
@@ -89,6 +99,9 @@
             "PACKAGE_NAME": "copyleft.by.pc"
         },
         "org.apache.cordova.media": {
+            "PACKAGE_NAME": "copyleft.by.pc"
+        },
+        "org.apache.cordova.inappbrowser": {
             "PACKAGE_NAME": "copyleft.by.pc"
         }
     },
