@@ -33,8 +33,6 @@ public class CrawlerHardmobPostProcessor implements ItemProcessor<Post,Post> {
 	@Resource(name="externalHardmobIds")
 	private List<String> externalHardmobIds; 
 	
-	private SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy, HH:mm");
-	
 	@Override
 	public Post process(Post post) throws Exception {
 		
@@ -92,7 +90,7 @@ public class CrawlerHardmobPostProcessor implements ItemProcessor<Post,Post> {
 			//Seta a data de publicacao
 			elements = document.getElementsByClass("date");
 			if(elements.size() > 0) {
-				post.setPublicationDate(sdf.parse(elements.get(0).text()));
+				post.setPublicationDate(new SimpleDateFormat("dd-MM-yyyy, HH:mm").parse(elements.get(0).text()));
 			} else {
 				log.info("Não foi possivel setar a data de publicacao para o topico hardmob: " + post.getUrl());
 			}

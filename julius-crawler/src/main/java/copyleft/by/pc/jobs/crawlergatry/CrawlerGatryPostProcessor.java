@@ -24,8 +24,6 @@ public class CrawlerGatryPostProcessor implements ItemProcessor<Element,Post> {
 	@Resource(name="externalGatryIds")
 	private List<String> externalGatryIds; 
 	
-	private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-	
 	@Override
 	public Post process(Element el) throws Exception {
 		
@@ -37,7 +35,7 @@ public class CrawlerGatryPostProcessor implements ItemProcessor<Element,Post> {
 			post.setTitle(el.getElementsByTag("h3").first().child(0).html() + " por " + el.getElementsByClass("preco").first().html());
 			post.setHtml("<p>" + post.getTitle() + "</p>" + "<img src=\"" +  el.getElementsByClass("lazy").first().attr("data-original") + "\" />");
 			post.setUrl("http://gatry.com/promocoes");
-			post.setPublicationDate(sdf.parse(el.getElementsByClass("data_postado").first().attr("title").replaceAll(" (.*?) ", " ")));
+			post.setPublicationDate(new SimpleDateFormat("dd/MM/yyyy HH:mm").parse(el.getElementsByClass("data_postado").first().attr("title").replaceAll(" (.*?) ", " ")));
 			return post;
 		} else {
 			log.debug("Post id " + externalCode + " ja incluido.");
