@@ -14,6 +14,7 @@ import copyleft.by.pc.jobs.purgeposts.PurgePostsJobConfiguration;
 @EnableBatchProcessing(modular=true)
 public class AppConfig {
     
+	/*
     @Bean
     public ApplicationContextFactory crawlerGatryJob(){
     	return new GenericApplicationContextFactory(CrawlerGatryJobConfiguration.class);
@@ -29,7 +30,7 @@ public class AppConfig {
     	return new GenericApplicationContextFactory(CrawlerHardmobJobConfiguration.class);
     }
     
-    /*
+    
     @Bean
     public ApplicationContextFactory newEpisodesNotificationJobs(){
     	return new GenericApplicationContextFactory(NotifySubscribersJobConfiguration.class);
