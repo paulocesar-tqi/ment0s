@@ -231,3 +231,17 @@
 2015-05-17 21:52:24.874 Julius[11346:158976] Finished load of: http://192.168.0.103:8100/#/posts
 2015-05-17 21:52:59.713 Julius[11346:158976] active
 2015-05-17 21:52:59.715 Julius[11346:158976] Attempting to badge the application icon but haven't received permission from the user to badge the application
+2015-05-18 12:05:37.226 Julius[2371:35797] Apache Cordova native platform version 3.8.0 is starting.
+2015-05-18 12:05:37.228 Julius[2371:35797] Multi-tasking -> Device: YES, App: YES
+2015-05-18 12:05:37.242 Julius[2371:35797] Unlimited access to network resources
+2015-05-18 12:05:37.617 Julius[2371:35797] [CDVTimer][file] 9.235978ms
+2015-05-18 12:05:37.617 Julius[2371:35797] [CDVTimer][TotalPluginStartup] 9.537995ms
+2015-05-18 12:05:37.647 Julius[2371:35797] active
+2015-05-18 12:05:37.650 Julius[2371:35797] Attempting to badge the application icon but haven't received permission from the user to badge the application
+2015-05-18 12:05:37.921 Julius[2371:35797] Resetting plugins due to page load.
+2015-05-18 12:05:38.611 Julius[2371:35797] Finished load of: http://192.168.0.101:8100/#/posts
+2015-05-18 12:06:46.815 Julius[2371:35797] THREAD WARNING: ['InAppBrowser'] took '43.516113' ms. Plugin should use a background thread.
+2015-05-18 12:07:22.813 Julius[2371:35797] active
+2015-05-18 12:07:22.814 Julius[2371:35797] Attempting to badge the application icon but haven't received permission from the user to badge the application
+2015-05-18 12:08:39.178 Julius[2371:35797] active
+2015-05-18 12:08:39.180 Julius[2371:35797] Attempting to badge the application icon but haven't received permission from the user to badge the application

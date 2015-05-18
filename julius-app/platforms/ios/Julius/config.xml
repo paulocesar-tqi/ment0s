@@ -72,7 +72,7 @@
     <author email="contato@paulocesar.tk" href="http://ionicframework.com/">
       Paulo Cesar
     </author>
-    <content original-src="index.html" src="http://192.168.0.103:8100" />
+    <content original-src="index.html" src="http://192.168.0.101:8100" />
     <access origin="*" />
     <icon src="www/img/app-icon.png" />
     <preference name="webviewbounce" value="false" />

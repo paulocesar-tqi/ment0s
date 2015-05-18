@@ -48,12 +48,17 @@
     margin-right: 10px;
     font-size: 1.0em;
     /*font-weight: bolder; */
-    padding: 5px;       
+    padding: 5px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
     border-top: 1px lightgrey solid;
     border-left: 1px lightgrey solid;
     border-right: 1px lightgrey solid;
     overflow: auto;
     max-height: 7.7em;
+    background-color: tan;
+    color: white;
+
 }
 
 .post-details {
