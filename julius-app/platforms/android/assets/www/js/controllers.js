@@ -4,8 +4,7 @@
  * blog: devgirl.org
  * more tutorials: hollyschinsky.github.io
  */
- //var URL_ENDPOINTS = 'http://192.168.0.102:8080';
- var URL_ENDPOINTS = 'http://10.10.1.185:8080';
+ var URL_ENDPOINTS = 'http://192.168.0.103:8080';
  //var URL_ENDPOINTS = 'http://localhost:8080';
 
 app.controller('PostsCtrl', function($scope, $ionicModal, $timeout, $sce, $ionicLoading, PostService, $cordovaPush, $cordovaDialogs, $cordovaMedia, $cordovaToast, ionPlatform, localstorage, $http) {
@@ -59,7 +58,8 @@ app.controller('PostsCtrl', function($scope, $ionicModal, $timeout, $sce, $ionic
 
     // function to open the modal urlViewer
     $scope.openUrlViewer = function () {
-        $scope.urlViewer.show();
+        //$scope.urlViewer.show();
+        window.open('http://www.apache.org', '_system', 'location=yes');
     };
 
     // function to close urlViewer
@@ -129,6 +129,7 @@ app.controller('PostsCtrl', function($scope, $ionicModal, $timeout, $sce, $ionic
         $ionicLoading.show({ template: '<p class="item-icon-left">Carregando...<ion-spinner icon="lines"/></p>'});
         PostService.loadPosts($scope.page)
             .success(function(result) {
+                result = JSON.parse(decryptText(result));
                 if(result.length) {
                     $scope.posts = $scope.posts.concat(result);
                     $scope.page++;
@@ -151,6 +152,12 @@ app.controller('PostsCtrl', function($scope, $ionicModal, $timeout, $sce, $ionic
     }
     $scope.toTrusted = function(text) {
         return ($sce.trustAsHtml(text));
+    }
+
+    function decryptText(text) {
+        var aesUtil = new AesUtil(128, 10);
+        var decrypt = aesUtil.decrypt("3FF2EC019C627B945225DEBAD71A01B6985FE84C95A70EB132882F88C0A59A55", "F27D5C9927726BCEFE7510B1BDD3D137", "i wanna be sedated", text);
+        return decrypt;
     }
 
     // Android Notification Received Handler
@@ -265,4 +272,3 @@ app.service('PostService', function($http) {
         }));
     }
 })
-

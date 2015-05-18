@@ -110,7 +110,7 @@ public class GenericDao {
 	
 	public List<Post> getPostsByFilter(int pageNumber, int pageSize) {
 		
-		String jpql = "SELECT new Post(p.id, p.title, p.publicationDate, p.sourceId) FROM Post p ORDER BY p.id DESC";
+		String jpql = "SELECT new Post(p.id, p.title, p.publicationDate, p.sourceId, p.url) FROM Post p ORDER BY p.id DESC";
 		TypedQuery<Post> query = em.createQuery(jpql, Post.class);
 		query.setMaxResults(pageSize);
 		query.setFirstResult(pageNumber * pageSize);

@@ -1,6 +1,5 @@
 package copyleft.by.pc.endpoints;
 
-import java.security.Key;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Queue;
@@ -8,11 +7,6 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.jose4j.jwe.ContentEncryptionAlgorithmIdentifiers;
-import org.jose4j.jwe.JsonWebEncryption;
-import org.jose4j.jwe.KeyManagementAlgorithmIdentifiers;
-import org.jose4j.keys.AesKey;
-import org.jose4j.lang.JoseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -31,6 +25,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import copyleft.by.pc.common.dao.GenericDao;
 import copyleft.by.pc.common.entities.Post;
+import copyleft.by.pc.utils.AesUtil;
 
 @Controller
 @Configuration
@@ -38,6 +33,13 @@ public class Endpoints {
 	
 	private static final Log log = LogFactory.getLog(Endpoints.class);
 
+	//Properties for encryptation
+	private final String IV = "F27D5C9927726BCEFE7510B1BDD3D137";
+	private final String SALT = "3FF2EC019C627B945225DEBAD71A01B6985FE84C95A70EB132882F88C0A59A55";
+	private final int KEY_SIZE = 128;
+	private final int ITERATION_COUNT = 10;
+	private final String PASSPHRASE = "i wanna be sedated";
+	
 	@Autowired
 	@Value("${post.page.size}") 
 	private Integer postPageSize;
@@ -91,21 +93,8 @@ public class Endpoints {
 	
 	
 	private String encrypt(String input) {
-		Key key = new AesKey("CHAVE_DE_16_BITS".getBytes());
-		log.info(key);
-		JsonWebEncryption jwe = new JsonWebEncryption();
-		jwe.setPayload(input);
-		jwe.setAlgorithmHeaderValue(KeyManagementAlgorithmIdentifiers.A128KW);
-		jwe.setEncryptionMethodHeaderParameter(ContentEncryptionAlgorithmIdentifiers.AES_128_CBC_HMAC_SHA_256);
-		jwe.setKey(key);
-		String serializedJwe = "";
-		try {
-			serializedJwe = jwe.getCompactSerialization();
-		} catch (JoseException e) {
-			e.printStackTrace();
-		}
-		return serializedJwe;
-
+		AesUtil util = new AesUtil(KEY_SIZE, ITERATION_COUNT);
+        return util.encrypt(SALT, IV, PASSPHRASE, input);
 	}
 
 	

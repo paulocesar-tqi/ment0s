@@ -33,6 +33,7 @@ public class Application {
 	
 	private static final String CRAWLER_GATRY_JOB = "crawlerGatryJob";
 	private static final String CRAWLER_HARDMOB_JOB = "crawlerHardmobJob";
+	private static final String CRAWLER_CDI_JOB = "crawlerCdiJob";
 	private static final String PURGE_POSTS_JOB = "purgePostsJob";
 	
 	private static ConfigurableApplicationContext ctx = null;
@@ -66,7 +67,7 @@ public class Application {
 	}
 	
 	
-	@Scheduled(fixedDelayString="${hardmob.runevery}",initialDelay=20000)
+	//@Scheduled(fixedDelayString="${hardmob.runevery}",initialDelay=20000)
 	public void runHardmobJob() throws JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException, JobParametersInvalidException, InterruptedException {
         JobLauncher jobLauncher = ctx.getBean(JobLauncher.class);
     	        		
@@ -76,6 +77,26 @@ public class Application {
 		.toJobParameters();
     	
     	JobExecution jobExecution = jobLauncher.run(crawlerHardmobJob, jobParameters);
+    	
+    	BatchStatus batchStatus = jobExecution.getStatus();
+    	while(batchStatus.isRunning()){
+    		Thread.sleep(1000);
+    	}
+    	JobInstance jobInstance = jobExecution.getJobInstance();
+    	log.info(String.format("Job %s instance %s exited with status %s",jobInstance.getJobName(), jobInstance.getId(), jobExecution.getExitStatus().getExitCode()));
+
+	}
+
+	@Scheduled(fixedDelayString="${cdi.runevery}",initialDelay=20000)
+	public void runCdiJob() throws JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException, JobParametersInvalidException, InterruptedException {
+        JobLauncher jobLauncher = ctx.getBean(JobLauncher.class);
+    	        		
+    	Job crawlerCdiJob = ctx.getBean(CRAWLER_CDI_JOB, Job.class);
+    	JobParameters jobParameters = new JobParametersBuilder()
+		.addDate("date", new Date())
+		.toJobParameters();
+    	
+    	JobExecution jobExecution = jobLauncher.run(crawlerCdiJob, jobParameters);
     	
     	BatchStatus batchStatus = jobExecution.getStatus();
     	while(batchStatus.isRunning()){

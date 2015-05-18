@@ -21,3 +21,213 @@
 2015-04-21 23:10:42.172 Julius[5742:124573] Finished load of: file:///Users/yusuke/Library/Developer/CoreSimulator/Devices/8CD62912-5AB1-434A-A45B-FF8F54206003/data/Containers/Bundle/Application/A1B4C6C9-403C-49CB-BAA9-2B3FEDA204C2/Julius.app/www/index.html#/posts
 2015-04-21 23:13:21.578 Julius[5742:124573] Resetting plugins due to page load.
 2015-04-21 23:13:49.484 Julius[5742:124573] Finished load of: http://www.hardmob.com.br/promocoes/586877-samsung-ativ-book-2-270e5g-kd2-i5-3210m-8gb-1tb-15-6-office-365-1708-10x.html
+2015-05-17 16:59:25.064 Julius[5327:71024] DiskCookieStorage changing policy from 2 to 0, cookie file: file:///Users/yusuke/Library/Developer/CoreSimulator/Devices/8A7E69E8-A3C8-44A8-826C-C318C1FC320F/data/Containers/Data/Application/5AA58A3B-8DF2-480F-9FEF-D8D20979C010/Library/Cookies/Cookies.binarycookies
+2015-05-17 16:59:25.501 Julius[5327:71024] Apache Cordova native platform version 3.8.0 is starting.
+2015-05-17 16:59:25.502 Julius[5327:71024] Multi-tasking -> Device: YES, App: YES
+2015-05-17 16:59:25.523 Julius[5327:71024] Unlimited access to network resources
+2015-05-17 16:59:26.035 Julius[5327:71024] [CDVTimer][file] 13.411045ms
+2015-05-17 16:59:26.035 Julius[5327:71024] [CDVTimer][TotalPluginStartup] 13.738036ms
+2015-05-17 16:59:26.101 Julius[5327:71024] active
+2015-05-17 16:59:26.109 Julius[5327:71024] Attempting to badge the application icon but haven't received permission from the user to badge the application
+2015-05-17 16:59:26.519 Julius[5327:71024] Resetting plugins due to page load.
+2015-05-17 16:59:27.486 Julius[5327:71024] Finished load of: http://192.168.0.103:8100/#/posts
+2015-05-17 17:01:14.098 Julius[5327:71024] Resetting plugins due to page load.
+2015-05-17 17:01:14.350 Julius[5327:71024] Finished load of: http://192.168.0.103:8100/#/posts
+2015-05-17 17:03:11.363 Julius[5945:74042] DiskCookieStorage changing policy from 2 to 0, cookie file: file:///Users/yusuke/Library/Developer/CoreSimulator/Devices/8A7E69E8-A3C8-44A8-826C-C318C1FC320F/data/Containers/Data/Application/5D06BC08-FB48-49DC-8934-EBD6DDDF26CA/Library/Cookies/Cookies.binarycookies
+2015-05-17 17:03:11.478 Julius[5945:74042] Apache Cordova native platform version 3.8.0 is starting.
+2015-05-17 17:03:11.479 Julius[5945:74042] Multi-tasking -> Device: YES, App: YES
+2015-05-17 17:03:11.482 Julius[5945:74042] Unlimited access to network resources
+2015-05-17 17:03:11.639 Julius[5945:74042] [CDVTimer][file] 5.100012ms
+2015-05-17 17:03:11.639 Julius[5945:74042] [CDVTimer][TotalPluginStartup] 5.415976ms
+2015-05-17 17:03:11.654 Julius[5945:74042] active
+2015-05-17 17:03:11.656 Julius[5945:74042] Attempting to badge the application icon but haven't received permission from the user to badge the application
+2015-05-17 17:03:11.804 Julius[5945:74042] Resetting plugins due to page load.
+2015-05-17 17:03:12.546 Julius[5945:74042] Finished load of: http://192.168.0.103:8100/#/posts
+2015-05-17 17:03:41.430 Julius[5945:74042] Resetting plugins due to page load.
+2015-05-17 17:03:41.640 Julius[5945:74042] Finished load of: http://192.168.0.103:8100/#/posts
+2015-05-17 17:57:34.580 Julius[5945:88173] Terminating since there is no system app.
+2015-05-17 18:10:28.496 Julius[7289:93951] DiskCookieStorage changing policy from 2 to 0, cookie file: file:///Users/yusuke/Library/Developer/CoreSimulator/Devices/8A7E69E8-A3C8-44A8-826C-C318C1FC320F/data/Containers/Data/Application/E6FAD19A-8B12-46F2-98F3-3DCC1137603D/Library/Cookies/Cookies.binarycookies
+2015-05-17 18:10:28.892 Julius[7289:93951] Apache Cordova native platform version 3.8.0 is starting.
+2015-05-17 18:10:28.892 Julius[7289:93951] Multi-tasking -> Device: YES, App: YES
+2015-05-17 18:10:28.912 Julius[7289:93951] Unlimited access to network resources
+2015-05-17 18:10:29.355 Julius[7289:93951] [CDVTimer][file] 8.643985ms
+2015-05-17 18:10:29.355 Julius[7289:93951] [CDVTimer][TotalPluginStartup] 8.871019ms
+2015-05-17 18:10:29.405 Julius[7289:93951] active
+2015-05-17 18:10:29.412 Julius[7289:93951] Attempting to badge the application icon but haven't received permission from the user to badge the application
+2015-05-17 18:10:29.743 Julius[7289:93951] Resetting plugins due to page load.
+2015-05-17 18:10:30.601 Julius[7289:93951] Finished load of: http://192.168.0.103:8100/#/posts
+2015-05-17 18:41:46.669 Julius[7289:93951] Resetting plugins due to page load.
+2015-05-17 18:41:46.913 Julius[7289:93951] Finished load of: http://192.168.0.103:8100/#/posts
+2015-05-17 18:43:33.917 Julius[7289:93951] Resetting plugins due to page load.
+2015-05-17 18:43:34.113 Julius[7289:93951] Finished load of: http://192.168.0.103:8100/#/posts
+2015-05-17 18:45:19.830 Julius[7289:93951] Resetting plugins due to page load.
+2015-05-17 18:45:19.845 Julius[7289:93951] Failed to load webpage with error: The operation couldn’t be completed. (NSURLErrorDomain error -999.)
+2015-05-17 18:45:19.846 Julius[7289:93951] Resetting plugins due to page load.
+2015-05-17 18:45:20.040 Julius[7289:93951] Finished load of: http://192.168.0.103:8100/#/posts
+2015-05-17 18:45:30.833 Julius[7289:93951] Resetting plugins due to page load.
+2015-05-17 18:45:31.018 Julius[7289:93951] Finished load of: http://192.168.0.103:8100/#/posts
+2015-05-17 18:46:03.716 Julius[7289:93951] Resetting plugins due to page load.
+2015-05-17 18:46:03.912 Julius[7289:93951] Finished load of: http://192.168.0.103:8100/#/posts
+2015-05-17 18:46:04.419 Julius[7289:93951] Resetting plugins due to page load.
+2015-05-17 18:46:04.610 Julius[7289:93951] Finished load of: http://192.168.0.103:8100/#/posts
+2015-05-17 19:00:01.539 Julius[7289:93951] Resetting plugins due to page load.
+2015-05-17 19:00:01.976 Julius[7289:93951] Finished load of: http://192.168.0.103:8100/#/posts
+2015-05-17 19:00:48.900 Julius[7289:93951] Resetting plugins due to page load.
+2015-05-17 19:00:49.125 Julius[7289:93951] Finished load of: http://192.168.0.103:8100/#/posts
+2015-05-17 19:11:24.603 Julius[8763:114597] DiskCookieStorage changing policy from 2 to 0, cookie file: file:///Users/yusuke/Library/Developer/CoreSimulator/Devices/8A7E69E8-A3C8-44A8-826C-C318C1FC320F/data/Containers/Data/Application/86458420-A49C-4232-B87D-E37011D2611F/Library/Cookies/Cookies.binarycookies
+2015-05-17 19:11:24.832 Julius[8763:114597] Apache Cordova native platform version 3.8.0 is starting.
+2015-05-17 19:11:24.832 Julius[8763:114597] Multi-tasking -> Device: YES, App: YES
+2015-05-17 19:11:24.834 Julius[8763:114597] Unlimited access to network resources
+2015-05-17 19:11:25.174 Julius[8763:114597] [CDVTimer][file] 10.462999ms
+2015-05-17 19:11:25.174 Julius[8763:114597] [CDVTimer][TotalPluginStartup] 10.688961ms
+2015-05-17 19:11:25.214 Julius[8763:114597] active
+2015-05-17 19:11:25.216 Julius[8763:114597] Attempting to badge the application icon but haven't received permission from the user to badge the application
+2015-05-17 19:11:25.451 Julius[8763:114597] Resetting plugins due to page load.
+2015-05-17 19:11:26.197 Julius[8763:114597] Finished load of: http://192.168.0.103:8100/#/posts
+2015-05-17 19:17:53.204 Julius[9184:118372] Apache Cordova native platform version 3.8.0 is starting.
+2015-05-17 19:17:53.205 Julius[9184:118372] Multi-tasking -> Device: YES, App: YES
+2015-05-17 19:17:53.207 Julius[9184:118372] Unlimited access to network resources
+2015-05-17 19:17:53.303 Julius[9184:118372] [CDVTimer][file] 5.384028ms
+2015-05-17 19:17:53.303 Julius[9184:118372] [CDVTimer][TotalPluginStartup] 5.602002ms
+2015-05-17 19:17:53.333 Julius[9184:118372] active
+2015-05-17 19:17:53.334 Julius[9184:118372] Attempting to badge the application icon but haven't received permission from the user to badge the application
+2015-05-17 19:17:53.424 Julius[9184:118372] Resetting plugins due to page load.
+2015-05-17 19:17:53.835 Julius[9184:118372] Finished load of: http://192.168.0.103:8100/#/posts
+2015-05-17 19:18:18.053 Julius[9184:118372] Resetting plugins due to page load.
+2015-05-17 19:18:18.346 Julius[9184:118372] Finished load of: http://192.168.0.103:8100/#/posts
+2015-05-17 19:18:24.575 Julius[9184:118372] THREAD WARNING: ['InAppBrowser'] took '53.645996' ms. Plugin should use a background thread.
+2015-05-17 19:19:22.518 Julius[9184:118372] active
+2015-05-17 19:19:22.520 Julius[9184:118372] Attempting to badge the application icon but haven't received permission from the user to badge the application
+2015-05-17 19:19:51.846 Julius[9184:118372] Resetting plugins due to page load.
+2015-05-17 19:19:51.846 Julius[9184:118372] IAB.close() called but it was already closed.
+2015-05-17 19:19:52.271 Julius[9184:118372] Finished load of: http://192.168.0.103:8100/#/posts
+2015-05-17 19:20:21.086 Julius[9184:118372] active
+2015-05-17 19:20:21.090 Julius[9184:118372] Attempting to badge the application icon but haven't received permission from the user to badge the application
+2015-05-17 19:25:27.811 Julius[9184:118372] Resetting plugins due to page load.
+2015-05-17 19:25:27.812 Julius[9184:118372] IAB.close() called but it was already closed.
+2015-05-17 19:25:28.079 Julius[9184:118372] Finished load of: http://192.168.0.103:8100/#/posts
+2015-05-17 19:26:08.544 Julius[9184:118372] Resetting plugins due to page load.
+2015-05-17 19:26:08.544 Julius[9184:118372] IAB.close() called but it was already closed.
+2015-05-17 19:26:08.827 Julius[9184:118372] Finished load of: http://192.168.0.103:8100/#/posts
+2015-05-17 19:58:25.723 Julius[9184:118372] active
+2015-05-17 19:58:25.726 Julius[9184:118372] Attempting to badge the application icon but haven't received permission from the user to badge the application
+2015-05-17 20:00:35.891 Julius[9184:118372] Resetting plugins due to page load.
+2015-05-17 20:00:35.892 Julius[9184:118372] IAB.close() called but it was already closed.
+2015-05-17 20:00:36.217 Julius[9184:118372] Finished load of: http://192.168.0.103:8100/#/posts
+2015-05-17 20:16:42.942 Julius[9184:118372] Resetting plugins due to page load.
+2015-05-17 20:16:42.942 Julius[9184:118372] IAB.close() called but it was already closed.
+2015-05-17 20:16:42.959 Julius[9184:118372] Failed to load webpage with error: Could not connect to the server.
+2015-05-17 20:17:18.872 Julius[9184:118372] Resetting plugins due to page load.
+2015-05-17 20:17:18.875 Julius[9184:118372] IAB.close() called but it was already closed.
+2015-05-17 20:17:18.884 Julius[9184:118372] Failed to load webpage with error: Could not connect to the server.
+2015-05-17 20:28:05.597 Julius[9184:118372] Resetting plugins due to page load.
+2015-05-17 20:28:05.598 Julius[9184:118372] IAB.close() called but it was already closed.
+2015-05-17 20:28:05.606 Julius[9184:118372] Failed to load webpage with error: Could not connect to the server.
+2015-05-17 20:33:11.584 Julius[9184:118372] Resetting plugins due to page load.
+2015-05-17 20:33:11.585 Julius[9184:118372] IAB.close() called but it was already closed.
+2015-05-17 20:33:11.590 Julius[9184:118372] Failed to load webpage with error: Could not connect to the server.
+2015-05-17 20:45:14.752 Julius[9184:118372] Resetting plugins due to page load.
+2015-05-17 20:45:14.753 Julius[9184:118372] IAB.close() called but it was already closed.
+2015-05-17 20:45:14.761 Julius[9184:118372] Failed to load webpage with error: Could not connect to the server.
+2015-05-17 20:46:45.805 Julius[9184:118372] Resetting plugins due to page load.
+2015-05-17 20:46:45.806 Julius[9184:118372] IAB.close() called but it was already closed.
+2015-05-17 20:46:45.813 Julius[9184:118372] Failed to load webpage with error: Could not connect to the server.
+2015-05-17 20:47:33.940 Julius[9184:118372] Resetting plugins due to page load.
+2015-05-17 20:47:33.941 Julius[9184:118372] IAB.close() called but it was already closed.
+2015-05-17 20:47:33.950 Julius[9184:118372] Failed to load webpage with error: Could not connect to the server.
+2015-05-17 20:48:33.336 Julius[9184:118372] Resetting plugins due to page load.
+2015-05-17 20:48:33.336 Julius[9184:118372] IAB.close() called but it was already closed.
+2015-05-17 20:48:33.342 Julius[9184:118372] Failed to load webpage with error: Could not connect to the server.
+2015-05-17 20:49:35.677 Julius[9184:118372] Resetting plugins due to page load.
+2015-05-17 20:49:35.677 Julius[9184:118372] IAB.close() called but it was already closed.
+2015-05-17 20:49:35.682 Julius[9184:118372] Failed to load webpage with error: Could not connect to the server.
+2015-05-17 20:52:39.978 Julius[9184:118372] Resetting plugins due to page load.
+2015-05-17 20:52:39.978 Julius[9184:118372] IAB.close() called but it was already closed.
+2015-05-17 20:52:39.984 Julius[9184:118372] Failed to load webpage with error: Could not connect to the server.
+2015-05-17 20:53:57.807 Julius[9184:118372] Resetting plugins due to page load.
+2015-05-17 20:53:57.807 Julius[9184:118372] IAB.close() called but it was already closed.
+2015-05-17 20:53:57.811 Julius[9184:118372] Failed to load webpage with error: Could not connect to the server.
+2015-05-17 20:55:17.373 Julius[9184:118372] Resetting plugins due to page load.
+2015-05-17 20:55:17.375 Julius[9184:118372] IAB.close() called but it was already closed.
+2015-05-17 20:55:17.379 Julius[9184:118372] Failed to load webpage with error: Could not connect to the server.
+2015-05-17 20:55:58.996 Julius[9184:118372] Resetting plugins due to page load.
+2015-05-17 20:55:58.997 Julius[9184:118372] IAB.close() called but it was already closed.
+2015-05-17 20:55:59.005 Julius[9184:118372] Failed to load webpage with error: Could not connect to the server.
+2015-05-17 20:56:37.475 Julius[9184:118372] Resetting plugins due to page load.
+2015-05-17 20:56:37.476 Julius[9184:118372] IAB.close() called but it was already closed.
+2015-05-17 20:56:37.487 Julius[9184:118372] Failed to load webpage with error: Could not connect to the server.
+2015-05-17 20:56:50.247 Julius[9184:118372] Resetting plugins due to page load.
+2015-05-17 20:56:50.247 Julius[9184:118372] IAB.close() called but it was already closed.
+2015-05-17 20:56:50.252 Julius[9184:118372] Failed to load webpage with error: Could not connect to the server.
+2015-05-17 20:58:49.839 Julius[9184:118372] Resetting plugins due to page load.
+2015-05-17 20:58:49.839 Julius[9184:118372] IAB.close() called but it was already closed.
+2015-05-17 20:58:49.846 Julius[9184:118372] Failed to load webpage with error: Could not connect to the server.
+2015-05-17 21:02:33.294 Julius[9184:118372] Resetting plugins due to page load.
+2015-05-17 21:02:33.295 Julius[9184:118372] IAB.close() called but it was already closed.
+2015-05-17 21:02:33.300 Julius[9184:118372] Failed to load webpage with error: Could not connect to the server.
+2015-05-17 21:02:47.355 Julius[9184:118372] Resetting plugins due to page load.
+2015-05-17 21:02:47.355 Julius[9184:118372] IAB.close() called but it was already closed.
+2015-05-17 21:02:47.364 Julius[9184:118372] Failed to load webpage with error: Could not connect to the server.
+2015-05-17 21:04:10.507 Julius[9184:118372] Resetting plugins due to page load.
+2015-05-17 21:04:10.507 Julius[9184:118372] IAB.close() called but it was already closed.
+2015-05-17 21:04:10.517 Julius[9184:118372] Failed to load webpage with error: Could not connect to the server.
+2015-05-17 21:05:06.499 Julius[9184:118372] Resetting plugins due to page load.
+2015-05-17 21:05:06.501 Julius[9184:118372] IAB.close() called but it was already closed.
+2015-05-17 21:05:06.505 Julius[9184:118372] Failed to load webpage with error: Could not connect to the server.
+2015-05-17 21:10:35.501 Julius[9184:118372] Resetting plugins due to page load.
+2015-05-17 21:10:35.501 Julius[9184:118372] IAB.close() called but it was already closed.
+2015-05-17 21:10:35.514 Julius[9184:118372] Failed to load webpage with error: Could not connect to the server.
+2015-05-17 21:11:37.711 Julius[9184:118372] Resetting plugins due to page load.
+2015-05-17 21:11:37.711 Julius[9184:118372] IAB.close() called but it was already closed.
+2015-05-17 21:11:37.715 Julius[9184:118372] Failed to load webpage with error: Could not connect to the server.
+2015-05-17 21:17:06.293 Julius[9184:118372] Resetting plugins due to page load.
+2015-05-17 21:17:06.293 Julius[9184:118372] IAB.close() called but it was already closed.
+2015-05-17 21:17:06.302 Julius[9184:118372] Failed to load webpage with error: Could not connect to the server.
+2015-05-17 21:20:59.216 Julius[10803:151207] Apache Cordova native platform version 3.8.0 is starting.
+2015-05-17 21:20:59.217 Julius[10803:151207] Multi-tasking -> Device: YES, App: YES
+2015-05-17 21:20:59.219 Julius[10803:151207] Unlimited access to network resources
+2015-05-17 21:20:59.325 Julius[10803:151207] [CDVTimer][file] 4.031956ms
+2015-05-17 21:20:59.325 Julius[10803:151207] [CDVTimer][TotalPluginStartup] 4.260004ms
+2015-05-17 21:20:59.336 Julius[10803:151207] active
+2015-05-17 21:20:59.339 Julius[10803:151207] Attempting to badge the application icon but haven't received permission from the user to badge the application
+2015-05-17 21:20:59.446 Julius[10803:151207] Resetting plugins due to page load.
+2015-05-17 21:21:00.183 Julius[10803:151207] Finished load of: http://192.168.0.103:8100/#/posts
+2015-05-17 21:29:26.855 Julius[10803:151207] Resetting plugins due to page load.
+2015-05-17 21:29:27.267 Julius[10803:151207] Finished load of: http://192.168.0.103:8100/#/posts
+2015-05-17 21:36:53.471 Julius[10803:151207] Resetting plugins due to page load.
+2015-05-17 21:36:53.704 Julius[10803:151207] Finished load of: http://192.168.0.103:8100/#/posts
+2015-05-17 21:36:56.289 Julius[10803:151207] Resetting plugins due to page load.
+2015-05-17 21:36:56.498 Julius[10803:151207] Finished load of: http://192.168.0.103:8100/#/posts
+2015-05-17 21:38:44.286 Julius[10803:151207] Resetting plugins due to page load.
+2015-05-17 21:38:44.484 Julius[10803:151207] Finished load of: http://192.168.0.103:8100/#/posts
+2015-05-17 21:39:33.901 Julius[10803:151207] Resetting plugins due to page load.
+2015-05-17 21:39:34.112 Julius[10803:151207] Finished load of: http://192.168.0.103:8100/#/posts
+2015-05-17 21:40:12.360 Julius[10803:151207] Resetting plugins due to page load.
+2015-05-17 21:40:12.571 Julius[10803:151207] Finished load of: http://192.168.0.103:8100/#/posts
+2015-05-17 21:40:18.073 Julius[10803:151207] Resetting plugins due to page load.
+2015-05-17 21:40:18.264 Julius[10803:151207] Finished load of: http://192.168.0.103:8100/#/posts
+2015-05-17 21:40:50.571 Julius[10803:151207] Resetting plugins due to page load.
+2015-05-17 21:40:50.582 Julius[10803:151207] Failed to load webpage with error: Could not connect to the server.
+2015-05-17 21:44:01.957 Julius[10803:151207] Resetting plugins due to page load.
+2015-05-17 21:44:01.961 Julius[10803:151207] Failed to load webpage with error: Could not connect to the server.
+2015-05-17 21:46:15.885 Julius[10803:151207] Resetting plugins due to page load.
+2015-05-17 21:46:15.891 Julius[10803:151207] Failed to load webpage with error: Could not connect to the server.
+2015-05-17 21:47:46.231 Julius[10803:151207] Resetting plugins due to page load.
+2015-05-17 21:47:46.237 Julius[10803:151207] Failed to load webpage with error: Could not connect to the server.
+2015-05-17 21:48:20.805 Julius[10803:151207] Resetting plugins due to page load.
+2015-05-17 21:48:20.816 Julius[10803:151207] Failed to load webpage with error: Could not connect to the server.
+2015-05-17 21:49:44.122 Julius[10803:151207] Resetting plugins due to page load.
+2015-05-17 21:49:44.130 Julius[10803:151207] Failed to load webpage with error: Could not connect to the server.
+2015-05-17 21:50:45.026 Julius[10803:151207] Resetting plugins due to page load.
+2015-05-17 21:50:45.034 Julius[10803:151207] Failed to load webpage with error: Could not connect to the server.
+2015-05-17 21:52:24.097 Julius[11346:158976] Apache Cordova native platform version 3.8.0 is starting.
+2015-05-17 21:52:24.098 Julius[11346:158976] Multi-tasking -> Device: YES, App: YES
+2015-05-17 21:52:24.100 Julius[11346:158976] Unlimited access to network resources
+2015-05-17 21:52:24.196 Julius[11346:158976] [CDVTimer][file] 5.003989ms
+2015-05-17 21:52:24.196 Julius[11346:158976] [CDVTimer][TotalPluginStartup] 5.208015ms
+2015-05-17 21:52:24.211 Julius[11346:158976] active
+2015-05-17 21:52:24.212 Julius[11346:158976] Attempting to badge the application icon but haven't received permission from the user to badge the application
+2015-05-17 21:52:24.289 Julius[11346:158976] Resetting plugins due to page load.
+2015-05-17 21:52:24.874 Julius[11346:158976] Finished load of: http://192.168.0.103:8100/#/posts
+2015-05-17 21:52:59.713 Julius[11346:158976] active
+2015-05-17 21:52:59.715 Julius[11346:158976] Attempting to badge the application icon but haven't received permission from the user to badge the application

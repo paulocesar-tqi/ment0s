@@ -35,8 +35,8 @@ public class CrawlerGatryPostProcessor implements ItemProcessor<Element,Post> {
 			Post post = new Post();
 			post.setSourceId(gatryId);
 			post.setExternalId(externalCode);
-			post.setTitle(el.text());
-			post.setHtml(el.html());
+			post.setTitle(el.getElementsByTag("h3").first().text() + " por " + el.getElementsByClass("preco").first().text());
+			post.setHtml("<p>" + post.getTitle() + "</p>" + "<img src=\"" +  el.getElementsByClass("lazy").first().attr("data-original") + "\" />");
 			post.setUrl("http://gatry.com/promocoes");
 			post.setPublicationDate(cal.getTime());
 			return post;

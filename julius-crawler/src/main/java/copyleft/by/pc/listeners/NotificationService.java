@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 
 import com.google.android.gcm.server.Sender;
 
@@ -25,24 +26,29 @@ public class NotificationService {
 
 	@Autowired
 	private GCMNotificationSender sender;
+	
+	@Autowired
+	@Value("${notification.enabled}") 
+	private Boolean isNotificationsEnabled;
 
 	public void notificateAndroidUsers(List<Post> items) {
 	
-		//Retrieve ids
-		List<String> ids = dao.getRegistrationIdsByPlatform("android");
+		if(isNotificationsEnabled) {
+			//Retrieve ids
+			List<String> ids = dao.getRegistrationIdsByPlatform("android");
 
-		if (ids != null && ids.size() > 0) {
-			for(Post post : items) {
-				Notification notification = new Notification();
-				notification.setBadge(1);
-				notification.setRegistrationIdsToSend(ids);
-				notification.setTitle("Teste mensagem!");
-				notification.setMessage(post.getTitle());
-				
-				sender.sendNotification(notification);
+			if (ids != null && ids.size() > 0) {
+				for(Post post : items) {
+					Notification notification = new Notification();
+					notification.setBadge(1);
+					notification.setRegistrationIdsToSend(ids);
+					notification.setTitle("Teste mensagem!");
+					notification.setMessage(post.getTitle());
+					
+					sender.sendNotification(notification);
+				}
 			}
 		}
-		
 	}
 
 }

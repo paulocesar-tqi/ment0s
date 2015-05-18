@@ -9,15 +9,16 @@
         <ion-refresher on-refresh="loadPosts()">
         </ion-refresher>
         <div class="list" data-ng-if="posts.length">
-            <a data-ng-repeat="p in posts" ng-click="openPostDetail(p.id)">
-                <div class="post-title" data-ng-bind-html="toTrusted(p.title)">
+            <div data-ng-repeat="p in posts" >
+                <div class="post-title" data-ng-bind-html="toTrusted(p.title)" ngc-done="'setSeeMore'">
                 </div>
+                <a class="item link original" ng-click="openUrlViewer(p.url)"><p>Visualizar o post original</p></a>
                 <div class="post-details">
                     <p class="blogger">Categoria</p>
                     <p class="pubdate">{{ p.publicationDate }} </p>
                 </div>
+            </div>
         </div>
-            </a>
         <ion-infinite-scroll on-infinite="morePosts()"
                 data-ng-if="infiniteLoad" icon="">
         </ion-infinite-scroll>

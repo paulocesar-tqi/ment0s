@@ -24,12 +24,13 @@ public class Post implements Serializable {
 		
 	}
 	
-	public Post(Long id, String title, Date publicationDate, Integer sourceId) {
+	public Post(Long id, String title, Date publicationDate, Integer sourceId, String url) {
 		super();
 		this.id = id;
 		this.title = title;
 		this.publicationDate = publicationDate;
 		this.sourceId = sourceId;
+		this.url = url;
 	}
 
 	@Id

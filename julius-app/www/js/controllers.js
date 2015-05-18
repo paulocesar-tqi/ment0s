@@ -4,11 +4,10 @@
  * blog: devgirl.org
  * more tutorials: hollyschinsky.github.io
  */
- //var URL_ENDPOINTS = 'http://192.168.0.102:8080';
- //var URL_ENDPOINTS = 'http://10.10.1.185:8080';
- var URL_ENDPOINTS = 'http://localhost:8080';
+ var URL_ENDPOINTS = 'http://192.168.0.103:8080';
+ //var URL_ENDPOINTS = 'http://localhost:8080';
 
-app.controller('PostsCtrl', function($scope, $ionicModal, $timeout, $sce, $ionicLoading, PostService, CryptoService, $cordovaPush, $cordovaDialogs, $cordovaMedia, $cordovaToast, ionPlatform, localstorage, $http) {
+app.controller('PostsCtrl', function($scope, $ionicModal, $timeout, $sce, $ionicLoading, PostService, $cordovaPush, $cordovaDialogs, $cordovaMedia, $cordovaToast, ionPlatform, localstorage, $http) {
     $scope.posts = [];
     $scope.page = 0;    
     $scope.infiniteLoad = false;
@@ -39,7 +38,6 @@ app.controller('PostsCtrl', function($scope, $ionicModal, $timeout, $sce, $ionic
         }
 
         $scope.morePosts();
-
     });
 
     // function to open the modal PostDetail
@@ -59,8 +57,9 @@ app.controller('PostsCtrl', function($scope, $ionicModal, $timeout, $sce, $ionic
     };
 
     // function to open the modal urlViewer
-    $scope.openUrlViewer = function () {
-        $scope.urlViewer.show();
+    $scope.openUrlViewer = function (url) {
+        //$scope.urlViewer.show();
+        window.open(url, '_system', 'location=yes');
     };
 
     // function to close urlViewer
@@ -130,22 +129,17 @@ app.controller('PostsCtrl', function($scope, $ionicModal, $timeout, $sce, $ionic
         $ionicLoading.show({ template: '<p class="item-icon-left">Carregando...<ion-spinner icon="lines"/></p>'});
         PostService.loadPosts($scope.page)
             .success(function(result) {
-                CryptoService.decrypt(result)
-                    .then(function(decrypted_plain_text) {
-                        console.log("text decrypt: " + decrypted_plain_text);
-                        if(decrypted_plain_text.length) {
-                            $scope.posts = $scope.posts.concat(JSON.parse(decrypted_plain_text));
-                            $scope.page++;
-                            $scope.$broadcast("scroll.infiniteScrollComplete");
-                            $ionicLoading.hide();
-                        } else {
-                            $scope.infiniteLoad = false; 
-                            $scope.$broadcast("scroll.infiniteScrollComplete");
-                            $ionicLoading.hide();
-                        }
-                    }).catch(function(err) {
-                        console.log("Error decrypting text." + err);
-                    });
+                result = JSON.parse(decryptText(result));
+                if(result.length) {
+                    $scope.posts = $scope.posts.concat(result);
+                    $scope.page++;
+                    $scope.$broadcast("scroll.infiniteScrollComplete");
+                    $ionicLoading.hide();
+                } else {
+                    $scope.infiniteLoad = false; 
+                    $scope.$broadcast("scroll.infiniteScrollComplete");
+                    $ionicLoading.hide();
+                }
             })
             .error(function (data, status) {
                 $ionicLoading.show({ template: '<p class="item-icon-left">Verifique sua conexão<ion-spinner icon="lines"/></p>'});
@@ -158,6 +152,12 @@ app.controller('PostsCtrl', function($scope, $ionicModal, $timeout, $sce, $ionic
     }
     $scope.toTrusted = function(text) {
         return ($sce.trustAsHtml(text));
+    }
+    
+    function decryptText(text) {
+        var aesUtil = new AesUtil(128, 10);
+        var decrypt = aesUtil.decrypt("3FF2EC019C627B945225DEBAD71A01B6985FE84C95A70EB132882F88C0A59A55", "F27D5C9927726BCEFE7510B1BDD3D137", "i wanna be sedated", text);
+        return decrypt;
     }
 
     // Android Notification Received Handler
@@ -256,6 +256,13 @@ function registerNotificationAndroid(e) {
     }
 }
 
+function setSeeMore() {
+    $('.post-title').readmore({ embedCSS: false, 
+                                moreLink: '<a class="item link more" href="#"><p>Ver mais</p></a>',
+                                lessLink: '',
+                                speed: 500});
+}
+
 
 app.service('PostService', function($http) {
     this.loadPosts = function(page) {
@@ -272,18 +279,3 @@ app.service('PostService', function($http) {
         }));
     }
 })
-
-
-app.service('CryptoService', function() {
-    var cryptographer = new JoseJWE.WebCryptographer();
-    cryptographer.setKeyEncryptionAlgorithm("A128KW");
-    cryptographer.setContentEncryptionAlgorithm("A128CBC-HS256");
-    var shared_key = {"kty":"oct", "k":"Q0hBVkVfREVfMTZfQklUUw"};
-    shared_key = crypto.subtle.importKey("jwk", shared_key, {name: "AES-KW"}, true, ["wrapKey", "unwrapKey"]);
-    var decrypter = new JoseJWE.Decrypter(cryptographer, shared_key);
-
-    this.decrypt = function(text) {
-        return decrypter.decrypt(text);
-    }
-})
-

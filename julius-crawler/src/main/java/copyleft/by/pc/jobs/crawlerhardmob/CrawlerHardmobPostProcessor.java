@@ -10,6 +10,7 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Entities.EscapeMode;
 import org.jsoup.select.Elements;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,6 +74,7 @@ public class CrawlerHardmobPostProcessor implements ItemProcessor<Post,Post> {
 			html = html.substring(html.indexOf("<div id=\"navbar\">"), html.indexOf("<div id=\"copyright\""));
 
 			Document document = Jsoup.parse(html);
+			document.outputSettings().escapeMode(EscapeMode.extended);
 			Elements elements = document.getElementsByClass("largefont");
 			
 			if(elements.size() != 1) {
