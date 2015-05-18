@@ -1,6 +1,6 @@
 package copyleft.by.pc.jobs.crawlergatry;
 
-import java.util.Calendar;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -24,11 +24,10 @@ public class CrawlerGatryPostProcessor implements ItemProcessor<Element,Post> {
 	@Resource(name="externalGatryIds")
 	private List<String> externalGatryIds; 
 	
+	private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy  HH:mm");
+	
 	@Override
 	public Post process(Element el) throws Exception {
-
-		Calendar cal = Calendar.getInstance();
-		//cal.add(Calendar.DATE, -30);
 		
 		String externalCode = el.attr("id"); 
 		if(!externalGatryIds.contains(externalCode)) {
@@ -38,7 +37,7 @@ public class CrawlerGatryPostProcessor implements ItemProcessor<Element,Post> {
 			post.setTitle(el.getElementsByTag("h3").first().text() + " por " + el.getElementsByClass("preco").first().text());
 			post.setHtml("<p>" + post.getTitle() + "</p>" + "<img src=\"" +  el.getElementsByClass("lazy").first().attr("data-original") + "\" />");
 			post.setUrl("http://gatry.com/promocoes");
-			post.setPublicationDate(cal.getTime());
+			post.setPublicationDate(sdf.parse(el.getElementsByClass("data_postado").first().attr("title").replaceAll("às", "")));
 			return post;
 		} else {
 			log.debug("Post id " + externalCode + " ja incluido.");

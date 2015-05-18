@@ -1,6 +1,6 @@
 package copyleft.by.pc.jobs.crawlerhardmob;
 
-import java.util.Calendar;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -33,16 +33,14 @@ public class CrawlerHardmobPostProcessor implements ItemProcessor<Post,Post> {
 	@Resource(name="externalHardmobIds")
 	private List<String> externalHardmobIds; 
 	
+	private SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy, HH:mm");
+	
 	@Override
 	public Post process(Post post) throws Exception {
-
-		Calendar cal = Calendar.getInstance();
-		//cal.add(Calendar.DATE, -30);
 		
 		if(!externalHardmobIds.contains(post.getExternalId())) {
 			post.setSourceId(hardmobId);
-			post.setPublicationDate(cal.getTime());
-			post = retrieveHtmlAndRealUrl(post);
+			post = setOtherFields(post);
 			return post;	
 		} else {
 			log.debug("Post id " + post.getExternalId() + " ja incluido.");
@@ -51,7 +49,7 @@ public class CrawlerHardmobPostProcessor implements ItemProcessor<Post,Post> {
 		
 	}
 
-	private Post retrieveHtmlAndRealUrl(Post post) {
+	private Post setOtherFields(Post post) {
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Host", "www.hardmob.com.br");
 		headers.set("Connection", "keep-alive");
@@ -75,8 +73,8 @@ public class CrawlerHardmobPostProcessor implements ItemProcessor<Post,Post> {
 
 			Document document = Jsoup.parse(html);
 			document.outputSettings().escapeMode(EscapeMode.extended);
+
 			Elements elements = document.getElementsByClass("largefont");
-			
 			if(elements.size() != 1) {
 				log.info("PROBLEMA: Não existe apenas um <p> no topico hardmob: " + post.getUrl());
 			}
@@ -85,12 +83,21 @@ public class CrawlerHardmobPostProcessor implements ItemProcessor<Post,Post> {
 			}
 			
 			elements = document.getElementsByClass("posttext");
-			
 			if(elements.size() > 0) {
 				post.setHtml(elements.get(0).html());
 			} else {
 				log.info("Não foi possivel setar o html para o topico hardmob: " + post.getUrl());
-			}			
+			}
+			
+			//Seta a data de publicacao
+			elements = document.getElementsByClass("date");
+			if(elements.size() > 0) {
+				post.setPublicationDate(sdf.parse(elements.get(0).text()));
+			} else {
+				log.info("Não foi possivel setar a data de publicacao para o topico hardmob: " + post.getUrl());
+			}
+			
+			
 		} catch (Exception e) {
 			log.info("Nao foi possivel acessar o topico - topico excluido: " + post.getUrl());
 			post = null;

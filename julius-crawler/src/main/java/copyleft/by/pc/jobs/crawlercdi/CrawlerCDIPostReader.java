@@ -1,7 +1,6 @@
 package copyleft.by.pc.jobs.crawlercdi;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -35,8 +34,6 @@ public class CrawlerCDIPostReader implements ItemReader<Post> {
 			log.info("CdiReader: Erro ao recuperar os posts do facebook", e);
 		}
 		
-		Calendar cal = Calendar.getInstance();
-		
 		list = new ArrayList<Post>();
 		for(facebook4j.Post facebookPost : feed) {
 			Post post = new Post();
@@ -50,7 +47,7 @@ public class CrawlerCDIPostReader implements ItemReader<Post> {
 			post.setUrl(cdiEndpoint);
 			post.setExternalId(facebookPost.getId());
 			post.setSourceId(cdiId);
-			post.setPublicationDate(cal.getTime());
+			post.setPublicationDate(facebookPost.getCreatedTime());
 			post.setHtml(html);
 
 			list.add(post);

@@ -1,6 +1,7 @@
 package copyleft.by.pc.jobs.crawlercdi;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -28,10 +29,13 @@ public class CrawlerCDIPostWriter implements ItemWriter<Post> {
 	@Override
 	public void write(List<? extends Post> posts) throws Exception {
 		
+		Calendar last3Days = Calendar.getInstance();
+		last3Days.add(Calendar.DATE, -3);
+		
 		int insertedCount = 0;
 		List<Post> newPosts = new ArrayList<Post>(); 
 		for(Post post : posts) {
-			if(post != null) {
+			if(post != null && last3Days.getTime().before(post.getPublicationDate())) {
 				log.info("Insertion post: " + post.getTitle());
 				em.persist(post);
 				++insertedCount;
