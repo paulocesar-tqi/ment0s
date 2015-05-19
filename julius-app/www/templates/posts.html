@@ -10,11 +10,12 @@
         </ion-refresher>
         <div class="list" data-ng-if="posts.length">
             <div data-ng-repeat="p in posts" >
-                <div class="post-title {{p.sourceId}}" data-ng-bind-html="toTrusted(p.title)" ngc-done="'setSeeMore'">
+                <div contenteditable="true" class="post-title source{{p.sourceId}}">
+                    <div class="post-image{{p.sourceId}}"></div>
+                    <p data-ng-bind-html="toTrusted(p.html)" ngc-done="'setSeeMore'"> </p>
                 </div>
                 <a class="item link original" ng-click="openUrlViewer(p.url)"><p>Visualizar o post original</p></a>
                 <div class="post-details">
-                    <img data-ng-src="img/{{p.sourceId}}.png" alt="">
                     <p class="blogger">Categoria</p>
                     <p class="pubdate">{{ p.publicationDate }} </p>
                 </div>

@@ -43,7 +43,7 @@ public class NotificationService {
 					notification.setBadge(1);
 					notification.setRegistrationIdsToSend(ids);
 					notification.setTitle("Teste mensagem!");
-					notification.setMessage(post.getTitle());
+					notification.setMessage(post.getHtml());
 					
 					sender.sendNotification(notification);
 				}

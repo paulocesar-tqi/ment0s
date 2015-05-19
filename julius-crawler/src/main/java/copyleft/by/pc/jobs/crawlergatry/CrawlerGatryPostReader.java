@@ -40,7 +40,7 @@ public class CrawlerGatryPostReader implements ItemReader<Element> {
 			for (Element el : elements) {
 				list.add(el);
 
-				log.info("Gatryreader: " + el.attr("id") + " | " + el.text());
+				log.debug("Gatryreader: " + el.attr("id") + " | " + el.text());
 			}
 			log.info("GatryReader: " + list.size() + " posts lidos.");
 			

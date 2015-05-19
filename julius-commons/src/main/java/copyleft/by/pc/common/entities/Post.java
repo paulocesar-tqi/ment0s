@@ -24,10 +24,10 @@ public class Post implements Serializable {
 		
 	}
 	
-	public Post(Long id, String title, Date publicationDate, Integer sourceId, String url) {
+	public Post(Long id, String html, Date publicationDate, Integer sourceId, String url) {
 		super();
 		this.id = id;
-		this.title = title;
+		this.html = html;
 		this.publicationDate = publicationDate;
 		this.sourceId = sourceId;
 		this.url = url;
@@ -36,9 +36,6 @@ public class Post implements Serializable {
 	@Id
 	@GeneratedValue
 	private Long id;
-
-	@Column(name = "title")
-	private String title;
 
 	@Column(name = "html")
 	private String html;
@@ -58,14 +55,6 @@ public class Post implements Serializable {
 
 	public Long getId() {
 		return id;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
 	}
 
 	public String getHtml() {

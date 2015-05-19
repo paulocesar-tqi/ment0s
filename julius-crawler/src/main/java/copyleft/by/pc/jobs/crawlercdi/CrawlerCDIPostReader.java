@@ -39,11 +39,9 @@ public class CrawlerCDIPostReader implements ItemReader<Post> {
 			Post post = new Post();
 			
 			String html = toHtmlEscaped(facebookPost.getMessage());
-			String title = html;
-			if(title.length() > 3000) 
-				title = title.substring(0, 2995) + "...";
+			if(html.length() > 10000) 
+				html = html.substring(0, 9995) + "...";
 			
-			post.setTitle(title);
 			post.setUrl(cdiEndpoint);
 			post.setExternalId(facebookPost.getId());
 			post.setSourceId(cdiId);
@@ -52,7 +50,7 @@ public class CrawlerCDIPostReader implements ItemReader<Post> {
 
 			list.add(post);
 
-			log.debug("CdiReader: " + post.getId() + " | " + post.getTitle());
+			log.debug("CdiReader: " + post.getId() + " | " + post.getHtml());
 		}
         log.info("CdiReader: " + list.size() + " posts lidos.");
 	}
@@ -63,7 +61,7 @@ public class CrawlerCDIPostReader implements ItemReader<Post> {
 		Post post = null;
 		if (!list.isEmpty()) {
 			post = list.remove(0);
-			log.debug("reader: " + post.getTitle());
+			log.debug("reader: " + post.getHtml());
 		}
 
 		return post;

@@ -4,8 +4,8 @@
  * blog: devgirl.org
  * more tutorials: hollyschinsky.github.io
  */
- var URL_ENDPOINTS = 'http://paulocesar.tk:8080';
- //var URL_ENDPOINTS = 'http://localhost:8080';
+ //var URL_ENDPOINTS = 'http://paulocesar.tk:8080';
+ var URL_ENDPOINTS = 'http://192.168.0.101:8080';
 
 app.controller('PostsCtrl', function($scope, $ionicModal, $timeout, $sce, $ionicLoading, PostService, $cordovaPush, $cordovaDialogs, $cordovaMedia, $cordovaToast, ionPlatform, localstorage, $http) {
     $scope.posts = [];
@@ -136,9 +136,16 @@ app.controller('PostsCtrl', function($scope, $ionicModal, $timeout, $sce, $ionic
                     $scope.$broadcast("scroll.infiniteScrollComplete");
                     $ionicLoading.hide();
                 } else {
-                    $scope.infiniteLoad = false; 
-                    $scope.$broadcast("scroll.infiniteScrollComplete");
-                    $ionicLoading.hide();
+                    if($scope.posts.length) {
+                        $scope.infiniteLoad = false; 
+                        $scope.$broadcast("scroll.infiniteScrollComplete");
+                        $ionicLoading.hide();
+                    } else {
+                        $ionicLoading.show({ template: '<p class="item-icon-left">Ainda não há promoções<ion-spinner icon="lines"/></p>'});
+                        $timeout(function(){
+                            $scope.morePosts();
+                        }, 10000);
+                    }
                 }
             })
             .error(function (data, status) {

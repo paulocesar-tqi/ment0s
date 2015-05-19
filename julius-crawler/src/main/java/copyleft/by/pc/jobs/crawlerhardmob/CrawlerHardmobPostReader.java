@@ -62,7 +62,7 @@ public class CrawlerHardmobPostReader implements ItemReader<Post> {
 			String url = el.child(0).attr("href");
 			String id = url.substring(url.indexOf("php/t-")+6, url.indexOf(".html"));
 			Post post = new Post();
-			post.setTitle(el.child(0).html());
+			post.setHtml(el.child(0).html());
 			post.setUrl(url);
 			post.setExternalId(id);
 			list.add(post);
@@ -78,7 +78,7 @@ public class CrawlerHardmobPostReader implements ItemReader<Post> {
 		Post post = null;
 		if (!list.isEmpty()) {
 			post = list.remove(0);
-			log.debug("reader: " + post.getTitle());
+			log.debug("reader: " + post.getHtml());
 		}
 
 		return post;

@@ -56,9 +56,49 @@
     border-right: 1px lightgrey solid;
     overflow: auto;
     max-height: 7.7em;
+}
+
+.post-image1 {
+    width: 55px;
+    height: 55px;
+    background-image: url('../img/1.png');
+    background-repeat: no-repeat;
+    background-position: right top;
+    float: right;
+}
+
+.post-image2 {
+    width: 55px;
+    height: 55px;
+    background-image: url('../img/2.png');
+    background-repeat: no-repeat;
+    background-position: right top;
+    float: right;
+}
+
+.post-image3 {
+    width: 55px;
+    height: 55px;
+    background-image: url('../img/3.png');
+    background-repeat: no-repeat;
+    background-position: right top;
+    float: right;
+}
+
+
+.source1 {
+    background-color: salmon;
+    color: white;
+}
+
+.source2 {
+    background-color: dimgrey;
+    color: white;
+}
+
+.source3 {
     background-color: tan;
     color: white;
-
 }
 
 .post-details {

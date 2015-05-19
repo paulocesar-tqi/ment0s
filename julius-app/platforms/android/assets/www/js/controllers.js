@@ -4,8 +4,8 @@
  * blog: devgirl.org
  * more tutorials: hollyschinsky.github.io
  */
- var URL_ENDPOINTS = 'http://192.168.0.103:8080';
- //var URL_ENDPOINTS = 'http://localhost:8080';
+ //var URL_ENDPOINTS = 'http://paulocesar.tk:8080';
+ var URL_ENDPOINTS = 'http://192.168.0.101:8080';
 
 app.controller('PostsCtrl', function($scope, $ionicModal, $timeout, $sce, $ionicLoading, PostService, $cordovaPush, $cordovaDialogs, $cordovaMedia, $cordovaToast, ionPlatform, localstorage, $http) {
     $scope.posts = [];
@@ -57,9 +57,9 @@ app.controller('PostsCtrl', function($scope, $ionicModal, $timeout, $sce, $ionic
     };
 
     // function to open the modal urlViewer
-    $scope.openUrlViewer = function () {
+    $scope.openUrlViewer = function (url) {
         //$scope.urlViewer.show();
-        window.open('http://www.apache.org', '_system', 'location=yes');
+        window.open(url, '_system', 'location=yes');
     };
 
     // function to close urlViewer
@@ -136,9 +136,16 @@ app.controller('PostsCtrl', function($scope, $ionicModal, $timeout, $sce, $ionic
                     $scope.$broadcast("scroll.infiniteScrollComplete");
                     $ionicLoading.hide();
                 } else {
-                    $scope.infiniteLoad = false; 
-                    $scope.$broadcast("scroll.infiniteScrollComplete");
-                    $ionicLoading.hide();
+                    if($scope.posts.length) {
+                        $scope.infiniteLoad = false; 
+                        $scope.$broadcast("scroll.infiniteScrollComplete");
+                        $ionicLoading.hide();
+                    } else {
+                        $ionicLoading.show({ template: '<p class="item-icon-left">Ainda não há promoções<ion-spinner icon="lines"/></p>'});
+                        $timeout(function(){
+                            $scope.morePosts();
+                        }, 10000);
+                    }
                 }
             })
             .error(function (data, status) {
@@ -153,7 +160,7 @@ app.controller('PostsCtrl', function($scope, $ionicModal, $timeout, $sce, $ionic
     $scope.toTrusted = function(text) {
         return ($sce.trustAsHtml(text));
     }
-
+    
     function decryptText(text) {
         var aesUtil = new AesUtil(128, 10);
         var decrypt = aesUtil.decrypt("3FF2EC019C627B945225DEBAD71A01B6985FE84C95A70EB132882F88C0A59A55", "F27D5C9927726BCEFE7510B1BDD3D137", "i wanna be sedated", text);
@@ -254,6 +261,13 @@ function registerNotificationAndroid(e) {
 
     break;
     }
+}
+
+function setSeeMore() {
+    $('.post-title').readmore({ embedCSS: false, 
+                                moreLink: '<a class="item link more" href="#"><p>Ver mais</p></a>',
+                                lessLink: '',
+                                speed: 500});
 }
 
 

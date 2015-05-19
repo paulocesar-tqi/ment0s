@@ -30,10 +30,15 @@ public class CrawlerGatryPostProcessor implements ItemProcessor<Element,Post> {
 		String externalCode = el.attr("id"); 
 		if(!externalGatryIds.contains(externalCode)) {
 			Post post = new Post();
+			
+			String html = el.getElementsByTag("h3").first().child(0).html() + " por " + el.getElementsByClass("preco").first().html() + ": " + el.getElementsByTag("h3").first().child(0).attr("href");
+			if(html.length() > 10000) 
+				html = html.substring(0, 9995).substring(0,html.lastIndexOf(" ")) + "...";
+			html = "<p>" + html + "</p>";
+			
 			post.setSourceId(gatryId);
 			post.setExternalId(externalCode);
-			post.setTitle(el.getElementsByTag("h3").first().child(0).html() + " por " + el.getElementsByClass("preco").first().html());
-			post.setHtml("<p>" + post.getTitle() + "</p>" + "<img src=\"" +  el.getElementsByClass("lazy").first().attr("data-original") + "\" />");
+			post.setHtml(html);
 			post.setUrl("http://gatry.com/promocoes");
 			post.setPublicationDate(new SimpleDateFormat("dd/MM/yyyy HH:mm").parse(el.getElementsByClass("data_postado").first().attr("title").replaceAll(" (.*?) ", " ")));
 			return post;

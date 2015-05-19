@@ -37,7 +37,7 @@ public class CrawlerHardmobPostWriter implements ItemWriter<Post> {
 		List<Post> newPosts = new ArrayList<Post>(); 
 		for(Post post : posts) {
 			if(post != null && last3Days.getTime().before(post.getPublicationDate())) {
-				log.info("Insertion post: " + post.getTitle());
+				log.info("Insertion post: " + post.getHtml());
 				em.persist(post);
 				++insertedCount;
 				newPosts.add(post);

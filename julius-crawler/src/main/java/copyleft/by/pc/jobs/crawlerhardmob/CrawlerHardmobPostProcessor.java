@@ -82,7 +82,12 @@ public class CrawlerHardmobPostProcessor implements ItemProcessor<Post,Post> {
 			
 			elements = document.getElementsByClass("posttext");
 			if(elements.size() > 0) {
-				post.setHtml(elements.get(0).html());
+				String htmlPost = elements.get(0).html();
+				if(htmlPost.length() > 10000) 
+					htmlPost = htmlPost.substring(0, 9995).substring(0,htmlPost.lastIndexOf(" ")) + "...";
+				htmlPost = "<p>" + htmlPost + "</p>";
+
+				post.setHtml(post.getHtml() + "<br/>" + htmlPost);
 			} else {
 				log.info("Não foi possivel setar o html para o topico hardmob: " + post.getUrl());
 			}
