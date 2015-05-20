@@ -66,6 +66,12 @@
 		  <version>[2.2,)</version>
 		</dependency>
 
+		<dependency>
+		    <groupId>net.spy</groupId>
+		    <artifactId>spymemcached</artifactId>
+		    <version>2.11.7</version>
+		</dependency>
+
   	    <dependency>
             <groupId>julius</groupId>
             <artifactId>julius-commons</artifactId>

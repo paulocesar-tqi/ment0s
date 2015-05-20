@@ -2,6 +2,7 @@ package copyleft.by.pc.jobs.crawlerhardmob;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import javax.annotation.Resource;
 
@@ -10,7 +11,9 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Entities.EscapeMode;
+import org.jsoup.nodes.Element;
+import org.jsoup.nodes.Node;
+import org.jsoup.nodes.TextNode;
 import org.jsoup.select.Elements;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,7 +73,7 @@ public class CrawlerHardmobPostProcessor implements ItemProcessor<Post,Post> {
 			html = html.substring(html.indexOf("<div id=\"navbar\">"), html.indexOf("<div id=\"copyright\""));
 
 			Document document = Jsoup.parse(html);
-			document.outputSettings().escapeMode(EscapeMode.extended);
+			//document.outputSettings().escapeMode(EscapeMode.extended);
 
 			Elements elements = document.getElementsByClass("largefont");
 			if(elements.size() != 1) {
@@ -82,10 +85,20 @@ public class CrawlerHardmobPostProcessor implements ItemProcessor<Post,Post> {
 			
 			elements = document.getElementsByClass("posttext");
 			if(elements.size() > 0) {
-				String htmlPost = elements.get(0).html();
+				String htmlPost = getText(elements.get(0));
+				StringTokenizer tokenizer = new StringTokenizer(htmlPost, " \t\n\r\f,!()[]'",true);
+				StringBuilder newHtml = new StringBuilder();
+				while(tokenizer.hasMoreElements()) {
+					String word = tokenizer.nextToken();
+					if(word.startsWith("http")) {
+						word = "<a href=\"javascript:window.open('"+ word + "','_system', 'location=yes')\">" + word + "</a>";
+					}
+					newHtml.append(word);
+				}
+				htmlPost= newHtml.toString().replaceAll("\n", "<br />");
 				if(htmlPost.length() > 10000) 
 					htmlPost = htmlPost.substring(0, 9995).substring(0,htmlPost.lastIndexOf(" ")) + "...";
-				htmlPost = "<p>" + htmlPost + "</p>";
+				//htmlPost = "<p>" + htmlPost + "</p>";
 
 				post.setHtml(post.getHtml() + "<br/>" + htmlPost);
 			} else {
@@ -108,5 +121,23 @@ public class CrawlerHardmobPostProcessor implements ItemProcessor<Post,Post> {
 		
 		return post;
 	}
+	
+	private String getText(Element parentElement) {
+	     String working = "";
+	     for (Node child : parentElement.childNodes()) {
+	          if (child instanceof TextNode) {
+	              working += ((TextNode) child).text();
+	          }
+	          if (child instanceof Element) {
+	              Element childElement = (Element)child;
+	              // do more of these for p or other tags you want a new line for
+	              if (childElement.tag().getName().equalsIgnoreCase("br")) {
+	                   working += "\n";
+	              }                  
+	              working += getText(childElement);
+	          }
+	     }
+	     return working;
+	 }
 		
 }

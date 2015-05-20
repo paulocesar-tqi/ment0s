@@ -301,3 +301,18 @@
 2015-05-18 22:14:10.998 Julius[4817:96206] active
 2015-05-18 22:14:11.000 Julius[4817:96206] Attempting to badge the application icon but haven't received permission from the user to badge the application
 2015-05-18 22:14:11.229 Julius[4817:96206] Finished load of: file:///Users/yusuke/Library/Developer/CoreSimulator/Devices/8A7E69E8-A3C8-44A8-826C-C318C1FC320F/data/Containers/Bundle/Application/DC5049F2-2F8D-4CD2-9683-6FCB4503A1C9/Julius.app/www/index.html#/posts
+2015-05-19 12:18:05.372 Julius[2132:29210] Apache Cordova native platform version 3.8.0 is starting.
+2015-05-19 12:18:05.374 Julius[2132:29210] Multi-tasking -> Device: YES, App: YES
+2015-05-19 12:18:05.389 Julius[2132:29210] Unlimited access to network resources
+2015-05-19 12:18:05.766 Julius[2132:29210] [CDVTimer][file] 12.663007ms
+2015-05-19 12:18:05.766 Julius[2132:29210] [CDVTimer][TotalPluginStartup] 13.006985ms
+2015-05-19 12:18:05.792 Julius[2132:29210] active
+2015-05-19 12:18:05.798 Julius[2132:29210] Attempting to badge the application icon but haven't received permission from the user to badge the application
+2015-05-19 12:18:06.091 Julius[2132:29210] Resetting plugins due to page load.
+2015-05-19 12:18:06.742 Julius[2132:29210] Finished load of: file:///Users/yusuke/Library/Developer/CoreSimulator/Devices/8A7E69E8-A3C8-44A8-826C-C318C1FC320F/data/Containers/Bundle/Application/5943F695-88FE-4241-B390-CC0677460638/Julius.app/www/index.html#/posts
+2015-05-19 12:18:40.641 Julius[2132:29210] THREAD WARNING: ['InAppBrowser'] took '50.833984' ms. Plugin should use a background thread.
+2015-05-19 12:20:35.760 Julius[2132:29210] active
+2015-05-19 12:20:35.762 Julius[2132:29210] Attempting to badge the application icon but haven't received permission from the user to badge the application
+2015-05-19 12:23:50.086 Julius[2132:29210] THREAD WARNING: ['InAppBrowser'] took '10.366699' ms. Plugin should use a background thread.
+2015-05-19 13:55:25.458 Julius[2132:29210] active
+2015-05-19 13:55:25.462 Julius[2132:29210] Attempting to badge the application icon but haven't received permission from the user to badge the application

@@ -9,7 +9,6 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.nodes.Entities.EscapeMode;
 import org.jsoup.select.Elements;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +53,6 @@ public class CrawlerHardmobPostReader implements ItemReader<Post> {
 		html = html.substring(html.indexOf("<div id=\"content\">"), html.indexOf("<div id=\"copyright\""));
 
 		Document document = Jsoup.parse(html);
-		document.outputSettings().escapeMode(EscapeMode.extended);
 		Elements elements = document.select("li");
 
 		list = new ArrayList<Post>();
@@ -62,7 +60,7 @@ public class CrawlerHardmobPostReader implements ItemReader<Post> {
 			String url = el.child(0).attr("href");
 			String id = url.substring(url.indexOf("php/t-")+6, url.indexOf(".html"));
 			Post post = new Post();
-			post.setHtml(el.child(0).html());
+			post.setHtml(el.child(0).text());
 			post.setUrl(url);
 			post.setExternalId(id);
 			list.add(post);

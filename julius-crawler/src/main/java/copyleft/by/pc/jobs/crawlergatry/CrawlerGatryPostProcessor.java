@@ -2,6 +2,7 @@ package copyleft.by.pc.jobs.crawlergatry;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import javax.annotation.Resource;
 
@@ -31,10 +32,10 @@ public class CrawlerGatryPostProcessor implements ItemProcessor<Element,Post> {
 		if(!externalGatryIds.contains(externalCode)) {
 			Post post = new Post();
 			
-			String html = el.getElementsByTag("h3").first().child(0).html() + " por " + el.getElementsByClass("preco").first().html() + ": " + el.getElementsByTag("h3").first().child(0).attr("href");
+			String html = el.getElementsByTag("h3").first().child(0).text() + " por " + el.getElementsByClass("preco").first().text() + "\n" + el.getElementsByTag("h3").first().child(0).attr("href");
+			html = formatLinks(html);
 			if(html.length() > 10000) 
 				html = html.substring(0, 9995).substring(0,html.lastIndexOf(" ")) + "...";
-			html = "<p>" + html + "</p>";
 			
 			post.setSourceId(gatryId);
 			post.setExternalId(externalCode);
@@ -47,6 +48,21 @@ public class CrawlerGatryPostProcessor implements ItemProcessor<Element,Post> {
 		}
 		return null;
 		
+	}
+	
+	private String formatLinks(String text) {
+		StringTokenizer tokenizer = new StringTokenizer(text, " \t\n\r\f,!()[]'",true);
+		StringBuilder newHtml = new StringBuilder();
+		while(tokenizer.hasMoreElements()) {
+			String word = tokenizer.nextToken();
+			if(word.startsWith("http")) {
+				word = "<a href=\"javascript:window.open('"+ word + "','_system', 'location=yes')\">" + word + "</a>";
+			}
+			newHtml.append(word);
+		}
+		text = newHtml.toString().replaceAll("\\r?\\n", "<br/> ");
+		
+		return text;
 	}
 	
 }

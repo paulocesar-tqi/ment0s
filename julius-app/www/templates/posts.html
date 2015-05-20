@@ -10,7 +10,7 @@
         </ion-refresher>
         <div class="list" data-ng-if="posts.length">
             <div data-ng-repeat="p in posts" >
-                <div contenteditable="true" class="post-title source{{p.sourceId}}">
+                <div class="post-title source{{p.sourceId}}">
                     <div class="post-image{{p.sourceId}}"></div>
                     <p data-ng-bind-html="toTrusted(p.html)" ngc-done="'setSeeMore'"> </p>
                 </div>

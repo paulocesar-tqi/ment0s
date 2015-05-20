@@ -29,13 +29,13 @@ public class CrawlerCDIPostWriter implements ItemWriter<Post> {
 	@Override
 	public void write(List<? extends Post> posts) throws Exception {
 		
-		Calendar last3Days = Calendar.getInstance();
-		last3Days.add(Calendar.DATE, -3);
+		Calendar last2Days = Calendar.getInstance();
+		last2Days.add(Calendar.DATE, -2);
 		
 		int insertedCount = 0;
 		List<Post> newPosts = new ArrayList<Post>(); 
 		for(Post post : posts) {
-			if(post != null && last3Days.getTime().before(post.getPublicationDate())) {
+			if(post != null && last2Days.getTime().before(post.getPublicationDate())) {
 				log.info("Insertion post: " + post.getHtml());
 				em.persist(post);
 				++insertedCount;

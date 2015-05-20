@@ -7,6 +7,8 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import net.spy.memcached.MemcachedClient;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.batch.item.ItemWriter;
@@ -25,18 +27,21 @@ public class CrawlerGatryPostWriter implements ItemWriter<Post> {
 
 	@Autowired
 	private NotificationService notificationService;
+	
+	@Autowired
+	private MemcachedClient cache;
 
 	
 	@Override
 	public void write(List<? extends Post> posts) throws Exception {
 		
-		Calendar last3Days = Calendar.getInstance();
-		last3Days.add(Calendar.DATE, -3);
+		Calendar last2Days = Calendar.getInstance();
+		last2Days.add(Calendar.DATE, -2);
 		
 		int insertedCount = 0;
 		List<Post> newPosts = new ArrayList<Post>(); 
 		for(Post post : posts) {
-			if(post != null && last3Days.getTime().before(post.getPublicationDate())) {
+			if(post != null && last2Days.getTime().before(post.getPublicationDate())) {
 				em.persist(post);
 				++insertedCount;
 				newPosts.add(post);
@@ -45,6 +50,7 @@ public class CrawlerGatryPostWriter implements ItemWriter<Post> {
 		
 		if(insertedCount > 0) {
 			em.flush();
+			cache.flush();
 			notificateAndroidUsers(newPosts);
 		}
 		

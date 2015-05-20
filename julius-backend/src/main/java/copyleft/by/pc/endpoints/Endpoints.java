@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+import net.spy.memcached.MemcachedClient;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +49,9 @@ public class Endpoints {
 	@Autowired
 	private GenericDao dao;
 	
+	@Autowired
+	private MemcachedClient cache;
+	
 	private final Queue<List<String>> registrationQueue = new ConcurrentLinkedQueue<List<String>>();
 
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
@@ -65,20 +70,26 @@ public class Endpoints {
 	public HttpEntity<String> listPosts(
 			@RequestParam(value = "pageNumber", required = false, defaultValue = "0") Integer pageNumber) {
 		
-		List<Post> posts = dao.getPostsByFilter(pageNumber, postPageSize);
-		
-		ObjectMapper mapper = new ObjectMapper();
-        String json = "";
-        try {
-			json = mapper.writeValueAsString(posts);
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
+		String json = (String) cache.get("page"+pageNumber);
+		if(json == null) {
+			log.info("Pagina nao existe no cache");
+			List<Post> posts = dao.getPostsByFilter(pageNumber, postPageSize);
+			
+			ObjectMapper mapper = new ObjectMapper();
+	        json = "";
+	        try {
+				json = mapper.writeValueAsString(posts);
+			} catch (JsonProcessingException e) {
+				e.printStackTrace();
+			}
+			
+	        log.info("Antes: " + json);
+	        json = encrypt(json);
+			log.info(json);
+			cache.set("page"+pageNumber, 0, json);
+		} else {
+			log.info("Pagina retornada do memcache");
 		}
-		
-		//ResponseEntity<List<Post>> oi = new ResponseEntity<>(posts, HttpStatus.OK);
-        log.info("Antes: " + json);
-        json = encrypt(json);
-		log.info(json);
 		return new ResponseEntity<>(json, HttpStatus.OK);
 	}
 

@@ -2,6 +2,7 @@ package copyleft.by.pc.jobs.crawlercdi;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -38,7 +39,7 @@ public class CrawlerCDIPostReader implements ItemReader<Post> {
 		for(facebook4j.Post facebookPost : feed) {
 			Post post = new Post();
 			
-			String html = toHtmlEscaped(facebookPost.getMessage());
+			String html = formatLinks(facebookPost.getMessage());
 			if(html.length() > 10000) 
 				html = html.substring(0, 9995) + "...";
 			
@@ -67,12 +68,19 @@ public class CrawlerCDIPostReader implements ItemReader<Post> {
 		return post;
 	}
 	
-	private String toHtmlEscaped(String text) {
-		text = text.replaceAll("\\r?\\n", "<br/>");
-		Document document = Jsoup.parseBodyFragment(text);
-		document.outputSettings().escapeMode(EscapeMode.extended);
-		Element tag = document.getElementsByTag("body").first();
-		return tag.html();
+	private String formatLinks(String text) {
+		StringTokenizer tokenizer = new StringTokenizer(text, " \t\n\r\f,!()[]'",true);
+		StringBuilder newHtml = new StringBuilder();
+		while(tokenizer.hasMoreElements()) {
+			String word = tokenizer.nextToken();
+			if(word.startsWith("http")) {
+				word = "<a href=\"javascript:window.open('"+ word + "','_system', 'location=yes')\">" + word + "</a>";
+			}
+			newHtml.append(word);
+		}
+		text = newHtml.toString().replaceAll("\\r?\\n", "<br/> ");
+		
+		return text;
 	}
 	
 	public static void main(String[] args) {
