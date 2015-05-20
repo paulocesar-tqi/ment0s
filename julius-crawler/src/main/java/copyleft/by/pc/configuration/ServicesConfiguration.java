@@ -1,5 +1,10 @@
 package copyleft.by.pc.configuration;
 
+import java.io.IOException;
+
+import net.spy.memcached.AddrUtil;
+import net.spy.memcached.MemcachedClient;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -32,6 +37,12 @@ public class ServicesConfiguration {
 	public NotificationService notificationService(){
 		return new NotificationService();
 	}
+	
+	@Bean
+	public MemcachedClient memcachedClient() throws IOException {
+		return new MemcachedClient(AddrUtil.getAddresses("127.0.0.1:11111"));
+	}
+	
 	
 	/*
 	@Bean

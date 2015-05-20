@@ -7,6 +7,8 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import net.spy.memcached.MemcachedClient;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.batch.item.ItemWriter;
@@ -25,6 +27,9 @@ public class CrawlerCDIPostWriter implements ItemWriter<Post> {
 	
 	@Autowired
 	private NotificationService notificationService;
+	
+	@Autowired
+	private MemcachedClient cache;
 	
 	@Override
 	public void write(List<? extends Post> posts) throws Exception {
@@ -45,6 +50,7 @@ public class CrawlerCDIPostWriter implements ItemWriter<Post> {
 		
 		if(insertedCount > 0) {
 			em.flush();
+			cache.flush();
 			notificateAndroidUsers(newPosts);
 		}
 
