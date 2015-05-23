@@ -5,9 +5,10 @@
  * more tutorials: hollyschinsky.github.io
  */
  //var URL_ENDPOINTS = 'http://paulocesar.tk:8080';
- var URL_ENDPOINTS = 'http://192.168.0.101:8080';
+var URL_ENDPOINTS = 'http://192.168.0.101:8080';
+var admobid = {};
 
-app.controller('PostsCtrl', function($scope, $ionicModal, $timeout, $sce, $ionicLoading, PostService, $cordovaPush, $cordovaDialogs, $cordovaMedia, $cordovaToast, ionPlatform, localstorage, $http) {
+app.controller('PostsCtrl', function($scope, $ionicModal, $timeout, $sce, $ionicLoading, PostService, $cordovaPush, $cordovaDialogs, $cordovaSocialSharing, $cordovaMedia, $cordovaToast, ionPlatform, localstorage, $http) {
     $scope.posts = [];
     $scope.page = 0;    
     $scope.infiniteLoad = false;
@@ -37,8 +38,44 @@ app.controller('PostsCtrl', function($scope, $ionicModal, $timeout, $sce, $ionic
             console.log("Found regId: " + localstorage.get("regId"));
         }
 
+        $scope.setAdMob();
         $scope.morePosts();
     });
+
+    $scope.setAdMob = function () {
+        if(window.AdMob) {
+
+            if( /(android)/i.test(navigator.userAgent) ) { // for android
+                console.log("Android detectado");
+                admobid = {
+                    banner: 'ca-app-pub-2794315939519770/8766347441', // or DFP format "/6253334/dfp_example_ad"
+                    interstitial: 'ca-app-pub-2794315939519770/8766347441'
+                };
+            } else if(/(ipod|iphone|ipad)/i.test(navigator.userAgent)) { // for ios
+                console.log("IOS detectado");
+                admobid = {
+                    banner: 'ca-app-pub-2794315939519770/4196547047', // or DFP format "/6253334/dfp_example_ad"
+                    interstitial: 'ca-app-pub-2794315939519770/4196547047'
+                };
+            } else { // for windows phone
+                console.log("Windows detectado");
+                admobid = {
+                    banner: 'ca-app-pub-2794315939519770/8766347441', // or DFP format "/6253334/dfp_example_ad"
+                    interstitial: 'ca-app-pub-2794315939519770/8766347441'
+                };
+            }
+
+            window.AdMob.createBanner({
+                adId:admobid.banner,
+                adSize:'SMART_BANNER', 
+                overlap:true, 
+                position:AdMob.AD_POSITION.BOTTOM_CENTER, 
+                autoShow:true});
+
+            window.AdMob.prepareInterstitial( {adId:admobid.interstitial, autoShow:false} );
+        }
+    }
+
 
     // function to open the modal PostDetail
     $scope.openPostDetail = function (id) {
@@ -65,6 +102,11 @@ app.controller('PostsCtrl', function($scope, $ionicModal, $timeout, $sce, $ionic
     // function to close urlViewer
     $scope.closeUrlViewer = function () {
         $scope.urlViewer.hide();
+    };
+
+    $scope.doShare = function (id, url) {
+        $cordovaSocialSharing.share($("#post"+id).text().trim(), 'Alguém enviou um promobug pra você', null, 'http://www.mylink.com');
+        //window.AdMob.showInterstitial();
     };
 
 
@@ -264,10 +306,11 @@ function registerNotificationAndroid(e) {
 }
 
 function setSeeMore() {
-    $('.post-title').readmore({ embedCSS: false, 
-                                moreLink: '<a class="item link more" href="#"><p>Ver mais</p></a>',
+    //console.log("on page: " + page);
+    $('.post-text').readmore({ embedCSS: false, 
+                                moreLink: '<a class="item link more" href="#"><p>▼ Ver mais ▼</p></a>',
                                 lessLink: '',
-                                speed: 500});
+                                speed: 1000});
 }
 
 

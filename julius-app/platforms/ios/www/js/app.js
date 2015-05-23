@@ -46,21 +46,14 @@
 	  }
 	}])
 
-    .directive('ngcDone', function ($timeout) {
+    .directive('ngcSeemore', function ($timeout) {
         return function (scope, element, attrs) {
-            scope.$watch(attrs.ngcDone, function (callback) {
+            scope.$watch(attrs.ngcSeemore, function (id) {
 
-                if (scope.$last === undefined) {
-                    scope.$watch('htmlElement', function () {
-                        if (scope.htmlElement !== undefined) {
-                            $timeout(eval(callback), 1);
-                        }
-                    });
-                }
-
-                if (scope.$last) {
-                    eval(callback)();
-                }
+                    $('#post'+id).readmore({ embedCSS: false, 
+                                moreLink: '<a class="item link more" href="#"><p>▼ Ver mais ▼</p></a>',
+                                lessLink: '',
+                                speed: 500});
             });
         }
     })
