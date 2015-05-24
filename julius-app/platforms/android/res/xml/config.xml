@@ -43,12 +43,12 @@
     <author email="contato@paulocesar.tk" href="http://ionicframework.com/">
       Paulo Cesar
     </author>
-    <content original-src="index.html" src="http://192.168.0.101:8100" />
+    <content src="index.html" />
     <access origin="*" />
     <preference name="webviewbounce" value="false" />
     <preference name="UIWebViewBounce" value="false" />
     <preference name="DisallowOverscroll" value="true" />
     <preference name="BackupWebStorage" value="none" />
     <preference name="SplashScreen" value="none" />
-    <preference name="SplashScreenDelay" value="0" />
+    <preference name="SplashScreenDelay" value="10" />
 </widget>

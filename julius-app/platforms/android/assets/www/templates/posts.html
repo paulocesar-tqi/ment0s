@@ -1,12 +1,12 @@
 <ion-view title="posts">
-    <ion-header-bar class="bar-assertive">
-        <div class="buttons">
-            <button class="button" ng-click="doShare()">Share</button>
-        </div>
+    <ion-header-bar align-title="center" class="bar bar-header bar-balanced">
         <h1 class="title">Promobugs</h1>
+        <div class="buttons">
+            <button class="button" ng-click="doShare()"><i class="icon ion-help-circled"></i></div></button>
+        </div>
     </ion-header-bar>
     <ion-content>
-        <ion-refresher on-refresh="loadPosts()">
+        <ion-refresher on-refresh="loadPosts()" pulling-icon="ion-android-arrow-dropdown-circle">
         </ion-refresher>
         <div class="list" data-ng-if="posts.length">
             <div data-ng-repeat="p in posts" >
@@ -18,22 +18,14 @@
                     <div ngc-seemore="'{{p.id}}'"></div>
                 </div>
                 <div class="footer">
-                    <div class="post-footer-left"></div>
-                    <div class="post-footer-right source{{p.sourceId}}">&nbsp;&nbsp;
-                        <a ng-click="openUrlViewer(p.url)">
+                        <a class="footer-button" ng-click="openUrlViewer(p.url)">
                             <i class="icon ion-ios-home"></i>
-                        </a>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <a ng-click="doShare(p.id, p.url)">
-                            <i class="icon ion-android-share-alt">&nbsp;&nbsp;</i></div>
                         </a>
+                        <a class="footer-button" ng-click="doShare(p.id, p.url)">
+                            <i class="icon ion-android-share-alt"></i>
+                        </a>
+                        <p class="pubdate">{{p.publicationDate}}</p>
                 </div>
-                <!--
-                <a class="item link original" ng-click="openUrlViewer(p.url)"><p>Visualizar o post original</p></a>
-                <div class="post-details">
-                    <p class="blogger">Categoria</p>
-                    <p class="pubdate">{{ p.publicationDate }} </p>
-                </div>
-                -->
             </div>
         </div>
         <ion-infinite-scroll on-infinite="morePosts()"

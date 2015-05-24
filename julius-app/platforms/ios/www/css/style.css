@@ -39,7 +39,7 @@
     margin-top: 20px;
     margin-left: 10px;
     margin-right: 10px;
-    font-size: 1.0em;
+     font-size: 1.0em;
     /*font-weight: bolder; */
     padding: 5px;
     border-top-left-radius: 5px;
@@ -49,6 +49,12 @@
     border-left: 1px lightgrey solid;
     border-right: 1px lightgrey solid;
     
+}
+
+.post a {
+    color: white;
+    font-size: 0.8em;
+    font-weight: bolder;
 }
 
 .footer {
@@ -146,6 +152,8 @@
     color: white;
     float: right;
     font-weight: bold;
+    margin: 0 0 0px;
+    white-space: nowrap;
 }
 
 a.more {

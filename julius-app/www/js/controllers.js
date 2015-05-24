@@ -4,30 +4,14 @@
  * blog: devgirl.org
  * more tutorials: hollyschinsky.github.io
  */
- //var URL_ENDPOINTS = 'http://paulocesar.tk:8080';
-var URL_ENDPOINTS = 'http://192.168.0.101:8080';
+ var URL_ENDPOINTS = 'http://paulocesar.tk/promobugs';
+//var URL_ENDPOINTS = 'http://192.168.0.101:8080';
 var admobid = {};
 
 app.controller('PostsCtrl', function($scope, $ionicModal, $timeout, $sce, $ionicLoading, PostService, $cordovaPush, $cordovaDialogs, $cordovaSocialSharing, $cordovaMedia, $cordovaToast, ionPlatform, localstorage, $http) {
     $scope.posts = [];
     $scope.page = 0;    
     $scope.infiniteLoad = false;
-
-    //init the modal postDetail
-    $ionicModal.fromTemplateUrl('templates/post-detail.html', {
-      scope: $scope,
-      animation: 'slide-in-up'
-    }).then(function (modal) {
-      $scope.postDetail = modal;
-    });
-
-    //init the modal url-viewer
-    $ionicModal.fromTemplateUrl('templates/url-viewer.html', {
-      scope: $scope,
-      animation: 'slide-in-up'
-    }).then(function (modal) {
-      $scope.urlViewer = modal;
-    });
 
     // call to register automatically upon device ready
     ionPlatform.ready.then(function (device) {
@@ -77,38 +61,15 @@ app.controller('PostsCtrl', function($scope, $ionicModal, $timeout, $sce, $ionic
     }
 
 
-    // function to open the modal PostDetail
-    $scope.openPostDetail = function (id) {
-        $ionicLoading.show({ template: "Loading post"});
-        PostService.loadPost(id)
-            .success(function(result) {
-                $scope.post = result;
-                $ionicLoading.hide();
-                $scope.postDetail.show();
-            });
-    };
-
-    // function to close PostDetail
-    $scope.closePostDetail = function () {
-        $scope.postDetail.hide();
-    };
-
     // function to open the modal urlViewer
     $scope.openUrlViewer = function (url) {
-        //$scope.urlViewer.show();
+        window.AdMob.showInterstitial();
         window.open(url, '_system', 'location=yes');
-    };
-
-    // function to close urlViewer
-    $scope.closeUrlViewer = function () {
-        $scope.urlViewer.hide();
     };
 
     $scope.doShare = function (id, url) {
         $cordovaSocialSharing.share($("#post"+id).text().trim(), 'Alguém enviou um promobug pra você', null, 'http://www.mylink.com');
-        //window.AdMob.showInterstitial();
     };
-
 
     // Register
     $scope.register = function () {
@@ -176,6 +137,7 @@ app.controller('PostsCtrl', function($scope, $ionicModal, $timeout, $sce, $ionic
                     $scope.posts = $scope.posts.concat(result);
                     $scope.page++;
                     $scope.$broadcast("scroll.infiniteScrollComplete");
+                    $scope.infiniteLoad = true; 
                     $ionicLoading.hide();
                 } else {
                     if($scope.posts.length) {
@@ -304,15 +266,6 @@ function registerNotificationAndroid(e) {
     break;
     }
 }
-
-function setSeeMore() {
-    //console.log("on page: " + page);
-    $('.post-text').readmore({ embedCSS: false, 
-                                moreLink: '<a class="item link more" href="#"><p>▼ Ver mais ▼</p></a>',
-                                lessLink: '',
-                                speed: 1000});
-}
-
 
 app.service('PostService', function($http) {
     this.loadPosts = function(page) {

@@ -72,7 +72,7 @@ public class Endpoints {
 		
 		String json = (String) cache.get("page"+pageNumber);
 		if(json == null) {
-			log.info("Pagina nao existe no cache");
+			log.info("Pagina nao existe no cache, recuperando...");
 			List<Post> posts = dao.getPostsByFilter(pageNumber, postPageSize);
 			
 			ObjectMapper mapper = new ObjectMapper();
@@ -83,9 +83,9 @@ public class Endpoints {
 				e.printStackTrace();
 			}
 			
-	        log.info("Antes: " + json);
+	        log.debug("Antes: " + json);
 	        json = encrypt(json);
-			log.info(json);
+			log.debug(json);
 			cache.set("page"+pageNumber, 0, json);
 		} else {
 			log.info("Pagina retornada do memcache");

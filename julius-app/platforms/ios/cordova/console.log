@@ -549,3 +549,252 @@
 2015-05-22 23:24:04.566 Promobugs[11123:197357] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
 2015-05-22 23:25:05.325 Promobugs[11123:197357] AdMob, onBannerReceive, 
 2015-05-22 23:25:05.325 Promobugs[11123:197357] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-22 23:26:10.471 Promobugs[11123:197357] AdMob, onBannerReceive, 
+2015-05-22 23:26:10.471 Promobugs[11123:197357] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-22 23:27:17.574 Promobugs[11123:197357] AdMob, onBannerReceive, 
+2015-05-22 23:27:17.574 Promobugs[11123:197357] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-22 23:28:18.122 Promobugs[11123:197357] AdMob, onBannerReceive, 
+2015-05-22 23:28:18.122 Promobugs[11123:197357] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-22 23:29:18.334 Promobugs[11123:197357] AdMob, onBannerReceive, 
+2015-05-22 23:29:18.335 Promobugs[11123:197357] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-22 23:30:18.527 Promobugs[11123:197357] AdMob, onBannerReceive, 
+2015-05-22 23:30:18.528 Promobugs[11123:197357] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-22 23:31:18.772 Promobugs[11123:197357] AdMob, onBannerReceive, 
+2015-05-22 23:31:18.773 Promobugs[11123:197357] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-22 23:32:19.017 Promobugs[11123:197357] AdMob, onBannerReceive, 
+2015-05-22 23:32:19.017 Promobugs[11123:197357] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-22 23:33:19.259 Promobugs[11123:197357] AdMob, onBannerReceive, 
+2015-05-22 23:33:19.260 Promobugs[11123:197357] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-22 23:34:19.504 Promobugs[11123:197357] AdMob, onBannerReceive, 
+2015-05-22 23:34:19.504 Promobugs[11123:197357] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-22 23:35:19.727 Promobugs[11123:197357] AdMob, onBannerReceive, 
+2015-05-22 23:35:19.727 Promobugs[11123:197357] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-22 23:36:19.971 Promobugs[11123:197357] AdMob, onBannerReceive, 
+2015-05-22 23:36:19.972 Promobugs[11123:197357] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-22 23:37:20.184 Promobugs[11123:197357] AdMob, onBannerReceive, 
+2015-05-22 23:37:20.184 Promobugs[11123:197357] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-22 23:38:20.394 Promobugs[11123:197357] AdMob, onBannerReceive, 
+2015-05-22 23:38:20.395 Promobugs[11123:197357] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-22 23:39:20.762 Promobugs[11123:197357] AdMob, onBannerReceive, 
+2015-05-22 23:39:20.762 Promobugs[11123:197357] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-22 23:40:20.978 Promobugs[11123:197357] AdMob, onBannerReceive, 
+2015-05-22 23:40:20.978 Promobugs[11123:197357] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-22 23:41:21.204 Promobugs[11123:197357] AdMob, onBannerReceive, 
+2015-05-22 23:41:21.204 Promobugs[11123:197357] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-22 23:42:21.430 Promobugs[11123:197357] AdMob, onBannerReceive, 
+2015-05-22 23:42:21.430 Promobugs[11123:197357] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-22 23:43:21.644 Promobugs[11123:197357] AdMob, onBannerReceive, 
+2015-05-22 23:43:21.645 Promobugs[11123:197357] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-22 23:44:21.849 Promobugs[11123:197357] AdMob, onBannerReceive, 
+2015-05-22 23:44:21.850 Promobugs[11123:197357] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-22 23:45:22.074 Promobugs[11123:197357] AdMob, onBannerReceive, 
+2015-05-22 23:45:22.074 Promobugs[11123:197357] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-22 23:46:22.294 Promobugs[11123:197357] AdMob, onBannerReceive, 
+2015-05-22 23:46:22.294 Promobugs[11123:197357] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-22 23:47:22.534 Promobugs[11123:197357] AdMob, onBannerReceive, 
+2015-05-22 23:47:22.534 Promobugs[11123:197357] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-22 23:48:23.123 Promobugs[11123:197357] AdMob, onBannerReceive, 
+2015-05-22 23:48:23.123 Promobugs[11123:197357] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-22 23:49:23.350 Promobugs[11123:197357] AdMob, onBannerReceive, 
+2015-05-22 23:49:23.351 Promobugs[11123:197357] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-22 23:50:23.571 Promobugs[11123:197357] AdMob, onBannerReceive, 
+2015-05-22 23:50:23.571 Promobugs[11123:197357] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-22 23:51:24.034 Promobugs[11123:197357] AdMob, onBannerReceive, 
+2015-05-22 23:51:24.034 Promobugs[11123:197357] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-22 23:52:24.050 Promobugs[11123:197357] AdMob, onBannerReceive, 
+2015-05-22 23:52:24.051 Promobugs[11123:197357] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-22 23:53:24.294 Promobugs[11123:197357] AdMob, onBannerReceive, 
+2015-05-22 23:53:24.295 Promobugs[11123:197357] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-22 23:54:24.511 Promobugs[11123:197357] AdMob, onBannerReceive, 
+2015-05-22 23:54:24.511 Promobugs[11123:197357] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-22 23:55:24.721 Promobugs[11123:197357] AdMob, onBannerReceive, 
+2015-05-22 23:55:24.722 Promobugs[11123:197357] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-22 23:56:24.993 Promobugs[11123:197357] AdMob, onBannerReceive, 
+2015-05-22 23:56:24.993 Promobugs[11123:197357] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-22 23:57:25.231 Promobugs[11123:197357] AdMob, onBannerReceive, 
+2015-05-22 23:57:25.231 Promobugs[11123:197357] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-22 23:58:25.468 Promobugs[11123:197357] AdMob, onBannerReceive, 
+2015-05-22 23:58:25.469 Promobugs[11123:197357] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-22 23:59:25.724 Promobugs[11123:197357] AdMob, onBannerReceive, 
+2015-05-22 23:59:25.724 Promobugs[11123:197357] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 00:00:25.942 Promobugs[11123:197357] AdMob, onBannerReceive, 
+2015-05-23 00:00:25.943 Promobugs[11123:197357] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 08:56:04.469 Promobugs[992:9189] DiskCookieStorage changing policy from 2 to 0, cookie file: file:///Users/yusuke/Library/Developer/CoreSimulator/Devices/8A7E69E8-A3C8-44A8-826C-C318C1FC320F/data/Containers/Data/Application/76C00230-DD1C-4125-ACBD-6633B96F4CF9/Library/Cookies/Cookies.binarycookies
+2015-05-23 08:56:04.749 Promobugs[992:9189] Apache Cordova native platform version 3.8.0 is starting.
+2015-05-23 08:56:04.750 Promobugs[992:9189] Multi-tasking -> Device: YES, App: YES
+2015-05-23 08:56:04.763 Promobugs[992:9189] Unlimited access to network resources
+2015-05-23 08:56:05.098 Promobugs[992:9189] [CDVTimer][admob] 1.071036ms
+2015-05-23 08:56:05.158 Promobugs[992:9189] [CDVTimer][socialsharing] 60.234010ms
+2015-05-23 08:56:05.168 Promobugs[992:9189] [CDVTimer][file] 9.922028ms
+2015-05-23 08:56:05.169 Promobugs[992:9189] [CDVTimer][TotalPluginStartup] 71.859002ms
+2015-05-23 08:56:05.194 Promobugs[992:9189] active
+2015-05-23 08:56:05.198 Promobugs[992:9189] Attempting to badge the application icon but haven't received permission from the user to badge the application
+2015-05-23 08:56:05.336 Promobugs[992:9189] Resetting plugins due to page load.
+2015-05-23 08:56:06.070 Promobugs[992:9189] Finished load of: file:///Users/yusuke/Library/Developer/CoreSimulator/Devices/8A7E69E8-A3C8-44A8-826C-C318C1FC320F/data/Containers/Bundle/Application/37CAAA62-890D-4D89-A8E8-86159C5BACD8/Promobugs.app/www/index.html#/posts
+2015-05-23 08:56:06.111 Promobugs[992:9189] IOS detectado
+2015-05-23 08:56:06.111 Promobugs[992:9189] createBanner
+2015-05-23 08:56:06.111 Promobugs[992:9189] prepareInterstitial
+2015-05-23 08:56:07.351 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 08:56:07.352 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 08:56:07.352 Promobugs[992:9189] statusbar offset:20.000000, overlap:1, ad position:8, x:0, y:0
+2015-05-23 08:56:07.587 Promobugs[992:9189] AdMob, onInterstitialReceive, 
+2015-05-23 08:56:07.588 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'interstitial','adEvent':'onAdLoaded'}
+2015-05-23 08:57:07.104 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 08:57:07.104 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 08:58:07.402 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 08:58:07.402 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 08:59:07.730 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 08:59:07.731 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 09:00:07.978 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 09:00:07.978 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 09:01:08.221 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 09:01:08.221 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 09:02:08.547 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 09:02:08.548 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 09:03:08.791 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 09:03:08.791 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 09:04:09.118 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 09:04:09.119 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 09:05:09.398 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 09:05:09.398 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 09:06:09.636 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 09:06:09.637 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 09:07:09.880 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 09:07:09.880 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 09:08:10.129 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 09:08:10.129 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 09:09:10.501 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 09:09:10.501 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 09:10:10.741 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 09:10:10.741 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 09:11:10.998 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 09:11:10.998 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 09:12:11.228 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 09:12:11.228 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 09:13:11.500 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 09:13:11.500 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 09:14:11.843 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 09:14:11.843 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 09:15:12.075 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 09:15:12.076 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 09:16:12.392 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 09:16:12.392 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 09:17:12.668 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 09:17:12.668 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 09:18:12.931 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 09:18:12.931 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 09:19:13.157 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 09:19:13.157 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 09:20:13.528 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 09:20:13.528 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 09:21:13.796 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 09:21:13.797 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 09:22:14.108 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 09:22:14.108 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 09:23:14.430 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 09:23:14.430 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 09:24:14.835 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 09:24:14.836 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 09:25:15.027 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 09:25:15.027 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 09:26:15.309 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 09:26:15.310 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 09:27:15.627 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 09:27:15.627 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 09:28:15.911 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 09:28:15.911 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 09:29:16.342 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 09:29:16.344 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 09:30:16.614 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 09:30:16.614 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 09:31:16.850 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 09:31:16.850 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 10:10:26.386 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 10:10:26.386 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 10:11:26.657 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 10:11:26.658 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 10:12:26.940 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 10:12:26.941 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 10:13:27.132 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 10:13:27.132 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 10:14:27.485 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 10:14:27.485 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 10:15:27.834 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 10:15:27.834 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 10:16:28.088 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 10:16:28.088 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 10:17:28.356 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 10:17:28.356 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 10:18:28.708 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 10:18:28.708 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 10:19:28.952 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 10:19:28.952 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 10:20:29.231 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 10:20:29.232 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 10:21:29.462 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 10:21:29.462 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 10:22:29.769 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 10:22:29.769 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 10:23:30.086 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 10:23:30.087 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 10:24:30.542 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 10:24:30.542 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 10:25:30.710 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 10:25:30.710 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 10:26:30.985 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 10:26:30.985 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 10:27:31.237 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 10:27:31.237 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 10:28:31.577 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 10:28:31.577 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 10:29:31.902 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 10:29:31.903 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 10:30:32.179 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 10:30:32.179 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 10:31:32.456 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 10:31:32.456 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 10:32:32.716 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 10:32:32.716 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 10:33:32.964 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 10:33:32.965 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 10:34:33.394 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 10:34:33.395 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 10:35:33.704 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 10:35:33.704 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 10:36:33.951 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 10:36:33.952 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 10:37:34.231 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 10:37:34.231 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 10:38:34.479 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 10:38:34.479 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 10:39:34.736 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 10:39:34.736 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 10:40:35.105 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 10:40:35.106 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 10:41:35.352 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 10:41:35.352 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 10:42:35.654 Promobugs[992:9189] AdMob, onBannerReceive, 
+2015-05-23 10:42:35.655 Promobugs[992:9189] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 10:42:40.096 Promobugs[3333:38327] DiskCookieStorage changing policy from 2 to 0, cookie file: file:///Users/yusuke/Library/Developer/CoreSimulator/Devices/8A7E69E8-A3C8-44A8-826C-C318C1FC320F/data/Containers/Data/Application/FECF538F-56E9-4F5C-8728-C17F74945978/Library/Cookies/Cookies.binarycookies
+2015-05-23 10:42:40.185 Promobugs[3333:38327] Apache Cordova native platform version 3.8.0 is starting.
+2015-05-23 10:42:40.186 Promobugs[3333:38327] Multi-tasking -> Device: YES, App: YES
+2015-05-23 10:42:40.188 Promobugs[3333:38327] Unlimited access to network resources
+2015-05-23 10:42:40.295 Promobugs[3333:38327] [CDVTimer][admob] 0.165999ms
+2015-05-23 10:42:40.348 Promobugs[3333:38327] [CDVTimer][socialsharing] 53.112030ms
+2015-05-23 10:42:40.351 Promobugs[3333:38327] [CDVTimer][file] 3.423989ms
+2015-05-23 10:42:40.352 Promobugs[3333:38327] [CDVTimer][TotalPluginStartup] 57.296038ms
+2015-05-23 10:42:40.370 Promobugs[3333:38327] active
+2015-05-23 10:42:40.372 Promobugs[3333:38327] Attempting to badge the application icon but haven't received permission from the user to badge the application
+2015-05-23 10:42:40.448 Promobugs[3333:38327] Resetting plugins due to page load.
+2015-05-23 10:42:40.816 Promobugs[3333:38327] Finished load of: file:///Users/yusuke/Library/Developer/CoreSimulator/Devices/8A7E69E8-A3C8-44A8-826C-C318C1FC320F/data/Containers/Bundle/Application/E07F4198-BDAD-42B5-B3ED-AE893B64F570/Promobugs.app/www/index.html#/posts
+2015-05-23 10:42:41.218 Promobugs[3333:38327] IOS detectado
+2015-05-23 10:42:41.218 Promobugs[3333:38327] createBanner
+2015-05-23 10:42:41.218 Promobugs[3333:38327] prepareInterstitial
+2015-05-23 10:42:42.308 Promobugs[3333:38327] AdMob, onBannerReceive, 
+2015-05-23 10:42:42.309 Promobugs[3333:38327] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-23 10:42:42.309 Promobugs[3333:38327] statusbar offset:20.000000, overlap:1, ad position:8, x:0, y:0
+2015-05-23 10:42:42.546 Promobugs[3333:38327] AdMob, onInterstitialReceive, 
+2015-05-23 10:42:42.546 Promobugs[3333:38327] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'interstitial','adEvent':'onAdLoaded'}
+2015-05-23 10:43:37.312 Promobugs[3333:38327] THREAD WARNING: ['InAppBrowser'] took '60.875244' ms. Plugin should use a background thread.
+2015-05-23 10:43:58.114 Promobugs[3333:38327] active
+2015-05-23 10:43:58.115 Promobugs[3333:38327] Attempting to badge the application icon but haven't received permission from the user to badge the application
