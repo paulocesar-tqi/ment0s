@@ -5,7 +5,7 @@
             <button class="button" ng-click="doShare()"><i class="icon ion-help-circled"></i></div></button>
         </div>
     </ion-header-bar>
-    <ion-content>
+    <ion-content overflow-scroll="true">
         <ion-refresher on-refresh="loadPosts()" pulling-icon="ion-android-arrow-dropdown-circle">
         </ion-refresher>
         <div class="list" data-ng-if="posts.length">
@@ -28,8 +28,8 @@
                 </div>
             </div>
         </div>
-        <ion-infinite-scroll on-infinite="morePosts()"
-                data-ng-if="infiniteLoad" icon="">
+        <ion-infinite-scroll on-infinite="morePosts()" immediate-check="false"
+                data-ng-if="infiniteLoad" distance="1%">
         </ion-infinite-scroll>
     </ion-content>
 

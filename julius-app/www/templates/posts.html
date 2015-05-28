@@ -28,8 +28,8 @@
                 </div>
             </div>
         </div>
-        <ion-infinite-scroll on-infinite="morePosts()"
-                data-ng-if="infiniteLoad" icon="">
+        <ion-infinite-scroll on-infinite="morePosts()" immediate-check="false"
+                data-ng-if="infiniteLoad" distance="1%">
         </ion-infinite-scroll>
     </ion-content>
 

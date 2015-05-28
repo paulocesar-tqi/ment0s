@@ -23,7 +23,7 @@ app.controller('PostsCtrl', function($scope, $ionicModal, $timeout, $sce, $ionic
         }
 
         $scope.setAdMob();
-        $scope.morePosts();
+        $scope.loadPosts();
     });
 
     $scope.setAdMob = function () {
@@ -128,38 +128,41 @@ app.controller('PostsCtrl', function($scope, $ionicModal, $timeout, $sce, $ionic
         $scope.infiniteLoad = true; 
         $scope.morePosts();
     }
-    $scope.morePosts = function() {    
+    $scope.morePosts = function() {  
+        $scope.infiniteLoad = false;
         $ionicLoading.show({ template: '<p class="item-icon-left">Carregando...<ion-spinner icon="lines"/></p>'});
-        PostService.loadPosts($scope.page)
-            .success(function(result) {
-                result = JSON.parse(decryptText(result));
-                if(result.length) {
-                    $scope.posts = $scope.posts.concat(result);
-                    $scope.page++;
-                    $scope.$broadcast("scroll.infiniteScrollComplete");
-                    $scope.infiniteLoad = true; 
-                    $ionicLoading.hide();
-                } else {
-                    if($scope.posts.length) {
-                        $scope.infiniteLoad = false; 
+        $timeout(function () {
+            PostService.loadPosts($scope.page)
+                .success(function(result) {
+                    result = JSON.parse(decryptText(result));
+                    if(result.length) {
+                        $scope.posts = $scope.posts.concat(result);
+                        $scope.page++;
                         $scope.$broadcast("scroll.infiniteScrollComplete");
+                        $scope.infiniteLoad = true; 
                         $ionicLoading.hide();
                     } else {
-                        $ionicLoading.show({ template: '<p class="item-icon-left">Ainda não há promoções<ion-spinner icon="lines"/></p>'});
-                        $timeout(function(){
-                            $scope.morePosts();
-                        }, 10000);
+                        if($scope.posts.length) {
+                            $scope.infiniteLoad = false; 
+                            $scope.$broadcast("scroll.infiniteScrollComplete");
+                            $ionicLoading.hide();
+                        } else {
+                            $ionicLoading.show({ template: '<p class="item-icon-left">Ainda não há promoções<ion-spinner icon="lines"/></p>'});
+                            $timeout(function(){
+                                $scope.morePosts();
+                            }, 10000);
+                        }
                     }
-                }
-            })
-            .error(function (data, status) {
-                $ionicLoading.show({ template: '<p class="item-icon-left">Verifique sua conexão<ion-spinner icon="lines"/></p>'});
-                $timeout(function(){
-                    $scope.morePosts();
-                }, 5000);
+                })
+                .error(function (data, status) {
+                    $ionicLoading.show({ template: '<p class="item-icon-left">Verifique sua conexão<ion-spinner icon="lines"/></p>'});
+                    $timeout(function(){
+                        $scope.morePosts();
+                    }, 5000);
 
-                console.log("Error loading posts." + data + " " + status)
-            });
+                    console.log("Error loading posts." + data + " " + status)
+                });
+        }, 1000);
     }
     $scope.toTrusted = function(text) {
         return ($sce.trustAsHtml(text));
