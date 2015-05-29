@@ -43,7 +43,9 @@ public class CrawlerCDIPostReader implements ItemReader<Post> {
 			if(html.length() > 10000) 
 				html = html.substring(0, 9995) + "...";
 			
-			post.setUrl(cdiEndpoint);
+			String id = facebookPost.getId();
+			
+			post.setUrl(cdiEndpoint + id.substring(id.indexOf("_")));
 			post.setExternalId(facebookPost.getId());
 			post.setSourceId(cdiId);
 			post.setPublicationDate(facebookPost.getCreatedTime());

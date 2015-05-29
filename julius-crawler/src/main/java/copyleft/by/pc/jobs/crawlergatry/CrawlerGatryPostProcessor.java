@@ -40,7 +40,7 @@ public class CrawlerGatryPostProcessor implements ItemProcessor<Element,Post> {
 			post.setSourceId(gatryId);
 			post.setExternalId(externalCode);
 			post.setHtml(html);
-			post.setUrl("http://gatry.com/promocoes");
+			post.setUrl("https://gatry.com/#" + externalCode);
 			post.setPublicationDate(new SimpleDateFormat("dd/MM/yyyy HH:mm").parse(el.getElementsByClass("data_postado").first().attr("title").replaceAll(" (.*?) ", " ")));
 			return post;
 		} else {
