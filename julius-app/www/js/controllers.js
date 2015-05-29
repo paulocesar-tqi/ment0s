@@ -64,6 +64,7 @@ app.controller('PostsCtrl', function($scope, $ionicModal, $timeout, $sce, $ionic
     // function to open the modal urlViewer
     $scope.openUrlViewer = function (url) {
         window.AdMob.showInterstitial();
+        window.AdMob.prepareInterstitial( {adId:admobid.interstitial, autoShow:false} );
         document.addEventListener('onAdDismiss',function(data){
                 if(data.adType == 'interstitial') {
                     window.open(url, '_system', 'location=yes');
@@ -147,7 +148,7 @@ app.controller('PostsCtrl', function($scope, $ionicModal, $timeout, $sce, $ionic
                         $ionicLoading.hide();
                     } else {
                         if($scope.posts.length) {
-                            $scope.infiniteLoad = false; 
+                            $scope.infiniteLoad = false;
                             $scope.$broadcast("scroll.infiniteScrollComplete");
                             $ionicLoading.hide();
                         } else {
