@@ -3,8 +3,6 @@
 
 *{font-family:OpenSans;}
 
-
-
 .scroll-content {
     /*background-image: linear-gradient(360deg, #33cd5f, #CFEFCB 10%, transparent 100%);*/
 }
@@ -175,6 +173,6 @@ a.more {
 
 a.more > p {
     font-weight: bold;
-    font-size: 0.7em;
+    font-size: 0.9em;
     color: white;
 }

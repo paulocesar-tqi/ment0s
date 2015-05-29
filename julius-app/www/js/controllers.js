@@ -33,19 +33,19 @@ app.controller('PostsCtrl', function($scope, $ionicModal, $timeout, $sce, $ionic
                 console.log("Android detectado");
                 admobid = {
                     banner: 'ca-app-pub-2794315939519770/8766347441', // or DFP format "/6253334/dfp_example_ad"
-                    interstitial: 'ca-app-pub-2794315939519770/8766347441'
+                    interstitial: 'ca-app-pub-2794315939519770/6392487043'
                 };
             } else if(/(ipod|iphone|ipad)/i.test(navigator.userAgent)) { // for ios
                 console.log("IOS detectado");
                 admobid = {
                     banner: 'ca-app-pub-2794315939519770/4196547047', // or DFP format "/6253334/dfp_example_ad"
-                    interstitial: 'ca-app-pub-2794315939519770/4196547047'
+                    interstitial: 'ca-app-pub-2794315939519770/4636552243'
                 };
             } else { // for windows phone
                 console.log("Windows detectado");
                 admobid = {
-                    banner: 'ca-app-pub-2794315939519770/8766347441', // or DFP format "/6253334/dfp_example_ad"
-                    interstitial: 'ca-app-pub-2794315939519770/8766347441'
+                    banner: 'ca-app-pub-2794315939519770/1543485049', // or DFP format "/6253334/dfp_example_ad"
+                    interstitial: 'ca-app-pub-2794315939519770/3020218247'
                 };
             }
 
@@ -64,7 +64,11 @@ app.controller('PostsCtrl', function($scope, $ionicModal, $timeout, $sce, $ionic
     // function to open the modal urlViewer
     $scope.openUrlViewer = function (url) {
         window.AdMob.showInterstitial();
-        window.open(url, '_system', 'location=yes');
+        document.addEventListener('onAdDismiss',function(data){
+                if(data.adType == 'interstitial') {
+                    window.open(url, '_system', 'location=yes');
+                }
+        });
     };
 
     $scope.doShare = function (id, url) {

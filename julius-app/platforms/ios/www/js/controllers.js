@@ -13,22 +13,6 @@ app.controller('PostsCtrl', function($scope, $ionicModal, $timeout, $sce, $ionic
     $scope.page = 0;    
     $scope.infiniteLoad = false;
 
-    //init the modal postDetail
-    $ionicModal.fromTemplateUrl('templates/post-detail.html', {
-      scope: $scope,
-      animation: 'slide-in-up'
-    }).then(function (modal) {
-      $scope.postDetail = modal;
-    });
-
-    //init the modal url-viewer
-    $ionicModal.fromTemplateUrl('templates/url-viewer.html', {
-      scope: $scope,
-      animation: 'slide-in-up'
-    }).then(function (modal) {
-      $scope.urlViewer = modal;
-    });
-
     // call to register automatically upon device ready
     ionPlatform.ready.then(function (device) {
         localstorage.removeItem("regId");
@@ -39,7 +23,7 @@ app.controller('PostsCtrl', function($scope, $ionicModal, $timeout, $sce, $ionic
         }
 
         $scope.setAdMob();
-        $scope.morePosts();
+        $scope.loadPosts();
     });
 
     $scope.setAdMob = function () {
@@ -49,19 +33,19 @@ app.controller('PostsCtrl', function($scope, $ionicModal, $timeout, $sce, $ionic
                 console.log("Android detectado");
                 admobid = {
                     banner: 'ca-app-pub-2794315939519770/8766347441', // or DFP format "/6253334/dfp_example_ad"
-                    interstitial: 'ca-app-pub-2794315939519770/8766347441'
+                    interstitial: 'ca-app-pub-2794315939519770/6392487043'
                 };
             } else if(/(ipod|iphone|ipad)/i.test(navigator.userAgent)) { // for ios
                 console.log("IOS detectado");
                 admobid = {
                     banner: 'ca-app-pub-2794315939519770/4196547047', // or DFP format "/6253334/dfp_example_ad"
-                    interstitial: 'ca-app-pub-2794315939519770/4196547047'
+                    interstitial: 'ca-app-pub-2794315939519770/4636552243'
                 };
             } else { // for windows phone
                 console.log("Windows detectado");
                 admobid = {
-                    banner: 'ca-app-pub-2794315939519770/8766347441', // or DFP format "/6253334/dfp_example_ad"
-                    interstitial: 'ca-app-pub-2794315939519770/8766347441'
+                    banner: 'ca-app-pub-2794315939519770/1543485049', // or DFP format "/6253334/dfp_example_ad"
+                    interstitial: 'ca-app-pub-2794315939519770/3020218247'
                 };
             }
 
@@ -77,38 +61,19 @@ app.controller('PostsCtrl', function($scope, $ionicModal, $timeout, $sce, $ionic
     }
 
 
-    // function to open the modal PostDetail
-    $scope.openPostDetail = function (id) {
-        $ionicLoading.show({ template: "Loading post"});
-        PostService.loadPost(id)
-            .success(function(result) {
-                $scope.post = result;
-                $ionicLoading.hide();
-                $scope.postDetail.show();
-            });
-    };
-
-    // function to close PostDetail
-    $scope.closePostDetail = function () {
-        $scope.postDetail.hide();
-    };
-
     // function to open the modal urlViewer
     $scope.openUrlViewer = function (url) {
-        //$scope.urlViewer.show();
-        window.open(url, '_system', 'location=yes');
-    };
-
-    // function to close urlViewer
-    $scope.closeUrlViewer = function () {
-        $scope.urlViewer.hide();
+        window.AdMob.showInterstitial();
+        document.addEventListener('onAdDismiss',function(data){
+                if(data.adType == 'interstitial') {
+                    window.open(url, '_system', 'location=yes');
+                }
+        });
     };
 
     $scope.doShare = function (id, url) {
         $cordovaSocialSharing.share($("#post"+id).text().trim(), 'Alguém enviou um promobug pra você', null, 'http://www.mylink.com');
-        //window.AdMob.showInterstitial();
     };
-
 
     // Register
     $scope.register = function () {
@@ -167,37 +132,41 @@ app.controller('PostsCtrl', function($scope, $ionicModal, $timeout, $sce, $ionic
         $scope.infiniteLoad = true; 
         $scope.morePosts();
     }
-    $scope.morePosts = function() {    
+    $scope.morePosts = function() {  
+        $scope.infiniteLoad = false;
         $ionicLoading.show({ template: '<p class="item-icon-left">Carregando...<ion-spinner icon="lines"/></p>'});
-        PostService.loadPosts($scope.page)
-            .success(function(result) {
-                result = JSON.parse(decryptText(result));
-                if(result.length) {
-                    $scope.posts = $scope.posts.concat(result);
-                    $scope.page++;
-                    $scope.$broadcast("scroll.infiniteScrollComplete");
-                    $ionicLoading.hide();
-                } else {
-                    if($scope.posts.length) {
-                        $scope.infiniteLoad = false; 
+        $timeout(function () {
+            PostService.loadPosts($scope.page)
+                .success(function(result) {
+                    result = JSON.parse(decryptText(result));
+                    if(result.length) {
+                        $scope.posts = $scope.posts.concat(result);
+                        $scope.page++;
                         $scope.$broadcast("scroll.infiniteScrollComplete");
+                        $scope.infiniteLoad = true; 
                         $ionicLoading.hide();
                     } else {
-                        $ionicLoading.show({ template: '<p class="item-icon-left">Ainda não há promoções<ion-spinner icon="lines"/></p>'});
-                        $timeout(function(){
-                            $scope.morePosts();
-                        }, 10000);
+                        if($scope.posts.length) {
+                            $scope.infiniteLoad = false; 
+                            $scope.$broadcast("scroll.infiniteScrollComplete");
+                            $ionicLoading.hide();
+                        } else {
+                            $ionicLoading.show({ template: '<p class="item-icon-left">Ainda não há promoções<ion-spinner icon="lines"/></p>'});
+                            $timeout(function(){
+                                $scope.morePosts();
+                            }, 10000);
+                        }
                     }
-                }
-            })
-            .error(function (data, status) {
-                $ionicLoading.show({ template: '<p class="item-icon-left">Verifique sua conexão<ion-spinner icon="lines"/></p>'});
-                $timeout(function(){
-                    $scope.morePosts();
-                }, 5000);
+                })
+                .error(function (data, status) {
+                    $ionicLoading.show({ template: '<p class="item-icon-left">Verifique sua conexão<ion-spinner icon="lines"/></p>'});
+                    $timeout(function(){
+                        $scope.morePosts();
+                    }, 5000);
 
-                console.log("Error loading posts." + data + " " + status)
-            });
+                    console.log("Error loading posts." + data + " " + status)
+                });
+        }, 1000);
     }
     $scope.toTrusted = function(text) {
         return ($sce.trustAsHtml(text));
@@ -304,15 +273,6 @@ function registerNotificationAndroid(e) {
     break;
     }
 }
-
-function setSeeMore() {
-    //console.log("on page: " + page);
-    $('.post-text').readmore({ embedCSS: false, 
-                                moreLink: '<a class="item link more" href="#"><p>▼ Ver mais ▼</p></a>',
-                                lessLink: '',
-                                speed: 1000});
-}
-
 
 app.service('PostService', function($http) {
     this.loadPosts = function(page) {

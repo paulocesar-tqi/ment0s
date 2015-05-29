@@ -26,17 +26,10 @@
                         </a>
                         <p class="pubdate">{{p.publicationDate}}</p>
                 </div>
-                <!--
-                <a class="item link original" ng-click="openUrlViewer(p.url)"><p>Visualizar o post original</p></a>
-                <div class="post-details">
-                    <p class="blogger">Categoria</p>
-                    <p class="pubdate">{{ p.publicationDate }} </p>
-                </div>
-                -->
             </div>
         </div>
-        <ion-infinite-scroll on-infinite="morePosts()"
-                data-ng-if="infiniteLoad" icon="">
+        <ion-infinite-scroll on-infinite="morePosts()" immediate-check="false"
+                data-ng-if="infiniteLoad" distance="1%">
         </ion-infinite-scroll>
     </ion-content>
 

@@ -798,3 +798,605 @@
 2015-05-23 10:43:37.312 Promobugs[3333:38327] THREAD WARNING: ['InAppBrowser'] took '60.875244' ms. Plugin should use a background thread.
 2015-05-23 10:43:58.114 Promobugs[3333:38327] active
 2015-05-23 10:43:58.115 Promobugs[3333:38327] Attempting to badge the application icon but haven't received permission from the user to badge the application
+2015-05-24 19:29:07.762 Promobugs[1258:47069] DiskCookieStorage changing policy from 2 to 0, cookie file: file:///Users/yusuke/Library/Developer/CoreSimulator/Devices/8A7E69E8-A3C8-44A8-826C-C318C1FC320F/data/Containers/Data/Application/25EE44BB-0CF0-477C-A93F-E2EDAE63127D/Library/Cookies/Cookies.binarycookies
+2015-05-24 19:29:08.239 Promobugs[1258:47069] Apache Cordova native platform version 3.8.0 is starting.
+2015-05-24 19:29:08.240 Promobugs[1258:47069] Multi-tasking -> Device: YES, App: YES
+2015-05-24 19:29:08.265 Promobugs[1258:47069] Unlimited access to network resources
+2015-05-24 19:29:08.781 Promobugs[1258:47069] [CDVTimer][admob] 0.557959ms
+2015-05-24 19:29:08.891 Promobugs[1258:47069] [CDVTimer][socialsharing] 109.130025ms
+2015-05-24 19:29:08.907 Promobugs[1258:47069] [CDVTimer][file] 16.297996ms
+2015-05-24 19:29:08.907 Promobugs[1258:47069] [CDVTimer][TotalPluginStartup] 126.788974ms
+2015-05-24 19:29:08.965 Promobugs[1258:47069] active
+2015-05-24 19:29:08.970 Promobugs[1258:47069] Attempting to badge the application icon but haven't received permission from the user to badge the application
+2015-05-24 19:29:09.166 Promobugs[1258:47069] Resetting plugins due to page load.
+2015-05-24 19:29:10.000 Promobugs[1258:47069] Finished load of: file:///Users/yusuke/Library/Developer/CoreSimulator/Devices/8A7E69E8-A3C8-44A8-826C-C318C1FC320F/data/Containers/Bundle/Application/9B2409DD-4768-4EC9-AC2C-8449CE8ECBD8/Promobugs.app/www/index.html#/posts
+2015-05-24 19:29:10.947 Promobugs[1258:47069] IOS detectado
+2015-05-24 19:29:10.947 Promobugs[1258:47069] createBanner
+2015-05-24 19:29:10.947 Promobugs[1258:47069] prepareInterstitial
+2015-05-24 19:29:12.425 Promobugs[1258:47069] AdMob, onInterstitialFailedToReceive, {'error': 'Request Error: No ad to show.'}
+2015-05-24 19:29:12.425 Promobugs[1258:47069] AdMob, onAdFailLoad, {'adNetwork':'AdMob','adType':'interstitial','adEvent':'onAdFailLoad','error':1,'reason':'Request Error: No ad to show.'}
+2015-05-24 19:29:13.193 Promobugs[1258:47069] AdMob, onBannerReceive, 
+2015-05-24 19:29:13.194 Promobugs[1258:47069] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 19:29:13.194 Promobugs[1258:47069] statusbar offset:20.000000, overlap:1, ad position:8, x:0, y:0
+2015-05-24 19:30:12.671 Promobugs[1258:47069] AdMob, onBannerReceive, 
+2015-05-24 19:30:12.671 Promobugs[1258:47069] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 19:31:12.902 Promobugs[1258:47069] AdMob, onBannerReceive, 
+2015-05-24 19:31:12.902 Promobugs[1258:47069] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 19:31:36.755 Promobugs[1549:49168] DiskCookieStorage changing policy from 2 to 0, cookie file: file:///Users/yusuke/Library/Developer/CoreSimulator/Devices/8A7E69E8-A3C8-44A8-826C-C318C1FC320F/data/Containers/Data/Application/145FEB76-296A-44C4-95B7-A64811E78773/Library/Cookies/Cookies.binarycookies
+2015-05-24 19:31:36.860 Promobugs[1549:49168] Apache Cordova native platform version 3.8.0 is starting.
+2015-05-24 19:31:36.861 Promobugs[1549:49168] Multi-tasking -> Device: YES, App: YES
+2015-05-24 19:31:36.863 Promobugs[1549:49168] Unlimited access to network resources
+2015-05-24 19:31:36.996 Promobugs[1549:49168] [CDVTimer][admob] 0.263035ms
+2015-05-24 19:31:37.069 Promobugs[1549:49168] [CDVTimer][socialsharing] 73.222995ms
+2015-05-24 19:31:37.074 Promobugs[1549:49168] [CDVTimer][file] 4.623950ms
+2015-05-24 19:31:37.074 Promobugs[1549:49168] [CDVTimer][TotalPluginStartup] 78.956962ms
+2015-05-24 19:31:37.095 Promobugs[1549:49168] active
+2015-05-24 19:31:37.097 Promobugs[1549:49168] Attempting to badge the application icon but haven't received permission from the user to badge the application
+2015-05-24 19:31:37.156 Promobugs[1549:49168] Resetting plugins due to page load.
+2015-05-24 19:31:37.652 Promobugs[1549:49168] Finished load of: file:///Users/yusuke/Library/Developer/CoreSimulator/Devices/8A7E69E8-A3C8-44A8-826C-C318C1FC320F/data/Containers/Bundle/Application/6D569082-44FF-4695-A13F-A103CC3A3552/Promobugs.app/www/index.html#/posts
+2015-05-24 19:31:38.069 Promobugs[1549:49168] IOS detectado
+2015-05-24 19:31:38.069 Promobugs[1549:49168] createBanner
+2015-05-24 19:31:38.069 Promobugs[1549:49168] prepareInterstitial
+2015-05-24 19:31:38.652 Promobugs[1549:49168] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x79968420
+2015-05-24 19:31:38.665 Promobugs[1549:49168] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x79968420
+2015-05-24 19:31:38.677 Promobugs[1549:49168] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x79968420
+2015-05-24 19:31:38.677 Promobugs[1549:49168] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x79968420
+2015-05-24 19:31:38.692 Promobugs[1549:49168] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x79968420
+2015-05-24 19:31:38.693 Promobugs[1549:49168] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x79968420
+2015-05-24 19:31:38.704 Promobugs[1549:49168] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x79968420
+2015-05-24 19:31:38.704 Promobugs[1549:49168] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x79968420
+2015-05-24 19:31:38.732 Promobugs[1549:49168] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x79968420
+2015-05-24 19:31:38.733 Promobugs[1549:49168] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x79968420
+2015-05-24 19:31:38.745 Promobugs[1549:49168] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x79968420
+2015-05-24 19:31:38.745 Promobugs[1549:49168] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x79968420
+2015-05-24 19:31:38.781 Promobugs[1549:49168] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x79968420
+2015-05-24 19:31:38.781 Promobugs[1549:49168] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x79968420
+2015-05-24 19:31:39.730 Promobugs[1549:49168] AdMob, onBannerReceive, 
+2015-05-24 19:31:39.730 Promobugs[1549:49168] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 19:31:39.730 Promobugs[1549:49168] statusbar offset:20.000000, overlap:1, ad position:8, x:0, y:0
+2015-05-24 19:31:39.777 Promobugs[1549:49168] AdMob, onInterstitialReceive, 
+2015-05-24 19:31:39.777 Promobugs[1549:49168] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'interstitial','adEvent':'onAdLoaded'}
+2015-05-24 19:32:39.870 Promobugs[1549:49168] AdMob, onBannerReceive, 
+2015-05-24 19:32:39.870 Promobugs[1549:49168] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 19:33:40.082 Promobugs[1549:49168] AdMob, onBannerReceive, 
+2015-05-24 19:33:40.083 Promobugs[1549:49168] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 19:34:40.469 Promobugs[1549:49168] AdMob, onBannerReceive, 
+2015-05-24 19:34:40.470 Promobugs[1549:49168] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 19:35:40.670 Promobugs[1549:49168] AdMob, onBannerReceive, 
+2015-05-24 19:35:40.670 Promobugs[1549:49168] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 19:36:40.888 Promobugs[1549:49168] AdMob, onBannerReceive, 
+2015-05-24 19:36:40.888 Promobugs[1549:49168] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 19:37:41.161 Promobugs[1549:49168] AdMob, onBannerReceive, 
+2015-05-24 19:37:41.162 Promobugs[1549:49168] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 19:38:41.397 Promobugs[1549:49168] AdMob, onBannerReceive, 
+2015-05-24 19:38:41.397 Promobugs[1549:49168] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 19:39:41.641 Promobugs[1549:49168] AdMob, onBannerReceive, 
+2015-05-24 19:39:41.642 Promobugs[1549:49168] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 19:40:41.907 Promobugs[1549:49168] AdMob, onBannerReceive, 
+2015-05-24 19:40:41.907 Promobugs[1549:49168] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 19:41:42.135 Promobugs[1549:49168] AdMob, onBannerReceive, 
+2015-05-24 19:41:42.135 Promobugs[1549:49168] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 19:42:42.367 Promobugs[1549:49168] AdMob, onBannerReceive, 
+2015-05-24 19:42:42.368 Promobugs[1549:49168] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 19:43:42.592 Promobugs[1549:49168] AdMob, onBannerReceive, 
+2015-05-24 19:43:42.592 Promobugs[1549:49168] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 19:44:42.815 Promobugs[1549:49168] AdMob, onBannerReceive, 
+2015-05-24 19:44:42.815 Promobugs[1549:49168] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 19:45:43.092 Promobugs[1549:49168] AdMob, onBannerReceive, 
+2015-05-24 19:45:43.093 Promobugs[1549:49168] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 19:46:43.332 Promobugs[1549:49168] AdMob, onBannerReceive, 
+2015-05-24 19:46:43.332 Promobugs[1549:49168] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 19:47:43.538 Promobugs[1549:49168] AdMob, onBannerReceive, 
+2015-05-24 19:47:43.538 Promobugs[1549:49168] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 19:48:43.798 Promobugs[1549:49168] AdMob, onBannerReceive, 
+2015-05-24 19:48:43.800 Promobugs[1549:49168] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 19:49:44.038 Promobugs[1549:49168] AdMob, onBannerReceive, 
+2015-05-24 19:49:44.038 Promobugs[1549:49168] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 19:50:44.274 Promobugs[1549:49168] AdMob, onBannerReceive, 
+2015-05-24 19:50:44.274 Promobugs[1549:49168] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 19:51:44.487 Promobugs[1549:49168] AdMob, onBannerReceive, 
+2015-05-24 19:51:44.487 Promobugs[1549:49168] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 19:52:44.744 Promobugs[1549:49168] AdMob, onBannerReceive, 
+2015-05-24 19:52:44.745 Promobugs[1549:49168] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 19:53:45.051 Promobugs[1549:49168] AdMob, onBannerReceive, 
+2015-05-24 19:53:45.051 Promobugs[1549:49168] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 19:54:45.247 Promobugs[1549:49168] AdMob, onBannerReceive, 
+2015-05-24 19:54:45.248 Promobugs[1549:49168] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 19:55:45.473 Promobugs[1549:49168] AdMob, onBannerReceive, 
+2015-05-24 19:55:45.473 Promobugs[1549:49168] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 19:56:45.744 Promobugs[1549:49168] AdMob, onBannerReceive, 
+2015-05-24 19:56:45.744 Promobugs[1549:49168] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 19:57:45.944 Promobugs[1549:49168] AdMob, onBannerReceive, 
+2015-05-24 19:57:45.945 Promobugs[1549:49168] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 19:58:46.160 Promobugs[1549:49168] AdMob, onBannerReceive, 
+2015-05-24 19:58:46.160 Promobugs[1549:49168] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 19:59:46.422 Promobugs[1549:49168] AdMob, onBannerReceive, 
+2015-05-24 19:59:46.422 Promobugs[1549:49168] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 20:00:46.661 Promobugs[1549:49168] AdMob, onBannerReceive, 
+2015-05-24 20:00:46.661 Promobugs[1549:49168] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 20:01:46.887 Promobugs[1549:49168] AdMob, onBannerReceive, 
+2015-05-24 20:01:46.889 Promobugs[1549:49168] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 20:02:47.091 Promobugs[1549:49168] AdMob, onBannerReceive, 
+2015-05-24 20:02:47.091 Promobugs[1549:49168] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 20:03:47.483 Promobugs[1549:49168] AdMob, onBannerReceive, 
+2015-05-24 20:03:47.483 Promobugs[1549:49168] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 20:04:47.763 Promobugs[1549:49168] AdMob, onBannerReceive, 
+2015-05-24 20:04:47.763 Promobugs[1549:49168] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 20:05:47.963 Promobugs[1549:49168] AdMob, onBannerReceive, 
+2015-05-24 20:05:47.963 Promobugs[1549:49168] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 20:06:48.170 Promobugs[1549:49168] AdMob, onBannerReceive, 
+2015-05-24 20:06:48.170 Promobugs[1549:49168] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 20:07:48.387 Promobugs[1549:49168] AdMob, onBannerReceive, 
+2015-05-24 20:07:48.387 Promobugs[1549:49168] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 20:08:48.602 Promobugs[1549:49168] AdMob, onBannerReceive, 
+2015-05-24 20:08:48.602 Promobugs[1549:49168] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 20:09:48.819 Promobugs[1549:49168] AdMob, onBannerReceive, 
+2015-05-24 20:09:48.819 Promobugs[1549:49168] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 20:10:49.038 Promobugs[1549:49168] AdMob, onBannerReceive, 
+2015-05-24 20:10:49.038 Promobugs[1549:49168] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 20:11:49.292 Promobugs[1549:49168] AdMob, onBannerReceive, 
+2015-05-24 20:11:49.292 Promobugs[1549:49168] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 20:12:49.513 Promobugs[1549:49168] AdMob, onBannerReceive, 
+2015-05-24 20:12:49.513 Promobugs[1549:49168] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 20:13:49.740 Promobugs[1549:49168] AdMob, onBannerReceive, 
+2015-05-24 20:13:49.741 Promobugs[1549:49168] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 20:14:49.961 Promobugs[1549:49168] AdMob, onBannerReceive, 
+2015-05-24 20:14:49.962 Promobugs[1549:49168] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 20:15:50.172 Promobugs[1549:49168] AdMob, onBannerReceive, 
+2015-05-24 20:15:50.172 Promobugs[1549:49168] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 20:16:50.389 Promobugs[1549:49168] AdMob, onBannerReceive, 
+2015-05-24 20:16:50.389 Promobugs[1549:49168] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 20:17:50.849 Promobugs[1549:49168] AdMob, onBannerReceive, 
+2015-05-24 20:17:50.849 Promobugs[1549:49168] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 20:18:50.818 Promobugs[1549:49168] AdMob, onBannerReceive, 
+2015-05-24 20:18:50.818 Promobugs[1549:49168] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 20:19:51.048 Promobugs[1549:49168] AdMob, onBannerReceive, 
+2015-05-24 20:19:51.048 Promobugs[1549:49168] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 20:20:51.266 Promobugs[1549:49168] AdMob, onBannerReceive, 
+2015-05-24 20:20:51.266 Promobugs[1549:49168] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 20:21:51.490 Promobugs[1549:49168] AdMob, onBannerReceive, 
+2015-05-24 20:21:51.490 Promobugs[1549:49168] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 20:22:51.921 Promobugs[1549:49168] AdMob, onBannerReceive, 
+2015-05-24 20:22:51.922 Promobugs[1549:49168] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 20:23:52.152 Promobugs[1549:49168] AdMob, onBannerReceive, 
+2015-05-24 20:23:52.152 Promobugs[1549:49168] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 20:24:18.140 Promobugs[2380:67511] DiskCookieStorage changing policy from 2 to 0, cookie file: file:///Users/yusuke/Library/Developer/CoreSimulator/Devices/8A7E69E8-A3C8-44A8-826C-C318C1FC320F/data/Containers/Data/Application/7D371F08-53E9-4957-9E4B-053FACB06DF6/Library/Cookies/Cookies.binarycookies
+2015-05-24 20:24:18.249 Promobugs[2380:67511] Apache Cordova native platform version 3.8.0 is starting.
+2015-05-24 20:24:18.250 Promobugs[2380:67511] Multi-tasking -> Device: YES, App: YES
+2015-05-24 20:24:18.252 Promobugs[2380:67511] Unlimited access to network resources
+2015-05-24 20:24:18.401 Promobugs[2380:67511] [CDVTimer][admob] 0.227988ms
+2015-05-24 20:24:18.476 Promobugs[2380:67511] [CDVTimer][socialsharing] 74.829996ms
+2015-05-24 20:24:18.481 Promobugs[2380:67511] [CDVTimer][file] 4.904985ms
+2015-05-24 20:24:18.481 Promobugs[2380:67511] [CDVTimer][TotalPluginStartup] 80.807984ms
+2015-05-24 20:24:18.496 Promobugs[2380:67511] active
+2015-05-24 20:24:18.499 Promobugs[2380:67511] Attempting to badge the application icon but haven't received permission from the user to badge the application
+2015-05-24 20:24:18.563 Promobugs[2380:67511] Resetting plugins due to page load.
+2015-05-24 20:24:19.101 Promobugs[2380:67511] Finished load of: file:///Users/yusuke/Library/Developer/CoreSimulator/Devices/8A7E69E8-A3C8-44A8-826C-C318C1FC320F/data/Containers/Bundle/Application/944F8BFE-BFDC-48F7-B9A0-C8E086521C98/Promobugs.app/www/index.html#/posts
+2015-05-24 20:24:19.525 Promobugs[2380:67511] IOS detectado
+2015-05-24 20:24:19.525 Promobugs[2380:67511] createBanner
+2015-05-24 20:24:19.526 Promobugs[2380:67511] prepareInterstitial
+2015-05-24 20:24:20.148 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:24:20.148 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:24:20.161 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:24:20.161 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:24:20.177 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:24:20.177 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:24:20.185 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:24:20.185 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:24:20.197 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:24:20.197 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:24:20.212 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:24:20.213 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:24:20.224 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:24:20.225 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:24:20.252 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:24:20.252 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:24:20.261 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:24:20.261 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:24:20.884 Promobugs[2380:67511] AdMob, onBannerReceive, 
+2015-05-24 20:24:20.884 Promobugs[2380:67511] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 20:24:20.884 Promobugs[2380:67511] statusbar offset:20.000000, overlap:1, ad position:8, x:0, y:0
+2015-05-24 20:24:20.952 Promobugs[2380:67511] AdMob, onInterstitialReceive, 
+2015-05-24 20:24:20.952 Promobugs[2380:67511] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'interstitial','adEvent':'onAdLoaded'}
+2015-05-24 20:24:39.661 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:24:39.661 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:24:39.683 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:24:39.683 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:24:39.718 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:24:39.718 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:24:39.729 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:24:39.729 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:24:39.739 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:24:39.739 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:24:39.749 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:24:39.749 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:24:51.101 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:24:51.101 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:24:51.115 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:24:51.115 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:24:51.128 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:24:51.128 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:24:51.147 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:24:51.147 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:24:51.156 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:24:51.157 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:24:51.166 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:24:51.166 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:24:51.186 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:24:51.186 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:24:51.197 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:24:51.197 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:24:51.210 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:24:51.210 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:24:51.229 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:24:51.229 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:24:58.050 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:24:58.050 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:24:58.059 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:24:58.059 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:24:58.094 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:24:58.095 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:24:58.132 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:24:58.132 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:24:58.142 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:24:58.143 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:02.120 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:02.121 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:02.197 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:02.197 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:02.253 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:02.253 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:02.264 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:02.264 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:02.292 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:02.293 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:02.315 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:02.315 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:20.600 Promobugs[2380:67511] AdMob, onBannerReceive, 
+2015-05-24 20:25:20.600 Promobugs[2380:67511] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 20:25:30.054 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:30.054 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:30.063 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:30.063 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:30.077 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:30.077 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:30.084 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:30.084 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:30.092 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:30.092 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:30.104 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:30.105 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:30.114 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:30.115 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:30.135 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:30.136 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:30.141 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:30.142 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:30.903 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:30.903 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:30.922 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:30.923 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:30.951 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:30.951 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:30.958 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:30.958 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:30.967 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:30.968 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:30.975 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:30.975 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:33.528 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:33.528 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:33.541 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:33.541 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:33.555 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:33.556 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:33.560 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:33.561 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:33.568 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:33.568 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:33.584 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:33.584 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:33.591 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:33.591 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:33.608 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:33.608 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:33.614 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:33.615 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:34.255 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:34.256 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:34.278 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:34.279 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:34.308 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:34.308 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:34.320 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:34.320 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:34.328 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:34.328 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:34.339 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:34.339 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:37.928 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:37.929 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:37.938 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:37.938 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:37.948 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:37.948 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:37.955 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:37.955 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:37.963 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:37.964 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:37.974 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:37.974 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:37.981 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:37.982 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:38.002 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:38.002 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:38.008 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:38.008 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:38.485 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:38.486 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:38.508 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:38.508 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:38.535 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:38.535 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:38.544 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:38.544 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:38.552 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:38.552 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:38.560 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:38.561 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:39.369 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:39.369 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:39.381 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:39.382 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:39.390 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:39.390 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:39.404 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:39.405 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:39.412 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:39.412 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:39.419 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:39.419 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:39.435 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:39.435 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:39.441 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:39.441 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:39.449 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:39.450 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:39.463 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:25:39.464 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:26:19.458 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:26:19.458 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:26:19.470 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:26:19.471 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:26:19.486 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:26:19.486 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:26:19.493 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:26:19.493 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:26:19.502 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:26:19.502 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:26:19.517 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:26:19.517 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:26:19.524 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:26:19.525 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:26:19.543 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:26:19.544 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:26:19.550 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:26:19.551 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:26:20.346 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:26:20.346 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:26:20.394 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:26:20.394 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:26:20.447 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:26:20.448 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:26:20.466 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:26:20.467 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:26:20.479 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:26:20.480 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:26:20.493 Promobugs[2380:67511] -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:26:20.493 Promobugs[2380:67511] *** WebKit discarded an uncaught exception in the webView:willRemoveScrollingLayer:withContentsLayer:forNode: delegate: <NSInvalidArgumentException> -[WebActionDisablingCALayerDelegate setBeingRemoved:]: unrecognized selector sent to instance 0x7b899dd0
+2015-05-24 20:26:20.950 Promobugs[2380:67511] AdMob, onBannerReceive, 
+2015-05-24 20:26:20.950 Promobugs[2380:67511] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 20:27:21.138 Promobugs[2380:67511] AdMob, onBannerReceive, 
+2015-05-24 20:27:21.138 Promobugs[2380:67511] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 20:28:21.358 Promobugs[2380:67511] AdMob, onBannerReceive, 
+2015-05-24 20:28:21.358 Promobugs[2380:67511] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 20:29:21.704 Promobugs[2380:67511] AdMob, onBannerReceive, 
+2015-05-24 20:29:21.704 Promobugs[2380:67511] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 20:30:21.857 Promobugs[2380:67511] AdMob, onBannerReceive, 
+2015-05-24 20:30:21.858 Promobugs[2380:67511] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 20:31:22.073 Promobugs[2380:67511] AdMob, onBannerReceive, 
+2015-05-24 20:31:22.073 Promobugs[2380:67511] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 20:32:22.295 Promobugs[2380:67511] AdMob, onBannerReceive, 
+2015-05-24 20:32:22.295 Promobugs[2380:67511] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 20:33:22.543 Promobugs[2380:67511] AdMob, onBannerReceive, 
+2015-05-24 20:33:22.544 Promobugs[2380:67511] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 20:34:22.774 Promobugs[2380:67511] AdMob, onBannerReceive, 
+2015-05-24 20:34:22.774 Promobugs[2380:67511] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 20:35:22.992 Promobugs[2380:67511] AdMob, onBannerReceive, 
+2015-05-24 20:35:22.993 Promobugs[2380:67511] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 20:36:23.214 Promobugs[2380:67511] AdMob, onBannerReceive, 
+2015-05-24 20:36:23.214 Promobugs[2380:67511] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 20:37:23.450 Promobugs[2380:67511] AdMob, onBannerReceive, 
+2015-05-24 20:37:23.451 Promobugs[2380:67511] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 20:38:23.869 Promobugs[2380:67511] AdMob, onBannerReceive, 
+2015-05-24 20:38:23.869 Promobugs[2380:67511] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 20:39:24.091 Promobugs[2380:67511] AdMob, onBannerReceive, 
+2015-05-24 20:39:24.091 Promobugs[2380:67511] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 20:40:24.317 Promobugs[2380:67511] AdMob, onBannerReceive, 
+2015-05-24 20:40:24.317 Promobugs[2380:67511] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 20:41:24.575 Promobugs[2380:67511] AdMob, onBannerReceive, 
+2015-05-24 20:41:24.575 Promobugs[2380:67511] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 20:42:24.800 Promobugs[2380:67511] AdMob, onBannerReceive, 
+2015-05-24 20:42:24.800 Promobugs[2380:67511] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 20:43:25.012 Promobugs[2380:67511] AdMob, onBannerReceive, 
+2015-05-24 20:43:25.012 Promobugs[2380:67511] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 20:44:25.375 Promobugs[2380:67511] AdMob, onBannerReceive, 
+2015-05-24 20:44:25.375 Promobugs[2380:67511] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 20:45:25.755 Promobugs[2380:67511] AdMob, onBannerReceive, 
+2015-05-24 20:45:25.756 Promobugs[2380:67511] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 20:46:25.984 Promobugs[2380:67511] AdMob, onBannerReceive, 
+2015-05-24 20:46:25.984 Promobugs[2380:67511] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 20:47:26.204 Promobugs[2380:67511] AdMob, onBannerReceive, 
+2015-05-24 20:47:26.204 Promobugs[2380:67511] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 20:48:26.436 Promobugs[2380:67511] AdMob, onBannerReceive, 
+2015-05-24 20:48:26.436 Promobugs[2380:67511] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 20:49:26.678 Promobugs[2380:67511] AdMob, onBannerReceive, 
+2015-05-24 20:49:26.678 Promobugs[2380:67511] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 20:50:26.900 Promobugs[2380:67511] AdMob, onBannerReceive, 
+2015-05-24 20:50:26.900 Promobugs[2380:67511] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 20:51:27.129 Promobugs[2380:67511] AdMob, onBannerReceive, 
+2015-05-24 20:51:27.129 Promobugs[2380:67511] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 20:52:27.494 Promobugs[2380:67511] AdMob, onBannerReceive, 
+2015-05-24 20:52:27.494 Promobugs[2380:67511] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 20:53:27.790 Promobugs[2380:67511] AdMob, onBannerReceive, 
+2015-05-24 20:53:27.791 Promobugs[2380:67511] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 20:54:28.067 Promobugs[2380:67511] AdMob, onBannerReceive, 
+2015-05-24 20:54:28.067 Promobugs[2380:67511] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 20:55:28.540 Promobugs[2380:67511] AdMob, onBannerReceive, 
+2015-05-24 20:55:28.540 Promobugs[2380:67511] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 20:56:28.815 Promobugs[2380:67511] AdMob, onBannerReceive, 
+2015-05-24 20:56:28.816 Promobugs[2380:67511] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 20:57:29.402 Promobugs[2380:67511] AdMob, onBannerReceive, 
+2015-05-24 20:57:29.402 Promobugs[2380:67511] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 20:58:30.559 Promobugs[2380:67511] AdMob, onBannerReceive, 
+2015-05-24 20:58:30.561 Promobugs[2380:67511] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 20:59:30.794 Promobugs[2380:67511] AdMob, onBannerReceive, 
+2015-05-24 20:59:30.796 Promobugs[2380:67511] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 21:00:31.061 Promobugs[2380:67511] AdMob, onBannerReceive, 
+2015-05-24 21:00:31.062 Promobugs[2380:67511] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 21:01:31.286 Promobugs[2380:67511] AdMob, onBannerReceive, 
+2015-05-24 21:01:31.287 Promobugs[2380:67511] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 21:02:31.550 Promobugs[2380:67511] AdMob, onBannerReceive, 
+2015-05-24 21:02:31.551 Promobugs[2380:67511] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 21:03:31.762 Promobugs[2380:67511] AdMob, onBannerReceive, 
+2015-05-24 21:03:31.763 Promobugs[2380:67511] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 21:04:32.006 Promobugs[2380:67511] AdMob, onBannerReceive, 
+2015-05-24 21:04:32.008 Promobugs[2380:67511] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 21:05:32.250 Promobugs[2380:67511] AdMob, onBannerReceive, 
+2015-05-24 21:05:32.252 Promobugs[2380:67511] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-24 21:06:32.476 Promobugs[2380:67511] AdMob, onBannerReceive, 
+2015-05-24 21:06:32.477 Promobugs[2380:67511] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-28 21:56:04.222 Promobugs[1246:29525] DiskCookieStorage changing policy from 2 to 0, cookie file: file:///Users/yusuke/Library/Developer/CoreSimulator/Devices/8A7E69E8-A3C8-44A8-826C-C318C1FC320F/data/Containers/Data/Application/B8B275A6-4243-4CA7-B340-46C24FB648B4/Library/Cookies/Cookies.binarycookies
+2015-05-28 21:56:04.517 Promobugs[1246:29525] Apache Cordova native platform version 3.8.0 is starting.
+2015-05-28 21:56:04.518 Promobugs[1246:29525] Multi-tasking -> Device: YES, App: YES
+2015-05-28 21:56:04.535 Promobugs[1246:29525] Unlimited access to network resources
+2015-05-28 21:56:04.914 Promobugs[1246:29525] [CDVTimer][admob] 0.881016ms
+2015-05-28 21:56:04.983 Promobugs[1246:29525] [CDVTimer][socialsharing] 69.502950ms
+2015-05-28 21:56:04.995 Promobugs[1246:29525] [CDVTimer][file] 11.950016ms
+2015-05-28 21:56:04.996 Promobugs[1246:29525] [CDVTimer][TotalPluginStartup] 83.037972ms
+2015-05-28 21:56:05.026 Promobugs[1246:29525] active
+2015-05-28 21:56:05.029 Promobugs[1246:29525] Attempting to badge the application icon but haven't received permission from the user to badge the application
+2015-05-28 21:56:05.195 Promobugs[1246:29525] Resetting plugins due to page load.
+2015-05-28 21:56:05.605 Promobugs[1246:29525] Finished load of: file:///Users/yusuke/Library/Developer/CoreSimulator/Devices/8A7E69E8-A3C8-44A8-826C-C318C1FC320F/data/Containers/Bundle/Application/ABCF4A2C-62ED-4E28-A476-DDF46F55C037/Promobugs.app/www/index.html#/posts
+2015-05-28 21:56:06.072 Promobugs[1246:29525] IOS detectado
+2015-05-28 21:56:06.072 Promobugs[1246:29525] createBanner
+2015-05-28 21:56:06.073 Promobugs[1246:29525] prepareInterstitial
+2015-05-28 21:56:09.913 Promobugs[1246:29525] AdMob, onBannerReceive, 
+2015-05-28 21:56:09.913 Promobugs[1246:29525] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-28 21:56:09.914 Promobugs[1246:29525] statusbar offset:20.000000, overlap:1, ad position:8, x:0, y:0
+2015-05-28 21:56:09.925 Promobugs[1246:29525] AdMob, onInterstitialReceive, 
+2015-05-28 21:56:09.925 Promobugs[1246:29525] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'interstitial','adEvent':'onAdLoaded'}
+2015-05-28 21:56:40.721 Promobugs[1246:29525] active
+2015-05-28 21:56:40.722 Promobugs[1246:29525] Attempting to badge the application icon but haven't received permission from the user to badge the application
+2015-05-28 21:57:41.126 Promobugs[1246:29525] AdMob, onBannerReceive, 
+2015-05-28 21:57:41.126 Promobugs[1246:29525] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-28 21:58:41.595 Promobugs[1246:29525] AdMob, onBannerReceive, 
+2015-05-28 21:58:41.595 Promobugs[1246:29525] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-28 21:59:41.999 Promobugs[1246:29525] AdMob, onBannerReceive, 
+2015-05-28 21:59:42.000 Promobugs[1246:29525] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-28 22:00:42.418 Promobugs[1246:29525] AdMob, onBannerReceive, 
+2015-05-28 22:00:42.419 Promobugs[1246:29525] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-28 22:01:43.038 Promobugs[1246:29525] AdMob, onBannerReceive, 
+2015-05-28 22:01:43.038 Promobugs[1246:29525] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-28 22:02:43.422 Promobugs[1246:29525] AdMob, onBannerReceive, 
+2015-05-28 22:02:43.422 Promobugs[1246:29525] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-28 22:03:43.862 Promobugs[1246:29525] AdMob, onBannerReceive, 
+2015-05-28 22:03:43.863 Promobugs[1246:29525] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-28 22:04:44.239 Promobugs[1246:29525] AdMob, onBannerReceive, 
+2015-05-28 22:04:44.239 Promobugs[1246:29525] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-28 22:05:44.667 Promobugs[1246:29525] AdMob, onBannerReceive, 
+2015-05-28 22:05:44.667 Promobugs[1246:29525] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-28 22:06:45.113 Promobugs[1246:29525] AdMob, onBannerReceive, 
+2015-05-28 22:06:45.113 Promobugs[1246:29525] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-28 22:07:45.652 Promobugs[1246:29525] AdMob, onBannerReceive, 
+2015-05-28 22:07:45.652 Promobugs[1246:29525] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-28 22:08:46.086 Promobugs[1246:29525] AdMob, onBannerReceive, 
+2015-05-28 22:08:46.086 Promobugs[1246:29525] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-28 22:09:46.445 Promobugs[1246:29525] AdMob, onBannerReceive, 
+2015-05-28 22:09:46.446 Promobugs[1246:29525] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-28 22:10:46.844 Promobugs[1246:29525] AdMob, onBannerReceive, 
+2015-05-28 22:10:46.844 Promobugs[1246:29525] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-28 22:11:47.386 Promobugs[1246:29525] AdMob, onBannerReceive, 
+2015-05-28 22:11:47.386 Promobugs[1246:29525] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-28 22:12:47.811 Promobugs[1246:29525] AdMob, onBannerReceive, 
+2015-05-28 22:12:47.811 Promobugs[1246:29525] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-28 22:13:48.239 Promobugs[1246:29525] AdMob, onBannerReceive, 
+2015-05-28 22:13:48.240 Promobugs[1246:29525] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-28 22:14:48.665 Promobugs[1246:29525] AdMob, onBannerReceive, 
+2015-05-28 22:14:48.666 Promobugs[1246:29525] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-28 22:15:49.122 Promobugs[1246:29525] AdMob, onBannerReceive, 
+2015-05-28 22:15:49.123 Promobugs[1246:29525] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-28 22:16:49.527 Promobugs[1246:29525] AdMob, onBannerReceive, 
+2015-05-28 22:16:49.527 Promobugs[1246:29525] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-28 22:17:50.022 Promobugs[1246:29525] AdMob, onBannerReceive, 
+2015-05-28 22:17:50.023 Promobugs[1246:29525] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-28 22:19:49.985 Promobugs[1246:29525] AdMob, onBannerFailedToReceive, {'error': '13', 'reason': 'Request Error: Received invalid response.'}
+2015-05-28 22:19:49.985 Promobugs[1246:29525] AdMob, onAdFailLoad, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdFailLoad','error':13,'reason':'Request Error: Received invalid response.'}
+2015-05-28 22:20:57.202 Promobugs[1246:29525] AdMob, onBannerFailedToReceive, {'error': '13', 'reason': 'Request Error: Received invalid response.'}
+2015-05-28 22:20:57.202 Promobugs[1246:29525] AdMob, onAdFailLoad, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdFailLoad','error':13,'reason':'Request Error: Received invalid response.'}
+2015-05-28 22:21:57.649 Promobugs[1246:29525] AdMob, onBannerReceive, 
+2015-05-28 22:21:57.649 Promobugs[1246:29525] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-28 22:22:58.091 Promobugs[1246:29525] AdMob, onBannerReceive, 
+2015-05-28 22:22:58.091 Promobugs[1246:29525] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-28 22:23:58.449 Promobugs[1246:29525] AdMob, onBannerReceive, 
+2015-05-28 22:23:58.449 Promobugs[1246:29525] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-28 22:24:58.826 Promobugs[1246:29525] AdMob, onBannerReceive, 
+2015-05-28 22:24:58.826 Promobugs[1246:29525] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-28 22:25:59.214 Promobugs[1246:29525] AdMob, onBannerReceive, 
+2015-05-28 22:25:59.214 Promobugs[1246:29525] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-28 22:26:59.868 Promobugs[1246:29525] AdMob, onBannerReceive, 
+2015-05-28 22:26:59.868 Promobugs[1246:29525] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-28 22:28:00.159 Promobugs[1246:29525] AdMob, onBannerReceive, 
+2015-05-28 22:28:00.159 Promobugs[1246:29525] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-28 22:29:00.669 Promobugs[1246:29525] AdMob, onBannerReceive, 
+2015-05-28 22:29:00.669 Promobugs[1246:29525] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-28 22:30:01.068 Promobugs[1246:29525] AdMob, onBannerReceive, 
+2015-05-28 22:30:01.068 Promobugs[1246:29525] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-28 22:31:01.455 Promobugs[1246:29525] AdMob, onBannerReceive, 
+2015-05-28 22:31:01.455 Promobugs[1246:29525] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-28 22:32:01.954 Promobugs[1246:29525] AdMob, onBannerReceive, 
+2015-05-28 22:32:01.954 Promobugs[1246:29525] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-28 22:33:02.420 Promobugs[1246:29525] AdMob, onBannerReceive, 
+2015-05-28 22:33:02.420 Promobugs[1246:29525] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-28 22:34:02.900 Promobugs[1246:29525] AdMob, onBannerReceive, 
+2015-05-28 22:34:02.900 Promobugs[1246:29525] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-28 22:35:03.306 Promobugs[1246:29525] AdMob, onBannerReceive, 
+2015-05-28 22:35:03.306 Promobugs[1246:29525] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-28 22:36:03.692 Promobugs[1246:29525] AdMob, onBannerReceive, 
+2015-05-28 22:36:03.692 Promobugs[1246:29525] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-28 22:37:04.152 Promobugs[1246:29525] AdMob, onBannerReceive, 
+2015-05-28 22:37:04.152 Promobugs[1246:29525] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-28 22:38:04.514 Promobugs[1246:29525] AdMob, onBannerReceive, 
+2015-05-28 22:38:04.514 Promobugs[1246:29525] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-28 22:39:04.968 Promobugs[1246:29525] AdMob, onBannerReceive, 
+2015-05-28 22:39:04.968 Promobugs[1246:29525] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-28 22:40:05.324 Promobugs[1246:29525] AdMob, onBannerReceive, 
+2015-05-28 22:40:05.324 Promobugs[1246:29525] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-28 22:41:05.769 Promobugs[1246:29525] AdMob, onBannerReceive, 
+2015-05-28 22:41:05.769 Promobugs[1246:29525] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-28 22:42:06.156 Promobugs[1246:29525] AdMob, onBannerReceive, 
+2015-05-28 22:42:06.157 Promobugs[1246:29525] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-28 22:43:06.614 Promobugs[1246:29525] AdMob, onBannerReceive, 
+2015-05-28 22:43:06.614 Promobugs[1246:29525] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-28 22:44:07.070 Promobugs[1246:29525] AdMob, onBannerReceive, 
+2015-05-28 22:44:07.070 Promobugs[1246:29525] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-28 22:45:07.440 Promobugs[1246:29525] AdMob, onBannerReceive, 
+2015-05-28 22:45:07.440 Promobugs[1246:29525] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-28 22:46:07.811 Promobugs[1246:29525] AdMob, onBannerReceive, 
+2015-05-28 22:46:07.812 Promobugs[1246:29525] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-28 22:47:08.219 Promobugs[1246:29525] AdMob, onBannerReceive, 
+2015-05-28 22:47:08.219 Promobugs[1246:29525] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-28 22:53:03.046 Promobugs[1246:29525] AdMob, onBannerReceive, 
+2015-05-28 22:53:03.046 Promobugs[1246:29525] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-28 22:54:03.408 Promobugs[1246:29525] AdMob, onBannerReceive, 
+2015-05-28 22:54:03.408 Promobugs[1246:29525] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
