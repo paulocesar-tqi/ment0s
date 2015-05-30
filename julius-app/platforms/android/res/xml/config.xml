@@ -49,6 +49,5 @@
     <preference name="UIWebViewBounce" value="false" />
     <preference name="DisallowOverscroll" value="true" />
     <preference name="BackupWebStorage" value="none" />
-    <preference name="SplashScreen" value="none" />
-    <preference name="SplashScreenDelay" value="10" />
+    <preference name="ShowSplashScreen" value="false" />
 </widget>

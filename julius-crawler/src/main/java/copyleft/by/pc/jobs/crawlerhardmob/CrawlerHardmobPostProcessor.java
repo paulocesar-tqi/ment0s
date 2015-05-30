@@ -91,7 +91,7 @@ public class CrawlerHardmobPostProcessor implements ItemProcessor<Post,Post> {
 				while(tokenizer.hasMoreElements()) {
 					String word = tokenizer.nextToken();
 					if(word.startsWith("http")) {
-						word = "<a href=\"javascript:window.open('"+ word + "','_system', 'location=yes')\">" + word + "</a>";
+						word = "<a href=\"javascript:openUrlViewer('"+ word + "')\">" + word + "</a>";
 					}
 					newHtml.append(word);
 				}

@@ -7,6 +7,7 @@
  var URL_ENDPOINTS = 'http://paulocesar.tk/promobugs';
 //var URL_ENDPOINTS = 'http://192.168.0.101:8080';
 var admobid = {};
+var clickedUrl = "";
 
 app.controller('PostsCtrl', function($scope, $ionicModal, $timeout, $sce, $ionicLoading, PostService, $cordovaPush, $cordovaDialogs, $cordovaSocialSharing, $cordovaMedia, $cordovaToast, ionPlatform, localstorage, $http) {
     $scope.posts = [];
@@ -57,18 +58,22 @@ app.controller('PostsCtrl', function($scope, $ionicModal, $timeout, $sce, $ionic
                 autoShow:true});
 
             window.AdMob.prepareInterstitial( {adId:admobid.interstitial, autoShow:false} );
+
+            document.addEventListener('onAdDismiss',function(data){
+                    if(data.adType == 'interstitial') {
+                        window.AdMob.prepareInterstitial( {adId:admobid.interstitial, autoShow:false} );
+                        window.open(clickedUrl, '_system', 'location=yes');
+                    }
+            });
+
         }
     }
 
 
     // function to open the modal urlViewer
     $scope.openUrlViewer = function (url) {
+        clickedUrl = url;
         window.AdMob.showInterstitial();
-        document.addEventListener('onAdDismiss',function(data){
-                if(data.adType == 'interstitial') {
-                    window.open(url, '_system', 'location=yes');
-                }
-        });
     };
 
     $scope.doShare = function (id, url) {
@@ -147,7 +152,7 @@ app.controller('PostsCtrl', function($scope, $ionicModal, $timeout, $sce, $ionic
                         $ionicLoading.hide();
                     } else {
                         if($scope.posts.length) {
-                            $scope.infiniteLoad = false; 
+                            $scope.infiniteLoad = false;
                             $scope.$broadcast("scroll.infiniteScrollComplete");
                             $ionicLoading.hide();
                         } else {

@@ -1400,3 +1400,106 @@
 2015-05-28 22:53:03.046 Promobugs[1246:29525] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
 2015-05-28 22:54:03.408 Promobugs[1246:29525] AdMob, onBannerReceive, 
 2015-05-28 22:54:03.408 Promobugs[1246:29525] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-29 23:31:18.856 Promobugs[2386:40011] DiskCookieStorage changing policy from 2 to 0, cookie file: file:///Users/yusuke/Library/Developer/CoreSimulator/Devices/8A7E69E8-A3C8-44A8-826C-C318C1FC320F/data/Containers/Data/Application/5F485511-BC94-4D85-A347-15EFC74628EB/Library/Cookies/Cookies.binarycookies
+2015-05-29 23:31:18.937 Promobugs[2386:40011] Apache Cordova native platform version 3.8.0 is starting.
+2015-05-29 23:31:18.937 Promobugs[2386:40011] Multi-tasking -> Device: YES, App: YES
+2015-05-29 23:31:18.939 Promobugs[2386:40011] Unlimited access to network resources
+2015-05-29 23:31:19.033 Promobugs[2386:40011] [CDVTimer][admob] 0.847995ms
+2015-05-29 23:31:19.083 Promobugs[2386:40011] [CDVTimer][socialsharing] 49.095035ms
+2015-05-29 23:31:19.087 Promobugs[2386:40011] [CDVTimer][file] 4.423022ms
+2015-05-29 23:31:19.088 Promobugs[2386:40011] [CDVTimer][TotalPluginStartup] 55.019975ms
+2015-05-29 23:31:19.098 Promobugs[2386:40011] active
+2015-05-29 23:31:19.102 Promobugs[2386:40011] Attempting to badge the application icon but haven't received permission from the user to badge the application
+2015-05-29 23:31:19.144 Promobugs[2386:40011] Resetting plugins due to page load.
+2015-05-29 23:31:19.492 Promobugs[2386:40011] Finished load of: file:///Users/yusuke/Library/Developer/CoreSimulator/Devices/8A7E69E8-A3C8-44A8-826C-C318C1FC320F/data/Containers/Bundle/Application/2553B720-E5F4-459F-9D7D-251905869B46/Promobugs.app/www/index.html#/posts
+2015-05-29 23:31:19.786 Promobugs[2386:40011] IOS detectado
+2015-05-29 23:31:19.786 Promobugs[2386:40011] createBanner
+2015-05-29 23:31:19.787 Promobugs[2386:40011] prepareInterstitial
+2015-05-29 23:31:21.509 Promobugs[2386:40011] AdMob, onBannerReceive, 
+2015-05-29 23:31:21.509 Promobugs[2386:40011] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-29 23:31:21.509 Promobugs[2386:40011] statusbar offset:20.000000, overlap:1, ad position:8, x:0, y:0
+2015-05-29 23:31:21.590 Promobugs[2386:40011] AdMob, onInterstitialReceive, 
+2015-05-29 23:31:21.590 Promobugs[2386:40011] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'interstitial','adEvent':'onAdLoaded'}
+2015-05-29 23:31:26.164 Promobugs[2386:40011] showInterstitial
+2015-05-29 23:31:26.166 Promobugs[2386:40011] AdMob, onInterstitialPresent, 
+2015-05-29 23:31:26.166 Promobugs[2386:40011] AdMob, onAdPresent, {'adNetwork':'AdMob','adType':'interstitial','adEvent':'onAdPresent'}
+2015-05-29 23:31:27.909 Promobugs[2386:40011] AdMob, onInterstitialDismiss, 
+2015-05-29 23:31:27.909 Promobugs[2386:40011] AdMob, onAdDismiss, {'adNetwork':'AdMob','adType':'interstitial','adEvent':'onAdDismiss'}
+2015-05-29 23:31:27.917 Promobugs[2386:40011] prepareInterstitial
+2015-05-29 23:31:27.981 Promobugs[2386:40011] THREAD WARNING: ['InAppBrowser'] took '63.710205' ms. Plugin should use a background thread.
+2015-05-29 23:31:28.655 Promobugs[2386:40011] AdMob, onInterstitialReceive, 
+2015-05-29 23:31:28.655 Promobugs[2386:40011] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'interstitial','adEvent':'onAdLoaded'}
+2015-05-29 23:31:39.855 Promobugs[2386:40011] active
+2015-05-29 23:31:39.858 Promobugs[2386:40011] Attempting to badge the application icon but haven't received permission from the user to badge the application
+2015-05-29 23:31:45.888 Promobugs[2386:40011] showInterstitial
+2015-05-29 23:31:45.890 Promobugs[2386:40011] AdMob, onInterstitialPresent, 
+2015-05-29 23:31:45.890 Promobugs[2386:40011] AdMob, onAdPresent, {'adNetwork':'AdMob','adType':'interstitial','adEvent':'onAdPresent'}
+2015-05-29 23:31:48.078 Promobugs[2386:40011] AdMob, onInterstitialDismiss, 
+2015-05-29 23:31:48.078 Promobugs[2386:40011] AdMob, onAdDismiss, {'adNetwork':'AdMob','adType':'interstitial','adEvent':'onAdDismiss'}
+2015-05-29 23:31:48.084 Promobugs[2386:40011] prepareInterstitial
+2015-05-29 23:31:48.206 Promobugs[2386:40011] prepareInterstitial
+2015-05-29 23:31:48.828 Promobugs[2386:40011] THREAD WARNING: ['InAppBrowser'] took '622.625244' ms. Plugin should use a background thread.
+2015-05-29 23:31:49.691 Promobugs[2386:40011] AdMob, onInterstitialReceive, 
+2015-05-29 23:31:49.693 Promobugs[2386:40011] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'interstitial','adEvent':'onAdLoaded'}
+2015-05-29 23:32:06.332 Promobugs[2386:40011] active
+2015-05-29 23:32:06.335 Promobugs[2386:40011] Attempting to badge the application icon but haven't received permission from the user to badge the application
+2015-05-29 23:32:08.887 Promobugs[2386:40011] showInterstitial
+2015-05-29 23:32:08.889 Promobugs[2386:40011] AdMob, onInterstitialPresent, 
+2015-05-29 23:32:08.889 Promobugs[2386:40011] AdMob, onAdPresent, {'adNetwork':'AdMob','adType':'interstitial','adEvent':'onAdPresent'}
+2015-05-29 23:32:10.551 Promobugs[2386:40011] AdMob, onInterstitialDismiss, 
+2015-05-29 23:32:10.551 Promobugs[2386:40011] AdMob, onAdDismiss, {'adNetwork':'AdMob','adType':'interstitial','adEvent':'onAdDismiss'}
+2015-05-29 23:32:10.557 Promobugs[2386:40011] prepareInterstitial
+2015-05-29 23:32:10.564 Promobugs[2386:40011] prepareInterstitial
+2015-05-29 23:32:11.773 Promobugs[2386:40011] THREAD WARNING: ['InAppBrowser'] took '1208.605957' ms. Plugin should use a background thread.
+2015-05-29 23:32:11.773 Promobugs[2386:40011] prepareInterstitial
+2015-05-29 23:32:11.849 Promobugs[2386:40011] THREAD WARNING: ['InAppBrowser'] took '75.416992' ms. Plugin should use a background thread.
+2015-05-29 23:32:13.067 Promobugs[2386:40011] AdMob, onInterstitialReceive, 
+2015-05-29 23:32:13.067 Promobugs[2386:40011] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'interstitial','adEvent':'onAdLoaded'}
+2015-05-29 23:34:04.899 Promobugs[2613:41468] DiskCookieStorage changing policy from 2 to 0, cookie file: file:///Users/yusuke/Library/Developer/CoreSimulator/Devices/8A7E69E8-A3C8-44A8-826C-C318C1FC320F/data/Containers/Data/Application/3CEC8DC5-6A39-4518-98D9-771AEA4022EF/Library/Cookies/Cookies.binarycookies
+2015-05-29 23:34:04.976 Promobugs[2613:41468] Apache Cordova native platform version 3.8.0 is starting.
+2015-05-29 23:34:04.976 Promobugs[2613:41468] Multi-tasking -> Device: YES, App: YES
+2015-05-29 23:34:04.978 Promobugs[2613:41468] Unlimited access to network resources
+2015-05-29 23:34:05.071 Promobugs[2613:41468] [CDVTimer][admob] 0.158012ms
+2015-05-29 23:34:05.118 Promobugs[2613:41468] [CDVTimer][socialsharing] 47.398984ms
+2015-05-29 23:34:05.122 Promobugs[2613:41468] [CDVTimer][file] 3.624022ms
+2015-05-29 23:34:05.122 Promobugs[2613:41468] [CDVTimer][TotalPluginStartup] 51.752985ms
+2015-05-29 23:34:05.134 Promobugs[2613:41468] active
+2015-05-29 23:34:05.136 Promobugs[2613:41468] Attempting to badge the application icon but haven't received permission from the user to badge the application
+2015-05-29 23:34:05.176 Promobugs[2613:41468] Resetting plugins due to page load.
+2015-05-29 23:34:05.539 Promobugs[2613:41468] Finished load of: file:///Users/yusuke/Library/Developer/CoreSimulator/Devices/8A7E69E8-A3C8-44A8-826C-C318C1FC320F/data/Containers/Bundle/Application/F33431A6-E9E5-4178-AB06-E6C4B28695F5/Promobugs.app/www/index.html#/posts
+2015-05-29 23:34:05.832 Promobugs[2613:41468] IOS detectado
+2015-05-29 23:34:05.832 Promobugs[2613:41468] createBanner
+2015-05-29 23:34:05.832 Promobugs[2613:41468] prepareInterstitial
+2015-05-29 23:34:07.786 Promobugs[2613:41468] AdMob, onInterstitialReceive, 
+2015-05-29 23:34:07.787 Promobugs[2613:41468] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'interstitial','adEvent':'onAdLoaded'}
+2015-05-29 23:34:07.902 Promobugs[2613:41468] AdMob, onBannerReceive, 
+2015-05-29 23:34:07.902 Promobugs[2613:41468] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-05-29 23:34:07.903 Promobugs[2613:41468] statusbar offset:20.000000, overlap:1, ad position:8, x:0, y:0
+2015-05-29 23:34:12.981 Promobugs[2613:41468] showInterstitial
+2015-05-29 23:34:12.983 Promobugs[2613:41468] AdMob, onInterstitialPresent, 
+2015-05-29 23:34:12.983 Promobugs[2613:41468] AdMob, onAdPresent, {'adNetwork':'AdMob','adType':'interstitial','adEvent':'onAdPresent'}
+2015-05-29 23:34:15.548 Promobugs[2613:41468] AdMob, onInterstitialDismiss, 
+2015-05-29 23:34:15.549 Promobugs[2613:41468] AdMob, onAdDismiss, {'adNetwork':'AdMob','adType':'interstitial','adEvent':'onAdDismiss'}
+2015-05-29 23:34:15.559 Promobugs[2613:41468] prepareInterstitial
+2015-05-29 23:34:16.377 Promobugs[2613:41468] AdMob, onInterstitialReceive, 
+2015-05-29 23:34:16.378 Promobugs[2613:41468] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'interstitial','adEvent':'onAdLoaded'}
+2015-05-29 23:34:33.350 Promobugs[2613:41468] active
+2015-05-29 23:34:33.352 Promobugs[2613:41468] Attempting to badge the application icon but haven't received permission from the user to badge the application
+2015-05-29 23:34:35.561 Promobugs[2613:41468] showInterstitial
+2015-05-29 23:34:35.562 Promobugs[2613:41468] AdMob, onInterstitialPresent, 
+2015-05-29 23:34:35.563 Promobugs[2613:41468] AdMob, onAdPresent, {'adNetwork':'AdMob','adType':'interstitial','adEvent':'onAdPresent'}
+2015-05-29 23:34:37.689 Promobugs[2613:41468] AdMob, onInterstitialDismiss, 
+2015-05-29 23:34:37.689 Promobugs[2613:41468] AdMob, onAdDismiss, {'adNetwork':'AdMob','adType':'interstitial','adEvent':'onAdDismiss'}
+2015-05-29 23:34:37.698 Promobugs[2613:41468] prepareInterstitial
+2015-05-29 23:34:38.515 Promobugs[2613:41468] AdMob, onInterstitialReceive, 
+2015-05-29 23:34:38.515 Promobugs[2613:41468] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'interstitial','adEvent':'onAdLoaded'}
+2015-05-29 23:34:51.679 Promobugs[2613:41468] active
+2015-05-29 23:34:51.680 Promobugs[2613:41468] Attempting to badge the application icon but haven't received permission from the user to badge the application
+2015-05-29 23:34:54.877 Promobugs[2613:41468] showInterstitial
+2015-05-29 23:34:54.879 Promobugs[2613:41468] AdMob, onInterstitialPresent, 
+2015-05-29 23:34:54.879 Promobugs[2613:41468] AdMob, onAdPresent, {'adNetwork':'AdMob','adType':'interstitial','adEvent':'onAdPresent'}
+2015-05-29 23:34:57.112 Promobugs[2613:41468] AdMob, onInterstitialDismiss, 
+2015-05-29 23:34:57.113 Promobugs[2613:41468] AdMob, onAdDismiss, {'adNetwork':'AdMob','adType':'interstitial','adEvent':'onAdDismiss'}
+2015-05-29 23:34:57.120 Promobugs[2613:41468] prepareInterstitial
+2015-05-29 23:34:57.970 Promobugs[2613:41468] AdMob, onInterstitialReceive, 
+2015-05-29 23:34:57.970 Promobugs[2613:41468] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'interstitial','adEvent':'onAdLoaded'}
