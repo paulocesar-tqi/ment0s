@@ -9,16 +9,17 @@
 var admobid = {};
 var clickedUrl = "";
 
-app.controller('PostsCtrl', function($scope, $ionicModal, $timeout, $sce, $ionicLoading, PostService, $cordovaPush, $cordovaDialogs, $cordovaSocialSharing, $cordovaMedia, $cordovaToast, ionPlatform, localstorage, $http) {
+app.controller('PostsCtrl', function($scope, $ionicSideMenuDelegate, $ionicModal, $timeout, $sce, $ionicLoading, PostService, $cordovaPush, $cordovaDialogs, $cordovaSocialSharing, $cordovaMedia, $cordovaToast, ionPlatform, localstorage, $http) {
     $scope.posts = [];
     $scope.page = 0;    
     $scope.infiniteLoad = false;
+    $scope.formData = {};
 
     // call to register automatically upon device ready
     ionPlatform.ready.then(function (device) {
         //localstorage.removeItem("regId");
         if(!localstorage.get("regId")) {
-            $scope.register();
+            //$scope.register();
         } else {
             console.log("Found regId: " + localstorage.get("regId"));
         }
@@ -84,6 +85,21 @@ app.controller('PostsCtrl', function($scope, $ionicModal, $timeout, $sce, $ionic
         $cordovaSocialSharing.share($("#post"+id).text().trim(), 'Alguém enviou um promobug pra você', null, 'http://www.mylink.com');
     };
 
+    $scope.toggleMenu = function () {
+        $ionicLoading.show({ template: '<p class="item-icon-left">Carregando Configurações<ion-spinner icon="lines"/></p>'});
+        $ionicSideMenuDelegate.toggleLeft();
+    };
+
+    $scope.clearWord1 = function () {
+        $scope.formData.word1 = "";
+    };
+    $scope.clearWord2 = function () {
+        $scope.formData.word2 = "";
+    };
+    $scope.clearWord3 = function () {
+        $scope.formData.word3 = "";
+    };
+
     // Register
     $scope.register = function () {
         var config = null;
@@ -114,7 +130,7 @@ app.controller('PostsCtrl', function($scope, $ionicModal, $timeout, $sce, $ionic
                     storeDeviceToken("ios");
                 }
             }, function (err) {
-                console.log("Register error " + err)
+                console.log("Register error " + err);
             });
         }
     }

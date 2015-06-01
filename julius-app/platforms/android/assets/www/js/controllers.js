@@ -9,7 +9,7 @@
 var admobid = {};
 var clickedUrl = "";
 
-app.controller('PostsCtrl', function($scope, $ionicModal, $timeout, $sce, $ionicLoading, PostService, $cordovaPush, $cordovaDialogs, $cordovaSocialSharing, $cordovaMedia, $cordovaToast, ionPlatform, localstorage, $http) {
+app.controller('PostsCtrl', function($scope, $ionicSideMenuDelegate, $ionicModal, $timeout, $sce, $ionicLoading, PostService, $cordovaPush, $cordovaDialogs, $cordovaSocialSharing, $cordovaMedia, $cordovaToast, ionPlatform, localstorage, $http) {
     $scope.posts = [];
     $scope.page = 0;    
     $scope.infiniteLoad = false;
@@ -18,7 +18,7 @@ app.controller('PostsCtrl', function($scope, $ionicModal, $timeout, $sce, $ionic
     ionPlatform.ready.then(function (device) {
         //localstorage.removeItem("regId");
         if(!localstorage.get("regId")) {
-            $scope.register();
+            //$scope.register();
         } else {
             console.log("Found regId: " + localstorage.get("regId"));
         }
@@ -82,6 +82,10 @@ app.controller('PostsCtrl', function($scope, $ionicModal, $timeout, $sce, $ionic
 
     $scope.doShare = function (id, url) {
         $cordovaSocialSharing.share($("#post"+id).text().trim(), 'Alguém enviou um promobug pra você', null, 'http://www.mylink.com');
+    };
+
+    $scope.toggleMenu = function () {
+        $ionicSideMenuDelegate.toggleLeft();
     };
 
     // Register

@@ -7,6 +7,16 @@
     /*background-image: linear-gradient(360deg, #33cd5f, #CFEFCB 10%, transparent 100%);*/
 }
 
+.item-input{
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+.item-input > input {
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
 .titulo {
     font-weight: bold;
     text-align: center;
