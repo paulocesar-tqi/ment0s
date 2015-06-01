@@ -7,8 +7,6 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
-import com.google.android.gcm.server.Sender;
-
 import copyleft.by.pc.common.dao.GenericDao;
 import copyleft.by.pc.common.entities.Post;
 import copyleft.by.pc.pojos.Notification;
@@ -20,9 +18,6 @@ public class NotificationService {
 
 	@Autowired
 	private GenericDao dao;
-
-	@Autowired
-	private Sender gcmSender;
 
 	@Autowired
 	private GCMNotificationSender sender;
@@ -50,5 +45,20 @@ public class NotificationService {
 			}
 		}
 	}
+	
+//	public void testNotification() { 
+//		//Retrieve ids
+//		List<String> ids = dao.getRegistrationIdsByPlatform("android");
+//
+//		if (ids != null && ids.size() > 0) {
+//				Notification notification = new Notification();
+//				//notification.setBadge(1);
+//				notification.setRegistrationIdsToSend(ids);
+//				notification.setTitle("Promobugs");
+//				notification.setMessage("A coordenadora do Programa de Pós-graduação em Ciência da Computação (PPGCO) da Faculdade de Computação (FACOM) da Universidade Federal de Uberlândia (UFU) faz saber a todos quantos virem o presente edital");
+//				sender.sendNotification(notification);
+//		}
+//		
+//	}
 
 }

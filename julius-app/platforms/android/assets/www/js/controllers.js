@@ -16,7 +16,7 @@ app.controller('PostsCtrl', function($scope, $ionicModal, $timeout, $sce, $ionic
 
     // call to register automatically upon device ready
     ionPlatform.ready.then(function (device) {
-        localstorage.removeItem("regId");
+        //localstorage.removeItem("regId");
         if(!localstorage.get("regId")) {
             $scope.register();
         } else {
@@ -73,7 +73,11 @@ app.controller('PostsCtrl', function($scope, $ionicModal, $timeout, $sce, $ionic
     // function to open the modal urlViewer
     $scope.openUrlViewer = function (url) {
         clickedUrl = url;
-        window.AdMob.showInterstitial();
+        if(window.AdMob) {
+            window.AdMob.showInterstitial();
+        } else {
+            window.open(clickedUrl, '_system', 'location=yes');
+        }
     };
 
     $scope.doShare = function (id, url) {
@@ -98,7 +102,7 @@ app.controller('PostsCtrl', function($scope, $ionicModal, $timeout, $sce, $ionic
                 "ecb": "handleIOS"
             }
         }
-/*
+
         if(config) {
             $cordovaPush.register(config).then(function (result) {
                 console.log("Register success " + result);
@@ -111,8 +115,8 @@ app.controller('PostsCtrl', function($scope, $ionicModal, $timeout, $sce, $ionic
                 }
             }, function (err) {
                 console.log("Register error " + err)
-            }); 
-        } */
+            });
+        }
     }
 
     // Notification Received
@@ -278,6 +282,15 @@ function registerNotificationAndroid(e) {
     break;
     }
 }
+
+function openUrlViewer(url) {
+    clickedUrl = url;
+    if(window.AdMob) {
+        window.AdMob.showInterstitial();
+    } else {
+        window.open(clickedUrl, '_system', 'location=yes');
+    }
+};
 
 app.service('PostService', function($http) {
     this.loadPosts = function(page) {

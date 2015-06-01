@@ -92,7 +92,7 @@ public class GCMNotificationSender {
 		final Message.Builder messageBuilder = new Message.Builder();
 		messageBuilder.addData("title", notification.getTitle());
 		messageBuilder.addData("message", notification.getMessage());
-		messageBuilder.addData("msgcnt", notification.getBadge().toString());
+		//messageBuilder.addData("msgcnt", notification.getBadge().toString());
 		return messageBuilder.build();
 	}
 

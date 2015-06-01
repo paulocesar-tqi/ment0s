@@ -29,7 +29,6 @@ import copyleft.by.pc.common.dao.GenericDao;
 import copyleft.by.pc.common.entities.Post;
 import copyleft.by.pc.configuration.InfrastructureConfiguration;
 import copyleft.by.pc.configuration.ServicesConfiguration;
-import copyleft.by.pc.listeners.ProtocolListener;
 
 @Configuration
 @EnableBatchProcessing
@@ -128,11 +127,6 @@ public class CrawlerHardmobJobConfiguration {
     	return new CrawlerHardmobPostWriter();
     }
     
-	@Bean
-	public ProtocolListener protocolListener(){
-		return new ProtocolListener();
-	}
-	
 	@StepScope
 	@Bean
 	public List<String> externalHardmobIds(){

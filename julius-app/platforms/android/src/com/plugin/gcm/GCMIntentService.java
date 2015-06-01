@@ -12,6 +12,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+import android.net.Uri;
+
+import copyleft.by.pc.R;
 
 import com.google.android.gcm.GCMBaseIntentService;
 
@@ -100,12 +103,14 @@ public class GCMIntentService extends GCMBaseIntentService {
 		
 		NotificationCompat.Builder mBuilder =
 			new NotificationCompat.Builder(context)
-				.setDefaults(defaults)
+				//.setDefaults(defaults)
 				.setSmallIcon(context.getApplicationInfo().icon)
 				.setWhen(System.currentTimeMillis())
 				.setContentTitle(extras.getString("title"))
 				.setTicker(extras.getString("title"))
 				.setContentIntent(contentIntent)
+				.setStyle(new NotificationCompat.BigTextStyle().bigText(extras.getString("message")))
+				.setSound(Uri.parse("android.resource://copyleft.by.pc/" + R.raw.coin))
 				.setAutoCancel(true);
 
 		String message = extras.getString("message");
