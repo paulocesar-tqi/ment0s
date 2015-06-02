@@ -4,22 +4,31 @@
  * blog: devgirl.org
  * more tutorials: hollyschinsky.github.io
  */
- var URL_ENDPOINTS = 'http://paulocesar.tk/promobugs';
+ //var URL_ENDPOINTS = 'http://paulocesar.tk/promobugs';
 //var URL_ENDPOINTS = 'http://192.168.0.101:8080';
+var URL_ENDPOINTS = 'http://localhost:8080';
 var admobid = {};
 var clickedUrl = "";
 
-app.controller('PostsCtrl', function($scope, $ionicSideMenuDelegate, $ionicModal, $timeout, $sce, $ionicLoading, PostService, $cordovaPush, $cordovaDialogs, $cordovaSocialSharing, $cordovaMedia, $cordovaToast, ionPlatform, localstorage, $http) {
+app.controller('PostsCtrl', function($scope, $ionicSideMenuDelegate, $ionicModal, $timeout, $sce, $ionicLoading, PostService, ConfigService, $cordovaPush, $cordovaDialogs, $cordovaSocialSharing, $cordovaMedia, $cordovaToast, ionPlatform, localstorage, $http) {
     $scope.posts = [];
     $scope.page = 0;    
     $scope.infiniteLoad = false;
+    $scope.formData = {};
+    $scope.user = "";
+
+    $scope.toggleNotifications = { checked: false };
+    $scope.toggleVibrations = { checked: false };
+    $scope.toggleFilter = { checked: false };
 
     // call to register automatically upon device ready
     ionPlatform.ready.then(function (device) {
         //localstorage.removeItem("regId");
+        localStorage['regId'] = "88vtyrvtrut1r24t23423r41u34vtr4";
         if(!localstorage.get("regId")) {
             //$scope.register();
         } else {
+            $scope.user = localstorage.get("regId");
             console.log("Found regId: " + localstorage.get("regId"));
         }
 
@@ -85,7 +94,66 @@ app.controller('PostsCtrl', function($scope, $ionicSideMenuDelegate, $ionicModal
     };
 
     $scope.toggleMenu = function () {
+        if(angular.equals({},$scope.formData)) {
+            $ionicLoading.show({ template: '<p class="item-icon-left">Carregando Configurações<ion-spinner icon="lines"/></p>'});
+            ConfigService.getUserConfig($scope.user)
+                .success(function(result) {
+                    result = JSON.parse(decryptText(result));
+                    if(result) {
+                        $scope.formData = result;
+                        if($scope.formData.activeNotifications == 1)
+                            $scope.toggleNotifications = { checked: true };
+                        if($scope.formData.activeVibration == 1)
+                            $scope.toggleVibrations = { checked: true };
+                        if($scope.formData.activeFilter == 1)
+                            $scope.toggleFilter = { checked: true };
+
+                        $scope.$watch('toggleNotifications.checked', function(newValue, oldValue) {
+                            if(newValue)
+                                $scope.formData.activeNotifications = 1;
+                            else
+                                $scope.formData.activeNotifications = 0;
+                        });
+                        $scope.$watch('toggleVibrations.checked', function(newValue, oldValue) {
+                            if(newValue)
+                                $scope.formData.activeVibration = 1;
+                            else
+                                $scope.formData.activeVibration = 0;
+                        });
+                        $scope.$watch('toggleFilter.checked', function(newValue, oldValue) {
+                            if(newValue)
+                                $scope.formData.activeFilter = 1;
+                            else
+                                $scope.formData.activeFilter = 0;
+                        });
+
+                        $ionicLoading.hide();
+                    }
+                })
+                .error(function (data, status) {
+                    $ionicLoading.show({ template: '<p class="item-icon-left">Verifique sua conexão<ion-spinner icon="lines"/></p>'});
+                    $timeout(function(){
+                        $scope.morePosts();
+                    }, 5000);
+
+                    console.log("Error loading config." + data + " " + status);
+                });
+        }
         $ionicSideMenuDelegate.toggleLeft();
+    };
+
+    $scope.clearWord1 = function () {
+        $scope.formData.word1 = "";
+    };
+    $scope.clearWord2 = function () {
+        $scope.formData.word2 = "";
+    };
+    $scope.clearWord3 = function () {
+        $scope.formData.word3 = "";
+    };
+
+    $scope.saveConfig = function () {
+        console.log("Salvar: " + JSON.stringify($scope.formData));
     };
 
     // Register
@@ -118,7 +186,7 @@ app.controller('PostsCtrl', function($scope, $ionicSideMenuDelegate, $ionicModal
                     storeDeviceToken("ios");
                 }
             }, function (err) {
-                console.log("Register error " + err)
+                console.log("Register error " + err);
             });
         }
     }
@@ -305,6 +373,22 @@ app.service('PostService', function($http) {
     }
 
     this.loadPost = function(id) {
+        var params = { id: id };
+        return ($http.get(URL_ENDPOINTS + "/post", {
+            params: params
+        }));
+    }
+})
+
+app.service('ConfigService', function($http) {
+    this.getUserConfig = function(id) {
+        var params = { id: id };
+        return ($http.get(URL_ENDPOINTS + "/getuserconfig", {
+            params: params
+        }));
+    }
+
+    this.saveUserConfig = function(id) {
         var params = { id: id };
         return ($http.get(URL_ENDPOINTS + "/post", {
             params: params

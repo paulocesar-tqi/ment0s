@@ -8,8 +8,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 @Entity
 @Table(name="source")
+@JsonInclude(Include.NON_NULL)
 public class Source implements Serializable{
 
 	private static final long serialVersionUID = -7340774847445899229L;

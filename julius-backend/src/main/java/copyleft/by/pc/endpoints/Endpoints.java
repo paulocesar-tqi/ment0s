@@ -1,5 +1,6 @@
 package copyleft.by.pc.endpoints;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Queue;
@@ -27,6 +28,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import copyleft.by.pc.common.dao.GenericDao;
 import copyleft.by.pc.common.entities.Post;
+import copyleft.by.pc.common.entities.User;
 import copyleft.by.pc.utils.AesUtil;
 
 @Controller
@@ -54,11 +56,13 @@ public class Endpoints {
 	
 	private final Queue<List<String>> registrationQueue = new ConcurrentLinkedQueue<List<String>>();
 
+	private final Queue<User> updateUserQueue = new ConcurrentLinkedQueue<User>();
+	
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
 	@ResponseBody
 	public HttpEntity<String> registerDevice(
 			@RequestParam(value = "regId", required = true) String value,
-			@RequestParam(value = "platform", required = false, defaultValue = "Android") String type) {
+			@RequestParam(value = "platform", required = false, defaultValue = "android") String type) {
 		
 		this.registrationQueue.add(Arrays.asList(value,type));
 		return new ResponseEntity<>(HttpStatus.CREATED);
@@ -102,10 +106,54 @@ public class Endpoints {
 		return new ResponseEntity<>(post, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value = "/getuserconfig", method = RequestMethod.GET, produces = "text/plain; charset=utf-8")
+	@ResponseBody
+	public HttpEntity<String> getUserById(
+			@RequestParam(value = "id", required = true) String id) {
+		
+		User user = dao.getUserById(id);
+		
+		ObjectMapper mapper = new ObjectMapper();
+        String json = "";
+        try {
+			json = mapper.writeValueAsString(user);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+        log.info("Antes: " + json);
+        json = encrypt(json);
+		log.info(json);
+		
+		return new ResponseEntity<>(json, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/saveuserconfig", method = RequestMethod.GET)
+	@ResponseBody
+	public HttpEntity<String> saveUserConfig(
+			@RequestParam(value = "payload", required = true) String payload) {
+		
+		String json = decrypt(payload);
+		ObjectMapper mapper = new ObjectMapper();
+        try {
+        	User user = mapper.readValue(json, User.class);
+        	this.updateUserQueue.add(user);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
 	
 	private String encrypt(String input) {
 		AesUtil util = new AesUtil(KEY_SIZE, ITERATION_COUNT);
         return util.encrypt(SALT, IV, PASSPHRASE, input);
+	}
+
+	private String decrypt(String input) {
+		AesUtil util = new AesUtil(KEY_SIZE, ITERATION_COUNT);
+        return util.decrypt(SALT, IV, PASSPHRASE, input);
 	}
 
 	
@@ -115,6 +163,12 @@ public class Endpoints {
 			dao.createOrUpdateUser(list.get(0), list.get(1));
 			this.registrationQueue.remove(list);
 			log.info("User " + list.get(0) + " | " + list.get(1) + " processado.");
+		}
+		
+		for (User user : this.updateUserQueue) {
+			dao.updateUser(user);
+			this.updateUserQueue.remove(user);
+			log.info("User " + user.getRegId() + " atualizado.");
 		}
 	}
 }

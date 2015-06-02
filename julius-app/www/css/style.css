@@ -7,6 +7,10 @@
     /*background-image: linear-gradient(360deg, #33cd5f, #CFEFCB 10%, transparent 100%);*/
 }
 
+.div-config {
+    margin: 10px;
+}
+
 .item-input{
   padding-top: 0px;
   padding-bottom: 0px;
@@ -27,6 +31,11 @@
   margin-left: -3.2em;
   margin-top: -0.2em;
  }
+
+.item-icon-left i {
+  padding-left: 2em;
+ }
+
 
 .item-icon-left {
     margin: 0 0 0 0px;

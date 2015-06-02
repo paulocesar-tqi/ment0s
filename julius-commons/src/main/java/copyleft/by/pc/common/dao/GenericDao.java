@@ -99,6 +99,16 @@ public class GenericDao {
 		}
 	}	
 
+	public User getUserById(String id) {
+		return em.find(User.class, id);
+	}	
+
+	@Transactional
+	public void updateUser(User user) {
+		em.merge(user);
+		em.flush();
+	}	
+
 	public List<String> getUserIdsByPlatform(String platformId) {
 		
 		String jpql = "SELECT u.regId FROM User u WHERE u.platformId = :platformId";

@@ -49,7 +49,7 @@
                             <i class="icon ion-android-notifications"></i>
                             Notificações
                             <label class="toggle toggle-assertive">
-                                <input type="checkbox">
+                                <input type="checkbox" ng-model="toggleNotifications.checked">
                                 <div class="track">
                                     <div class="handle"></div>
                                 </div>
@@ -60,7 +60,7 @@
                             <i class="icon ion-radio-waves"></i>
                             Vibrar
                             <label class="toggle toggle-assertive">
-                                <input type="checkbox">
+                                <input type="checkbox" ng-model="toggleVibrations.checked" ng-disabled="formData.activeNotifications == 0">
                                 <div class="track">
                                     <div class="handle"></div>
                                 </div>
@@ -70,15 +70,15 @@
                         <li class="item item-toggle">
                             <i class="icon ion-funnel"></i>
                             Filtrar notificações
-                            <label class="toggle toggle-assertive">
-                                <input type="checkbox">
+                            <label class="toggle toggle-assertive" >
+                                <input type="checkbox" ng-model="toggleFilter.checked" ng-disabled="formData.activeNotifications == 0" >
                                 <div class="track">
                                     <div class="handle"></div>
                                 </div>
                             </label>
                         </li>
                     </ul>
-                    <div style="margin: 10px;">
+                    <div class="div-config" ng-show="formData.activeNotifications == 1 && formData.activeFilter == 1">
                         Receber apenas notificações com os termos:
                         <br/>
                         <div class="list">
@@ -97,9 +97,9 @@
                                 <i ng-click="clearWord3()" class="button button-clear icon ion-close-circled padding-right"></i>
                             </div>
                         </div>
-                        <button class="button button-block button-positive">
-                            Salvar
-                        </button>
+                    </div>
+                    <div class="div-config">
+                        <button class="button button-block button-positive" ng-click="saveConfig()">Salvar</button>
                     </div>
                 </form>
             </ion-content>         
