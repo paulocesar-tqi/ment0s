@@ -32,6 +32,11 @@
   margin-top: -0.2em;
  }
 
+.item-icon-left i {
+  padding-left: 2em;
+ }
+
+
 .item-icon-left {
     margin: 0 0 0 0px;
 }

@@ -4,9 +4,9 @@
  * blog: devgirl.org
  * more tutorials: hollyschinsky.github.io
  */
- //var URL_ENDPOINTS = 'http://paulocesar.tk/promobugs';
+var URL_ENDPOINTS = 'http://paulocesar.tk/promobugs';
 //var URL_ENDPOINTS = 'http://192.168.0.101:8080';
-var URL_ENDPOINTS = 'http://localhost:8080';
+//var URL_ENDPOINTS = 'http://localhost:8080';
 var admobid = {};
 var clickedUrl = "";
 
@@ -15,7 +15,6 @@ app.controller('PostsCtrl', function($scope, $ionicSideMenuDelegate, $ionicModal
     $scope.page = 0;    
     $scope.infiniteLoad = false;
     $scope.formData = {};
-    $scope.user = "";
 
     $scope.toggleNotifications = { checked: false };
     $scope.toggleVibrations = { checked: false };
@@ -24,12 +23,11 @@ app.controller('PostsCtrl', function($scope, $ionicSideMenuDelegate, $ionicModal
     // call to register automatically upon device ready
     ionPlatform.ready.then(function (device) {
         //localstorage.removeItem("regId");
-        localStorage['regId'] = "88vtyrvtrut1r24t23423r41u34vtr4";
+        //localStorage['regId'] = "88vtyrvtrut1r24t23423r41u34vtr4";
         if(!localstorage.get("regId")) {
-            //$scope.register();
+            $scope.register();
         } else {
-            $scope.user = localstorage.get("regId");
-            console.log("Found regId: " + localstorage.get("regId"));
+            $cordovaToast.showShortCenter("Found regId: " + localstorage.get("regId"));
         }
 
         $scope.setAdMob();
@@ -96,7 +94,7 @@ app.controller('PostsCtrl', function($scope, $ionicSideMenuDelegate, $ionicModal
     $scope.toggleMenu = function () {
         if(angular.equals({},$scope.formData)) {
             $ionicLoading.show({ template: '<p class="item-icon-left">Carregando Configurações<ion-spinner icon="lines"/></p>'});
-            ConfigService.getUserConfig($scope.user)
+            ConfigService.getUserConfig(localstorage.get("regId"))
                 .success(function(result) {
                     result = JSON.parse(decryptText(result));
                     if(result) {

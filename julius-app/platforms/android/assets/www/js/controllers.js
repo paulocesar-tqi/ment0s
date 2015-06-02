@@ -4,9 +4,9 @@
  * blog: devgirl.org
  * more tutorials: hollyschinsky.github.io
  */
- //var URL_ENDPOINTS = 'http://paulocesar.tk/promobugs';
+var URL_ENDPOINTS = 'http://paulocesar.tk/promobugs';
 //var URL_ENDPOINTS = 'http://192.168.0.101:8080';
-var URL_ENDPOINTS = 'http://localhost:8080';
+//var URL_ENDPOINTS = 'http://localhost:8080';
 var admobid = {};
 var clickedUrl = "";
 
@@ -15,7 +15,6 @@ app.controller('PostsCtrl', function($scope, $ionicSideMenuDelegate, $ionicModal
     $scope.page = 0;    
     $scope.infiniteLoad = false;
     $scope.formData = {};
-    $scope.user = "";
 
     $scope.toggleNotifications = { checked: false };
     $scope.toggleVibrations = { checked: false };
@@ -23,13 +22,12 @@ app.controller('PostsCtrl', function($scope, $ionicSideMenuDelegate, $ionicModal
 
     // call to register automatically upon device ready
     ionPlatform.ready.then(function (device) {
-        //localstorage.removeItem("regId");
-        localStorage['regId'] = "88vtyrvtrut1r24t23423r41u34vtr4";
+        localstorage.removeItem("regId");
+        //localStorage['regId'] = "88vtyrvtrut1r24t23423r41u34vtr4";
         if(!localstorage.get("regId")) {
-            //$scope.register();
+            $scope.register();
         } else {
-            $scope.user = localstorage.get("regId");
-            console.log("Found regId: " + localstorage.get("regId"));
+            $cordovaToast.showShortCenter("Found regId: " + localstorage.get("regId"));
         }
 
         $scope.setAdMob();
@@ -96,7 +94,7 @@ app.controller('PostsCtrl', function($scope, $ionicSideMenuDelegate, $ionicModal
     $scope.toggleMenu = function () {
         if(angular.equals({},$scope.formData)) {
             $ionicLoading.show({ template: '<p class="item-icon-left">Carregando Configurações<ion-spinner icon="lines"/></p>'});
-            ConfigService.getUserConfig($scope.user)
+            ConfigService.getUserConfig(localstorage.get("regId"))
                 .success(function(result) {
                     result = JSON.parse(decryptText(result));
                     if(result) {
@@ -133,7 +131,7 @@ app.controller('PostsCtrl', function($scope, $ionicSideMenuDelegate, $ionicModal
                 .error(function (data, status) {
                     $ionicLoading.show({ template: '<p class="item-icon-left">Verifique sua conexão<ion-spinner icon="lines"/></p>'});
                     $timeout(function(){
-                        $scope.morePosts();
+                        $ionicLoading.hide();
                     }, 5000);
 
                     console.log("Error loading config." + data + " " + status);
@@ -153,7 +151,22 @@ app.controller('PostsCtrl', function($scope, $ionicSideMenuDelegate, $ionicModal
     };
 
     $scope.saveConfig = function () {
-        console.log("Salvar: " + JSON.stringify($scope.formData));
+        $ionicLoading.show({ template: '<p class="item-icon-left">Salvando Configurações<ion-spinner icon="lines"/></p>'});
+        ConfigService.saveUserConfig(encryptText(JSON.stringify($scope.formData)))
+            .success(function(result) {
+                    $ionicLoading.show({ template: '<p class="item-icon-left">Configurações salvas<i class="icon ion-checkmark-circled"></i></p>'});
+                    $timeout(function(){
+                       $ionicLoading.hide();
+                    }, 1000);
+            })
+            .error(function (data, status) {
+                $ionicLoading.show({ template: '<p class="item-icon-left">Verifique sua conexão<ion-spinner icon="lines"/></p>'});
+                $timeout(function(){
+                    $scope.saveConfig();
+                }, 5000);
+
+                console.log("Error saving config." + data + " " + status);
+            });
     };
 
     // Register
@@ -257,6 +270,12 @@ app.controller('PostsCtrl', function($scope, $ionicSideMenuDelegate, $ionicModal
         var aesUtil = new AesUtil(128, 10);
         var decrypt = aesUtil.decrypt("3FF2EC019C627B945225DEBAD71A01B6985FE84C95A70EB132882F88C0A59A55", "F27D5C9927726BCEFE7510B1BDD3D137", "i wanna be sedated", text);
         return decrypt;
+    }
+
+    function encryptText(text) {
+        var aesUtil = new AesUtil(128, 10);
+        var encrypt = aesUtil.encrypt("3FF2EC019C627B945225DEBAD71A01B6985FE84C95A70EB132882F88C0A59A55", "F27D5C9927726BCEFE7510B1BDD3D137", "i wanna be sedated", text);
+        return encrypt;
     }
 
     // Android Notification Received Handler
@@ -388,9 +407,9 @@ app.service('ConfigService', function($http) {
         }));
     }
 
-    this.saveUserConfig = function(id) {
-        var params = { id: id };
-        return ($http.get(URL_ENDPOINTS + "/post", {
+    this.saveUserConfig = function(payload) {
+        var params = { payload: payload };
+        return ($http.get(URL_ENDPOINTS + "/saveuserconfig", {
             params: params
         }));
     }
