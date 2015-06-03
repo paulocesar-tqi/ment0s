@@ -1503,3 +1503,32 @@
 2015-05-29 23:34:57.120 Promobugs[2613:41468] prepareInterstitial
 2015-05-29 23:34:57.970 Promobugs[2613:41468] AdMob, onInterstitialReceive, 
 2015-05-29 23:34:57.970 Promobugs[2613:41468] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'interstitial','adEvent':'onAdLoaded'}
+2015-06-02 22:47:16.288 Promobugs[2894:41332] DiskCookieStorage changing policy from 2 to 0, cookie file: file:///Users/yusuke/Library/Developer/CoreSimulator/Devices/8A7E69E8-A3C8-44A8-826C-C318C1FC320F/data/Containers/Data/Application/ED926081-1735-4A81-8744-B065587ABABF/Library/Cookies/Cookies.binarycookies
+2015-06-02 22:47:16.447 Promobugs[2894:41332] Apache Cordova native platform version 3.8.0 is starting.
+2015-06-02 22:47:16.447 Promobugs[2894:41332] Multi-tasking -> Device: YES, App: YES
+2015-06-02 22:47:16.452 Promobugs[2894:41332] Unlimited access to network resources
+2015-06-02 22:47:16.803 Promobugs[2894:41332] [CDVTimer][admob] 0.737965ms
+2015-06-02 22:47:16.863 Promobugs[2894:41332] [CDVTimer][socialsharing] 59.390962ms
+2015-06-02 22:47:16.869 Promobugs[2894:41332] [CDVTimer][file] 6.039977ms
+2015-06-02 22:47:16.869 Promobugs[2894:41332] [CDVTimer][TotalPluginStartup] 66.830993ms
+2015-06-02 22:47:16.891 Promobugs[2894:41332] active
+2015-06-02 22:47:16.904 Promobugs[2894:41332] Attempting to badge the application icon but haven't received permission from the user to badge the application
+2015-06-02 22:47:17.044 Promobugs[2894:41332] Resetting plugins due to page load.
+2015-06-02 22:47:17.485 Promobugs[2894:41332] Finished load of: file:///Users/yusuke/Library/Developer/CoreSimulator/Devices/8A7E69E8-A3C8-44A8-826C-C318C1FC320F/data/Containers/Bundle/Application/2B84D4E6-7081-42EA-BC36-16EB2F1F3A07/Promobugs.app/www/index.html#/posts
+2015-06-02 22:47:22.723 Promobugs[2894:41332] THREAD WARNING: ['PushPlugin'] took '44.517090' ms. Plugin should use a background thread.
+2015-06-02 22:47:22.724 Promobugs[2894:41332] IOS detectado
+2015-06-02 22:47:22.725 Promobugs[2894:41332] createBanner
+2015-06-02 22:47:22.725 Promobugs[2894:41332] prepareInterstitial
+2015-06-02 22:47:23.389 Promobugs[2894:41332] Register error  - remote notifications are not supported in the simulator
+2015-06-02 22:47:24.281 Promobugs[2894:41332] AdMob, onBannerReceive, 
+2015-06-02 22:47:24.281 Promobugs[2894:41332] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-06-02 22:47:24.281 Promobugs[2894:41332] statusbar offset:20.000000, overlap:1, ad position:8, x:0, y:0
+2015-06-02 22:47:24.333 Promobugs[2894:41332] AdMob, onInterstitialReceive, 
+2015-06-02 22:47:24.333 Promobugs[2894:41332] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'interstitial','adEvent':'onAdLoaded'}
+2015-06-02 22:47:26.065 Promobugs[2894:41332] active
+2015-06-02 22:47:50.669 Promobugs[2894:41332] Error loading config. 406
+2015-06-02 22:47:57.828 Promobugs[2894:41332] Error loading config. 406
+2015-06-02 22:48:26.819 Promobugs[2894:41332] AdMob, onBannerReceive, 
+2015-06-02 22:48:26.819 Promobugs[2894:41332] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}
+2015-06-02 22:49:27.088 Promobugs[2894:41332] AdMob, onBannerReceive, 
+2015-06-02 22:49:27.089 Promobugs[2894:41332] AdMob, onAdLoaded, {'adNetwork':'AdMob','adType':'banner','adEvent':'onAdLoaded'}

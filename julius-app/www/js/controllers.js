@@ -24,6 +24,7 @@ app.controller('PostsCtrl', function($scope, $ionicSideMenuDelegate, $ionicModal
     ionPlatform.ready.then(function (device) {
         //localstorage.removeItem("regId");
         //localStorage['regId'] = "88vtyrvtrut1r24t23423r41u34vtr4";
+        alert(localstorage.get("regId"));
         if(!localstorage.get("regId")) {
             $scope.register();
         } else {

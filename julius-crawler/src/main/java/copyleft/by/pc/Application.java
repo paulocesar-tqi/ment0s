@@ -43,7 +43,6 @@ public class Application {
         SpringApplication app = new SpringApplication(Application.class);
         app.setWebEnvironment(false);
         ctx = app.run();
-
 	}
 
 	

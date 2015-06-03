@@ -1,7 +1,7 @@
 <ion-view title="posts">
     <ion-side-menus>
         <ion-pane ion-side-menu-content>
-            <ion-header-bar align-title="center" class="bar bar-header bar-balanced">
+            <ion-header-bar align-title="center" class="bar bar-header bar-assertive">
                 <div class="buttons">
                     <button class="button" ng-click="toggleMenu()"><i class="icon ion-navicon"></i></button>
                 </div>
@@ -22,11 +22,11 @@
                             </div>
                             <div ngc-seemore="'{{p.id}}'"></div>
                         </div>
-                        <div class="footer">
-                                <a class="footer-button" ng-click="openUrlViewer(p.url)">
+                        <div class="footer-source{{p.sourceId}}">
+                                <a class="footer-button button{{p.sourceId}}" ng-click="openUrlViewer(p.url)">
                                     <i class="icon ion-ios-home"></i>
                                 </a>
-                                <a class="footer-button" ng-click="doShare(p.id, p.url)">
+                                <a class="footer-button button{{p.sourceId}}" ng-click="doShare(p.id, p.url)">
                                     <i class="icon ion-android-share-alt"></i>
                                 </a>
                                 <p class="pubdate">{{p.publicationDate}}</p>

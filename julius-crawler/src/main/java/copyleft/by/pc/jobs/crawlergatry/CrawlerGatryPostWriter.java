@@ -54,6 +54,8 @@ public class CrawlerGatryPostWriter implements ItemWriter<Post> {
 			notificateAndroidUsers(newPosts);
 		}
 		
+		//notificationService.testNotification();
+		
 		log.info("GatryWriter: " + insertedCount + " novos posts inseridos.");
 	}
 

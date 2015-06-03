@@ -46,19 +46,19 @@ public class NotificationService {
 		}
 	}
 	
-//	public void testNotification() { 
-//		//Retrieve ids
-//		List<String> ids = dao.getRegistrationIdsByPlatform("android");
-//
-//		if (ids != null && ids.size() > 0) {
-//				Notification notification = new Notification();
-//				//notification.setBadge(1);
-//				notification.setRegistrationIdsToSend(ids);
-//				notification.setTitle("Promobugs");
-//				notification.setMessage("A coordenadora do Programa de Pós-graduação em Ciência da Computação (PPGCO) da Faculdade de Computação (FACOM) da Universidade Federal de Uberlândia (UFU) faz saber a todos quantos virem o presente edital");
-//				sender.sendNotification(notification);
-//		}
-//		
-//	}
+	public void testNotification() { 
+		//Retrieve ids
+		List<String> ids = dao.getRegistrationIdsByPlatform("android");
+
+		if (ids != null && ids.size() > 0) {
+				Notification notification = new Notification();
+				//notification.setBadge(1);
+				notification.setRegistrationIdsToSend(ids);
+				notification.setTitle("Promobugs");
+				notification.setMessage("A coordenadora do Programa de Pós-graduação em Ciência da Computação (PPGCO) da Faculdade de Computação (FACOM) da Universidade Federal de Uberlândia (UFU) faz saber a todos quantos virem o presente edital");
+				sender.sendNotification(notification);
+		}
+		
+	}
 
 }
