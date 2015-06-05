@@ -89,7 +89,6 @@ app.controller('PostsCtrl', function($scope, $ionicSideMenuDelegate, $ionicModal
                 $scope.formData.activeVibration = 0;
         });
         $scope.$watch('toggleFilter.checked', function(newValue, oldValue) {
-            console.log("clicou: " + newValue);
             if(newValue)
                 $scope.formData.activeFilter = 1;
             else

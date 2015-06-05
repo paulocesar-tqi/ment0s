@@ -14,6 +14,9 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.net.Uri;
 
+import java.net.URLDecoder;
+import java.io.UnsupportedEncodingException;
+
 import copyleft.by.pc.R;
 
 import com.google.android.gcm.GCMBaseIntentService;
@@ -100,7 +103,12 @@ public class GCMIntentService extends GCMBaseIntentService {
 				defaults = Integer.parseInt(extras.getString("defaults"));
 			} catch (NumberFormatException e) {}
 		}
-		
+
+		String message = "";
+		try {
+			message = URLDecoder.decode(extras.getString("message"), "UTF-8");
+		} catch (UnsupportedEncodingException e) {}
+
 		NotificationCompat.Builder mBuilder =
 			new NotificationCompat.Builder(context)
 				//.setDefaults(defaults)
@@ -109,11 +117,10 @@ public class GCMIntentService extends GCMBaseIntentService {
 				.setContentTitle(extras.getString("title"))
 				.setTicker(extras.getString("title"))
 				.setContentIntent(contentIntent)
-				.setStyle(new NotificationCompat.BigTextStyle().bigText(extras.getString("message")))
+				.setStyle(new NotificationCompat.BigTextStyle().bigText(message))
 				.setSound(Uri.parse("android.resource://copyleft.by.pc/" + R.raw.coin))
 				.setAutoCancel(true);
 
-		String message = extras.getString("message");
 		if (message != null) {
 			mBuilder.setContentText(message);
 		} else {
