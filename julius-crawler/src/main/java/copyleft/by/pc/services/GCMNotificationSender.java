@@ -1,6 +1,8 @@
 package copyleft.by.pc.services;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -91,7 +93,13 @@ public class GCMNotificationSender {
 	private Message createMessage(Notification notification) {
 		final Message.Builder messageBuilder = new Message.Builder();
 		messageBuilder.addData("title", notification.getTitle());
-		messageBuilder.addData("message", notification.getMessage());
+		
+		String message = "";
+		try {
+			message = URLEncoder.encode(notification.getMessage(), "UTF-8");
+		} catch (UnsupportedEncodingException e) {}
+		
+		messageBuilder.addData("message", message);
 		//messageBuilder.addData("msgcnt", notification.getBadge().toString());
 		return messageBuilder.build();
 	}
