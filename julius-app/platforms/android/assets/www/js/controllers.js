@@ -59,17 +59,22 @@ app.controller('PostsCtrl', function($scope, $ionicSideMenuDelegate, $ionicModal
             $scope.formData = JSON.parse(localstorage.get("preferences"));
             $scope.configToggles();
         }
-
     }
 
      $scope.configToggles = function () {
         console.log("Preferences:" + localstorage.get("preferences"));
         if($scope.formData.activeNotifications == 1)
             $scope.toggleNotifications = { checked: true };
+        else
+            $scope.toggleNotifications = { checked: false };
         if($scope.formData.activeVibration == 1)
             $scope.toggleVibrations = { checked: true };
+        else
+            $scope.toggleVibrations = { checked: false };
         if($scope.formData.activeFilter == 1)
             $scope.toggleFilter = { checked: true };
+        else
+            $scope.toggleFilter = { checked: false };
 
         $scope.$watch('toggleNotifications.checked', function(newValue, oldValue) {
             if(newValue)
@@ -84,6 +89,7 @@ app.controller('PostsCtrl', function($scope, $ionicSideMenuDelegate, $ionicModal
                 $scope.formData.activeVibration = 0;
         });
         $scope.$watch('toggleFilter.checked', function(newValue, oldValue) {
+            console.log("clicou: " + newValue);
             if(newValue)
                 $scope.formData.activeFilter = 1;
             else
@@ -169,6 +175,7 @@ app.controller('PostsCtrl', function($scope, $ionicSideMenuDelegate, $ionicModal
                     $ionicLoading.show({ template: '<p class="item-icon-left">Configurações salvas<i class="icon ion-checkmark-circled"></i></p>'});
                     $timeout(function(){
                        $ionicLoading.hide();
+                       $ionicSideMenuDelegate.toggleLeft();
                     }, 1000);
             })
             .error(function (data, status) {

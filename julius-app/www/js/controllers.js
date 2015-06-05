@@ -18,7 +18,7 @@ app.controller('PostsCtrl', function($scope, $ionicSideMenuDelegate, $ionicModal
 
     // call to register automatically upon device ready
     ionPlatform.ready.then(function (device) {
-        localstorage.removeItem("preferences");
+        //localstorage.removeItem("preferences");
         //localstorage.removeItem("regId");
         //localstorage.set("regId","APA91bGvMOX6nX_m7PQwiXlyi--oZnePhqDt0lggkcyxA1a8JYZiNT2pCysJ5LtqhMvDVCnbp0H7PLVNr4xSsohebo2b0drUv8o_n7ULUDH01_-lHMNSJSYUEhHPUhh7jN4bZpa2hxXw");
         if(!localstorage.get("regId")) {
@@ -59,17 +59,22 @@ app.controller('PostsCtrl', function($scope, $ionicSideMenuDelegate, $ionicModal
             $scope.formData = JSON.parse(localstorage.get("preferences"));
             $scope.configToggles();
         }
-
     }
 
      $scope.configToggles = function () {
         console.log("Preferences:" + localstorage.get("preferences"));
         if($scope.formData.activeNotifications == 1)
             $scope.toggleNotifications = { checked: true };
+        else
+            $scope.toggleNotifications = { checked: false };
         if($scope.formData.activeVibration == 1)
             $scope.toggleVibrations = { checked: true };
+        else
+            $scope.toggleVibrations = { checked: false };
         if($scope.formData.activeFilter == 1)
             $scope.toggleFilter = { checked: true };
+        else
+            $scope.toggleFilter = { checked: false };
 
         $scope.$watch('toggleNotifications.checked', function(newValue, oldValue) {
             if(newValue)
@@ -169,6 +174,7 @@ app.controller('PostsCtrl', function($scope, $ionicSideMenuDelegate, $ionicModal
                     $ionicLoading.show({ template: '<p class="item-icon-left">Configurações salvas<i class="icon ion-checkmark-circled"></i></p>'});
                     $timeout(function(){
                        $ionicLoading.hide();
+                       $ionicSideMenuDelegate.toggleLeft();
                     }, 1000);
             })
             .error(function (data, status) {
