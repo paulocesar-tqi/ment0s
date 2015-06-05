@@ -12,6 +12,7 @@ import org.jsoup.nodes.Element;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.util.HtmlUtils;
 
 import copyleft.by.pc.common.entities.Post;
 
@@ -32,7 +33,7 @@ public class CrawlerGatryPostProcessor implements ItemProcessor<Element,Post> {
 		if(!externalGatryIds.contains(externalCode)) {
 			Post post = new Post();
 			
-			String html = el.getElementsByTag("h3").first().child(0).text() + " por " + el.getElementsByClass("preco").first().text() + "\n" + el.getElementsByTag("h3").first().child(0).attr("href");
+			String html = el.getElementsByClass("imagem").first().child(0).child(0).attr("title") + " por " + el.getElementsByClass("preco").first().text() + "\n" + el.getElementsByTag("h3").first().child(0).attr("href");
 			html = formatLinks(html);
 			if(html.length() > 10000) 
 				html = html.substring(0, 9995).substring(0,html.lastIndexOf(" ")) + "...";

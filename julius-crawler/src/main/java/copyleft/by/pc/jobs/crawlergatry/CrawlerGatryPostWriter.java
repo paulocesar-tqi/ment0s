@@ -13,10 +13,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
 
 import copyleft.by.pc.common.entities.Post;
-import copyleft.by.pc.listeners.NotificationService;
+import copyleft.by.pc.services.NotificationService;
 
 public class CrawlerGatryPostWriter implements ItemWriter<Post> {
 	private static final Log log = LogFactory.getLog(CrawlerGatryPostWriter.class);
@@ -31,7 +30,6 @@ public class CrawlerGatryPostWriter implements ItemWriter<Post> {
 	@Autowired
 	private MemcachedClient cache;
 
-	
 	@Override
 	public void write(List<? extends Post> posts) throws Exception {
 		
@@ -39,7 +37,7 @@ public class CrawlerGatryPostWriter implements ItemWriter<Post> {
 		last2Days.add(Calendar.DATE, -2);
 		
 		int insertedCount = 0;
-		List<Post> newPosts = new ArrayList<Post>(); 
+		ArrayList<Post> newPosts = new ArrayList<Post>(); 
 		for(Post post : posts) {
 			if(post != null && last2Days.getTime().before(post.getPublicationDate())) {
 				em.persist(post);
@@ -51,20 +49,10 @@ public class CrawlerGatryPostWriter implements ItemWriter<Post> {
 		if(insertedCount > 0) {
 			em.flush();
 			cache.flush();
-			notificateAndroidUsers(newPosts);
+			notificationService.addPostsToNotificationMountQueue(newPosts);
 		}
-		
-		//notificationService.testNotification();
-		
+
 		log.info("GatryWriter: " + insertedCount + " novos posts inseridos.");
 	}
 
-	@Async
-	private void notificateAndroidUsers(List<Post> newPosts) {
-//		List<Post> posts = new ArrayList<Post>();
-//		posts.add(newPosts.get(0));
-//		notificationService.notificateAndroidUsers(posts);
-		notificationService.notificateAndroidUsers(newPosts);
-	}
-	
 }

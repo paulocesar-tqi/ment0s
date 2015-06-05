@@ -2,6 +2,8 @@ package copyleft.by.pc.configuration;
 
 import java.io.IOException;
 
+import javax.jms.ConnectionFactory;
+
 import net.spy.memcached.AddrUtil;
 import net.spy.memcached.MemcachedClient;
 
@@ -9,11 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jms.config.JmsListenerContainerFactory;
+import org.springframework.jms.config.SimpleJmsListenerContainerFactory;
 
 import com.google.android.gcm.server.Sender;
 
 import copyleft.by.pc.common.dao.GenericDao;
-import copyleft.by.pc.listeners.NotificationService;
+import copyleft.by.pc.services.NotificationService;
 
 @Configuration
 public class ServicesConfiguration {
@@ -43,6 +47,12 @@ public class ServicesConfiguration {
 		return new MemcachedClient(AddrUtil.getAddresses("127.0.0.1:11111"));
 	}
 	
+	@Bean
+    JmsListenerContainerFactory<?> myJmsContainerFactory(ConnectionFactory connectionFactory) {
+        SimpleJmsListenerContainerFactory factory = new SimpleJmsListenerContainerFactory();
+        factory.setConnectionFactory(connectionFactory);
+        return factory;
+    }
 	
 	/*
 	@Bean

@@ -45,7 +45,7 @@ public class GCMNotificationSender {
 	}
 
 	public void sendNotification(Notification notification) {
-		sendAsyncNotification(notification, notification.getRegistrationIdsToSend());
+		sendAsyncNotification(notification, notification.getAndroidIdsToSend());
 	}
 
 	private void sendAsyncNotification(Notification notification, List<String> validDeviceIds) {

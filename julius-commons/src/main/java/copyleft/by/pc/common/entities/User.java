@@ -1,6 +1,7 @@
 package copyleft.by.pc.common.entities;
 
 import java.io.Serializable;
+import java.text.Normalizer;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -114,7 +115,7 @@ public class User implements Serializable{
 	}
 
 	public void setWord1(String word1) {
-		this.word1 = word1;
+		this.word1 = normalize(word1);
 	}
 
 	public String getWord2() {
@@ -122,7 +123,7 @@ public class User implements Serializable{
 	}
 
 	public void setWord2(String word2) {
-		this.word2 = word2;
+		this.word2 = normalize(word2);
 	}
 
 	public String getWord3() {
@@ -130,7 +131,13 @@ public class User implements Serializable{
 	}
 
 	public void setWord3(String word3) {
-		this.word3 = word3;
+		this.word3 = normalize(word3);
 	}
 
+	private String normalize(String text) {
+		text = Normalizer.normalize(text.toLowerCase(), Normalizer.Form.NFD);
+		text = text.replaceAll("[^\\p{ASCII}]", "");
+		text = text.replaceAll("[^a-z0-9]", "");
+		return text;
+	}
 }

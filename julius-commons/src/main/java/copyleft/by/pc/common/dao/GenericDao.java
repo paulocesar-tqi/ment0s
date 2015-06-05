@@ -1,5 +1,7 @@
 package copyleft.by.pc.common.dao;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -12,9 +14,11 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import copyleft.by.pc.common.entities.NotificationPlan;
 import copyleft.by.pc.common.entities.Post;
 import copyleft.by.pc.common.entities.Source;
 import copyleft.by.pc.common.entities.User;
+import copyleft.by.pc.common.entities.Word;
 
 public class GenericDao {
 	
@@ -129,7 +133,60 @@ public class GenericDao {
 
 	public Post getPostById(Long id) {
 		return em.find(Post.class, id);
-	}	
+	}
+	
+	public NotificationPlan getWordsAndIds() {
+		String sqlIdsNoFilter = " select platform, GROUP_CONCAT(reg_id SEPARATOR ' ') from user where active_notifications = 1 and active_filter = 0 " +
+								" group by platform";
+		
+		String sqlWords = "select word, GROUP_CONCAT(id_android SEPARATOR ' ') id_android, GROUP_CONCAT(id_ios SEPARATOR ' ') id_ios, GROUP_CONCAT(id_wp SEPARATOR ' ') id_wp from ( " +
+							" select a.word1 word, IF(a.platform = 'android', a.reg_id, null) id_android, IF(a.platform = 'ios', a.reg_id, null) id_ios, IF(a.platform = 'wp', a.reg_id, null) id_wp from user a where a.word1 is not null and a.active_notifications = 1 and a.active_filter = 1 " +
+							" union all " +
+							" select a.word2 word, IF(a.platform = 'android', a.reg_id, null) id_android, IF(a.platform = 'ios', a.reg_id, null) id_ios, IF(a.platform = 'wp', a.reg_id, null) id_wp from user a where a.word2 is not null and a.active_notifications = 1 and a.active_filter = 1 " + 
+							" union all " + 
+							" select a.word3 word, IF(a.platform = 'android', a.reg_id, null) id_android, IF(a.platform = 'ios', a.reg_id, null) id_ios, IF(a.platform = 'wp', a.reg_id, null) id_wp from user a where a.word3 is not null and a.active_notifications = 1 and a.active_filter = 1 " +
+						 ") words " +
+						 " GROUP BY word";
+		
+		NotificationPlan result = new NotificationPlan();
+		
+		Query query = em.createNativeQuery(sqlIdsNoFilter);
+		@SuppressWarnings("unchecked")
+		List<Object[]> list = query.getResultList();
+		if(list != null) {
+			for(Object[] obj : list) {
+				if("android".equals(obj[0])) {
+					result.setIdsAndroidNoFilter(new ArrayList<String>(Arrays.asList(((String)obj[1]).split(" "))));
+				} else if("ios".equals(obj[0])) {
+					result.setIdsIosNoFilter(new ArrayList<String>(Arrays.asList(((String)obj[1]).split(" "))));
+				} else if("wp".equals(obj[0])) {
+					result.setIdsWpNoFilter(new ArrayList<String>(Arrays.asList(((String)obj[1]).split(" "))));
+				}
+			}
+		}
+		
+		query = em.createNativeQuery(sqlWords);
+		@SuppressWarnings("unchecked")
+		List<Object[]> list2 = query.getResultList();
+		if(list2 != null) {
+			ArrayList<Word> wordList = new ArrayList<Word>();
+			for(Object[] obj : list2) {
+				ArrayList<String> listAndroid = new ArrayList<String>();
+				ArrayList<String> listIos = new ArrayList<String>();
+				ArrayList<String> listWp = new ArrayList<String>();
+				if(obj[1] != null) 
+					listAndroid = new ArrayList<String>(Arrays.asList(((String)obj[1]).split(" ")));
+				if(obj[2] != null) 
+					listIos = new ArrayList<String>(Arrays.asList(((String)obj[2]).split(" ")));
+				if(obj[3] != null) 
+					listWp = new ArrayList<String>(Arrays.asList(((String)obj[3]).split(" ")));
+				
+				wordList.add(new Word((String)obj[0], listAndroid, listIos, listWp));
+			}
+			result.setWords(wordList);
+		}
+		return result;
+	}
 
 
 }

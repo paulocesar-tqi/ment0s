@@ -37,6 +37,7 @@ public class Application {
 	private static final String PURGE_POSTS_JOB = "purgePostsJob";
 	
 	private static ConfigurableApplicationContext ctx = null;
+	
 
 	public static void main(String[] args) throws BeansException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException, JobParametersInvalidException, InterruptedException {
 
@@ -124,7 +125,6 @@ public class Application {
     	}
     	JobInstance jobInstance = jobExecution.getJobInstance();
     	log.info(String.format("Job %s instance %s exited with status %s",jobInstance.getJobName(), jobInstance.getId(), jobExecution.getExitStatus().getExitCode()));
-
 	}
- 
+	
 }

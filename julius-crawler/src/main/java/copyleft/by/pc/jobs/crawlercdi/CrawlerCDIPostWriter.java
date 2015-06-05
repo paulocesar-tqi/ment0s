@@ -13,10 +13,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
 
 import copyleft.by.pc.common.entities.Post;
-import copyleft.by.pc.listeners.NotificationService;
+import copyleft.by.pc.services.NotificationService;
 
 public class CrawlerCDIPostWriter implements ItemWriter<Post> {
 	private static final Log log = LogFactory.getLog(CrawlerCDIPostWriter.class);
@@ -38,7 +37,7 @@ public class CrawlerCDIPostWriter implements ItemWriter<Post> {
 		last2Days.add(Calendar.DATE, -2);
 		
 		int insertedCount = 0;
-		List<Post> newPosts = new ArrayList<Post>(); 
+		ArrayList<Post> newPosts = new ArrayList<Post>(); 
 		for(Post post : posts) {
 			if(post != null && last2Days.getTime().before(post.getPublicationDate())) {
 				log.info("Insertion post: " + post.getHtml());
@@ -51,18 +50,10 @@ public class CrawlerCDIPostWriter implements ItemWriter<Post> {
 		if(insertedCount > 0) {
 			em.flush();
 			cache.flush();
-			notificateAndroidUsers(newPosts);
+			notificationService.addPostsToNotificationMountQueue(newPosts);
 		}
 
 		log.info("CdiWriter: " + insertedCount + " novos posts inseridos.");
 	}
 	
-	@Async
-	private void notificateAndroidUsers(List<Post> newPosts) {
-//		List<Post> posts = new ArrayList<Post>();
-//		posts.add(newPosts.get(0));
-//		notificationService.notificateAndroidUsers(posts);
-		notificationService.notificateAndroidUsers(newPosts);
-	}
-
 }

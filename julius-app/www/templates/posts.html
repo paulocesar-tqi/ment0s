@@ -79,24 +79,25 @@
                         </li>
                     </ul>
                     <div class="div-config" ng-show="formData.activeNotifications == 1 && formData.activeFilter == 1">
-                        Receber apenas notificações com os termos:
+                        <span class="wordsHeader">Receber apenas notificações com os termos:</span>
                         <br/>
-                        <div class="list">
+                        <div>
                             <div class="item item-input" style="height: 10%" ng-click="publish($event)">
-                                <input type="text" name="word1" placeholder="Termo 1" ng-model="formData.word1">
+                                <input type="text" name="word1" placeholder="Ex: ipad" ng-model="formData.word1">
                                 <i ng-click="clearWord1()" class="button button-clear icon ion-close-circled padding-right"></i>
                             </div>
 
                             <div class="item item-input" style="height: 10%" ng-click="publish($event)">
-                                <input type="text" name="word2" placeholder="Termo 2" ng-model="formData.word2">
+                                <input type="text" name="word2" placeholder="Ex: pendrive" ng-model="formData.word2">
                                 <i ng-click="clearWord2()" class="button button-clear icon ion-close-circled padding-right"></i>
                             </div>
 
                             <div class="item item-input" style="height: 10%" ng-click="publish($event)">
-                                <input type="text" name="word3" placeholder="Termo 3" ng-model="formData.word3">
+                                <input type="text" name="word3" placeholder="Ex: moto x" ng-model="formData.word3">
                                 <i ng-click="clearWord3()" class="button button-clear icon ion-close-circled padding-right"></i>
                             </div>
                         </div>
+                        <span class="wordsFooter">*Caracteres especiais, espaços e letras maíusculas não serão considerados.</span>
                     </div>
                     <div class="div-config">
                         <button class="button button-block button-positive" ng-click="saveConfig()">Salvar</button>

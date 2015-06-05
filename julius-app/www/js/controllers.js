@@ -16,24 +16,80 @@ app.controller('PostsCtrl', function($scope, $ionicSideMenuDelegate, $ionicModal
     $scope.infiniteLoad = false;
     $scope.formData = {};
 
-    $scope.toggleNotifications = { checked: false };
-    $scope.toggleVibrations = { checked: false };
-    $scope.toggleFilter = { checked: false };
-
     // call to register automatically upon device ready
     ionPlatform.ready.then(function (device) {
+        localstorage.removeItem("preferences");
         //localstorage.removeItem("regId");
-        //localStorage['regId'] = "88vtyrvtrut1r24t23423r41u34vtr4";
-        alert(localstorage.get("regId"));
+        //localstorage.set("regId","APA91bGvMOX6nX_m7PQwiXlyi--oZnePhqDt0lggkcyxA1a8JYZiNT2pCysJ5LtqhMvDVCnbp0H7PLVNr4xSsohebo2b0drUv8o_n7ULUDH01_-lHMNSJSYUEhHPUhh7jN4bZpa2hxXw");
         if(!localstorage.get("regId")) {
             $scope.register();
         } else {
-            $cordovaToast.showShortCenter("Found regId: " + localstorage.get("regId"));
+            //$cordovaToast.showShortCenter("Found regId: " + localstorage.get("regId"));
+            console.log("Found regId: " + localstorage.get("regId"));
         }
 
+        $scope.checkConfig();
         $scope.setAdMob();
         $scope.loadPosts();
-    });
+
+     });
+
+    $scope.checkConfig = function () {
+        if(!localstorage.get("preferences")) {
+            if(!localstorage.get("regId")) {
+                $timeout(function(){
+                    $scope.checkConfig();
+                }, 1000);
+                return;
+            } else {
+                ConfigService.getUserConfig(localstorage.get("regId"))
+                .success(function(result) {
+                    result = decryptText(result);
+                    console.log("Preferences retorned: " + result);
+                    localstorage.set("preferences", result);
+                    $scope.formData = JSON.parse(result);
+                    $scope.configToggles();
+                })
+                .error(function (data, status) {
+                    $cordovaToast.showShortCenter("Erro ao recuperar suas configurações");
+                    console.log("Error loading config." + data + " " + status);
+                });               
+            }
+        } else {
+            $scope.formData = JSON.parse(localstorage.get("preferences"));
+            $scope.configToggles();
+        }
+
+    }
+
+     $scope.configToggles = function () {
+        console.log("Preferences:" + localstorage.get("preferences"));
+        if($scope.formData.activeNotifications == 1)
+            $scope.toggleNotifications = { checked: true };
+        if($scope.formData.activeVibration == 1)
+            $scope.toggleVibrations = { checked: true };
+        if($scope.formData.activeFilter == 1)
+            $scope.toggleFilter = { checked: true };
+
+        $scope.$watch('toggleNotifications.checked', function(newValue, oldValue) {
+            if(newValue)
+                $scope.formData.activeNotifications = 1;
+            else
+                $scope.formData.activeNotifications = 0;
+        });
+        $scope.$watch('toggleVibrations.checked', function(newValue, oldValue) {
+            if(newValue)
+                $scope.formData.activeVibration = 1;
+            else
+                $scope.formData.activeVibration = 0;
+        });
+        $scope.$watch('toggleFilter.checked', function(newValue, oldValue) {
+            if(newValue)
+                $scope.formData.activeFilter = 1;
+            else
+                $scope.formData.activeFilter = 0;
+        });
+     }
 
     $scope.setAdMob = function () {
         if(window.AdMob) {
@@ -77,7 +133,6 @@ app.controller('PostsCtrl', function($scope, $ionicSideMenuDelegate, $ionicModal
         }
     }
 
-
     // function to open the modal urlViewer
     $scope.openUrlViewer = function (url) {
         clickedUrl = url;
@@ -93,51 +148,6 @@ app.controller('PostsCtrl', function($scope, $ionicSideMenuDelegate, $ionicModal
     };
 
     $scope.toggleMenu = function () {
-        if(angular.equals({},$scope.formData)) {
-            $ionicLoading.show({ template: '<p class="item-icon-left">Carregando Configurações<ion-spinner icon="lines"/></p>'});
-            ConfigService.getUserConfig(localstorage.get("regId"))
-                .success(function(result) {
-                    result = JSON.parse(decryptText(result));
-                    if(result) {
-                        $scope.formData = result;
-                        if($scope.formData.activeNotifications == 1)
-                            $scope.toggleNotifications = { checked: true };
-                        if($scope.formData.activeVibration == 1)
-                            $scope.toggleVibrations = { checked: true };
-                        if($scope.formData.activeFilter == 1)
-                            $scope.toggleFilter = { checked: true };
-
-                        $scope.$watch('toggleNotifications.checked', function(newValue, oldValue) {
-                            if(newValue)
-                                $scope.formData.activeNotifications = 1;
-                            else
-                                $scope.formData.activeNotifications = 0;
-                        });
-                        $scope.$watch('toggleVibrations.checked', function(newValue, oldValue) {
-                            if(newValue)
-                                $scope.formData.activeVibration = 1;
-                            else
-                                $scope.formData.activeVibration = 0;
-                        });
-                        $scope.$watch('toggleFilter.checked', function(newValue, oldValue) {
-                            if(newValue)
-                                $scope.formData.activeFilter = 1;
-                            else
-                                $scope.formData.activeFilter = 0;
-                        });
-
-                        $ionicLoading.hide();
-                    }
-                })
-                .error(function (data, status) {
-                    $ionicLoading.show({ template: '<p class="item-icon-left">Verifique sua conexão<ion-spinner icon="lines"/></p>'});
-                    $timeout(function(){
-                        $ionicLoading.hide();
-                    }, 5000);
-
-                    console.log("Error loading config." + data + " " + status);
-                });
-        }
         $ionicSideMenuDelegate.toggleLeft();
     };
 
@@ -155,6 +165,7 @@ app.controller('PostsCtrl', function($scope, $ionicSideMenuDelegate, $ionicModal
         $ionicLoading.show({ template: '<p class="item-icon-left">Salvando Configurações<ion-spinner icon="lines"/></p>'});
         ConfigService.saveUserConfig(encryptText(JSON.stringify($scope.formData)))
             .success(function(result) {
+                    localstorage.set("preferences", JSON.stringify($scope.formData));
                     $ionicLoading.show({ template: '<p class="item-icon-left">Configurações salvas<i class="icon ion-checkmark-circled"></i></p>'});
                     $timeout(function(){
                        $ionicLoading.hide();
