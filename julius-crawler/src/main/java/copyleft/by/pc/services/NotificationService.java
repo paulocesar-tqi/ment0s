@@ -1,7 +1,11 @@
 package copyleft.by.pc.services;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.text.Normalizer;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
@@ -17,6 +21,8 @@ import org.springframework.jms.core.MessageCreator;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.util.CollectionUtils;
+
+import com.google.android.gcm.server.Sender;
 
 import copyleft.by.pc.common.dao.GenericDao;
 import copyleft.by.pc.common.entities.NotificationPlan;
@@ -122,30 +128,39 @@ public class NotificationService {
 	}
 
 	
-//	public void testNotification() { 
-//		//Retrieve ids
-//		List<String> ids = dao.getRegistrationIdsByPlatform("android");
-//
-//		if (ids != null && ids.size() > 0) {
-//				Notification notification = new Notification();
-//				//notification.setBadge(1);
-//				notification.setRegistrationIdsToSend(ids);
-//				notification.setTitle("Promobugs");
-//				notification.setMessage("A coordenadora do Programa de Pós-graduação em Ciência da Computação (PPGCO) da Faculdade de Computação (FACOM) da Universidade Federal de Uberlândia (UFU) faz saber a todos quantos virem o presente edital");
-//				sender.sendNotification(notification);
-//		}
-//		
-//	}
-	
-	public static void main(String[] args) {
-		  	String text = "Tábua de Corte Hauskraft http://www.americanas.com.br/produto Vermelha 25cm por R$ 10,95<br/> <a href=\"javascript:window.open('http://www.americanas.com.br/produto/122376946/tabua-de-corte-hauskraft-vermelha-25cm?franq=AFL-03-77214','_system', 'location=yes')\">http://www.americanas.com.br/produto/122376946/tabua-de-corte-hauskraft-vermelha-25cm?franq=AFL-03-77214</a>";
-		  	text = text.replaceAll("\\<.*?\\>", "");
-		  	text = text.replaceAll("(http+[\\w\\d:#@%/;$()~_?\\+-=\\\\\\.&]*)", "");
-			//text = Normalizer.normalize(text.toLowerCase(), Normalizer.Form.NFD);
-			//text = text.replaceAll("[^\\p{ASCII}]", "");
-			//text = text.replaceAll("[^a-z0-9]", "");
-			//log.info("post nomalized: " + text);
-			System.out.println(text);
+	public static void main(String[] args) throws IOException {
+		Notification notification = new Notification("Promobugs", 
+													"A coordenadora do Programa de Pós-graduação em Ciência da Computação (PPGCO) da Faculdade de Computação (FACOM) da Universidade Federal de Uberlândia (UFU) faz saber a todos quantos virem o presente edital",
+													null, null, null);
+
+		Sender gcmSender = new Sender("AIzaSyDdQORbPTMuO9ZPIM4E5VzqXwW-MNX--qM");
+		//gcmSender.sendNoRetry(createMessage(notification), "APA91bFpik20ovAf-iO2GqV456T-YvS5p7WsZHhZpvMqCGWgzikQdRX7J2Vbophunifi4S8kc73osydfoEQ1TT9_La3_RButKWemplfyLKcHWxwEQi-goLpxgxX6YU3a-9hC1FtBA6hV");
+		System.out.println(String.valueOf(System.currentTimeMillis()));
+		
 	}
+	
+	private static com.google.android.gcm.server.Message createMessage(Notification notification) {
+		final com.google.android.gcm.server.Message.Builder messageBuilder = new com.google.android.gcm.server.Message.Builder();
+		messageBuilder.addData("title", notification.getTitle());
+		String message = "";
+		try {
+			message = URLEncoder.encode(notification.getMessage(), "UTF-8");
+		} catch (UnsupportedEncodingException e) {}
+		
+		messageBuilder.addData("message", message);
+		//messageBuilder.addData("msgcnt", notification.getBadge().toString());
+		return messageBuilder.build();
+	}
+		
+//	public static void main(String[] args) {
+//		  	String text = "Tábua de Corte Hauskraft http://www.americanas.com.br/produto Vermelha 25cm por R$ 10,95<br/> <a href=\"javascript:window.open('http://www.americanas.com.br/produto/122376946/tabua-de-corte-hauskraft-vermelha-25cm?franq=AFL-03-77214','_system', 'location=yes')\">http://www.americanas.com.br/produto/122376946/tabua-de-corte-hauskraft-vermelha-25cm?franq=AFL-03-77214</a>";
+//		  	text = text.replaceAll("\\<.*?\\>", "");
+//		  	text = text.replaceAll("(http+[\\w\\d:#@%/;$()~_?\\+-=\\\\\\.&]*)", "");
+//			//text = Normalizer.normalize(text.toLowerCase(), Normalizer.Form.NFD);
+//			//text = text.replaceAll("[^\\p{ASCII}]", "");
+//			//text = text.replaceAll("[^a-z0-9]", "");
+//			//log.info("post nomalized: " + text);
+//			System.out.println(text);
+//	}
 
 }

@@ -100,6 +100,9 @@ public class GCMNotificationSender {
 		} catch (UnsupportedEncodingException e) {}
 		
 		messageBuilder.addData("message", message);
+		
+		messageBuilder.addData("notId", String.valueOf(System.currentTimeMillis()));
+		
 		//messageBuilder.addData("msgcnt", notification.getBadge().toString());
 		return messageBuilder.build();
 	}
