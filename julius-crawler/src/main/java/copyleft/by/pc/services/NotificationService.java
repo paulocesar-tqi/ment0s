@@ -130,12 +130,13 @@ public class NotificationService {
 	
 	public static void main(String[] args) throws IOException {
 		Notification notification = new Notification("Promobugs", 
-													"A coordenadora do Programa de Pós-graduação em Ciência da Computação (PPGCO) da Faculdade de Computação (FACOM) da Universidade Federal de Uberlândia (UFU) faz saber a todos quantos virem o presente edital",
+													//"A coordenadora do Programa de Pós-graduação em Ciência da Computação (PPGCO) da Faculdade de Computação (FACOM) da Universidade Federal de Uberlândia (UFU) faz saber a todos quantos virem o presente edital",
+				"paulo teste 2 paulo teste 2 paulo teste 2 paulo teste 2 paulo teste 2 ",
 													null, null, null);
 
 		Sender gcmSender = new Sender("AIzaSyDdQORbPTMuO9ZPIM4E5VzqXwW-MNX--qM");
-		//gcmSender.sendNoRetry(createMessage(notification), "APA91bFpik20ovAf-iO2GqV456T-YvS5p7WsZHhZpvMqCGWgzikQdRX7J2Vbophunifi4S8kc73osydfoEQ1TT9_La3_RButKWemplfyLKcHWxwEQi-goLpxgxX6YU3a-9hC1FtBA6hV");
-		System.out.println(String.valueOf(System.currentTimeMillis()));
+		gcmSender.sendNoRetry(createMessage(notification), "APA91bFpik20ovAf-iO2GqV456T-YvS5p7WsZHhZpvMqCGWgzikQdRX7J2Vbophunifi4S8kc73osydfoEQ1TT9_La3_RButKWemplfyLKcHWxwEQi-goLpxgxX6YU3a-9hC1FtBA6hV");
+		//System.out.println(String.valueOf(System.currentTimeMillis()));
 		
 	}
 	
@@ -148,6 +149,7 @@ public class NotificationService {
 		} catch (UnsupportedEncodingException e) {}
 		
 		messageBuilder.addData("message", message);
+		messageBuilder.addData("notId", String.valueOf(System.currentTimeMillis()));
 		//messageBuilder.addData("msgcnt", notification.getBadge().toString());
 		return messageBuilder.build();
 	}

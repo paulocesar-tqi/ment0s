@@ -135,7 +135,7 @@ public class GCMIntentService extends GCMBaseIntentService {
 		int notId = 0;
 		
 		try {
-			notId = Integer.parseInt(extras.getString("notId"));
+			notId = Integer.parseInt(String.valueOf((Long.parseLong(extras.getString("notId")) % 100000)));
 		}
 		catch(NumberFormatException e) {
 			Log.e(TAG, "Number format exception - Error parsing Notification ID: " + e.getMessage());
