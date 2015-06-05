@@ -1,7 +1,6 @@
 package copyleft.by.pc.endpoints;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -54,8 +53,6 @@ public class Endpoints {
 	@Autowired
 	private MemcachedClient cache;
 	
-	private final Queue<List<String>> registrationQueue = new ConcurrentLinkedQueue<List<String>>();
-
 	private final Queue<User> updateUserQueue = new ConcurrentLinkedQueue<User>();
 	
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
@@ -64,7 +61,8 @@ public class Endpoints {
 			@RequestParam(value = "regId", required = true) String value,
 			@RequestParam(value = "platform", required = false, defaultValue = "android") String type) {
 		
-		this.registrationQueue.add(Arrays.asList(value,type));
+		dao.createOrUpdateUser(value, type);
+		log.info("User " + value + " | " + type + " processado.");
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	
@@ -159,12 +157,6 @@ public class Endpoints {
 	
 	@Scheduled(fixedDelay=5000)
 	public void processQueues() {
-		for (List<String> list : this.registrationQueue) {
-			dao.createOrUpdateUser(list.get(0), list.get(1));
-			this.registrationQueue.remove(list);
-			log.info("User " + list.get(0) + " | " + list.get(1) + " processado.");
-		}
-		
 		for (User user : this.updateUserQueue) {
 			dao.updateUser(user);
 			this.updateUserQueue.remove(user);
