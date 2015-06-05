@@ -12,7 +12,6 @@ import org.jsoup.nodes.Element;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.util.HtmlUtils;
 
 import copyleft.by.pc.common.entities.Post;
 
