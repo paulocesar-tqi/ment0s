@@ -43,10 +43,8 @@ app.controller('PostsCtrl', function($scope, $ionicSideMenuDelegate, $ionicScrol
         $scope.moveData = $ionicScrollDelegate.getScrollPosition().top;
 
         if($scope.moveData>=250){
-            console.log("exibindo...");
             $('.scrollToTop').fadeIn();
         }else if($scope.moveData<250){
-            console.log("ocultando...");
             $('.scrollToTop').fadeOut();
         }
 

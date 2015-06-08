@@ -37,7 +37,7 @@
                         data-ng-if="infiniteLoad" distance="1%">
                 </ion-infinite-scroll>
             </ion-content>
-            <div  class="scrollToTop" ng-click="scrollTop()"><i style="vertical-align: middle;"class="icon ion-arrow-up-a"></i></div>
+            <div  class="scrollToTop" ng-click="scrollTop()"><i style="vertical-align: text-bottom;" class="icon ion-skip-forward"></i></div>
         </ion-pane>
         <ion-side-menu side="left">
             <ion-header-bar align-title="center" class="bar bar-header bar-assertive">
@@ -111,6 +111,13 @@
                 <h1 class="title">Promobugss</h1>
             </ion-header-bar>
             <ion-content>
+                <div class="about-header">
+                    <span>Siga o Gafanhoto no twitter:</span>
+                    <br/>
+                    <a href='#' onclick="javascript:window.open('https://twitter.com/gafanhotoApp', '_system', 'location=yes');"><img src="img/twitter.png"></img></a>
+                    <br/>
+                    <span>E-mail: <a style="color: white; font-weight: bolder;" href='#' onclick="javascript:window.open('mailto:gafanhoto@paulocesar.tk', '_system', 'location=yes');">gafanhoto@paulocesar.tk</a></span>
+                </div>
                 <div class="about-content">
                     <ion-slide-box>
                         <ion-slide>
@@ -125,8 +132,9 @@
                     </ion-slide-box>
                 </div>
                 <div class="about-footer">
-                    <span>Siga o gafanhoto no twitter: @gafanhotoapp</span>
-                    <span>Copyright © 2015 - Gafanhoto</span>
+                    <span>Copyright © 2015 - Gafanhoto v1.0</span>
+                    <br/>
+                    <span>Por Paulo César <a style="color: white; font-weight: bolder;" href='#' onclick="javascript:window.open('mailto:contato@paulocesar.tk', '_system', 'location=yes');">contato@paulocesar.tk</a></span>
                 </div>
             </ion-content>
         </ion-side-menu>
