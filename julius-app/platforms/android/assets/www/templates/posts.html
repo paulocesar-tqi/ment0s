@@ -7,13 +7,13 @@
                 </div>
                 <h1 class="title">Promobugs</h1>
                 <div class="buttons">
-                    <button class="button" ng-click="doShare()"><i class="icon ion-help-circled"></i></button>
+                    <button class="button" ng-click="toggleAbout()"><i class="icon ion-help-circled"></i></button>
                 </div>
             </ion-header-bar>
-            <ion-content>
+            <ion-content id="main-content" on-scroll="getScrollPosition()">
                 <ion-refresher on-refresh="loadPosts()" pulling-icon="ion-android-arrow-dropdown-circle">
                 </ion-refresher>
-                <div class="list" data-ng-if="posts.length">
+                <div data-ng-if="posts.length" on-scroll="getScrollPosition()">
                     <div data-ng-repeat="p in posts" >
                         <div class="post source{{p.sourceId}}">
                             <div class="post-text" id="post{{p.id}}">
@@ -37,6 +37,7 @@
                         data-ng-if="infiniteLoad" distance="1%">
                 </ion-infinite-scroll>
             </ion-content>
+            <div  class="scrollToTop" ng-click="scrollTop()"><i style="vertical-align: middle;"class="icon ion-arrow-up-a"></i></div>
         </ion-pane>
         <ion-side-menu side="left">
             <ion-header-bar align-title="center" class="bar bar-header bar-assertive">
@@ -104,6 +105,30 @@
                     </div>
                 </form>
             </ion-content>         
+        </ion-side-menu>
+        <ion-side-menu side="right">
+            <ion-header-bar align-title="center" class="bar bar-header bar-assertive">
+                <h1 class="title">Promobugss</h1>
+            </ion-header-bar>
+            <ion-content>
+                <div class="about-content">
+                    <ion-slide-box>
+                        <ion-slide>
+                                <img style="width: 100%" src="img/tela_completa.png"></img>
+                        </ion-slide>
+                        <ion-slide>
+                                <img style="width: 100%" src="img/tela_post.png"></img>
+                        </ion-slide>
+                        <ion-slide>
+                                <img style="width: 100%" src="img/tela_config.png"></img>
+                        </ion-slide>
+                    </ion-slide-box>
+                </div>
+                <div class="about-footer">
+                    <span>Siga o gafanhoto no twitter: @gafanhotoapp</span>
+                    <span>Copyright © 2015 - Gafanhoto</span>
+                </div>
+            </ion-content>
         </ion-side-menu>
     </ion-side-menus>
 </ion-view>

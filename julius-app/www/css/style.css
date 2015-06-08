@@ -7,6 +7,46 @@
     /*background-image: linear-gradient(360deg, #33cd5f, #CFEFCB 10%, transparent 100%);*/
 }
 
+.scrollToTop{
+  height: 56px;
+  width: 56px;
+ 
+  position: fixed;
+  bottom: 60px;
+  right: 10px;
+  
+  z-index: 1000;
+  border-radius: 5px 5px 5px 5px;
+
+  text-align: center;
+  font-size: 4em;
+ 
+  display:none;
+  background-color: #EF473A;
+  color: white;
+}
+
+.slider {
+  height: 100%;
+}
+
+.slider-pager {
+    top: 0px;
+}
+.slider-slide {
+  color: #000;
+  background-color: #fff;
+  text-align: center;
+  font-weight: 300;
+}
+.about-content {
+    width: 100%;
+}
+.about-footer {
+    height:50px;
+    text-align: center;
+}
+
 .wordsHeader {
     font-size: 0.8em;
 }

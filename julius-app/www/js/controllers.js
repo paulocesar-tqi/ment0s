@@ -10,7 +10,7 @@ var URL_ENDPOINTS = 'http://paulocesar.tk/promobugs';
 var admobid = {};
 var clickedUrl = "";
 
-app.controller('PostsCtrl', function($scope, $ionicSideMenuDelegate, $ionicModal, $timeout, $sce, $ionicLoading, PostService, ConfigService, $cordovaPush, $cordovaDialogs, $cordovaSocialSharing, $cordovaMedia, $cordovaToast, ionPlatform, localstorage, $http) {
+app.controller('PostsCtrl', function($scope, $ionicSideMenuDelegate, $ionicScrollDelegate, $ionicModal, $timeout, $sce, $ionicLoading, PostService, ConfigService, $cordovaPush, $cordovaDialogs, $cordovaSocialSharing, $cordovaMedia, $cordovaToast, ionPlatform, localstorage, $http) {
     $scope.posts = [];
     $scope.page = 0;    
     $scope.infiniteLoad = false;
@@ -33,6 +33,27 @@ app.controller('PostsCtrl', function($scope, $ionicSideMenuDelegate, $ionicModal
         $scope.loadPosts();
 
      });
+
+    $scope.scrollTop = function () {
+        $ionicScrollDelegate.scrollTop(true);
+    }
+
+    $scope.getScrollPosition = function() {
+        //monitor the scroll
+        $scope.moveData = $ionicScrollDelegate.getScrollPosition().top;
+
+        if($scope.moveData>=250){
+            console.log("exibindo...");
+            $('.scrollToTop').fadeIn();
+        }else if($scope.moveData<250){
+            console.log("ocultando...");
+            $('.scrollToTop').fadeOut();
+        }
+
+    };
+    $scope.toggleAbout = function () {
+        $ionicSideMenuDelegate.toggleRight();
+    };
 
     $scope.checkConfig = function () {
         if(!localstorage.get("preferences")) {
@@ -366,16 +387,6 @@ app.controller('PostsCtrl', function($scope, $ionicSideMenuDelegate, $ionicModal
 
 });
 
-
-app.controller('PostDetailCtrl', function($scope, $stateParams, PostService) {
-        console.log('details');
-        //$ionicLoading.show({ template: "Loading posts..."});
-        PostService.loadPost($stateParams.id)
-            .success(function(result) {
-                $scope.post = result;
-//                $ionicLoading.hide();
-            });
-});
 
 // Android Notification Received Handler
 function registerNotificationAndroid(e) {
