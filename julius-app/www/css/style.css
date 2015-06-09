@@ -51,6 +51,7 @@
     text-align: center;
     background-color: #EF473A;
     color: white;
+    margin-bottom: 50px;
 }
 
 .about-header {
@@ -129,7 +130,6 @@
 
 .post a {
     color: white;
-    font-size: 0.8em;
     font-weight: bolder;
 }
 
@@ -209,7 +209,7 @@
 
 .post-text {
     overflow: auto;
-    max-height: 7.5em;
+    max-height: 7.4em;
 }
 
 .post-image1 {
@@ -298,10 +298,12 @@ a.more {
     border-top-right-radius: 5px;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
+    font-size: 0.8em;
+
 }
 
 a.more > p {
     font-weight: bold;
-    font-size: 0.9em;
+    font-size: 0.8em;
     color: white;
 }

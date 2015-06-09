@@ -5,7 +5,7 @@
  * more tutorials: hollyschinsky.github.io
  */
 var URL_ENDPOINTS = 'http://paulocesar.tk/promobugs';
-//var URL_ENDPOINTS = 'http://192.168.0.101:8080';
+//var URL_ENDPOINTS = 'http://192.168.0.102:8080';
 //var URL_ENDPOINTS = 'http://localhost:8080';
 var admobid = {};
 var clickedUrl = "";
