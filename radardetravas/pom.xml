@@ -16,7 +16,7 @@
 		<jdk.version>1.7</jdk.version>
 		<jsoup.version>1.7.3</jsoup.version>
 		<commons-collections.version>3.0</commons-collections.version>
-		<commons-io.version>2.4</commons-io.version>
+		<commons-io.version>2.7</commons-io.version>
 		<httpcomponentes.version>4.3.1</httpcomponentes.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
